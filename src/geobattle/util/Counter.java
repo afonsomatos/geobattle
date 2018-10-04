@@ -2,17 +2,30 @@ package geobattle.util;
 
 public abstract class Counter {
 
-	private double step;
-	private double end;
-	private double val = 0;
+	private double start, step, end;
+	private double value;
+	
+	public Counter(double start, double step, double end) {
+		value = this.start = start;
+		this.step = step;
+		this.end = end;
+		
+	}
 	
 	public Counter(double step) {
-		this(step, 1);
+		this(0, step, 1);
 	}
 	
 	public Counter(double step, double end) {
-		this.step = step;
-		this.end = end;
+		this(0, step, end);
+	}
+	
+	public double getValue() {
+		return value;
+	}
+	
+	public void reset() {
+		value = start;
 	}
 	
 	public void setStep(double step) {
@@ -20,9 +33,9 @@ public abstract class Counter {
 	}
 	
 	public void tick() {
-		val += step;
-		if (val >= end) {
-			val = 0;
+		value += step;
+		if (start >= end && value <= end || start <= end && value >= end) {
+			value = start;
 			fire();
 		}
 	}

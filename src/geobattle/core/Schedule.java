@@ -43,6 +43,16 @@ class Schedule {
 		private long start, delay;
 		private Runnable runnable;
 		
+		public Event() {
+			
+		}
+		
+		public Event(long delay, boolean repeat, Runnable runnable) {
+			this.delay = delay;
+			this.repeat = repeat;
+			this.runnable = runnable;
+		}
+		
 		public boolean isRepeat() {
 			return repeat;
 		}

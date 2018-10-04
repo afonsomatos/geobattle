@@ -10,7 +10,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import geobattle.core.Schedule.Event;
 import geobattle.enemies.Enemy;
+import geobattle.util.Counter;
+import geobattle.util.Log;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Rifle;
 import geobattle.weapons.Shotgun;
@@ -33,7 +36,16 @@ public class Game {
 	private int height = 500;
 	private int fps = 60;
 	
+	private Event outOfBorderEvent;
 	private boolean outOfBorders = false;
+	private Counter outOfBorderCounter = new Counter(5, -1, 0) {
+		@Override
+		public void fire() {
+			outOfBorderEvent.setOff(true);
+			playerExitedMap();
+		}
+	};
+	
 	private boolean paused = false;
 	private boolean gameRunning = false;
 	private int enemiesLeft = 0;
@@ -47,11 +59,16 @@ public class Game {
 		window = new Window(this);
 		collisionHandler = new CollisionHandler(this);
 		debugRender = new Debug(this);
+
+		outOfBorderEvent = new Event(1000, true, () -> outOfBorderCounter.tick());
 	}
 	
 	public void start() {
 		score = 0;
 		gameRunning = true;
+		
+		Log.i("Game starting");
+		
 		levelManager.sendNextLevel();
 		
 		Player player = new Player(this);
@@ -109,15 +126,23 @@ public class Game {
 		return outOfBorders;
 	}
 
+	public Counter getOutOfBorderCounter() {
+		return outOfBorderCounter;
+	}
+	
 	private void handleOutOfBorders() {
 		// check for switch
 		if (outOfBorders ^ (outOfBorders = player.isOutOfBorders())) {
+			outOfBorderEvent.setOff(false);
 			if (outOfBorders) {
-				// start timer
-			} else {
-				// stop timer
+				outOfBorderCounter.reset();
+				schedule.add(outOfBorderEvent);
 			}
 		}
+	}
+	
+	private void playerExitedMap() {
+		Log.i("Player exited the map");
 	}
 	
 	public void tick() {
@@ -231,8 +256,7 @@ public class Game {
 		// Use for enhanced graphic rendering, otherwise it'll become laggy
 		System.setProperty("sun.java2d.opengl", "true");
 		
-		Game game = new Game();
-		game.start();
+		new Game().start();
 	}
 
 }
