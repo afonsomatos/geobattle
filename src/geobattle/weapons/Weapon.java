@@ -28,6 +28,7 @@ public class Weapon extends GameObject {
 	
 	// Projectiles
 	private int damage = 10;
+	private int projectileSize = 8;
 	private double projectileSpeed = 2.0f;
 	private Color projectileColor = Color.CYAN;
 	
@@ -128,6 +129,10 @@ public class Weapon extends GameObject {
 
 	public void setAmmoSaved(int ammoSaved) {
 		this.ammoSaved = ammoSaved;
+	}
+	
+	public void setProjectileSize(int projectileSize) {
+		this.projectileSize = projectileSize;
 	}
 
 	public void reload() {
@@ -264,6 +269,8 @@ public class Weapon extends GameObject {
 			p.setSpeed(projectileSpeed);
 			p.setColor(projectileColor);
 			p.setDamage(damage);
+			p.setWidth(projectileSize);
+			p.setHeight(projectileSize);
 			
 			double delta = shotsFired == 1 ? 0 : step * i - fireAmplitude / 2;
 			p.setVelX(-Math.cos(fireAngle + delta) * p.getSpeed());

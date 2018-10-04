@@ -29,10 +29,11 @@ public class Game {
 	private LevelManager levelManager;
 	private CollisionHandler collisionHandler;
 	
-	private int width = 1920;
-	private int height = 1080;
+	private int width = 700;
+	private int height = 500;
 	private int fps = 60;
 	
+	private boolean outOfBorders = false;
 	private boolean paused = false;
 	private boolean gameRunning = false;
 	private int enemiesLeft = 0;
@@ -103,10 +104,27 @@ public class Game {
 	public void togglePaused() {
 		paused = !paused;
 	}
+	
+	public boolean isOutOfBorders() {
+		return outOfBorders;
+	}
 
+	private void handleOutOfBorders() {
+		// check for switch
+		if (outOfBorders ^ (outOfBorders = player.isOutOfBorders())) {
+			if (outOfBorders) {
+				// start timer
+			} else {
+				// stop timer
+			}
+		}
+	}
+	
 	public void tick() {
 		schedule.tick();
 
+		handleOutOfBorders();
+		
 		for (GameObject g : getGameObjects()) {
 			if (g.isActive())
 				g.tick();
@@ -134,7 +152,7 @@ public class Game {
 			if (!g.isHidden())
 				g.render(gfx);
 		}
-		
+
 		hud.render(gfx);
 
 		if (RENDER_DEBUG)

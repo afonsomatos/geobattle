@@ -40,7 +40,11 @@ public class GameObject implements Renderable {
 		this.setX(x);
 		this.setY(y);
 	}
-	
+
+	public boolean isOutOfBorders() {
+		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
+	}
+
 	public void addBehavior(Behavior b) {
 		behaviors.add(b);
 	}

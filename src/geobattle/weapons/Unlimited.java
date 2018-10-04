@@ -15,6 +15,7 @@ public class Unlimited extends Weapon {
 		setShotsFired(1);
 		setRadius(70);
 		
+		setShotsFired(1);
 		setFireSpeed(Weapon.MAX_SPEED);
 		setReloadSpeed(Weapon.MAX_SPEED);
 		setAmmoCapacity(Weapon.INFINITE_AMMO);
@@ -23,6 +24,8 @@ public class Unlimited extends Weapon {
 		setColor(Color.RED);
 		setProjectileColor(Color.RED);
 		setProjectileSpeed(20.0f);
+		setDamage(10000);
+		setProjectileSize(35);
 		fill();
 	}
 	

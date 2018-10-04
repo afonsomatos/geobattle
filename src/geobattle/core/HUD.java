@@ -93,11 +93,22 @@ class HUD implements Renderable {
 				game.getHeight()-20);
 	}
 	
+	
 	@Override
 	public void render(Graphics2D gfx) {
+		
+		if (game.isOutOfBorders()) {
+			gfx.setColor(new Color(0, 0, 0, 200));
+			gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
+			
+			gfx.setColor(Color.RED);
+			gfx.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 24));
+			gfx.drawString("You're out of borders!", 200, game.getHeight()/2);
+		}
+		
 		gfx.setFont(new Font("arial", Font.PLAIN, 16));
 		gfx.setColor(Color.WHITE);
-		
+
 		renderTopLeft(gfx);
 		renderTopRight(gfx);
 		renderTopMiddle(gfx);
