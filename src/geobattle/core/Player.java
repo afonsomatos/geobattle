@@ -3,8 +3,11 @@ package geobattle.core;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 
+import geobattle.specials.Special;
+import geobattle.specials.WaveSpecial;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;
 
@@ -15,6 +18,8 @@ public class Player extends AliveObject {
 	
 	private Arsenal arsenal = new Arsenal(4);
 	private GameObject target = null;
+	
+	private Special special;
 	
 	public Player(Game game) {
 		this(game, 0, 0);
@@ -28,7 +33,8 @@ public class Player extends AliveObject {
 		setSpeed(4.0f);
 		setColor(Color.CYAN);
 		setHealth(1000);
-
+		
+		special = new WaveSpecial(game);
 		getCollider().setTag(Tag.Player);
 	}
 	
@@ -64,6 +70,11 @@ public class Player extends AliveObject {
 		}
 	}
 	
+	public void sendSpecial() {
+		special.setPos(new Point((int)getX(), (int)getY()));
+		special.send();
+	}
+	
 	public Arsenal getArsenal() {
 		return arsenal;
 	}
@@ -96,7 +107,7 @@ public class Player extends AliveObject {
 			int thickness = 5;
 			gfx.setStroke(new BasicStroke(thickness));
 			
-			Rectangle rect = this.getCollider().getBounds();
+			Rectangle rect = (Rectangle) this.getCollider().getBounds();
 			gfx.drawRect(rect.x + thickness / 2, rect.y + thickness / 2, rect.width - thickness, rect.height - thickness);
 		}
 		

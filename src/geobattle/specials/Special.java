@@ -5,13 +5,18 @@ import java.awt.Point;
 import geobattle.core.Game;
 import geobattle.core.Tag;
 
-abstract class Special {
+public abstract class Special {
 	
 	protected Game game;
-	protected Point pos = new Point(0, 0);
+	protected Point pos;
 	protected Tag tag = Tag.Neutral;
 	
 	public Special(Game game) {
+		this(game, null);
+	}
+	
+	public Special(Game game, Point pos) {
+		this.pos = pos;
 		this.game = game;
 	}
 	

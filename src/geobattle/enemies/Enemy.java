@@ -13,6 +13,7 @@ public class Enemy extends AliveObject {
 	Enemy(Game game, int x, int y, GameObject target) {
 		super(game, x, y);
 		this.target = target;
+		setTag(Tag.Enemy);
 		getCollider().setTag(Tag.Enemy);
 	}
 	

@@ -8,7 +8,7 @@ import geobattle.core.Tag;
 import geobattle.weapons.Bullet;
 import geobattle.weapons.Projectile;
 
-public class StarBurst extends Special {
+public class StarBurstSpecial extends Special {
 	
 	public enum Style {
 		RAINBOW,
@@ -27,7 +27,7 @@ public class StarBurst extends Special {
 	private Style style = Style.SOLID;
 	private Color color = Color.BLACK;
 	
-	public StarBurst(Game game, Tag tag) {
+	public StarBurstSpecial(Game game, Tag tag) {
 		super(game);
 		setTag(tag);
 	}

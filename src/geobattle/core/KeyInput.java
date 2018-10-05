@@ -82,6 +82,11 @@ class KeyInput implements KeyListener {
 					lastSelected = aux;
 				}
 				break;
+			
+			// Special attack
+			case KeyEvent.VK_Z:
+				game.getSchedule().next(() -> player.sendSpecial());
+				break;
 				
 			// Reloading
 			case KeyEvent.VK_R:

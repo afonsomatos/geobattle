@@ -5,7 +5,7 @@ import java.awt.Color;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extensions.ShootExt;
+import geobattle.extensions.ShootExtension;
 import geobattle.weapons.Weapon;
 
 public class Tower extends Enemy {
@@ -22,7 +22,7 @@ public class Tower extends Enemy {
 		setColor(Color.PINK);
 
 		weapon = buildWeapon(target);
-		addBehavior(new ShootExt(target, weapon));
+		addBehavior(new ShootExtension(target, weapon));
 	}
 
 	public Weapon buildWeapon(GameObject target) {

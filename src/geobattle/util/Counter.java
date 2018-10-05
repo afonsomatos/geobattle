@@ -9,7 +9,6 @@ public abstract class Counter {
 		value = this.start = start;
 		this.step = step;
 		this.end = end;
-		
 	}
 	
 	public Counter(double step) {

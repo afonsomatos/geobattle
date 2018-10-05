@@ -8,21 +8,21 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Player;
 import geobattle.core.Tag;
-import geobattle.extensions.FollowExt;
-import geobattle.specials.StarBurst;
+import geobattle.extensions.FollowExtension;
+import geobattle.specials.StarBurstSpecial;
 
 public class Creeper extends Enemy {
 
-	private StarBurst starBurst;
+	private StarBurstSpecial starBurst;
 	
 	public Creeper(Game game, int x, int y, GameObject target) {
 		super(game, x, y, target);
 		
-		starBurst = new StarBurst(game, Tag.Enemy);
+		starBurst = new StarBurstSpecial(game, Tag.Enemy);
 		starBurst.setColor(Color.GREEN);
 		starBurst.setProjectiles(20);
 		
-		addBehavior(new FollowExt(target));
+		addBehavior(new FollowExtension(target));
 		
 		setColor(Color.GREEN);
 		setWidth(15);

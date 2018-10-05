@@ -170,10 +170,10 @@ public class Game {
 
 		collisionHandler.handleCollisions();
 		
-		/*
-		 */
 		if (!levelManager.isLoadingLevel() && enemiesLeft == 0)
 			levelManager.sendNextLevel();
+		/*
+		 */
 	}
 	
 	public void render() {

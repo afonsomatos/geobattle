@@ -2,23 +2,23 @@ package geobattle.extensions;
 
 import geobattle.core.GameObject;
 
-public class FollowExt extends Extension {
+public class FollowExtension extends Extension {
 
 	private GameObject target = null;
 	private int maxDistance = 0;
 	private int minDistance = 0;
 	
-	public FollowExt(GameObject target, int minDistance, int maxDistance) {
+	public FollowExtension(GameObject target, int minDistance, int maxDistance) {
 		this.target = target;
 		this.minDistance = minDistance;
 		this.maxDistance = maxDistance;
 	}
 	
-	public FollowExt(GameObject target, int minDistance) {
+	public FollowExtension(GameObject target, int minDistance) {
 		this(target, minDistance, 0);
 	}
 	
-	public FollowExt(GameObject target) {
+	public FollowExtension(GameObject target) {
 		this(target, 0, 0);
 	}
 	

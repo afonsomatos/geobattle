@@ -2,7 +2,7 @@ package geobattle.core;
 
 import java.util.LinkedList;
 
-class CollisionHandler {
+public class CollisionHandler {
 
 	private Game game;
 	private CollisionMatrix collisionMatrix;
@@ -12,6 +12,10 @@ class CollisionHandler {
 		
 		collisionMatrix = new CollisionMatrix();
 		collisionMatrix.addCollision(Tag.Player, Tag.Enemy);
+	}
+	
+	public CollisionMatrix getCollisionMatrix() {
+		return collisionMatrix;
 	}
 	
 	public void handleCollisions() {
@@ -44,7 +48,7 @@ class CollisionHandler {
 		return colliders;
 	}
 
-	private class CollisionMatrix {
+	public class CollisionMatrix {
 		
 		private boolean[][] matrix;
 		
@@ -60,7 +64,7 @@ class CollisionHandler {
 			matrix[p2][p1] = true;
 		}
 		
-		private boolean collidesWith(Tag tag1, Tag tag2) {
+		public boolean collidesWith(Tag tag1, Tag tag2) {
 			return matrix[tag1.ordinal()][tag2.ordinal()];
 		}
 	

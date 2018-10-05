@@ -7,14 +7,14 @@ import geobattle.core.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.specials.StarBurst;
-import geobattle.specials.StarBurst.Style;
+import geobattle.specials.StarBurstSpecial;
+import geobattle.specials.StarBurstSpecial.Style;
 import geobattle.util.Counter;
 import geobattle.weapons.Projectile;
 
 public class Bubble extends Enemy {
 
-	private StarBurst starBurst;
+	private StarBurstSpecial starBurst;
 	private Counter attackCounter;
 
 	private boolean exploded = false;
@@ -22,7 +22,7 @@ public class Bubble extends Enemy {
 	public Bubble(Game game, int x, int y) {
 		super(game, x, y, null);
 		
-		starBurst = new StarBurst(game, Tag.Enemy);
+		starBurst = new StarBurstSpecial(game, Tag.Enemy);
 		starBurst.setStyle(Style.RAINBOW);
 		starBurst.setProjectiles(8);
 		
