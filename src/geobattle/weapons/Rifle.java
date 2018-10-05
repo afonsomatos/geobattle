@@ -12,7 +12,7 @@ public class Rifle extends Weapon {
 		super(game, origin, tag);
 		
 		setDamage(15);
-		setShotsFired(1);
+		setProjectiles(1);
 		setRadius(70);
 		
 		setFireSpeed(0.1);

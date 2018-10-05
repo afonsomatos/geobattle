@@ -1,31 +1,30 @@
-package geobattle.behaviors;
+package geobattle.extensions;
 
 import geobattle.core.GameObject;
 
-public class FollowBehavior extends Behavior {
+public class FollowExt extends Extension {
 
 	private GameObject target = null;
 	private int maxDistance = 0;
 	private int minDistance = 0;
 	
-	public FollowBehavior(GameObject target, int minDistance, int maxDistance) {
+	public FollowExt(GameObject target, int minDistance, int maxDistance) {
 		this.target = target;
 		this.minDistance = minDistance;
 		this.maxDistance = maxDistance;
 	}
 	
-	public FollowBehavior(GameObject target, int minDistance) {
+	public FollowExt(GameObject target, int minDistance) {
 		this(target, minDistance, 0);
 	}
 	
-	public FollowBehavior(GameObject target) {
+	public FollowExt(GameObject target) {
 		this(target, 0, 0);
 	}
 	
 	@Override
-	public void behave(GameObject gameObject) {
-
-		double dist = gameObject.distance(target);
+	public void tick(GameObject gameObject) {
+		final double dist = gameObject.distance(target);
 		
 		// If target is too far away, stop
 		if (maxDistance != 0 && dist > maxDistance) {
@@ -42,7 +41,6 @@ public class FollowBehavior extends Behavior {
 			gameObject.setVelX(-gameObject.getVelX());
 			gameObject.setVelY(-gameObject.getVelY());
 		}
-		
 	}
 
 }

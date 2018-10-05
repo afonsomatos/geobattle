@@ -12,7 +12,7 @@ public class Sniper extends Weapon {
 		super(game, origin, tag);
 		
 		setDamage(100);
-		setShotsFired(1);
+		setProjectiles(1);
 		setFireSpeed(0.01);
 		setRadius(70);
 		setReloadSpeed(0.007);

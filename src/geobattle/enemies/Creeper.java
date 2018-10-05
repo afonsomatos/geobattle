@@ -3,12 +3,12 @@ package geobattle.enemies;
 import java.awt.Color;
 import java.awt.Point;
 
-import geobattle.behaviors.FollowBehavior;
 import geobattle.core.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Player;
 import geobattle.core.Tag;
+import geobattle.extensions.FollowExt;
 import geobattle.specials.StarBurst;
 
 public class Creeper extends Enemy {
@@ -22,7 +22,7 @@ public class Creeper extends Enemy {
 		starBurst.setColor(Color.GREEN);
 		starBurst.setProjectiles(20);
 		
-		addBehavior(new FollowBehavior(target));
+		addBehavior(new FollowExt(target));
 		
 		setColor(Color.GREEN);
 		setWidth(15);

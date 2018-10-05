@@ -1,19 +1,19 @@
-package geobattle.behaviors;
+package geobattle.extensions;
 
 import geobattle.core.GameObject;
 import geobattle.weapons.Weapon;
 
-public class ShootBehavior extends Behavior {
+public class ShootExt extends Extension {
 
 	private Weapon weapon;
 	private GameObject target;
 	private boolean automatic = true;
 
-	public ShootBehavior() {
+	public ShootExt() {
 		this(null, null);
 	}
 	
-	public ShootBehavior(GameObject target, Weapon weapon) {
+	public ShootExt(GameObject target, Weapon weapon) {
 		this.target = target;
 		this.weapon = weapon;
 	}
@@ -32,7 +32,7 @@ public class ShootBehavior extends Behavior {
 	}
 	
 	@Override
-	public void behave(GameObject gameObject) {
+	public void tick(GameObject gameObject) {
 
 		if (!automatic) return;
 				

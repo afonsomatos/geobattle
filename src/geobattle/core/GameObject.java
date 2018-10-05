@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import geobattle.behaviors.Behavior;
+import geobattle.extensions.Extension;
 
 public class GameObject implements Renderable {
 
@@ -27,7 +27,7 @@ public class GameObject implements Renderable {
 	private Tag tag			= Tag.Neutral;
 	
 	private Collider collider = null;
-	private LinkedList<Behavior> behaviors = new LinkedList<Behavior>();
+	private LinkedList<Extension> behaviors = new LinkedList<Extension>();
 
 	protected Game game;
 	
@@ -45,7 +45,7 @@ public class GameObject implements Renderable {
 		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
 	}
 
-	public void addBehavior(Behavior b) {
+	public void addBehavior(Extension b) {
 		behaviors.add(b);
 	}
 	
@@ -70,8 +70,8 @@ public class GameObject implements Renderable {
 	
 	public void tick() {
 		
-		for (Behavior b : behaviors)
-			b.behave(this);
+		for (Extension b : behaviors)
+			b.tick(this);
 		
 		velX += accX;
 		velY += accY;

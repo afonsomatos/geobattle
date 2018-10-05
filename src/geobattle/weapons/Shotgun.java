@@ -17,7 +17,7 @@ public class Shotgun extends Weapon {
 		setReloadSpeed(0.01);
 		setFireAmplitude(Math.PI / 4);
 		setRadius(70);
-		setShotsFired(8);
+		setProjectiles(8);
 		setAmmoSaved(32);
 		setColor(Color.LIGHT_GRAY);
 		setAmmoCapacity(7);

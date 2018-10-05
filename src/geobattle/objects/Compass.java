@@ -9,12 +9,11 @@ import geobattle.util.Util;
 
 public class Compass extends GameObject {
 
+	private double lastAngle = 0;
 	private int radius = 20;
 	private Color backgroundColor = new Color(255, 0, 0, 175);
 	private Color arrowColor = Color.WHITE;
 	private GameObject target;
-	
-	private double lastAngle = 0;
 	
 	public Compass(Game game, int x, int y) {
 		this(game, x, y, null);
@@ -45,7 +44,6 @@ public class Compass extends GameObject {
 		final double theta = Math.PI / 4;
 		final int p1 = (int) (Math.cos(theta) * radius);
 		final int p2 = (int) (Math.sin(theta) * radius);
-		
 		final int x[] = {0, -p1, radius, -p1};
 		final int y[] = {0, -p2, 0, p2};
 		
@@ -65,8 +63,8 @@ public class Compass extends GameObject {
 		double angle;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;
-		
 		gfx.rotate(angle);
+		
 		drawArrow(gfx);
 		gfx.dispose();
 	}

@@ -17,10 +17,10 @@ public class Unlimited extends Weapon {
 		super(game, origin, tag);
 		
 		setDamage(15);
-		setShotsFired(1);
+		setProjectiles(1);
 		setRadius(85);
 		
-		setShotsFired(1);
+		setProjectiles(1);
 		setFireSpeed(Weapon.MAX_SPEED);
 		setReloadSpeed(Weapon.MAX_SPEED);
 		setAmmoCapacity(Weapon.INFINITE_AMMO);

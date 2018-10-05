@@ -13,33 +13,31 @@ import geobattle.util.Util;
 public class Weapon extends GameObject {
 	
 	private boolean reloading = false;
-	private boolean pausing = false;	// Is in middle of firing bullets
+	private boolean pausing = false;
 	
 	public static final int MAX_SPEED = 1;
 	public static final int INFINITE_AMMO = Integer.MAX_VALUE;
-
-	private double recoil = 0;
 	
 	private Counter reloadCounter;
 	private Counter fireCounter;
-	
+
 	private int ammoLoad = 0;
 	private int ammoCapacity = INFINITE_AMMO;
 	private int ammoSaved = INFINITE_AMMO;
 	
+	private int projectiles = 1;
 	private int damage = 10;
 	private int projectileSize = 8;
 	private double projectileSpeed = 2.0f;
 	private Color projectileColor = Color.CYAN;
 	
-	private GameObject lock = null;		// Where bullets will go
-	private GameObject origin = null;	// Who is holding the weapon
+	private GameObject lock = null;
+	private GameObject origin = null;
 	
-	private int shotsFired = 1;
 	private double fireAmplitude = Math.PI / 4;
-	
-	private double radius = 70;		// Pixels between weapon and origin
-	private double fireAngle = 0;	// Position is calculated with cos/sin(fireAngle) * radius
+	private double radius = 70;
+	private double fireAngle = 0;
+	private double recoil = 0;
 	
 	public Weapon(Game game, GameObject origin, Tag tag) {
 		super(game);
@@ -86,24 +84,24 @@ public class Weapon extends GameObject {
 		this.recoil = recoil;
 	}
 	
-	protected void draw(Graphics2D gfx) {
-		// (0, 0) is the firing point
-		int side = 10;
-		
-		int x[] = {0, side, side};
-		int y[] = {0, side, -side};
-		
+	protected void draw(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.setColor(getColor());
+		// (0, 0) is the firing point
+		final int side = 10;
+		final int x[] = {0, side, side};
+		final int y[] = {0, side, -side};
 		gfx.fillPolygon(x, y, 3);
+		gfx.dispose();
 	}
 	
 	@Override
-	public void render(Graphics2D gfx) {
-		Graphics2D g = (Graphics2D) gfx.create();
-		g.rotate(fireAngle, (int) getX(), (int) getY());
-		g.translate(getX(), getY());
-		draw(g);
-		g.dispose();
+	public void render(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		gfx.rotate(fireAngle, (int) getX(), (int) getY());
+		gfx.translate(getX(), getY());
+		draw(gfx);
+		gfx.dispose();
 	}
 	
 	public void fill() {
@@ -163,8 +161,8 @@ public class Weapon extends GameObject {
 		this.ammoCapacity = ammoCapacity;
 	}
 	
-	public void setShotsFired(int shotsFired) {
-		this.shotsFired = shotsFired;
+	public void setProjectiles(int projectiles) {
+		this.projectiles = projectiles;
 	}
 	
 	public void tickFiring() {
@@ -263,9 +261,9 @@ public class Weapon extends GameObject {
 	public void fire(int x, int y) {
 		Game game = this.getGame();
 		
-		final double step = fireAmplitude / (shotsFired - 1);
+		final double step = fireAmplitude / (projectiles - 1);
 
-		for (int i = 0; i < shotsFired; ++i) {
+		for (int i = 0; i < projectiles; ++i) {
 			
 			Projectile p = new Bullet(game, (int) this.getX(), (int) this.getY());
 			p.getCollider().setTag(getTag());
@@ -276,7 +274,7 @@ public class Weapon extends GameObject {
 			p.setHeight(projectileSize);
 			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);
-			final double delta = fireRecoil + (shotsFired == 1 ? 0 : step * i - fireAmplitude / 2);
+			final double delta = fireRecoil + (projectiles == 1 ? 0 : step * i - fireAmplitude / 2);
 			p.setVelX(-Math.cos(fireAngle + delta) * p.getSpeed());
 			p.setVelY(-Math.sin(fireAngle + delta) * p.getSpeed());
 		

@@ -2,11 +2,11 @@ package geobattle.enemies;
 
 import java.awt.Color;
 
-import geobattle.behaviors.FollowBehavior;
-import geobattle.behaviors.ShootBehavior;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.extensions.FollowExt;
+import geobattle.extensions.ShootExt;
 import geobattle.weapons.Weapon;
 
 public class Soldier extends Enemy {
@@ -24,8 +24,8 @@ public class Soldier extends Enemy {
 		setColor(Color.RED);
 		
 		weapon = buildWeapon(target);
-		addBehavior(new ShootBehavior(target, weapon));
-		addBehavior(new FollowBehavior(target, 300));
+		addBehavior(new ShootExt(target, weapon));
+		addBehavior(new FollowExt(target, 300));
 	}
 	
 	public Weapon buildWeapon(GameObject target) {
