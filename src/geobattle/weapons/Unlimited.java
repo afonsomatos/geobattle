@@ -12,7 +12,6 @@ import geobattle.util.Util;
 public class Unlimited extends Weapon {
 
 	private Random rand = new Random();
-	private final double offAngle = Math.PI / 72;
 	
 	public Unlimited(Game game, GameObject origin, Tag tag) {
 		super(game, origin, tag);
@@ -26,6 +25,7 @@ public class Unlimited extends Weapon {
 		setReloadSpeed(Weapon.MAX_SPEED);
 		setAmmoCapacity(Weapon.INFINITE_AMMO);
 		setAmmoSaved(Weapon.INFINITE_AMMO);
+		setRecoil(Math.PI / 72);
 		
 		setProjectileColor(Color.ORANGE);
 		setProjectileSpeed(20.0f);
@@ -47,9 +47,4 @@ public class Unlimited extends Weapon {
 		gfx.fillPolygon(x, y, 3);
 	}
 	
-	@Override
-	public void fire(int x, int y) {
-		setFireAngle(getFireAngle() + Util.randomDouble(-offAngle, offAngle));
-		super.fire(x, y);
-	}
 }

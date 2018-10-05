@@ -18,15 +18,15 @@ public class Weapon extends GameObject {
 	public static final int MAX_SPEED = 1;
 	public static final int INFINITE_AMMO = Integer.MAX_VALUE;
 
+	private double recoil = 0;
+	
 	private Counter reloadCounter;
 	private Counter fireCounter;
 	
-	// Ammo
 	private int ammoLoad = 0;
 	private int ammoCapacity = INFINITE_AMMO;
 	private int ammoSaved = INFINITE_AMMO;
 	
-	// Projectiles
 	private int damage = 10;
 	private int projectileSize = 8;
 	private double projectileSpeed = 2.0f;
@@ -80,6 +80,10 @@ public class Weapon extends GameObject {
 				pausing = false;
 			}
 		};
+	}
+	
+	public void setRecoil(double recoil) {
+		this.recoil = recoil;
 	}
 	
 	protected void draw(Graphics2D gfx) {
@@ -259,7 +263,7 @@ public class Weapon extends GameObject {
 	public void fire(int x, int y) {
 		Game game = this.getGame();
 		
-		double step = fireAmplitude / (shotsFired - 1);
+		final double step = fireAmplitude / (shotsFired - 1);
 
 		for (int i = 0; i < shotsFired; ++i) {
 			
@@ -271,7 +275,8 @@ public class Weapon extends GameObject {
 			p.setWidth(projectileSize);
 			p.setHeight(projectileSize);
 			
-			double delta = shotsFired == 1 ? 0 : step * i - fireAmplitude / 2;
+			final double fireRecoil = Util.randomDouble(-recoil, recoil);
+			final double delta = fireRecoil + (shotsFired == 1 ? 0 : step * i - fireAmplitude / 2);
 			p.setVelX(-Math.cos(fireAngle + delta) * p.getSpeed());
 			p.setVelY(-Math.sin(fireAngle + delta) * p.getSpeed());
 		
