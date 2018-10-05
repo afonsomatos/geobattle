@@ -27,9 +27,9 @@ public class GameObject implements Renderable {
 	private Tag tag			= Tag.Neutral;
 	
 	private Collider collider = null;
-	private Game game;
-	
 	private LinkedList<Behavior> behaviors = new LinkedList<Behavior>();
+
+	protected Game game;
 	
 	public GameObject(Game game) {
 		this(game, 0, 0);

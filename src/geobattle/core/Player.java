@@ -15,7 +15,7 @@ public class Player extends AliveObject {
 	
 	private Arsenal arsenal = new Arsenal(4);
 	private GameObject target = null;
-
+	
 	public Player(Game game) {
 		this(game, 0, 0);
 	}
@@ -56,6 +56,7 @@ public class Player extends AliveObject {
 	
 	@Override
 	public void suffer(int hit) {
+		game.playerGotHit();
 		shield -= hit;
 		if (shield < 0) {
 			super.suffer(- (int) shield);

@@ -93,11 +93,9 @@ class HUD implements Renderable {
 				game.getHeight()-20);
 	}
 	
-	
-	@Override
-	public void render(Graphics2D gfx) {
+	public void renderPlayerExitingMap(Graphics2D _gfx) {
 		String txt;
-		
+		Graphics2D gfx = (Graphics2D) _gfx.create();
 		if (game.isOutOfBorders()) {
 			gfx.setColor(new Color(0, 0, 0, 200));
 			gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
@@ -109,11 +107,36 @@ class HUD implements Renderable {
 			gfx.drawString(txt,
 					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, game.getHeight()/2);
 			
-			txt = "Exiting in " + game.getOutOfBorderCounter().getValue() + " seconds";
+			txt = String.format("Exiting in %d seconds", (int)game.getOutOfBorderCounter().getValue());
 			gfx.drawString(txt,
 					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, game.getHeight()/2 + 20);
 		}
+		gfx.dispose();
+	}
+	
+	public void renderPlayerGettingHit(Graphics2D _gfx) {
+		if (!game.isPlayerGettingHit()) return;
+		Graphics2D gfx = (Graphics2D) _gfx.create();
 		
+		gfx.setColor(new Color(255, 0, 0, 100));
+		gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
+		
+		gfx.dispose();
+	}
+	
+	public void renderWarnings(Graphics2D gfx) {
+		renderPlayerGettingHit(gfx);
+		renderPlayerExitingMap(gfx);
+	}
+	
+	@Override
+	public void render(Graphics2D _gfx) {
+		String txt;
+		
+		renderWarnings(_gfx);
+		renderPlayerExitingMap(_gfx);
+		
+		Graphics2D gfx = (Graphics2D) _gfx.create();
 		gfx.setFont(new Font("arial", Font.PLAIN, 16));
 		gfx.setColor(Color.WHITE);
 
@@ -124,6 +147,7 @@ class HUD implements Renderable {
 		renderBottomLeft(gfx);
 		renderBottomRight(gfx);
 		renderBottomMiddle(gfx);
+		gfx.dispose();
 	}
 
 }

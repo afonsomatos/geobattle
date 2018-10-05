@@ -46,6 +46,9 @@ public class Game {
 		}
 	};
 	
+	private Event gettingHitEvent;
+	private boolean gettingHit = false;
+	
 	private boolean paused = false;
 	private boolean gameRunning = false;
 	private int enemiesLeft = 0;
@@ -61,6 +64,7 @@ public class Game {
 		debugRender = new Debug(this);
 
 		outOfBorderEvent = new Event(1000, true, () -> outOfBorderCounter.tick());
+		gettingHitEvent = new Event(500, false, () -> gettingHit = false);
 	}
 	
 	public void start() {
@@ -128,6 +132,15 @@ public class Game {
 
 	public Counter getOutOfBorderCounter() {
 		return outOfBorderCounter;
+	}
+
+	public boolean isPlayerGettingHit() {
+		return gettingHit;
+	}
+	
+	public void playerGotHit() {
+		gettingHit = true;
+		schedule.add(gettingHitEvent);
 	}
 	
 	private void handleOutOfBorders() {

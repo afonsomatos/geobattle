@@ -1,7 +1,11 @@
 package geobattle.util;
 
+import java.util.Random;
+
 public final class Util {
 
+	private static Random rand = new Random();
+	
 	public static double clamp(double min, double val, double max) {
 		if (val < min)
 			return min;
@@ -20,5 +24,13 @@ public final class Util {
 				return true;
 		return false;
 	}
+	
+	public static int randomInteger(int lower, int upper) {
+		return lower + rand.nextInt(upper - lower);
+	}
 
+	public static double randomDouble(double lower, double upper) {
+		return lower + rand.nextDouble() * (upper - lower);
+	}
+	
 }

@@ -82,8 +82,7 @@ public class Weapon extends GameObject {
 		};
 	}
 	
-	
-	private void draw(Graphics2D gfx) {
+	protected void draw(Graphics2D gfx) {
 		// (0, 0) is the firing point
 		int side = 10;
 		
