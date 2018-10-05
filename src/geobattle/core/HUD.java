@@ -13,6 +13,10 @@ class HUD implements Renderable {
 	private Game game;
 	private Compass playerCompass;
 	
+	private final Color labelsColor = Color.WHITE;
+	private final Color gettingHitBackgroundColor = new Color(255, 0, 0, 100);
+	private final Color playerOutOfMapBackgroundColor = new Color(0, 0, 0, 100);
+	
 	public HUD(Game game) {
 		this.game = game;
 		playerCompass = new Compass(game, game.getWidth()/2, game.getHeight()/2 + 30);
@@ -100,7 +104,7 @@ class HUD implements Renderable {
 		String txt;
 		Graphics2D gfx = (Graphics2D) _gfx.create();
 		if (game.isOutOfBorders()) {
-			gfx.setColor(new Color(0, 0, 0, 200));
+			gfx.setColor(playerOutOfMapBackgroundColor);
 			gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
 			
 			gfx.setColor(Color.RED);
@@ -127,7 +131,7 @@ class HUD implements Renderable {
 		if (!game.isPlayerGettingHit()) return;
 		Graphics2D gfx = (Graphics2D) _gfx.create();
 		
-		gfx.setColor(new Color(255, 0, 0, 100));
+		gfx.setColor(gettingHitBackgroundColor);
 		gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
 		
 		gfx.dispose();
@@ -147,7 +151,7 @@ class HUD implements Renderable {
 		
 		Graphics2D gfx = (Graphics2D) _gfx.create();
 		gfx.setFont(new Font("arial", Font.PLAIN, 16));
-		gfx.setColor(Color.WHITE);
+		gfx.setColor(labelsColor);
 
 		renderTopLeft(gfx);
 		renderTopRight(gfx);
