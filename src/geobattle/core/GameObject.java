@@ -210,6 +210,16 @@ public class GameObject implements Renderable {
 		this.game = game;
 	}
 	
+	public double pointAngle(GameObject obj) {
+		
+		double distX = obj.getX() - getX();
+		double fireAngle = Math.acos(distX /  distance(obj));
+		
+		if (getY() > obj.getY())
+			fireAngle *= -1;
+		return fireAngle;
+	}
+	
 	public double distance(GameObject obj) {
 		return Math.sqrt(
 				Math.pow(obj.getX() - getX(), 2) +

@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import geobattle.objects.Compass;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;
 
 class HUD implements Renderable {
 
 	private Game game;
+	private Compass playerCompass;
 	
 	public HUD(Game game) {
 		this.game = game;
+		playerCompass = new Compass(game, game.getWidth()/2, game.getHeight()/2 + 30);
 	}
 	
 	private void renderTopRight(Graphics2D gfx) {
@@ -103,14 +106,20 @@ class HUD implements Renderable {
 			gfx.setColor(Color.RED);
 			gfx.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
 			
+			int middle = game.getHeight()/2;
 			txt = "You're out of borders!";
 			gfx.drawString(txt,
-					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, game.getHeight()/2);
+					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, middle - 40);
 			
 			txt = String.format("Exiting in %d seconds", (int)game.getOutOfBorderCounter().getValue());
 			gfx.drawString(txt,
-					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, game.getHeight()/2 + 20);
+					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, game.getHeight()/2 + 50);
+		
+			playerCompass.setY(middle);
+			playerCompass.setTarget(game.getPlayer());
+			playerCompass.render(gfx);
 		}
+
 		gfx.dispose();
 	}
 	
