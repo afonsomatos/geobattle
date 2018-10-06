@@ -42,4 +42,8 @@ public final class Util {
 		gfx.fillOval(x - radius, y - radius, radius * 2, radius * 2);
 	}
 	
+	public static String repeatString(int n, String string) {
+		return new String(new char[n]).replace("\0", string);
+	}
+	
 }

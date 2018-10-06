@@ -22,7 +22,7 @@ public class Player extends AliveObject {
 	
 	private Special special;
 	private boolean specialReady = true;
-	private Counter specialCounter = new Counter(0.06) {
+	private Counter specialCounter = new Counter(0.01) {
 		@Override
 		public void fire() {
 			specialReady = true;
@@ -42,7 +42,9 @@ public class Player extends AliveObject {
 		setColor(Color.CYAN);
 		setHealth(1000);
 		
-		special = new WaveSpecial(game, Tag.Player);
+		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
+		waveSpecial.setDamage(10000);
+		special = waveSpecial;
 		getCollider().setTag(Tag.Player);
 	}
 	
@@ -50,7 +52,8 @@ public class Player extends AliveObject {
 	public void tick() {
 		super.tick();
 
-		specialCounter.tick();
+		if (!specialReady)
+			specialCounter.tick();
 		
 		Weapon weapon = getWeapon();
 		if (weapon != null)
@@ -58,6 +61,10 @@ public class Player extends AliveObject {
 		
 		if (firing)
 			fire();
+	}
+	
+	public boolean isSpecialReady() {
+		return specialReady;
 	}
 	
 	public void fire() {

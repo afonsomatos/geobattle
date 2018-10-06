@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import geobattle.objects.Compass;
+import geobattle.util.Util;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;
 
@@ -40,6 +41,8 @@ class HUD implements Renderable {
 		gfx.drawString("Score: " + game.getScore(), 10, 40);
 		gfx.drawString("Wave: " + game.getLevelManager().getLevel(), 10, 60);
 		gfx.drawString("Shield: " + (int) player.getShield(), 10, 80);
+		
+		gfx.drawString("Special: [" + (player.isSpecialReady() ? "***" : "___") + "]", 10, 100);
 	}
 	
 	public void renderBottomLeft(Graphics2D gfx) {

@@ -18,7 +18,7 @@ public abstract class Counter {
 	public Counter(double step, double end) {
 		this(0, step, end);
 	}
-	
+
 	public double getValue() {
 		return value;
 	}
