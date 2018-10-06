@@ -50,10 +50,10 @@ class LevelManager {
 		
 		LinkedList<Enemy> newEnemies = new LinkedList<Enemy>();
 		
-		for (int i = 0; i < 20; ++i) {	
-			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
-			/*
+		for (int i = 0; i < 4; ++i) {	
 			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
+			/*
+			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
 			newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));

@@ -34,6 +34,12 @@ public class AliveObject extends GameObject {
 		health = health > hit ? health - hit : 0;
 	}
 	
+	public int giveHealth(int givenHealth) {
+		final int given = Math.min(healthCapacity - health, givenHealth);
+		setHealth(health + given);
+		return givenHealth - given;
+	}
+	
 	public void setHealth(int health) {
 		if (health > healthCapacity)
 			healthCapacity = health;

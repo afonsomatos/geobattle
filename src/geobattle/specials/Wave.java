@@ -15,7 +15,7 @@ import geobattle.util.Util;
 class Wave extends GameObject {
 
 	private int damage = 300;
-	private int thickness = 5;
+	private int thickness = 30;
 	private int radius = 300;
 	private double speed = 0.08;
 	

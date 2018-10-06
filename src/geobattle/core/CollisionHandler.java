@@ -10,8 +10,9 @@ public class CollisionHandler {
 	public CollisionHandler(Game game) {
 		this.game = game;
 		
-		collisionMatrix = new CollisionMatrix();
-		collisionMatrix.addCollision(Tag.Player, Tag.Enemy);
+		collisionMatrix = new CollisionMatrix()
+				.add(Tag.Player, Tag.Enemy)
+				.add(Tag.Player, Tag.Item);
 	}
 	
 	public CollisionMatrix getCollisionMatrix() {
@@ -57,11 +58,12 @@ public class CollisionHandler {
 			matrix = new boolean[len][len];
 		}
 		
-		private void addCollision(Tag tag1, Tag tag2) {
+		private CollisionMatrix add(Tag tag1, Tag tag2) {
 			int p1 = tag1.ordinal();
 			int p2 = tag2.ordinal();
 			matrix[p1][p2] = true;
 			matrix[p2][p1] = true;
+			return this;
 		}
 		
 		public boolean collidesWith(Tag tag1, Tag tag2) {

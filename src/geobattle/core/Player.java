@@ -14,7 +14,8 @@ import geobattle.weapons.Weapon;
 
 public class Player extends AliveObject {
 	
-	private double shield = 300;
+	private int shieldCapacity = 300;
+	private int shield = 300;
 	private boolean firing = false;
 	
 	private Arsenal arsenal = new Arsenal(4);
@@ -110,8 +111,17 @@ public class Player extends AliveObject {
 		this.target = target;
 	}
 
-	public void setShield(double shield) {
-		this.shield = shield;
+	public int giveShield(int givenShield) {
+		final int given = Math.min(shieldCapacity - shield, givenShield);
+		setShield(shield + given);
+		return givenShield - given;
+	}
+	
+	public void setShield(int shield) {
+		if (shield > shieldCapacity)
+			shieldCapacity = shield;
+		
+		this.shield = Math.max(shield, 0);
 	}
 	
 	public int getShield() {

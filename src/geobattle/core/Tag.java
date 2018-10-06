@@ -4,5 +4,6 @@ public enum Tag {
 	Player,
 	Enemy,
 	Neutral,
-	Blackhole
+	Blackhole,
+	Item
 }

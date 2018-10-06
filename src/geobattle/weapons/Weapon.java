@@ -24,6 +24,7 @@ public class Weapon extends GameObject {
 	private int ammoLoad = 0;
 	private int ammoCapacity = INFINITE_AMMO;
 	private int ammoSaved = INFINITE_AMMO;
+	private int ammoSavedCapacity = 0;
 	
 	private int projectiles = 1;
 	private int damage = 10;
@@ -128,8 +129,17 @@ public class Weapon extends GameObject {
 		this.fireAngle = fireAngle;
 	}
 
+	public int fillAmmo(int givenAmmo) {
+		final int given = Math.min(ammoSavedCapacity - ammoSaved, givenAmmo);
+		setAmmoSaved(ammoSaved + given);
+		return givenAmmo - given;
+	}
+	
 	public void setAmmoSaved(int ammoSaved) {
-		this.ammoSaved = ammoSaved;
+		if (ammoSaved > ammoSavedCapacity)
+			ammoSavedCapacity = ammoSaved;
+		
+		this.ammoSaved = Math.max(ammoSaved, 0);
 	}
 	
 	public void setProjectileSize(int projectileSize) {
