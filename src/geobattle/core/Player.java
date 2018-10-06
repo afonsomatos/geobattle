@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 
 import geobattle.specials.Special;
 import geobattle.specials.WaveSpecial;
+import geobattle.util.Counter;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;
 
@@ -20,6 +21,13 @@ public class Player extends AliveObject {
 	private GameObject target = null;
 	
 	private Special special;
+	private boolean specialReady = true;
+	private Counter specialCounter = new Counter(0.06) {
+		@Override
+		public void fire() {
+			specialReady = true;
+		}
+	};
 	
 	public Player(Game game) {
 		this(game, 0, 0);
@@ -34,7 +42,7 @@ public class Player extends AliveObject {
 		setColor(Color.CYAN);
 		setHealth(1000);
 		
-		special = new WaveSpecial(game);
+		special = new WaveSpecial(game, Tag.Player);
 		getCollider().setTag(Tag.Player);
 	}
 	
@@ -42,6 +50,8 @@ public class Player extends AliveObject {
 	public void tick() {
 		super.tick();
 
+		specialCounter.tick();
+		
 		Weapon weapon = getWeapon();
 		if (weapon != null)
 			weapon.setLock(target);
@@ -71,8 +81,10 @@ public class Player extends AliveObject {
 	}
 	
 	public void sendSpecial() {
+		if (!specialReady) return;
 		special.setPos(new Point((int)getX(), (int)getY()));
 		special.send();
+		specialReady = false;
 	}
 	
 	public Arsenal getArsenal() {

@@ -7,9 +7,9 @@ import geobattle.core.Tag;
 
 public abstract class Special {
 	
-	protected Game game;
-	protected Point pos;
-	protected Tag tag = Tag.Neutral;
+	private Game game;
+	private Point pos;
+	private Tag tag = Tag.Neutral;
 	
 	public Special(Game game) {
 		this(game, null);
@@ -18,6 +18,14 @@ public abstract class Special {
 	public Special(Game game, Point pos) {
 		this.pos = pos;
 		this.game = game;
+	}
+	
+	public Point getPos() {
+		return pos;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 	
 	public void setPos(Point pos) {

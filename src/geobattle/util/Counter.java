@@ -27,6 +27,10 @@ public abstract class Counter {
 		value = start;
 	}
 	
+	public void setEnd(double end) {
+		this.end = end;
+	}
+	
 	public void setStep(double step) {
 		this.step = step;
 	}

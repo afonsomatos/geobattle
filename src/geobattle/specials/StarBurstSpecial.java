@@ -1,6 +1,7 @@
 package geobattle.specials;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.Random;
 
 import geobattle.core.Game;
@@ -61,7 +62,8 @@ public class StarBurstSpecial extends Special {
 	public void send() {
 		
 		Tag projectilesTag = getTag();
-
+		Game game = getGame();
+		Point pos = getPos();
 		double step = Math.PI * 2 / projectiles;
 		double delta = rand.nextDouble() * (Math.PI * 2);
 		
