@@ -7,10 +7,13 @@ import java.awt.Graphics2D;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Player;
-import geobattle.util.Log;
+import geobattle.sprites.Sprite;
+import geobattle.sprites.SpriteMap;
 
 public class ShieldBonus extends Item {
 
+	private static Sprite sprite = SpriteMap.SHIELD;
+	
 	private int quantity;
 	
 	public ShieldBonus(Game game, double x, double y, int quantity) {

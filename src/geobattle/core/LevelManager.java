@@ -4,11 +4,8 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import geobattle.core.Schedule.Event;
-import geobattle.enemies.Bubble;
-import geobattle.enemies.Creeper;
 import geobattle.enemies.Enemy;
 import geobattle.enemies.Soldier;
-import geobattle.enemies.Tower;
 
 class LevelManager {
 
