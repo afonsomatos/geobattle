@@ -6,8 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import geobattle.colliders.Box;
+import geobattle.colliders.Collider;
 import geobattle.specials.Special;
 import geobattle.specials.WaveSpecial;
+import geobattle.sprites.SolidSquare;
+import geobattle.sprites.Sprite;
+import geobattle.sprites.SpriteMap;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.util.Tank;
@@ -48,7 +53,12 @@ public class Player extends AliveObject {
 		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
-		getCollider().setTag(Tag.Player);
+		
+		getSpriteRenderer().setSprite(SpriteMap.PLAYER);
+		
+		Collider col = getCollider();
+		col.setTag(Tag.Player);
+		col.surround(Box.SPRITE);
 	}
 	
 	@Override

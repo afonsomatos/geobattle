@@ -4,7 +4,7 @@ import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 
-public abstract class Projectile extends GameObject {
+public class Projectile extends GameObject {
 
 	private int damage = 10;
 	

@@ -3,6 +3,7 @@ package geobattle.weapons;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import geobattle.colliders.Box;
 import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
@@ -47,10 +48,8 @@ public class Weapon extends GameObject {
 		setWidth(15);
 		setHeight(15);
 		fill();
-		setCollider(new Collider(this));
 		
 		setupCounters();
-		
 		game.spawnGameObject(this);
 	}
 	
@@ -262,13 +261,15 @@ public class Weapon extends GameObject {
 
 		for (int i = 0; i < projectiles; ++i) {
 			
-			Projectile p = new Bullet(game, (int) this.getX(), (int) this.getY());
+			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY());
 			p.getCollider().setTag(getTag());
 			p.setSpeed(projectileSpeed);
 			p.setColor(projectileColor);
 			p.setDamage(damage);
 			p.setWidth(projectileSize);
 			p.setHeight(projectileSize);
+			
+			p.getCollider().surround(Box.OBJECT);
 			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);
 			final double delta = fireRecoil + (projectiles == 1 ? 0 : step * i - fireAmplitude / 2);

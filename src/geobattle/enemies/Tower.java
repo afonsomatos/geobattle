@@ -2,10 +2,12 @@ package geobattle.enemies;
 
 import java.awt.Color;
 
+import geobattle.colliders.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extensions.ShootExtension;
+import geobattle.sprites.SpriteMap;
 import geobattle.weapons.Weapon;
 
 public class Tower extends Enemy {
@@ -19,10 +21,11 @@ public class Tower extends Enemy {
 		setWidth(40);
 		setHeight(40);
 		setSpeed(0);
-		setColor(Color.PINK);
 
 		weapon = buildWeapon(target);
 		addBehavior(new ShootExtension(target, weapon));
+		getSpriteRenderer().setSprite(SpriteMap.TOWER);
+		getCollider().surround(Box.SPRITE);
 	}
 
 	public Weapon buildWeapon(GameObject target) {

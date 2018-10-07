@@ -17,7 +17,7 @@ public class HealthItem extends UnitsItem {
 		col.setOffsetX(-25);
 		col.setOffsetY(-25);
 		
-		getSpriteRenderer().add(SpriteMap.HEALTH);
+		getSpriteRenderer().setSprite(SpriteMap.HEALTH);
 	}
 
 	@Override

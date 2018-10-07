@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.Random;
 
+import geobattle.colliders.Box;
 import geobattle.core.Game;
 import geobattle.core.Tag;
-import geobattle.weapons.Bullet;
 import geobattle.weapons.Projectile;
 
 public class StarBurstSpecial extends Special {
@@ -68,13 +68,16 @@ public class StarBurstSpecial extends Special {
 		double delta = rand.nextDouble() * (Math.PI * 2);
 		
 		for (int i = 0; i < projectiles; ++i) {
-			Projectile p = new Bullet(game,
+			Projectile p = new Projectile(game,
 					(int) (pos.getX() + Math.cos(delta + step * i) * radius),
 					(int) (pos.getY() + Math.sin(delta + step * i) * radius));
 			
+			p.setWidth(8);
+			p.setHeight(8);
 			p.getCollider().setTag(projectilesTag);
 			p.setDamage(damage);
 			p.setSpeed(speed);
+			p.getCollider().surround(Box.OBJECT);
 			
 			switch (style) {
 				case RAINBOW:

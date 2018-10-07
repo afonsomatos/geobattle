@@ -1,5 +1,6 @@
 package geobattle.enemies;
 
+import geobattle.colliders.Collider;
 import geobattle.core.AliveObject;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
@@ -14,6 +15,7 @@ public class Enemy extends AliveObject {
 		super(game, x, y);
 		this.target = target;
 		setTag(Tag.Enemy);
+		
 		getCollider().setTag(Tag.Enemy);
 	}
 	

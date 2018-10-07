@@ -4,12 +4,12 @@ import java.awt.Rectangle;
 
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.sprites.Sprite;
 
 public class Collider {
 
 	private Tag tag;
 	private GameObject gameObject = null;
-	private boolean hey = false;
 	
 	private int width;
 	private int height;
@@ -17,16 +17,16 @@ public class Collider {
 	private int offsetX = 0;
 	private int offsetY = 0;
 	
+	public Collider(GameObject gameObject, Tag tag) {
+		this(gameObject, gameObject.getWidth(), gameObject.getHeight(), tag);
+	}
+
 	public Collider(GameObject gameObject) {
 		this(gameObject, Tag.Neutral);
 	}
-
-	public Collider(GameObject gameObject, Tag tag) {
-		this.gameObject = gameObject;
-		this.tag = tag;
-	}
 	
-	public Collider(int width, int height, Tag tag) {
+	public Collider(GameObject gameObject, int width, int height, Tag tag) {
+		this.gameObject = gameObject;
 		this.width = width;
 		this.height = height;
 		this.tag = tag;
@@ -34,6 +34,21 @@ public class Collider {
 	
 	public void handleCollision(Collider other) {
 		return;
+	}
+	
+	public void surround(Box box) {
+		if (box == Box.SPRITE) {
+			Sprite sprite = gameObject.getSpriteRenderer().getSprite();
+			width = sprite.getWidth();
+			height = sprite.getHeight();
+			offsetX = -sprite.getCenterX();
+			offsetY = -sprite.getCenterY();
+		} else if (box == Box.OBJECT) {
+			width = gameObject.getWidth();
+			height = gameObject.getHeight();
+			offsetX = -width/2;
+			offsetY = -height/2;
+		}
 	}
 	
 	public GameObject getGameObject() {
@@ -66,7 +81,6 @@ public class Collider {
 	
 	public void setWidth(int width) {
 		this.width = width;
-		hey = true;
 	}
 	
 	public void setHeight(int height) {
@@ -74,24 +88,11 @@ public class Collider {
 	}
 	
 	public Rectangle getBounds() {
-		if (!hey) {
-			int width = gameObject.getWidth();
-			int height = gameObject.getHeight();
-			return new Rectangle(
-					(int) (gameObject.getX()) - width / 2,
-					(int) (gameObject.getY()) - height / 2,
-					width, height);
-		} else {
-			
-			
-			return new Rectangle(
-					(int) gameObject.getX() + offsetX,
-					(int) gameObject.getY() + offsetY,
-					width, height
-					);
-			
-			
-		}
+		return new Rectangle(
+				(int) gameObject.getX() + offsetX,
+				(int) gameObject.getY() + offsetY,
+				width, height
+				);
 	}
 	
 }

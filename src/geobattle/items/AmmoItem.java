@@ -18,7 +18,7 @@ public class AmmoItem extends UnitsItem {
 		col.setHeight(25);
 		col.setOffsetX(-13);
 		col.setOffsetY(-13);
-		getSpriteRenderer().add(SpriteMap.AMMO);
+		getSpriteRenderer().setSprite(SpriteMap.AMMO);
 	}
 
 	@Override

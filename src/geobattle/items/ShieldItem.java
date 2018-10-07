@@ -18,7 +18,7 @@ public class ShieldItem extends UnitsItem {
 		col.setOffsetX(-25);
 		col.setOffsetY(-25);
 		
-		getSpriteRenderer().add(SpriteMap.SHIELD);
+		getSpriteRenderer().setSprite(SpriteMap.SHIELD);
 	}
 
 	@Override

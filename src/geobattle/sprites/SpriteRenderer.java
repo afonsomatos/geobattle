@@ -9,7 +9,7 @@ import geobattle.core.Renderer;
 
 public class SpriteRenderer implements Renderer {
 
-	private LinkedList<Sprite> sprites = new LinkedList<Sprite>();
+	private Sprite sprite;
 	private GameObject gameObject;
 	
 	public SpriteRenderer(GameObject gameObject) {
@@ -18,23 +18,25 @@ public class SpriteRenderer implements Renderer {
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
+		if (sprite == null)
+			return;
 		
+		Graphics2D gfx = (Graphics2D) superGfx.create();
 		int x = (int) gameObject.getX();
 		int y = (int) gameObject.getY();
 		
-		for (Sprite s : sprites) {
-			// Is translation not accumulative?
-			gfx.translate(x - s.getCenterX(), y - s.getCenterY());
-			BufferedImage image = s.getBufferedImage();
-			gfx.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
-		}
-		
+		// Is translation not accumulative?
+		gfx.translate(x - sprite.getCenterX(), y - sprite.getCenterY());
+		gfx.drawImage(sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), null);
 		gfx.dispose();
 	}
 	
-	public void add(Sprite s) {
-		sprites.add(s);
+	public Sprite getSprite() {
+		return sprite;
+	}
+	
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
 	}
 
 }

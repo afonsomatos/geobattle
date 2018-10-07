@@ -5,3 +5,6 @@
 /SpriteMap$Type.class
 /SpriteMap$Label.class
 /SpriteRenderer.class
+/SolidSprite.class
+/SolidSquare.class
+/SolidCross.class

@@ -14,8 +14,9 @@ class Debug implements Renderer {
 		this.game = game;
 	}
 	
-	@Override
-	public void render(Graphics2D gfx) {
+	public void renderPositionFx(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		
 		// Position
 		for(GameObject g : game.getGameObjects()) {
 			if (g.isHidden()) continue;
@@ -35,14 +36,27 @@ class Debug implements Renderer {
 					);
 		}
 		
+		gfx.dispose();
+	}
+	
+	public void renderColliderFx(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		
 		// Draw collision boxes
 		for (GameObject g : game.getGameObjects()) {
 			Collider col = g.getCollider();
 			if (col == null) continue;
-			gfx.setColor(Color.GREEN);
+			gfx.setColor(new Color(255, 0, 255));
 			gfx.draw(col.getBounds());
 		}
 		
+		gfx.dispose();
+	}
+	
+	@Override
+	public void render(Graphics2D gfx) {
+//		renderPositionFx(gfx);
+		renderColliderFx(gfx);
 	}
 
 }

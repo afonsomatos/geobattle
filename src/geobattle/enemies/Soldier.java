@@ -2,11 +2,13 @@ package geobattle.enemies;
 
 import java.awt.Color;
 
+import geobattle.colliders.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extensions.FollowExtension;
 import geobattle.extensions.ShootExtension;
+import geobattle.sprites.SpriteMap;
 import geobattle.weapons.Weapon;
 
 public class Soldier extends Enemy {
@@ -17,15 +19,14 @@ public class Soldier extends Enemy {
 	public Soldier(Game game, int x, int y, GameObject target) {
 		super(game, x, y, target);
 		
-		setWidth(25);
-		setHeight(25);
 		setSpeed(1.0);
 		setHealth(100);
-		setColor(Color.RED);
 		
 		weapon = buildWeapon(target);
 		addBehavior(new ShootExtension(target, weapon));
 		addBehavior(new FollowExtension(target, 300));
+		getSpriteRenderer().setSprite(SpriteMap.SOLDIER);
+		getCollider().surround(Box.SPRITE);
 	}
 	
 	public Weapon buildWeapon(GameObject target) {

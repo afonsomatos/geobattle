@@ -85,7 +85,8 @@ public class GameObject implements Renderer {
 			}
 		}
 		
-		spriteRenderer.render(superGfx);
+		if (spriteRenderer != null)
+			spriteRenderer.render(superGfx);
 	}
 	
 	public void tick() {
