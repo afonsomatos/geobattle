@@ -5,13 +5,17 @@ public class Tank {
 	private int minQuantity = 0;
 	private int quantity = 0;
 	private int maxQuantity = 0;
-	
+
 	public Tank() {
 		
 	}
 	
 	public Tank(int quantity) {
 		this.maxQuantity = this.quantity = quantity;
+	}
+	
+	public void fill() {
+		quantity = maxQuantity;
 	}
 	
 	public int fill(int quant) {
@@ -33,16 +37,27 @@ public class Tank {
 		this.quantity = Math.max(charge, 0);	
 	}
 	
+	public int free() {
+		return maxQuantity - quantity;
+	}
+	
 	public int get() {
 		return quantity;
 	}
 	
-	public int getMax() {
+	public int max() {
 		return maxQuantity;
 	}
 	
-	public int getMin() {
+	public int min() {
 		return minQuantity;
 	}
 	
+	public boolean empty() {
+		return quantity == 0;
+	}
+	
+	public boolean full() {
+		return quantity >= maxQuantity;
+	}
 }

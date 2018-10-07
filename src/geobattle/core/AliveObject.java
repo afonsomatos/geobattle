@@ -61,7 +61,7 @@ public class AliveObject extends GameObject {
 		int y = (int) (getY()) - getHeight() / 2 - height * 2;
 		
 		final int health = healthTank.get();
-		final int healthCapacity = healthTank.getMax();
+		final int healthCapacity = healthTank.max();
 		gfx.setColor(new Color(200, (int) 255.0 * health / healthCapacity, 0));
 		gfx.fillRect(x, y, (int) (width * (double) health / healthCapacity), height);
 		

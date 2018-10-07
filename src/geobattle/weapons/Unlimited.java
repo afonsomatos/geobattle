@@ -23,7 +23,7 @@ public class Unlimited extends Weapon {
 		setProjectiles(1);
 		setFireSpeed(Weapon.MAX_SPEED);
 		setReloadSpeed(Weapon.MAX_SPEED);
-		setAmmoCapacity(Weapon.INFINITE_AMMO);
+		setAmmoLoad(Weapon.INFINITE_AMMO);
 		setAmmoSaved(Weapon.INFINITE_AMMO);
 		setRecoil(Math.PI / 72);
 		

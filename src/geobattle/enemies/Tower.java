@@ -31,7 +31,7 @@ public class Tower extends Enemy {
 		weapon.setDamage(80);
 		weapon.setReloadSpeed(0.0025);
 		weapon.setFireSpeed(0.005);
-		weapon.setAmmoCapacity(50);
+		weapon.setAmmoLoad(50);
 		weapon.setColor(Color.MAGENTA);
 		weapon.setProjectileColor(Color.MAGENTA);
 		weapon.setProjectileSpeed(10.0);

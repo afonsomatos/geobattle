@@ -8,6 +8,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.util.Counter;
+import geobattle.util.Tank;
 import geobattle.util.Util;
 
 public class Weapon extends GameObject {
@@ -21,10 +22,8 @@ public class Weapon extends GameObject {
 	private Counter reloadCounter;
 	private Counter fireCounter;
 
-	private int ammoLoad = 0;
-	private int ammoCapacity = INFINITE_AMMO;
-	private int ammoSaved = INFINITE_AMMO;
-	private int ammoSavedCapacity = 0;
+	private Tank loadTank = new Tank();
+	private Tank ammoTank = new Tank();
 	
 	private int projectiles = 1;
 	private int damage = 10;
@@ -61,14 +60,12 @@ public class Weapon extends GameObject {
 			@Override
 			public void fire() {
 				reloading = false;
+				int newLoad = loadTank.free();
 				
-				int addedLoad = ammoCapacity - ammoLoad;
-				if (ammoSaved != INFINITE_AMMO) {
-					addedLoad = Math.min(ammoSaved, addedLoad);
-					ammoSaved -= addedLoad;
-				}
+				if (ammoTank.get() != INFINITE_AMMO)
+					newLoad -= ammoTank.take(newLoad);
 				
-				ammoLoad += addedLoad;	
+				loadTank.fill(newLoad);
 			}
 		};
 		
@@ -106,7 +103,7 @@ public class Weapon extends GameObject {
 	}
 	
 	public void fill() {
-		ammoLoad = ammoCapacity;
+		loadTank.fill();
 	}
 	
 	public GameObject getLock() {
@@ -118,7 +115,7 @@ public class Weapon extends GameObject {
 	}
 
 	public int getAmmoSaved() {
-		return ammoSaved;
+		return ammoTank.get();
 	}
 	
 	public double getFireAngle() {
@@ -129,17 +126,12 @@ public class Weapon extends GameObject {
 		this.fireAngle = fireAngle;
 	}
 
-	public int fillAmmo(int givenAmmo) {
-		final int given = Math.min(ammoSavedCapacity - ammoSaved, givenAmmo);
-		setAmmoSaved(ammoSaved + given);
-		return givenAmmo - given;
+	public int fillAmmo(int ammo) {
+		return ammoTank.fill(ammo);
 	}
 	
-	public void setAmmoSaved(int ammoSaved) {
-		if (ammoSaved > ammoSavedCapacity)
-			ammoSavedCapacity = ammoSaved;
-		
-		this.ammoSaved = Math.max(ammoSaved, 0);
+	public void setAmmoSaved(int ammo) {
+		ammoTank.set(ammo);
 	}
 	
 	public void setProjectileSize(int projectileSize) {
@@ -147,7 +139,7 @@ public class Weapon extends GameObject {
 	}
 
 	public void reload() {
-		if (ammoLoad != INFINITE_AMMO && ammoSaved != 0 && ammoLoad < ammoCapacity)
+		if (loadTank.get() != INFINITE_AMMO && ammoTank.get() != 0 && !loadTank.full())
 			reloading = true;
 	}
 	
@@ -156,30 +148,21 @@ public class Weapon extends GameObject {
 	}
 
 	public int getAmmoCapacity() {
-		return ammoCapacity;
+		return loadTank.max();
 	}
 
 	public int getAmmoLoad() {
-		return ammoLoad;
+		return loadTank.get();
 	}
 
 	public void setAmmoLoad(int ammoLoad) {
-		this.ammoLoad = ammoLoad;
-	}
-
-	public void setAmmoCapacity(int ammoCapacity) {
-		this.ammoCapacity = ammoCapacity;
+		loadTank.set(ammoLoad);
 	}
 	
 	public void setProjectiles(int projectiles) {
 		this.projectiles = projectiles;
 	}
 	
-	public void tickFiring() {
-		if (ammoLoad <= 0 && ammoLoad != INFINITE_AMMO)
-			return;
-	}
-
 	public void tickReloading() {
 		if (!reloading) return;
 		reloadCounter.tick();
@@ -224,7 +207,6 @@ public class Weapon extends GameObject {
 		
 		updatePosition();
 		tickReloading();
-		tickFiring();
 	}
 
 	public void setLock(GameObject lock) {
@@ -260,8 +242,13 @@ public class Weapon extends GameObject {
 	}
 	
 	public boolean canFire() {
-		return !reloading && !pausing &&
-				(ammoLoad > 0 || ammoSaved > 0 || ammoLoad == INFINITE_AMMO);
+		if (reloading || pausing)
+			return false;
+		
+		if (ammoTank.empty() && loadTank.empty())
+			return false;
+		
+		return true;
 	}
 	
 	public void fire(GameObject obj) {
@@ -292,8 +279,8 @@ public class Weapon extends GameObject {
 		}
 
 		pausing = true;
-		if (ammoLoad != INFINITE_AMMO)
-			ammoLoad--;
+		if (loadTank.get() != INFINITE_AMMO)
+			loadTank.take(1);
 	}
 	
 }

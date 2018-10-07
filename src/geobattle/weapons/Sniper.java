@@ -17,7 +17,7 @@ public class Sniper extends Weapon {
 		setRadius(70);
 		setReloadSpeed(0.007);
 		setAmmoSaved(32);
-		setAmmoCapacity(7);
+		setAmmoLoad(7);
 		setColor(Color.GREEN);
 		setProjectileColor(Color.RED);
 		setProjectileSpeed(30.0f);

@@ -33,7 +33,7 @@ public class Soldier extends Enemy {
 		
 		weapon.setDamage(20);
 		weapon.setColor(Color.RED);
-		weapon.setAmmoCapacity(30);
+		weapon.setAmmoLoad(30);
 		weapon.setReloadSpeed(0.005);
 		weapon.setFireSpeed(0.01);
 		weapon.setProjectileColor(Color.GRAY);

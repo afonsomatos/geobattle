@@ -18,7 +18,7 @@ public class Rifle extends Weapon {
 		setFireSpeed(0.1);
 		setReloadSpeed(0.01);
 		setRecoil(0.1);
-		setAmmoCapacity(30);
+		setAmmoLoad(30);
 		setAmmoSaved(90);
 		
 		setColor(new Color(189, 45, 200));
