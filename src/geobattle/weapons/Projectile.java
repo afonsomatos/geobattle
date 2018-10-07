@@ -1,6 +1,6 @@
 package geobattle.weapons;
 
-import geobattle.core.Collider;
+import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 

@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import geobattle.colliders.Collider;
 import geobattle.util.Tank;
 import geobattle.weapons.Projectile;
 

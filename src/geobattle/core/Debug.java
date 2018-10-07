@@ -4,6 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import geobattle.colliders.Collider;
+
 class Debug implements Renderer {
 
 	private Game game;
@@ -14,6 +16,7 @@ class Debug implements Renderer {
 	
 	@Override
 	public void render(Graphics2D gfx) {
+		// Position
 		for(GameObject g : game.getGameObjects()) {
 			if (g.isHidden()) continue;
 			gfx.setColor(Color.RED);
@@ -31,6 +34,15 @@ class Debug implements Renderer {
 					(int) g.getY() + 50
 					);
 		}
+		
+		// Draw collision boxes
+		for (GameObject g : game.getGameObjects()) {
+			Collider col = g.getCollider();
+			if (col == null) continue;
+			gfx.setColor(Color.GREEN);
+			gfx.draw(col.getBounds());
+		}
+		
 	}
 
 }

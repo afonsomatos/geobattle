@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+import geobattle.colliders.Collider;
 import geobattle.extensions.Extension;
 import geobattle.sprites.Sprite;
 import geobattle.sprites.SpriteRenderer;

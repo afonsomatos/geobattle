@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.core.Renderer;
+import geobattle.util.Log;
 
 public final class SpriteMap {
 	
@@ -19,6 +20,8 @@ public final class SpriteMap {
 	
 	// Create all sprites programatically
 	static {
+		
+		Log.i("Loading sprites");
 		
 		draw(SHIELD, (Graphics2D gfx) -> {
 			gfx.setStroke(new BasicStroke(10));

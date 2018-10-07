@@ -1,5 +1,6 @@
 package geobattle.items;
 
+import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Player;
@@ -14,9 +15,12 @@ public class AmmoBonus extends Item {
 	public AmmoBonus(Game game, double x, double y, int quantity) {
 		super(game, x, y);
 		this.quantity = quantity;
-		setWidth(20);
-		setHeight(20);
 		
+		Collider col = getCollider();
+		col.setWidth(25);
+		col.setHeight(25);
+		col.setOffsetX(-13);
+		col.setOffsetY(-13);
 		getSpriteRenderer().add(SpriteMap.AMMO);
 	}
 
@@ -27,7 +31,6 @@ public class AmmoBonus extends Item {
 			Weapon weapon = p.getWeapon();
 			quantity = weapon.fillAmmo(quantity);
 		}
-		Log.i(quantity + "bullets left");
 		if (quantity == 0)
 			kill();
 	}

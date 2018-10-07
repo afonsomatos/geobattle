@@ -2,6 +2,8 @@ package geobattle.core;
 
 import java.util.LinkedList;
 
+import geobattle.colliders.Collider;
+
 public class CollisionHandler {
 
 	private Game game;

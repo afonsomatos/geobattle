@@ -3,7 +3,7 @@ package geobattle.enemies;
 import java.awt.Color;
 import java.awt.Point;
 
-import geobattle.core.Collider;
+import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
