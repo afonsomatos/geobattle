@@ -6,31 +6,28 @@ import geobattle.core.GameObject;
 import geobattle.core.Player;
 import geobattle.sprites.SpriteMap;
 
-public class HealthBonus extends Item {
+public class ShieldItem extends UnitsItem {
 
-	private int quantity;
 	
-	public HealthBonus(Game game, double x, double y, int quantity) {
-		super(game, x, y);
-		this.quantity = quantity;
-
+	public ShieldItem(Game game, double x, double y, int units) {
+		super(game, x, y, units);
+		
 		Collider col = getCollider();
 		col.setWidth(50);
 		col.setHeight(50);
 		col.setOffsetX(-25);
 		col.setOffsetY(-25);
 		
-		getSpriteRenderer().add(SpriteMap.HEALTH);
+		getSpriteRenderer().add(SpriteMap.SHIELD);
 	}
 
 	@Override
 	public void collected(GameObject collector) {
 		if (collector instanceof Player) {
 			Player p = (Player) collector;
-			quantity = p.giveHealth(quantity);
+			setUnits(p.giveShield(getUnits()));
 		}
-		if (quantity == 0)
-			kill();
+		super.collected(collector);
 	}
 
 }

@@ -4,3 +4,10 @@
 /ShieldBons.class
 /ShieldBonus.class
 /AmmoBonus.class
+/CollectableItem.class
+/AmmoItem.class
+/HealthItem.class
+/ShieldItem.class
+/LimitedItem.class
+/QuantityItem.class
+/UnitsItem.class

@@ -8,13 +8,10 @@ import geobattle.sprites.SpriteMap;
 import geobattle.util.Log;
 import geobattle.weapons.Weapon;
 
-public class AmmoBonus extends Item {
+public class AmmoItem extends UnitsItem {
 
-	private int quantity;
-	
-	public AmmoBonus(Game game, double x, double y, int quantity) {
-		super(game, x, y);
-		this.quantity = quantity;
+	public AmmoItem(Game game, double x, double y, int units) {
+		super(game, x, y, units);
 		
 		Collider col = getCollider();
 		col.setWidth(25);
@@ -29,10 +26,9 @@ public class AmmoBonus extends Item {
 		if (collector instanceof Player) {
 			Player p = (Player) collector;
 			Weapon weapon = p.getWeapon();
-			quantity = weapon.fillAmmo(quantity);
+			setUnits(weapon.fillAmmo(getUnits()));
 		}
-		if (quantity == 0)
-			kill();
+		super.collected(collector);
 	}
 
 }

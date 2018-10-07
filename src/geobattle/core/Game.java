@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import geobattle.core.Schedule.Event;
 import geobattle.enemies.Enemy;
-import geobattle.items.AmmoBonus;
-import geobattle.items.HealthBonus;
-import geobattle.items.ShieldBonus;
+import geobattle.items.AmmoItem;
+import geobattle.items.HealthItem;
+import geobattle.items.ShieldItem;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.weapons.Arsenal;
@@ -94,9 +94,9 @@ public class Game {
 		spawnGameObject(player);
 		this.player = player;
 
-		spawnGameObject(new HealthBonus(this, 400, 400, 300));
-		spawnGameObject(new ShieldBonus(this, 200, 200, 200));
-		spawnGameObject(new AmmoBonus(this, 100, 400, 100));
+		spawnGameObject(new HealthItem(this, 400, 400, 300));
+		spawnGameObject(new ShieldItem(this, 200, 200, 200));
+		spawnGameObject(new AmmoItem(this, 100, 400, 100));
 		
 		window.setVisible(true);
 		gameLoop();	

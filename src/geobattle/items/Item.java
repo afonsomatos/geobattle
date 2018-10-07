@@ -4,6 +4,7 @@ import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.util.Tank;
 
 public abstract class Item extends GameObject {
 
@@ -20,4 +21,5 @@ public abstract class Item extends GameObject {
 	}
 	
 	public abstract void collected(GameObject collector);
+	
 }
