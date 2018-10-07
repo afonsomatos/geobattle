@@ -2,24 +2,24 @@ package geobattle.util;
 
 public final class Log {
 	
-	public static void v(String message) {
+	public static void v(Object message) {
 		log("VERBOSE", message);
 	}
 	
-	public static void i(String message) {
+	public static void i(Object message) {
 		log("INFO", message);
 	}
 	
-	public static void e(String message) {
+	public static void e(Object message) {
 		log("ERROR", message);
 	}
 	
-	public static void w(String message) {
+	public static void w(Object message) {
 		log("WARNING", message);
 	}
 	
-	private static void log(String tag, String message) {
-		System.out.println("[" + tag + "] " + message);
+	private static void log(String tag, Object message) {
+		System.out.println("[" + tag + "] " + message.toString());
 	}
 	
 	private Log() {

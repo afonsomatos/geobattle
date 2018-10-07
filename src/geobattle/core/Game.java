@@ -25,7 +25,7 @@ import geobattle.weapons.Unlimited;
 
 public class Game {
 
-	private boolean RENDER_DEBUG = false;
+	private boolean RENDER_DEBUG = true;
 	private Renderer debugRender;
 
 	private Window window;

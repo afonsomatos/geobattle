@@ -1,7 +1,6 @@
 package geobattle.sprites;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -21,15 +20,14 @@ public class SpriteRenderer implements Renderer {
 	public void render(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		
-		final int x = (int) gameObject.getX();
-		final int y = (int) gameObject.getY();
+		int x = (int) gameObject.getX();
+		int y = (int) gameObject.getY();
 		
 		for (Sprite s : sprites) {
-			Point center = s.getCenter();
-			BufferedImage image = s.getImage();
-			gfx.translate(x - center.x, y - center.y);
+			// Is translation not accumulative?
+			gfx.translate(x - s.getCenterX(), y - s.getCenterY());
+			BufferedImage image = s.getBufferedImage();
 			gfx.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
-			gfx.dispose();
 		}
 		
 		gfx.dispose();

@@ -1,33 +1,38 @@
 package geobattle.sprites;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Sprite {
 	
-	private BufferedImage image;
-	private Point center;
+	private BufferedImage bufferedImage;
 	
-	public Sprite(int width, int height, Point center) {
-		this.center = center;
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	private int centerX = 0;
+	private int centerY = 0;
+	
+	public Sprite(int width, int height, int centerX, int centerY) {
+		this.centerX = centerX;
+		this.centerY = centerY;
+		bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 	}
 	
-	public Sprite(int width, int height) {
-		this(width, height, new Point(0, 0));
+	public BufferedImage getBufferedImage() {
+		return bufferedImage;
+	}
+	
+	public void setCenterX(int centerX) {
+		this.centerX = centerX;
 	}
 
-	public BufferedImage getImage() {
-		return image;
+	public void setCenterY(int centerY) {
+		this.centerY = centerY;
+	}
+
+	public int getCenterX() {
+		return centerX;
 	}
 	
-	public void setCenter(Point center) {
-		this.center = center;
+	public int getCenterY() {
+		return centerY;
 	}
-	
-	public Point getCenter() {
-		return center;
-	}
-	
 	
 }
