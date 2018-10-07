@@ -35,8 +35,8 @@ public class Game {
 	private LevelManager levelManager;
 	private CollisionHandler collisionHandler;
 	
-	private int width = 700;
-	private int height = 500;
+	private int width = 800;
+	private int height = 600;
 	private int fps = 60;
 	
 	private Event outOfBorderEvent;
