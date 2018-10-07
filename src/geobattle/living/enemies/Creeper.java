@@ -1,4 +1,4 @@
-package geobattle.enemies;
+package geobattle.living.enemies;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -7,9 +7,9 @@ import geobattle.colliders.Box;
 import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Player;
 import geobattle.core.Tag;
 import geobattle.extensions.FollowExtension;
+import geobattle.living.Player;
 import geobattle.specials.StarBurstSpecial;
 import geobattle.sprites.SpriteMap;
 
@@ -26,19 +26,16 @@ public class Creeper extends Enemy {
 		
 		addBehavior(new FollowExtension(target));
 		
-		setWidth(15);
-		setHeight(15);
 		setSpeed(1);
 		setHealth(400);
-		
-		setupCollider();
+
 		getSpriteRenderer().setSprite(SpriteMap.CREEPER);
-		getCollider().surround(Box.SPRITE);
+		setupCollider();
 	}
 	
 	private void setupCollider() {
 		Collider superCol = this.getCollider();
-		setCollider(new Collider(this, Tag.Enemy) {
+		setCollider(new Collider(this, Tag.Enemy, Box.SPRITE) {
 			@Override
 			public void handleCollision(Collider other) {
 				superCol.handleCollision(other);

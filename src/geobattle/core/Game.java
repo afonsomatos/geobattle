@@ -11,10 +11,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import geobattle.core.Schedule.Event;
-import geobattle.enemies.Enemy;
 import geobattle.items.AmmoItem;
 import geobattle.items.HealthItem;
 import geobattle.items.ShieldItem;
+import geobattle.living.Player;
+import geobattle.living.enemies.Enemy;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.weapons.Arsenal;

@@ -3,6 +3,7 @@ package geobattle.core;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import geobattle.living.Player;
 import geobattle.util.Util;
 import geobattle.weapons.Arsenal;
 

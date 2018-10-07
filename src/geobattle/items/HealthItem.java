@@ -1,23 +1,19 @@
 package geobattle.items;
 
+import geobattle.colliders.Box;
 import geobattle.colliders.Collider;
-import geobattle.core.AliveObject;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
+import geobattle.living.AliveObject;
 import geobattle.sprites.SpriteMap;
 
 public class HealthItem extends UnitsItem {
 
 	public HealthItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
-
-		Collider col = getCollider();
-		col.setWidth(50);
-		col.setHeight(50);
-		col.setOffsetX(-25);
-		col.setOffsetY(-25);
 		
 		getSpriteRenderer().setSprite(SpriteMap.HEALTH);
+		getCollider().surround(Box.SPRITE);
 	}
 
 	@Override

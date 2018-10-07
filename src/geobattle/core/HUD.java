@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import geobattle.living.Player;
 import geobattle.objects.Compass;
 import geobattle.util.Util;
 import geobattle.weapons.Arsenal;

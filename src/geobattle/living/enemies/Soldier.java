@@ -1,4 +1,4 @@
-package geobattle.enemies;
+package geobattle.living.enemies;
 
 import java.awt.Color;
 
@@ -6,38 +6,39 @@ import geobattle.colliders.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.extensions.FollowExtension;
 import geobattle.extensions.ShootExtension;
 import geobattle.sprites.SpriteMap;
 import geobattle.weapons.Weapon;
 
-public class Tower extends Enemy {
-	
-	private Weapon weapon;
-	
-	public Tower(Game game, int x, int y, GameObject target) {
-		super(game, x, y, target);
-	
-		setHealth(400);
-		setWidth(40);
-		setHeight(40);
-		setSpeed(0);
+public class Soldier extends Enemy {
 
+	public boolean follow = false;
+	private Weapon weapon;
+
+	public Soldier(Game game, int x, int y, GameObject target) {
+		super(game, x, y, target);
+		
+		setSpeed(1.0);
+		setHealth(100);
+		
 		weapon = buildWeapon(target);
 		addBehavior(new ShootExtension(target, weapon));
-		getSpriteRenderer().setSprite(SpriteMap.TOWER);
+		addBehavior(new FollowExtension(target, 300));
+		getSpriteRenderer().setSprite(SpriteMap.SOLDIER);
 		getCollider().surround(Box.SPRITE);
 	}
-
+	
 	public Weapon buildWeapon(GameObject target) {
 		Weapon weapon = new Weapon(getGame(), this, Tag.Enemy);
 		
-		weapon.setDamage(80);
-		weapon.setReloadSpeed(0.0025);
-		weapon.setFireSpeed(0.005);
-		weapon.setAmmoLoad(50);
-		weapon.setColor(Color.MAGENTA);
-		weapon.setProjectileColor(Color.MAGENTA);
-		weapon.setProjectileSpeed(10.0);
+		weapon.setDamage(20);
+		weapon.setColor(Color.RED);
+		weapon.setAmmoLoad(30);
+		weapon.setReloadSpeed(0.005);
+		weapon.setFireSpeed(0.01);
+		weapon.setProjectileColor(Color.GRAY);
+		weapon.setProjectileSpeed(8.0);
 		weapon.setLock(target);
 		weapon.fill();
 		
@@ -49,5 +50,5 @@ public class Tower extends Enemy {
 		super.kill();
 		weapon.kill();
 	}
-	
+		
 }

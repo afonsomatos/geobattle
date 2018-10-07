@@ -14,7 +14,7 @@ public final class SpriteMap {
 	// Items
 	public final static Sprite SHIELD 	= new Sprite(50, 50, 25, 25);
 	public final static Sprite HEALTH 	= new Sprite(50, 50, 25, 25);
-	public final static Sprite AMMO		= new Sprite(100, 100, 50, 50);
+	public final static Sprite AMMO		= new Sprite(24, 24, 12, 12);
 	
 	// Troops
 	public final static Sprite TOWER 	= new SolidSquare(40, 40, Color.PINK);

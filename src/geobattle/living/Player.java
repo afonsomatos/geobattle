@@ -1,4 +1,4 @@
-package geobattle.core;
+package geobattle.living;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -8,6 +8,9 @@ import java.awt.Rectangle;
 
 import geobattle.colliders.Box;
 import geobattle.colliders.Collider;
+import geobattle.core.Game;
+import geobattle.core.GameObject;
+import geobattle.core.Tag;
 import geobattle.specials.Special;
 import geobattle.specials.WaveSpecial;
 import geobattle.sprites.SolidSquare;
@@ -55,7 +58,7 @@ public class Player extends AliveObject {
 		special = waveSpecial;
 		
 		getSpriteRenderer().setSprite(SpriteMap.PLAYER);
-		
+
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
 		col.surround(Box.SPRITE);

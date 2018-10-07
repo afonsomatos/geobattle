@@ -1,10 +1,9 @@
-package geobattle.enemies;
+package geobattle.living.enemies;
 
-import geobattle.colliders.Collider;
-import geobattle.core.AliveObject;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.living.AliveObject;
 import geobattle.weapons.Weapon;
 
 public class Enemy extends AliveObject {

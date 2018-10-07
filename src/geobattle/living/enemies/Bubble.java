@@ -1,8 +1,9 @@
-package geobattle.enemies;
+package geobattle.living.enemies;
 
 import java.awt.Color;
 import java.awt.Point;
 
+import geobattle.colliders.Box;
 import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
@@ -34,6 +35,8 @@ public class Bubble extends Enemy {
 		
 		setupAttack();
 		setupCollider();
+		
+		getCollider().surround(Box.OBJECT);
 	}
 
 	public void setupAttack() {
@@ -61,6 +64,9 @@ public class Bubble extends Enemy {
 					int damage = p.getDamage();
 					bubble.setWidth(bubble.getWidth() + damage / 3);
 					bubble.setHeight(bubble.getHeight() + damage / 3);
+					
+					// enlarge collider
+					getCollider().surround(Box.OBJECT);
 								
 					if (bubble.isDead()) {
 						starBurst.setPos(new Point((int)getX(), (int)getY()));

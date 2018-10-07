@@ -1,9 +1,10 @@
 package geobattle.items;
 
+import geobattle.colliders.Box;
 import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Player;
+import geobattle.living.Player;
 import geobattle.sprites.SpriteMap;
 import geobattle.util.Log;
 import geobattle.weapons.Weapon;
@@ -13,12 +14,8 @@ public class AmmoItem extends UnitsItem {
 	public AmmoItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
 		
-		Collider col = getCollider();
-		col.setWidth(25);
-		col.setHeight(25);
-		col.setOffsetX(-13);
-		col.setOffsetY(-13);
 		getSpriteRenderer().setSprite(SpriteMap.AMMO);
+		getCollider().surround(Box.SPRITE);
 	}
 
 	@Override
