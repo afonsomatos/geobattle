@@ -61,7 +61,7 @@ public class AliveObject extends GameObject {
 		final int width = 40;
 		final int height = 10;
 		int x = (int) (getX()) - width / 2;
-		int y = (int) (getY()) - getHeight() / 2 - height * 2;
+		int y = (int) (getY()) - getCollider().getHeight() / 2 - height * 2;
 		
 		final int health = healthTank.get();
 		final int healthCapacity = healthTank.max();

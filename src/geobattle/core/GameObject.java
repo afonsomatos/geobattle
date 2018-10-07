@@ -75,16 +75,6 @@ public class GameObject implements Renderer {
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-
-		if (drawCollider) {
-			Collider col = this.getCollider();
-			if (col != null) {
-				gfx.setColor(this.getColor());
-				gfx.fill(col.getBounds());
-			}
-		}
-		
 		if (spriteRenderer != null)
 			spriteRenderer.render(superGfx);
 	}

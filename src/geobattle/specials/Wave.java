@@ -4,11 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import geobattle.core.CollisionHandler.CollisionMatrix;
-import geobattle.living.AliveObject;
+import geobattle.colliders.CollisionMatrix;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.living.AliveObject;
 import geobattle.util.Counter;
 import geobattle.util.Util;
 

@@ -1,8 +1,10 @@
-package geobattle.core;
+package geobattle.colliders;
 
 import java.util.LinkedList;
 
-import geobattle.colliders.Collider;
+import geobattle.core.Game;
+import geobattle.core.GameObject;
+import geobattle.core.Tag;
 
 public class CollisionHandler {
 
@@ -25,7 +27,7 @@ public class CollisionHandler {
 		
 		LinkedList<Collider> colliders = getColliders();
 		
-		for (int i = 0; i < colliders.size(); ++i)
+		for (int i = 0; i < colliders.size(); ++i) {
 			for (int j = i + 1; j < colliders.size(); j++) {
 				Collider c1 = colliders.get(i);
 				Collider c2 = colliders.get(j);
@@ -35,7 +37,7 @@ public class CollisionHandler {
 					c2.handleCollision(c1);
 				}
 			}
-			
+		}
 	}
 	
 	public LinkedList<Collider> getColliders() {
@@ -51,27 +53,4 @@ public class CollisionHandler {
 		return colliders;
 	}
 
-	public class CollisionMatrix {
-		
-		private boolean[][] matrix;
-		
-		public CollisionMatrix() {
-			int len = Tag.values().length;
-			matrix = new boolean[len][len];
-		}
-		
-		private CollisionMatrix add(Tag tag1, Tag tag2) {
-			int p1 = tag1.ordinal();
-			int p2 = tag2.ordinal();
-			matrix[p1][p2] = true;
-			matrix[p2][p1] = true;
-			return this;
-		}
-		
-		public boolean collidesWith(Tag tag1, Tag tag2) {
-			return matrix[tag1.ordinal()][tag2.ordinal()];
-		}
-	
-	}
-	
 }

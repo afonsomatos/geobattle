@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import geobattle.colliders.CollisionHandler;
 import geobattle.core.Schedule.Event;
 import geobattle.items.AmmoItem;
 import geobattle.items.HealthItem;

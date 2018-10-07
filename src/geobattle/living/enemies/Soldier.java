@@ -25,6 +25,7 @@ public class Soldier extends Enemy {
 		weapon = buildWeapon(target);
 		addBehavior(new ShootExtension(target, weapon));
 		addBehavior(new FollowExtension(target, 300));
+		
 		getSpriteRenderer().setSprite(SpriteMap.SOLDIER);
 		getCollider().surround(Box.SPRITE);
 	}

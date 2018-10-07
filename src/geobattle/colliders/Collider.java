@@ -11,32 +11,26 @@ public class Collider {
 	private Tag tag;
 	private GameObject gameObject = null;
 	
-	private int width;
-	private int height;
+	private int width = 0;
+	private int height = 0;
 	
 	private int offsetX = 0;
 	private int offsetY = 0;
 	
-	public Collider(GameObject gameObject, Tag tag) {
-		this(gameObject, gameObject.getWidth(), gameObject.getHeight(), tag);
-	}
-	
-	public Collider(GameObject gameObject, Tag tag, Box box) {
-		this(gameObject, gameObject.getWidth(), gameObject.getHeight(), tag);
-		surround(box);
-	}
-
 	public Collider(GameObject gameObject) {
 		this(gameObject, Tag.Neutral);
 	}
 	
-	public Collider(GameObject gameObject, int width, int height, Tag tag) {
-		this.gameObject = gameObject;
-		this.width = width;
-		this.height = height;
-		this.tag = tag;
+	public Collider(GameObject gameObject, Tag tag) {
+		this(gameObject, tag, Box.OBJECT);
 	}
 	
+	public Collider(GameObject gameObject, Tag tag, Box box) {
+		this.gameObject = gameObject;
+		this.tag = tag;
+		surround(box);
+	}
+
 	public void handleCollision(Collider other) {
 		
 	}
@@ -63,6 +57,10 @@ public class Collider {
 		return gameObject;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+	
 	public void setOffsetX(int offsetX) {
 		this.offsetX = offsetX;
 	}

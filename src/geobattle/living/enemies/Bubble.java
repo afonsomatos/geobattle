@@ -10,6 +10,7 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.specials.StarBurstSpecial;
 import geobattle.specials.StarBurstSpecial.Style;
+import geobattle.sprites.SolidSquare;
 import geobattle.util.Counter;
 import geobattle.weapons.Projectile;
 
@@ -35,8 +36,6 @@ public class Bubble extends Enemy {
 		
 		setupAttack();
 		setupCollider();
-		
-		getCollider().surround(Box.OBJECT);
 	}
 
 	public void setupAttack() {
@@ -62,11 +61,18 @@ public class Bubble extends Enemy {
 				if (obj instanceof Projectile) {
 					Projectile p = (Projectile) obj;
 					int damage = p.getDamage();
-					bubble.setWidth(bubble.getWidth() + damage / 3);
-					bubble.setHeight(bubble.getHeight() + damage / 3);
+					
+					int newWidth = bubble.getWidth() + damage/3;
+					int newHeight = bubble.getHeight() + damage/3;
+					
+					bubble.setWidth(newWidth);
+					bubble.setHeight(newHeight);
 					
 					// enlarge collider
 					getCollider().surround(Box.OBJECT);
+					
+					// Update sprite
+					bubble.getSpriteRenderer().setSprite(new SolidSquare(newWidth, newHeight, Color.YELLOW));
 								
 					if (bubble.isDead()) {
 						starBurst.setPos(new Point((int)getX(), (int)getY()));
