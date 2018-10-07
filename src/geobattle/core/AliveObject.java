@@ -4,19 +4,19 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import geobattle.util.Tank;
 import geobattle.weapons.Projectile;
 
 public class AliveObject extends GameObject {
 
-	private int health = 0;
-	private int healthCapacity = 0;
+	private Tank healthTank = new Tank();
 	
 	public AliveObject(Game game, double x, double y) {
 		super(game, x, y);
 		setupCollider();
 	}
 	
-	private void setupCollider() {
+	private final void setupCollider() {
 		setCollider(new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
@@ -31,45 +31,44 @@ public class AliveObject extends GameObject {
 	}
 	
 	public void suffer(int hit) {
-		health = health > hit ? health - hit : 0;
+		healthTank.take(hit);
 	}
 	
-	public int giveHealth(int givenHealth) {
-		final int given = Math.min(healthCapacity - health, givenHealth);
-		setHealth(health + given);
-		return givenHealth - given;
+	public int giveHealth(int health) {
+		return healthTank.fill(health);
 	}
 	
 	public void setHealth(int health) {
-		if (health > healthCapacity)
-			healthCapacity = health;
-		
-		this.health = Math.max(health, 0);
+		healthTank.set(health);
 	}
 	
 	public int getHealth() {
-		return health;
+		return healthTank.get();
 	}
 
 	public boolean isDead() {
-		return health == 0;
+		return healthTank.get() == 0;
 	}
 	
 	@Override
-	public void render(Graphics2D gfx) {
-		super.render(gfx);
-
-		int width = 40;
-		int height = 10;
+	public void render(Graphics2D superGfx) {
+		super.render(superGfx);
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		
+		final int width = 40;
+		final int height = 10;
 		int x = (int) (getX()) - width / 2;
 		int y = (int) (getY()) - getHeight() / 2 - height * 2;
 		
+		final int health = healthTank.get();
+		final int healthCapacity = healthTank.getMax();
 		gfx.setColor(new Color(200, (int) 255.0 * health / healthCapacity, 0));
 		gfx.fillRect(x, y, (int) (width * (double) health / healthCapacity), height);
 		
 		gfx.setStroke(new BasicStroke(1));
 		gfx.setColor(Color.WHITE);
 		gfx.drawRect(x, y, width, height);
+		gfx.dispose();
 	}
 	
 }

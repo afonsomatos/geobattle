@@ -16,7 +16,7 @@ public final class Util {
 	}
 	
 	public static int clamp(int min, int val, int max) {
-		return (int) clamp(min, (double) val, max);
+		return (int) clamp(min, val, max);
 	}
 	
 	public static <T> boolean contains(T[] array, T item) {

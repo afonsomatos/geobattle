@@ -17,7 +17,7 @@ public class Collider {
 	}
 
 	public void handleCollision(Collider other) {
-		// TODO: Log collisions
+		return;
 	}
 	
 	public GameObject getGameObject() {

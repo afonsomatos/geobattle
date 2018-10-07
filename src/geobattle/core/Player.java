@@ -9,13 +9,14 @@ import java.awt.Rectangle;
 import geobattle.specials.Special;
 import geobattle.specials.WaveSpecial;
 import geobattle.util.Counter;
+import geobattle.util.Tank;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;
 
 public class Player extends AliveObject {
 	
-	private int shieldCapacity = 300;
-	private int shield = 300;
+	private Tank shieldTank = new Tank(300);
+	
 	private boolean firing = false;
 	
 	private Arsenal arsenal = new Arsenal(4);
@@ -77,15 +78,12 @@ public class Player extends AliveObject {
 			weapon.fire(target);
 	}
 	
-	
 	@Override
 	public void suffer(int hit) {
 		game.playerGotHit();
-		shield -= hit;
-		if (shield < 0) {
-			super.suffer(- (int) shield);
-			shield = 0;
-		}
+		int remainder = shieldTank.take(hit);
+		if (remainder > 0)
+			super.suffer(remainder);
 	}
 	
 	public void sendSpecial() {
@@ -111,35 +109,32 @@ public class Player extends AliveObject {
 		this.target = target;
 	}
 
-	public int giveShield(int givenShield) {
-		final int given = Math.min(shieldCapacity - shield, givenShield);
-		setShield(shield + given);
-		return givenShield - given;
+	public int giveShield(int shield) {
+		return shieldTank.fill(shield);
 	}
 	
 	public void setShield(int shield) {
-		if (shield > shieldCapacity)
-			shieldCapacity = shield;
-		
-		this.shield = Math.max(shield, 0);
+		shieldTank.set(shield);
 	}
 	
 	public int getShield() {
-		return (int) shield;
+		return shieldTank.get();
 	}
 	
 	@Override
-	public void render(Graphics2D gfx) {
-		super.render(gfx);
-		if (this.shield > 0) {
-			gfx.setColor(Color.BLUE);
-			int thickness = 5;
-			gfx.setStroke(new BasicStroke(thickness));
-			
-			Rectangle rect = (Rectangle) this.getCollider().getBounds();
-			gfx.drawRect(rect.x + thickness / 2, rect.y + thickness / 2, rect.width - thickness, rect.height - thickness);
-		}
+	public void render(Graphics2D superGfx) {
+		super.render(superGfx);
 		
+		if (shieldTank.get() <= 0)
+			return;
+		
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		gfx.setColor(Color.BLUE);
+		final int thickness = 5;
+		gfx.setStroke(new BasicStroke(thickness));
+			
+		Rectangle rect = (Rectangle) this.getCollider().getBounds();
+		gfx.drawRect(rect.x + thickness / 2, rect.y + thickness / 2, rect.width - thickness, rect.height - thickness);
 	}
 
 }
