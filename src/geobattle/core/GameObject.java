@@ -5,8 +5,10 @@ import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 import geobattle.extensions.Extension;
+import geobattle.sprites.Sprite;
+import geobattle.sprites.SpriteRenderer;
 
-public class GameObject implements Renderable {
+public class GameObject implements Renderer {
 
 	private double width 	= 0;
 	private double height 	= 0;
@@ -26,6 +28,9 @@ public class GameObject implements Renderable {
 	private Color color 	= Color.BLACK;
 	private Tag tag			= Tag.Neutral;
 	
+	private SpriteRenderer spriteRenderer;
+	
+	private boolean drawCollider = true;
 	private Collider collider = null;
 	private LinkedList<Extension> behaviors = new LinkedList<Extension>();
 
@@ -39,6 +44,8 @@ public class GameObject implements Renderable {
 		this.setGame(game);
 		this.setX(x);
 		this.setY(y);
+		
+		spriteRenderer = new SpriteRenderer(this);
 	}
 
 	public boolean isOutOfBorders() {
@@ -53,19 +60,31 @@ public class GameObject implements Renderable {
 		this.active = active;
 	}
 	
+	public void setDrawCollider(boolean drawCollider) {
+		this.drawCollider = drawCollider;
+	}
+	
 	public boolean isActive() {
 		return active;
 	}
 	
+	public SpriteRenderer getSpriteRenderer() {
+		return spriteRenderer;
+	}
+	
 	@Override
-	public void render(Graphics2D gfx) {
-		
-		Collider col = this.getCollider();
-		if (col != null) {
-			gfx.setColor(this.getColor());
-			gfx.fill(col.getBounds());
+	public void render(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+
+		if (drawCollider) {
+			Collider col = this.getCollider();
+			if (col != null) {
+				gfx.setColor(this.getColor());
+				gfx.fill(col.getBounds());
+			}
 		}
 		
+		spriteRenderer.render(superGfx);
 	}
 	
 	public void tick() {

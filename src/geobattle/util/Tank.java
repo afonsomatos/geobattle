@@ -21,7 +21,7 @@ public class Tank {
 	public int fill(int quant) {
 		final int filled = Math.min(maxQuantity - quantity, quant);
 		set(filled + quantity);
-		return filled - quant;
+		return quant - filled;
 	}
 	
 	public int take(int quant) {

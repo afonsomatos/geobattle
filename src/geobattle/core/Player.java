@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import geobattle.specials.Special;
 import geobattle.specials.WaveSpecial;
 import geobattle.util.Counter;
+import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;

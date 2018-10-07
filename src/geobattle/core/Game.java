@@ -26,7 +26,7 @@ import geobattle.weapons.Unlimited;
 public class Game {
 
 	private boolean RENDER_DEBUG = false;
-	private Renderable debugRender;
+	private Renderer debugRender;
 
 	private Window window;
 	private Schedule schedule = new Schedule();
@@ -270,13 +270,6 @@ public class Game {
 
 	public Schedule getSchedule() {
 		return schedule;
-	}
-	
-	public static void main(String[] args) {
-		// Use for enhanced graphic rendering, otherwise it'll become laggy
-		System.setProperty("sun.java2d.opengl", "true");
-		
-		new Game().start();
 	}
 
 }

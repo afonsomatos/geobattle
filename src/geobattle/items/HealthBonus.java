@@ -1,12 +1,9 @@
 package geobattle.items;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Player;
+import geobattle.sprites.SpriteMap;
 
 public class HealthBonus extends Item {
 
@@ -17,19 +14,8 @@ public class HealthBonus extends Item {
 		this.quantity = quantity;
 		setWidth(20);
 		setHeight(20);
-	}
-
-	@Override
-	public void render(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setStroke(new BasicStroke(10));
-		gfx.translate(getX(), getY());
-		final int width = getWidth();
-		final int height = getHeight();
-		gfx.setColor(Color.GREEN);
-		gfx.drawLine(0, -height/2, 0, height/2);
-		gfx.drawLine(-width/2, 0, width/2, 0);
-		gfx.dispose();
+		
+		getSpriteRenderer().add(SpriteMap.HEALTH);
 	}
 
 	@Override

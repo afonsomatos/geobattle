@@ -22,4 +22,8 @@ public final class Log {
 		System.out.println("[" + tag + "] " + message);
 	}
 	
+	private Log() {
+		
+	}
+	
 }

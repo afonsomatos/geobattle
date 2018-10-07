@@ -18,11 +18,8 @@ public abstract class Item extends GameObject {
 				collected(other.getGameObject());
 			}
 		});
+		setDrawCollider(false);
 	}
 	
-	@Override
-	public abstract void render(Graphics2D gfx);
-	
 	public abstract void collected(GameObject collector);
-	
 }

@@ -9,7 +9,7 @@ import geobattle.util.Util;
 import geobattle.weapons.Arsenal;
 import geobattle.weapons.Weapon;
 
-class HUD implements Renderable {
+class HUD implements Renderer {
 
 	private Game game;
 	private Compass playerCompass;

@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-class Debug implements Renderable {
+class Debug implements Renderer {
 
 	private Game game;
 	

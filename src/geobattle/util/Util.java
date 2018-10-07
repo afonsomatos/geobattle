@@ -46,4 +46,8 @@ public final class Util {
 		return new String(new char[n]).replace("\0", string);
 	}
 	
+	private Util() {
+		
+	}
+	
 }

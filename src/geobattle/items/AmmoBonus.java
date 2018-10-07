@@ -1,12 +1,9 @@
 package geobattle.items;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Player;
+import geobattle.sprites.SpriteMap;
 import geobattle.util.Log;
 import geobattle.weapons.Weapon;
 
@@ -19,19 +16,8 @@ public class AmmoBonus extends Item {
 		this.quantity = quantity;
 		setWidth(20);
 		setHeight(20);
-	}
-
-	@Override
-	public void render(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setStroke(new BasicStroke(10));
-		gfx.translate(getX(), getY());
-		final int width = getWidth();
-		final int height = getHeight();
-		gfx.setColor(Color.ORANGE);
-		gfx.rotate(Math.PI / 4);
-		gfx.fillRect(-width/2, -height/2, width, height);
-		gfx.dispose();
+		
+		getSpriteRenderer().add(SpriteMap.AMMO);
 	}
 
 	@Override
