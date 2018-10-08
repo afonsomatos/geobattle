@@ -4,7 +4,6 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.util.Tank;
 
 public abstract class Item extends GameObject {
 
@@ -17,7 +16,6 @@ public abstract class Item extends GameObject {
 				collected(other.getGameObject());
 			}
 		});
-		setDrawCollider(false);
 	}
 	
 	public abstract void collected(GameObject collector);

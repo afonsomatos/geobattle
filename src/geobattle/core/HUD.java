@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 
 import geobattle.living.Player;
 import geobattle.object.Compass;
-import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
@@ -148,7 +147,6 @@ class HUD implements Renderer {
 	
 	@Override
 	public void render(Graphics2D _gfx) {
-		String txt;
 		
 		renderWarnings(_gfx);
 		renderPlayerExitingMap(_gfx);

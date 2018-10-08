@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
-import geobattle.sprite.Sprite;
 import geobattle.sprite.SpriteRenderer;
 
 public class GameObject implements Renderer {
@@ -26,12 +25,11 @@ public class GameObject implements Renderer {
 	private boolean hidden 	= false;
 	private boolean freezed	= false;
 	
-	private Color color 	= Color.BLACK;
+	private Color color 	= Color.WHITE;
 	private Tag tag			= Tag.Neutral;
 	
 	private SpriteRenderer spriteRenderer;
 	
-	private boolean drawCollider = true;
 	private Collider collider = null;
 	private LinkedList<Extension> behaviors = new LinkedList<Extension>();
 
@@ -60,11 +58,7 @@ public class GameObject implements Renderer {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	public void setDrawCollider(boolean drawCollider) {
-		this.drawCollider = drawCollider;
-	}
-	
+
 	public boolean isActive() {
 		return active;
 	}

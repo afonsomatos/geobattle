@@ -99,9 +99,11 @@ public class Game {
 		//spawnGameObject(new HealthItem(this, 400, 400, 300));
 		//spawnGameObject(new ShieldItem(this, 200, 200, 200));
 		
-		spawnGameObject(new AmmoItem(this, 100, 400, 1));
-		spawnGameObject(new AmmoItem(this, 300, 400, 10));
-		spawnGameObject(new AmmoItem(this, 500, 400, 20));
+		spawnGameObject(new AmmoItem(this, 100, 400, 1000));
+		spawnGameObject(new HealthItem(this, 300, 400, 1000));
+		spawnGameObject(new ShieldItem(this, 500, 400, 3000));
+		player.setHealth(200);
+		player.setShield(10);
 		
 		window.setVisible(true);
 		gameLoop();	

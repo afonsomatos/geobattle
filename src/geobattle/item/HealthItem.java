@@ -16,6 +16,7 @@ public class HealthItem extends UnitsItem {
 	public HealthItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
 		
+		setLabelColor(Color.GREEN);
 		getSpriteRenderer().setSprite(sprite);
 		getCollider().surround(Box.SPRITE);
 	}

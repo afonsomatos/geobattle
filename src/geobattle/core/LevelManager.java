@@ -1,15 +1,10 @@
 package geobattle.core;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 import geobattle.core.Schedule.Event;
 import geobattle.living.Player;
-import geobattle.living.enemies.Bubble;
-import geobattle.living.enemies.Creeper;
 import geobattle.living.enemies.Enemy;
-import geobattle.living.enemies.Soldier;
-import geobattle.living.enemies.Tower;
 
 class LevelManager {
 
@@ -18,8 +13,6 @@ class LevelManager {
 	private int level = 0;
 	private boolean loadingLevel = false;
 	private int levelCountDown;
-
-	private Random rand = new Random();
 	
 	public LevelManager(Game game) {
 		this.game = game;
