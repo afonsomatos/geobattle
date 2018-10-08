@@ -11,9 +11,12 @@ import geobattle.core.Tag;
 import geobattle.extension.FollowExtension;
 import geobattle.living.Player;
 import geobattle.special.StarBurstSpecial;
-import geobattle.sprite.SpriteMap;
+import geobattle.sprite.SolidSquare;
+import geobattle.sprite.Sprite;
 
 public class Creeper extends Enemy {
+
+	public static Sprite sprite = new SolidSquare(16, 16, Color.GREEN);
 
 	private StarBurstSpecial starBurst;
 	
@@ -29,7 +32,7 @@ public class Creeper extends Enemy {
 		setSpeed(1);
 		setHealth(400);
 
-		getSpriteRenderer().setSprite(SpriteMap.CREEPER);
+		getSpriteRenderer().setSprite(sprite);
 		setupCollider();
 	}
 	

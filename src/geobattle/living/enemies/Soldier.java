@@ -8,10 +8,13 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.FollowExtension;
 import geobattle.extension.ShootExtension;
-import geobattle.sprite.SpriteMap;
+import geobattle.sprite.SolidSquare;
+import geobattle.sprite.Sprite;
 import geobattle.weapon.Weapon;
 
 public class Soldier extends Enemy {
+
+	public static Sprite sprite = new SolidSquare(24, 24, Color.RED);
 
 	public boolean follow = false;
 	private Weapon weapon;
@@ -25,8 +28,8 @@ public class Soldier extends Enemy {
 		weapon = buildWeapon(target);
 		addBehavior(new ShootExtension(target, weapon));
 		addBehavior(new FollowExtension(target, 300));
-		
-		getSpriteRenderer().setSprite(SpriteMap.SOLDIER);
+
+		getSpriteRenderer().setSprite(sprite);
 		getCollider().surround(Box.SPRITE);
 	}
 	

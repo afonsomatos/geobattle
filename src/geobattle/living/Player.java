@@ -15,15 +15,15 @@ import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
-import geobattle.sprite.SpriteMap;
 import geobattle.util.Counter;
-import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
 public class Player extends Living {
 	
+	public static Sprite sprite	= new SolidSquare(40, 40, Color.CYAN);
+
 	private Tank shieldTank = new Tank(300);
 	
 	private boolean firing = false;
@@ -57,7 +57,7 @@ public class Player extends Living {
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
 		
-		getSpriteRenderer().setSprite(SpriteMap.PLAYER);
+		getSpriteRenderer().setSprite(sprite);
 
 		Collider col = getCollider();
 		col.setTag(Tag.Player);

@@ -32,11 +32,15 @@ public class Sprite extends BufferedImage {
 		return centerY;
 	}
 	
-	public void draw(Renderer renderer) {
+	public void draw(int dx, int dy, Renderer renderer) {
 		Graphics2D gfx = (Graphics2D) getGraphics();
-		gfx.translate(getCenterX(), getCenterY());
+		gfx.translate(dx, dy);
 		renderer.render(gfx);
-		gfx.dispose();
+		gfx.dispose();	
+	}
+	
+	public void draw(Renderer renderer) {
+		draw(getCenterX(), getCenterY(), renderer);
 	}
 	
 }

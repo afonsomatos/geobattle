@@ -9,11 +9,11 @@ import geobattle.sprite.Sprite;
 public class Collider {
 
 	private Tag tag;
-	private GameObject gameObject = null;
+	private GameObject gameObject;
 	
 	private int width = 0;
 	private int height = 0;
-	
+
 	private int offsetX = 0;
 	private int offsetY = 0;
 	

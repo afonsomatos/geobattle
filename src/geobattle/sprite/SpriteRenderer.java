@@ -1,8 +1,6 @@
 package geobattle.sprite;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 import geobattle.core.GameObject;
 import geobattle.core.Renderer;

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Box;
-import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -43,8 +42,6 @@ public class Weapon extends GameObject {
 	private double radius = 70;
 	private double fireAngle = 0;
 	private double recoil = 0;
-	
-	private Sprite projectileSprite;
 	
 	public Weapon(Game game, GameObject origin, Tag tag) {
 		super(game);

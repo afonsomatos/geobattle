@@ -2,7 +2,7 @@ package geobattle.collider;
 
 import geobattle.core.Tag;
 
-public class CollisionMatrix {
+public final class CollisionMatrix {
 	
 	private boolean[][] matrix;
 	

@@ -1,18 +1,22 @@
 package geobattle.item;
 
+import java.awt.Color;
+
 import geobattle.collider.Box;
-import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Player;
-import geobattle.sprite.SpriteMap;
+import geobattle.sprite.SolidCross;
+import geobattle.sprite.Sprite;
 
 public class ShieldItem extends UnitsItem {
 
+	private static Sprite sprite = new SolidCross(50, 50, Color.CYAN);
+	
 	public ShieldItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
 		
-		getSpriteRenderer().setSprite(SpriteMap.SHIELD);
+		getSpriteRenderer().setSprite(sprite);
 		getCollider().surround(Box.SPRITE);
 	}
 
