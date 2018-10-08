@@ -1,15 +1,15 @@
-package geobattle.specials;
+package geobattle.special;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Random;
 
-import geobattle.colliders.Box;
+import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.Tag;
-import geobattle.sprites.SolidSquare;
-import geobattle.weapons.projectile.BlockBullet;
-import geobattle.weapons.projectile.Projectile;
+import geobattle.sprite.SolidSquare;
+import geobattle.weapon.projectile.BlockBullet;
+import geobattle.weapon.projectile.Projectile;
 
 public class StarBurstSpecial extends Special {
 	

@@ -1,4 +1,4 @@
-package geobattle.sprites;
+package geobattle.sprite;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

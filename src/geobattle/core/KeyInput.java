@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 import geobattle.living.Player;
 import geobattle.util.Util;
-import geobattle.weapons.Arsenal;
+import geobattle.weapon.Arsenal;
 
 class KeyInput implements KeyListener {
 

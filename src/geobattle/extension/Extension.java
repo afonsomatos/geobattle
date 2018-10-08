@@ -1,4 +1,4 @@
-package geobattle.extensions;
+package geobattle.extension;
 
 import geobattle.core.GameObject;
 

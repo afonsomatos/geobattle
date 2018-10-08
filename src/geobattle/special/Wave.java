@@ -1,10 +1,10 @@
-package geobattle.specials;
+package geobattle.special;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import geobattle.colliders.CollisionMatrix;
+import geobattle.collider.CollisionMatrix;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;

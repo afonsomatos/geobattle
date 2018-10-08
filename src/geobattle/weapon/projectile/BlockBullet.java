@@ -1,4 +1,4 @@
-package geobattle.weapons.projectile;
+package geobattle.weapon.projectile;
 
 import geobattle.core.Game;
 

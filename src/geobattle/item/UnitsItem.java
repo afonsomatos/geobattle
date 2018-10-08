@@ -1,4 +1,4 @@
-package geobattle.items;
+package geobattle.item;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;

@@ -1,7 +1,7 @@
-package geobattle.extensions;
+package geobattle.extension;
 
 import geobattle.core.GameObject;
-import geobattle.weapons.Weapon;
+import geobattle.weapon.Weapon;
 
 public class ShootExtension extends Extension {
 

@@ -4,7 +4,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.living.AliveObject;
-import geobattle.weapons.Weapon;
+import geobattle.weapon.Weapon;
 
 public class Enemy extends AliveObject {
 	

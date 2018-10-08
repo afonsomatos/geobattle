@@ -1,10 +1,10 @@
-package geobattle.objects;
+package geobattle.object;
 
 import java.awt.Graphics2D;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.sprites.SpriteMap;
+import geobattle.sprite.SpriteMap;
 
 public class Compass extends GameObject {
 

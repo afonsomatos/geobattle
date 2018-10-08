@@ -3,18 +3,18 @@ package geobattle.living.enemies;
 import java.awt.Color;
 import java.awt.Point;
 
-import geobattle.colliders.Box;
-import geobattle.colliders.Collider;
+import geobattle.collider.Box;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.specials.StarBurstSpecial;
-import geobattle.specials.StarBurstSpecial.Style;
-import geobattle.sprites.SolidSquare;
-import geobattle.sprites.Sprite;
+import geobattle.special.StarBurstSpecial;
+import geobattle.special.StarBurstSpecial.Style;
+import geobattle.sprite.SolidSquare;
+import geobattle.sprite.Sprite;
 import geobattle.util.Counter;
 import geobattle.util.Log;
-import geobattle.weapons.projectile.Projectile;
+import geobattle.weapon.projectile.Projectile;
 
 public class Bubble extends Enemy {
 

@@ -1,4 +1,4 @@
-package geobattle.weapons;
+package geobattle.weapon;
 
 public class Arsenal {
 	

@@ -1,11 +1,11 @@
-package geobattle.items;
+package geobattle.item;
 
-import geobattle.colliders.Box;
-import geobattle.colliders.Collider;
+import geobattle.collider.Box;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.AliveObject;
-import geobattle.sprites.SpriteMap;
+import geobattle.sprite.SpriteMap;
 
 public class HealthItem extends UnitsItem {
 

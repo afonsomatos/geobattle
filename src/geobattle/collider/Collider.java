@@ -1,10 +1,10 @@
-package geobattle.colliders;
+package geobattle.collider;
 
 import java.awt.Rectangle;
 
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.sprites.Sprite;
+import geobattle.sprite.Sprite;
 
 public class Collider {
 

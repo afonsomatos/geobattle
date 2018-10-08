@@ -3,15 +3,15 @@ package geobattle.living.enemies;
 import java.awt.Color;
 import java.awt.Point;
 
-import geobattle.colliders.Box;
-import geobattle.colliders.Collider;
+import geobattle.collider.Box;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extensions.FollowExtension;
+import geobattle.extension.FollowExtension;
 import geobattle.living.Player;
-import geobattle.specials.StarBurstSpecial;
-import geobattle.sprites.SpriteMap;
+import geobattle.special.StarBurstSpecial;
+import geobattle.sprite.SpriteMap;
 
 public class Creeper extends Enemy {
 

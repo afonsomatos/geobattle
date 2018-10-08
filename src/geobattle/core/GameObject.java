@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import geobattle.colliders.Collider;
-import geobattle.extensions.Extension;
-import geobattle.sprites.Sprite;
-import geobattle.sprites.SpriteRenderer;
+import geobattle.collider.Collider;
+import geobattle.extension.Extension;
+import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 
 public class GameObject implements Renderer {
 

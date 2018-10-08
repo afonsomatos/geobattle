@@ -1,4 +1,4 @@
-package geobattle.weapons;
+package geobattle.weapon;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

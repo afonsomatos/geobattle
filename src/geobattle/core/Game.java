@@ -10,20 +10,20 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import geobattle.colliders.CollisionHandler;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Schedule.Event;
-import geobattle.items.AmmoItem;
-import geobattle.items.HealthItem;
-import geobattle.items.ShieldItem;
+import geobattle.item.AmmoItem;
+import geobattle.item.HealthItem;
+import geobattle.item.ShieldItem;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.util.Counter;
 import geobattle.util.Log;
-import geobattle.weapons.Arsenal;
-import geobattle.weapons.Rifle;
-import geobattle.weapons.Shotgun;
-import geobattle.weapons.Sniper;
-import geobattle.weapons.Unlimited;
+import geobattle.weapon.Arsenal;
+import geobattle.weapon.Rifle;
+import geobattle.weapon.Shotgun;
+import geobattle.weapon.Sniper;
+import geobattle.weapon.Unlimited;
 
 public class Game {
 

@@ -1,6 +1,6 @@
-package geobattle.items;
+package geobattle.item;
 
-import geobattle.colliders.Collider;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;

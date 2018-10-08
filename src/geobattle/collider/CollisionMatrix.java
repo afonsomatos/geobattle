@@ -1,4 +1,4 @@
-package geobattle.colliders;
+package geobattle.collider;
 
 import geobattle.core.Tag;
 

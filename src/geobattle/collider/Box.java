@@ -1,4 +1,4 @@
-package geobattle.colliders;
+package geobattle.collider;
 
 public enum Box {
 	SPRITE,

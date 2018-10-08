@@ -1,13 +1,13 @@
-package geobattle.items;
+package geobattle.item;
 
-import geobattle.colliders.Box;
-import geobattle.colliders.Collider;
+import geobattle.collider.Box;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Player;
-import geobattle.sprites.SpriteMap;
+import geobattle.sprite.SpriteMap;
 import geobattle.util.Log;
-import geobattle.weapons.Weapon;
+import geobattle.weapon.Weapon;
 
 public class AmmoItem extends UnitsItem {
 

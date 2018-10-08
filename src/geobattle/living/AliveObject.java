@@ -4,11 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import geobattle.colliders.Collider;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.util.Tank;
-import geobattle.weapons.projectile.Projectile;
+import geobattle.weapon.projectile.Projectile;
 
 public class AliveObject extends GameObject {
 

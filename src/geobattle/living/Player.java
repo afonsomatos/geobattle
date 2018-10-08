@@ -6,21 +6,21 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import geobattle.colliders.Box;
-import geobattle.colliders.Collider;
+import geobattle.collider.Box;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.specials.Special;
-import geobattle.specials.WaveSpecial;
-import geobattle.sprites.SolidSquare;
-import geobattle.sprites.Sprite;
-import geobattle.sprites.SpriteMap;
+import geobattle.special.Special;
+import geobattle.special.WaveSpecial;
+import geobattle.sprite.SolidSquare;
+import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteMap;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.util.Tank;
-import geobattle.weapons.Arsenal;
-import geobattle.weapons.Weapon;
+import geobattle.weapon.Arsenal;
+import geobattle.weapon.Weapon;
 
 public class Player extends AliveObject {
 	

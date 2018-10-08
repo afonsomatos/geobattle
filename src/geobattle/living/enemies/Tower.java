@@ -2,13 +2,13 @@ package geobattle.living.enemies;
 
 import java.awt.Color;
 
-import geobattle.colliders.Box;
+import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extensions.ShootExtension;
-import geobattle.sprites.SpriteMap;
-import geobattle.weapons.Weapon;
+import geobattle.extension.ShootExtension;
+import geobattle.sprite.SpriteMap;
+import geobattle.weapon.Weapon;
 
 public class Tower extends Enemy {
 	

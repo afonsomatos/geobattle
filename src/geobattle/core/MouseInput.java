@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import geobattle.weapons.Weapon;
+import geobattle.weapon.Weapon;
 
 class MouseInput implements MouseListener, MouseMotionListener {
 

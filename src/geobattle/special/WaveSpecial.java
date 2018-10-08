@@ -1,4 +1,4 @@
-package geobattle.specials;
+package geobattle.special;
 
 import java.awt.Color;
 import java.awt.Point;

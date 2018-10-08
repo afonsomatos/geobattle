@@ -1,20 +1,20 @@
-package geobattle.weapons;
+package geobattle.weapon;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import geobattle.colliders.Box;
-import geobattle.colliders.Collider;
+import geobattle.collider.Box;
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.sprites.SolidSquare;
-import geobattle.sprites.Sprite;
+import geobattle.sprite.SolidSquare;
+import geobattle.sprite.Sprite;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
-import geobattle.weapons.projectile.BlockBullet;
-import geobattle.weapons.projectile.Projectile;
+import geobattle.weapon.projectile.BlockBullet;
+import geobattle.weapon.projectile.Projectile;
 
 public class Weapon extends GameObject {
 	
