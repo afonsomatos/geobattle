@@ -55,7 +55,7 @@ class Debug implements Renderer {
 	
 	@Override
 	public void render(Graphics2D gfx) {
-		renderPositionFx(gfx);
+		//renderPositionFx(gfx);
 		renderColliderFx(gfx);
 	}
 

@@ -8,9 +8,13 @@ import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.sprites.SolidSquare;
+import geobattle.sprites.Sprite;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
+import geobattle.weapons.projectile.BlockBullet;
+import geobattle.weapons.projectile.Projectile;
 
 public class Weapon extends GameObject {
 	
@@ -39,6 +43,8 @@ public class Weapon extends GameObject {
 	private double radius = 70;
 	private double fireAngle = 0;
 	private double recoil = 0;
+	
+	private Sprite projectileSprite;
 	
 	public Weapon(Game game, GameObject origin, Tag tag) {
 		super(game);
@@ -261,14 +267,13 @@ public class Weapon extends GameObject {
 
 		for (int i = 0; i < projectiles; ++i) {
 			
-			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY());
+			Projectile p = new BlockBullet(game, (int) this.getX(), (int) this.getY(), projectileSize, projectileSize);
 			p.getCollider().setTag(getTag());
 			p.setSpeed(projectileSpeed);
 			p.setColor(projectileColor);
 			p.setDamage(damage);
-			p.setWidth(projectileSize);
-			p.setHeight(projectileSize);
 			
+			p.getSpriteRenderer().setSprite(new SolidSquare(projectileSize, projectileSize, projectileColor));
 			p.getCollider().surround(Box.OBJECT);
 			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);

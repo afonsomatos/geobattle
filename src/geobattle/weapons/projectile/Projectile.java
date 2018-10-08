@@ -1,10 +1,10 @@
-package geobattle.weapons;
+package geobattle.weapons.projectile;
 
 import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 
-public class Projectile extends GameObject {
+public abstract class Projectile extends GameObject {
 
 	private int damage = 10;
 	

@@ -11,13 +11,21 @@ import geobattle.core.Tag;
 import geobattle.specials.StarBurstSpecial;
 import geobattle.specials.StarBurstSpecial.Style;
 import geobattle.sprites.SolidSquare;
+import geobattle.sprites.Sprite;
 import geobattle.util.Counter;
-import geobattle.weapons.Projectile;
+import geobattle.util.Log;
+import geobattle.weapons.projectile.Projectile;
 
 public class Bubble extends Enemy {
 
 	private StarBurstSpecial starBurst;
-	private Counter attackCounter;
+	private Counter attackCounter = new Counter(0.025, 1) {
+		@Override
+		public void fire() {
+			starBurst.setPos(new Point((int)getX(), (int)getY()));
+			starBurst.send();	
+		}
+	};
 
 	private boolean exploded = false;
 	
@@ -31,55 +39,48 @@ public class Bubble extends Enemy {
 		setWidth(10);
 		setHeight(10);
 		setSpeed(0.2);
-		setColor(Color.YELLOW);
 		setHealth(300);
 		
-		setupAttack();
 		setupCollider();
+		updateSprite();
 	}
 
-	public void setupAttack() {
-		attackCounter = new Counter(0.025, 1) {
-			@Override
-			public void fire() {
-				starBurst.setPos(new Point((int)getX(), (int)getY()));
-				starBurst.send();	
-			}
-		};
+	public void updateSprite() {
+		getSpriteRenderer().setSprite(new SolidSquare(getWidth(), getHeight(), Color.YELLOW));
 	}
 	
+	public void enlarge(double increase) {
+		setWidth(getWidth() + increase);
+		setHeight(getHeight() + increase);
+		getCollider().surround(Box.OBJECT);
+		updateSprite();
+	}
+
 	private void setupCollider() {
 		Collider superCol = this.getCollider();
 		Bubble bubble = this;
 		setCollider(new Collider(this, Tag.Enemy) {
 			@Override
 			public void handleCollision(Collider other) {
-				superCol.handleCollision(other);
 				if (exploded) return;
 				
 				GameObject obj = other.getGameObject();
 				if (obj instanceof Projectile) {
 					Projectile p = (Projectile) obj;
 					int damage = p.getDamage();
-					
-					int newWidth = bubble.getWidth() + damage/3;
-					int newHeight = bubble.getHeight() + damage/3;
-					
-					bubble.setWidth(newWidth);
-					bubble.setHeight(newHeight);
-					
-					// enlarge collider
-					getCollider().surround(Box.OBJECT);
-					
-					// Update sprite
-					bubble.getSpriteRenderer().setSprite(new SolidSquare(newWidth, newHeight, Color.YELLOW));
-								
+
+					// Suffer damage
+					superCol.handleCollision(other);
+
 					if (bubble.isDead()) {
 						starBurst.setPos(new Point((int)getX(), (int)getY()));
 						starBurst.setProjectiles(20);
 						starBurst.send();
 						exploded = true;
+						return;
 					}
+					
+					enlarge(damage/3.0);
 				}
 			};
 		});

@@ -7,7 +7,9 @@ import java.util.Random;
 import geobattle.colliders.Box;
 import geobattle.core.Game;
 import geobattle.core.Tag;
-import geobattle.weapons.Projectile;
+import geobattle.sprites.SolidSquare;
+import geobattle.weapons.projectile.BlockBullet;
+import geobattle.weapons.projectile.Projectile;
 
 public class StarBurstSpecial extends Special {
 	
@@ -16,7 +18,7 @@ public class StarBurstSpecial extends Special {
 		SOLID,
 	};
 	
-	private final Color[] rainbowColors = { Color.PINK, Color.RED, Color.GREEN, Color.YELLOW,
+	private static final Color[] rainbowColors = { Color.PINK, Color.RED, Color.GREEN, Color.YELLOW,
 			Color.CYAN, Color.BLUE, Color.WHITE };
 	
 	private Random rand = new Random();
@@ -68,12 +70,11 @@ public class StarBurstSpecial extends Special {
 		double delta = rand.nextDouble() * (Math.PI * 2);
 		
 		for (int i = 0; i < projectiles; ++i) {
-			Projectile p = new Projectile(game,
+			Projectile p = new BlockBullet(game,
 					(int) (pos.getX() + Math.cos(delta + step * i) * radius),
-					(int) (pos.getY() + Math.sin(delta + step * i) * radius));
-			
-			p.setWidth(8);
-			p.setHeight(8);
+					(int) (pos.getY() + Math.sin(delta + step * i) * radius),
+					8, 8);
+
 			p.getCollider().setTag(projectilesTag);
 			p.setDamage(damage);
 			p.setSpeed(speed);
@@ -88,6 +89,7 @@ public class StarBurstSpecial extends Special {
 					break;
 			}
 
+			p.getSpriteRenderer().setSprite(new SolidSquare(8, 8, p.getColor()));
 			p.setVelX(Math.cos(delta + step * i) * speed);
 			p.setVelY(Math.sin(delta + step * i) * speed);
 			game.spawnGameObject(p);

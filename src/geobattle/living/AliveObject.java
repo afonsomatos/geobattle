@@ -8,7 +8,7 @@ import geobattle.colliders.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.util.Tank;
-import geobattle.weapons.Projectile;
+import geobattle.weapons.projectile.Projectile;
 
 public class AliveObject extends GameObject {
 
