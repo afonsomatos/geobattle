@@ -57,7 +57,7 @@ public class Compass extends GameObject {
 		double angle;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;
-		getSpriteRenderer().setRotation(angle);
+		getSpriteRenderer().setRotation(0);
 		super.render(gfx);
 	}
 	

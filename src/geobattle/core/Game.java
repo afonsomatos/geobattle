@@ -27,7 +27,7 @@ import geobattle.weapon.Unlimited;
 
 public class Game {
 
-	private boolean RENDER_DEBUG = true;
+	private boolean RENDER_DEBUG = false;
 	private Renderer debugRender;
 
 	private Window window;
@@ -96,9 +96,12 @@ public class Game {
 		spawnGameObject(player);
 		this.player = player;
 
-		spawnGameObject(new HealthItem(this, 400, 400, 300));
-		spawnGameObject(new ShieldItem(this, 200, 200, 200));
-		spawnGameObject(new AmmoItem(this, 100, 400, 100));
+		//spawnGameObject(new HealthItem(this, 400, 400, 300));
+		//spawnGameObject(new ShieldItem(this, 200, 200, 200));
+		
+		spawnGameObject(new AmmoItem(this, 100, 400, 1));
+		spawnGameObject(new AmmoItem(this, 300, 400, 10));
+		spawnGameObject(new AmmoItem(this, 500, 400, 20));
 		
 		window.setVisible(true);
 		gameLoop();	

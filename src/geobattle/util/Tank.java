@@ -37,6 +37,10 @@ public class Tank {
 		this.quantity = Math.max(charge, 0);	
 	}
 	
+	public int getMax() {
+		return maxQuantity;
+	}
+	
 	public int free() {
 		return maxQuantity - quantity;
 	}

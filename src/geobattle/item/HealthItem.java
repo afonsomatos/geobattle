@@ -11,7 +11,7 @@ import geobattle.sprite.Sprite;
 
 public class HealthItem extends UnitsItem {
 
-	private static Sprite sprite = new SolidCross(50, 50, Color.GREEN);
+	private static Sprite sprite = new SolidCross(30, 30, Color.GREEN);
 	
 	public HealthItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);

@@ -12,7 +12,7 @@ import geobattle.weapon.Weapon;
 
 public class AmmoItem extends UnitsItem {
 
-	private static Sprite sprite = new SolidDiamond(24, 24, Color.WHITE);
+	private static Sprite sprite = new SolidDiamond(30, 30, Color.WHITE);
 	
 	public AmmoItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);

@@ -11,7 +11,7 @@ import geobattle.sprite.Sprite;
 
 public class ShieldItem extends UnitsItem {
 
-	private static Sprite sprite = new SolidCross(50, 50, Color.CYAN);
+	private static Sprite sprite = new SolidCross(30, 30, Color.CYAN);
 	
 	public ShieldItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);

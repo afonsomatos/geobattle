@@ -13,7 +13,9 @@ public class SolidDiamond extends Sprite {
 			gfx.setStroke(new BasicStroke(10));
 			gfx.setColor(color);
 			gfx.rotate(Math.PI / 4);
-			gfx.fillRect(-10, -10, 20, 20);
+			
+			int side = (int) Math.sqrt(Math.pow(height/2, 2) + Math.pow(width/2, 2));
+			gfx.fillRect(-side/2, -side/2, side, side);
 		});
 	}
 

@@ -75,8 +75,11 @@ public class GameObject implements Renderer {
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		if (spriteRenderer != null)
+		if (spriteRenderer != null) {
+			Graphics2D gfx = (Graphics2D) superGfx.create();
 			spriteRenderer.render(superGfx);
+			gfx.dispose();
+		}
 	}
 	
 	public void tick() {
