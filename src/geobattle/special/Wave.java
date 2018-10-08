@@ -8,7 +8,7 @@ import geobattle.collider.CollisionMatrix;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.living.AliveObject;
+import geobattle.living.Living;
 import geobattle.util.Counter;
 import geobattle.util.Util;
 
@@ -56,8 +56,8 @@ class Wave extends GameObject {
 		
 		CollisionMatrix colMatrix = game.getCollisionHandler().getCollisionMatrix();
 		for (GameObject g : game.getGameObjects()) {
-			if (g instanceof AliveObject && distance(g) <= radius && colMatrix.collidesWith(tag, g.getTag())) {
-				((AliveObject) g).suffer(damage);
+			if (g instanceof Living && distance(g) <= radius && colMatrix.collidesWith(tag, g.getTag())) {
+				((Living) g).suffer(damage);
 			}
 		}
 	}

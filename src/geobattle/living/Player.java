@@ -22,7 +22,7 @@ import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
-public class Player extends AliveObject {
+public class Player extends Living {
 	
 	private Tank shieldTank = new Tank(300);
 	

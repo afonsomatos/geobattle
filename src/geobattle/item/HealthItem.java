@@ -4,7 +4,7 @@ import geobattle.collider.Box;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.living.AliveObject;
+import geobattle.living.Living;
 import geobattle.sprite.SpriteMap;
 
 public class HealthItem extends UnitsItem {
@@ -18,8 +18,8 @@ public class HealthItem extends UnitsItem {
 
 	@Override
 	public void collected(GameObject collector) {
-		if (collector instanceof AliveObject) {
-			AliveObject obj = (AliveObject) collector;
+		if (collector instanceof Living) {
+			Living obj = (Living) collector;
 			setUnits(obj.giveHealth(getUnits()));
 		}
 		super.collected(collector);

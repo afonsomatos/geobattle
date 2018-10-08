@@ -10,11 +10,11 @@ import geobattle.core.GameObject;
 import geobattle.util.Tank;
 import geobattle.weapon.projectile.Projectile;
 
-public class AliveObject extends GameObject {
+public class Living extends GameObject {
 
 	private Tank healthTank = new Tank();
 	
-	public AliveObject(Game game, double x, double y) {
+	public Living(Game game, double x, double y) {
 		super(game, x, y);
 		setupCollider();
 	}
@@ -26,7 +26,7 @@ public class AliveObject extends GameObject {
 				GameObject otherObj = other.getGameObject();
 				if (otherObj instanceof Projectile) {
 					Projectile projectile = (Projectile) otherObj;
-					AliveObject.this.suffer(projectile.getDamage());
+					Living.this.suffer(projectile.getDamage());
 					projectile.kill();
 				}
 			}

@@ -3,10 +3,10 @@ package geobattle.living.enemies;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.living.AliveObject;
+import geobattle.living.Living;
 import geobattle.weapon.Weapon;
 
-public class Enemy extends AliveObject {
+public class Enemy extends Living {
 	
 	private GameObject target = null;
 	
