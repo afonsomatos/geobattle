@@ -97,7 +97,7 @@ public class Weapon extends GameObject {
 	}
 	
 	@Override
-	public void drawer(Graphics2D superGfx) {
+	public void render(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.rotate(fireAngle, (int) getX(), (int) getY());
 		gfx.translate(getX(), getY());

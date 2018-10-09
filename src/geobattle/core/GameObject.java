@@ -10,7 +10,7 @@ import geobattle.extension.Extension;
 import geobattle.render.Drawer;
 import geobattle.render.SpriteRenderer;
 
-public class GameObject implements Drawer {
+public class GameObject {
 
 	private double width 	= 0;
 	private double height 	= 0;
@@ -19,9 +19,8 @@ public class GameObject implements Drawer {
 	private double speed 	= 0;
 	private double velX		= 0;
 	private double velY		= 0;
-	
-	private double accX = 0;
-	private double accY = 0;
+	private double accX 	= 0;
+	private double accY 	= 0;
 
 	private boolean active 	= true;
 	private boolean hidden 	= false;
@@ -67,8 +66,7 @@ public class GameObject implements Drawer {
 		return spriteRendererList;
 	}
 	
-	@Override
-	public void drawer(Graphics2D superGfx) {
+	public void render(Graphics2D superGfx) {
 		
 		// Render all sprites
 		for (SpriteRenderer s : spriteRendererList) {

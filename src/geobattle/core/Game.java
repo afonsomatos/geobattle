@@ -35,6 +35,7 @@ public class Game {
 	private Schedule schedule = new Schedule();
 	private Player player;
 	private HUD hud;
+	
 	private LevelManager levelManager;
 	private CollisionHandler collisionHandler;
 	
@@ -197,10 +198,9 @@ public class Game {
 		gfx.fillRect(0, 0, width, height);
 		gfx.setColor(oldColor);
 		
-		for (GameObject g : gameObjects) {
+		for (GameObject g : gameObjects)
 			if (!g.isHidden())
-				g.drawer(gfx);
-		}
+				g.render(gfx);
 
 		hud.drawer(gfx);
 

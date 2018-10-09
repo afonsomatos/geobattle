@@ -54,8 +54,8 @@ public class Living extends GameObject {
 	}
 	
 	@Override
-	public void drawer(Graphics2D superGfx) {
-		super.drawer(superGfx);
+	public void render(Graphics2D superGfx) {
+		super.render(superGfx);
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		
 		final int width = 40;

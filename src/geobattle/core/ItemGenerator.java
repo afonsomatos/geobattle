@@ -7,6 +7,8 @@ import geobattle.util.Util;
 
 public class ItemGenerator extends GameObject {
 
+	private final int MARGIN = 100;
+	
 	int lastWave = 0;
 	
 	public ItemGenerator(Game game) {
@@ -21,8 +23,8 @@ public class ItemGenerator extends GameObject {
 		if (wave != 0 && wave != lastWave) {
 			lastWave = wave;
 
-			int randX = Util.randomInteger(100, game.getWidth());
-			int randY = Util.randomInteger(100, game.getHeight());
+			int randX = Util.randomInteger(MARGIN, game.getWidth() - MARGIN);
+			int randY = Util.randomInteger(MARGIN, game.getHeight() - MARGIN);
 
 			if (wave % 3 == 0) {
 				game.spawnGameObject(new HealthItem(game, randX, randY, 300));

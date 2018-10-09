@@ -55,13 +55,13 @@ public class Compass extends GameObject {
 	}
 	
 	@Override
-	public void drawer(Graphics2D gfx) {
+	public void render(Graphics2D gfx) {
 		// Change angle before rendering
 		double angle = 0;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;
 		srend.setRotation(angle);
-		super.drawer(gfx);
+		super.render(gfx);
 	}
 	
 }

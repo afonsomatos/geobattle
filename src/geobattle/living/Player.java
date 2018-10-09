@@ -153,9 +153,9 @@ public class Player extends Living {
 	}
 	
 	@Override
-	public void drawer(Graphics2D superGfx) {
+	public void render(Graphics2D superGfx) {
 		shieldRenderer.setActive(shieldTank.get() > 0);
-		super.drawer(superGfx);
+		super.render(superGfx);
 	}
 
 }

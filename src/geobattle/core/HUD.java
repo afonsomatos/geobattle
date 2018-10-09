@@ -125,7 +125,7 @@ class HUD implements Drawer {
 		
 			playerCompass.setY(middle);
 			playerCompass.setTarget(game.getPlayer());
-			playerCompass.drawer(gfx);
+			playerCompass.render(gfx);
 		}
 
 		gfx.dispose();
