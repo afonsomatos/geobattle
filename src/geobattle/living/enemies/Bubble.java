@@ -12,6 +12,7 @@ import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.weapon.projectile.Projectile;
@@ -28,6 +29,7 @@ public class Bubble extends Enemy {
 	};
 
 	private boolean exploded = false;
+	private SpriteRenderer spriteRenderer;
 	
 	public Bubble(Game game, int x, int y) {
 		super(game, x, y, null);
@@ -42,11 +44,14 @@ public class Bubble extends Enemy {
 		setHealth(300);
 		
 		setupCollider();
+		
+		spriteRenderer = new SpriteRenderer();
+		getSpriteRendererList().add(spriteRenderer);
 		updateSprite();
 	}
 
 	public void updateSprite() {
-		getSpriteRenderer().setSprite(new SolidSquare(getWidth(), getHeight(), Color.YELLOW));
+		spriteRenderer.setSprite(new SolidSquare(getWidth(), getHeight(), Color.YELLOW));
 	}
 	
 	public void enlarge(double increase) {

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.util.Util;
 
 public class Compass extends GameObject {
@@ -13,10 +14,11 @@ public class Compass extends GameObject {
 	private double lastAngle = 0;
 	private GameObject target;
 	
-	private static Sprite sprite;
+	private SpriteRenderer srend;
 	
+	private static Sprite sprite = new Sprite(40, 40, 20, 20);
+
 	static {
-		sprite = new Sprite(40, 40, 20, 20);
 		sprite.draw((Graphics2D gfx) -> {
 			int radius = 20;
 			
@@ -44,7 +46,8 @@ public class Compass extends GameObject {
 	public Compass(Game game, int x, int y, GameObject target) {
 		super(game, x, y);
 		this.target = target;
-		getSpriteRenderer().setSprite(sprite);
+		srend = new SpriteRenderer(sprite);
+		getSpriteRendererList().add(srend);
 	}
 	
 	public void setTarget(GameObject target) {
@@ -54,10 +57,10 @@ public class Compass extends GameObject {
 	@Override
 	public void render(Graphics2D gfx) {
 		// Change angle before rendering
-		double angle;
+		double angle = 0;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;
-		getSpriteRenderer().setRotation(0);
+		srend.setRotation(angle);
 		super.render(gfx);
 	}
 	

@@ -1,15 +1,18 @@
 package geobattle.living.enemies;
 
 import java.awt.Color;
+import java.util.List;
 
 import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.extension.Extension;
 import geobattle.extension.FollowExtension;
 import geobattle.extension.ShootExtension;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.weapon.Weapon;
 
 public class Soldier extends Enemy {
@@ -26,10 +29,12 @@ public class Soldier extends Enemy {
 		setHealth(100);
 		
 		weapon = buildWeapon(target);
-		addBehavior(new ShootExtension(target, weapon));
-		addBehavior(new FollowExtension(target, 300));
+		
+		List<Extension> extensionList = getExtensionList();
+		extensionList.add(new ShootExtension(target, weapon));
+		extensionList.add(new FollowExtension(target, 300));
 
-		getSpriteRenderer().setSprite(sprite);
+		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		getCollider().surround(Box.SPRITE);
 	}
 	

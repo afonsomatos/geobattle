@@ -2,7 +2,8 @@ package geobattle.core;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
@@ -21,17 +22,17 @@ public class GameObject implements Renderer {
 	private double accX = 0;
 	private double accY = 0;
 
-	private boolean active = true;
+	private boolean active 	= true;
 	private boolean hidden 	= false;
 	private boolean freezed	= false;
 	
 	private Color color 	= Color.WHITE;
 	private Tag tag			= Tag.Neutral;
 	
-	private SpriteRenderer spriteRenderer;
-	
 	private Collider collider = null;
-	private LinkedList<Extension> behaviors = new LinkedList<Extension>();
+	
+	private List<SpriteRenderer> spriteRendererList = new ArrayList<SpriteRenderer>();
+	private List<Extension> extensionList 			= new ArrayList<Extension>();
 
 	protected Game game;
 	
@@ -43,16 +44,14 @@ public class GameObject implements Renderer {
 		this.setGame(game);
 		this.setX(x);
 		this.setY(y);
-		
-		spriteRenderer = new SpriteRenderer(this);
 	}
 
 	public boolean isOutOfBorders() {
 		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
 	}
-
-	public void addBehavior(Extension b) {
-		behaviors.add(b);
+	
+	public List<Extension> getExtensionList () {
+		return extensionList;
 	}
 	
 	public void setActive(boolean active) {
@@ -63,22 +62,25 @@ public class GameObject implements Renderer {
 		return active;
 	}
 	
-	public SpriteRenderer getSpriteRenderer() {
-		return spriteRenderer;
+	public List<SpriteRenderer> getSpriteRendererList() {
+		return spriteRendererList;
 	}
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		if (spriteRenderer != null) {
+		
+		// Render all sprites
+		for (SpriteRenderer s : spriteRendererList) {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
-			spriteRenderer.render(superGfx);
+			s.render((int) x, (int) y, gfx);
 			gfx.dispose();
 		}
+		
 	}
 	
 	public void tick() {
 		
-		for (Extension b : behaviors)
+		for (Extension b : extensionList)
 			b.tick(this);
 		
 		velX += accX;

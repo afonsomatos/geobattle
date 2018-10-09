@@ -8,6 +8,7 @@ import geobattle.core.GameObject;
 import geobattle.living.Player;
 import geobattle.sprite.SolidDiamond;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.weapon.Weapon;
 
 public class AmmoItem extends UnitsItem {
@@ -18,7 +19,8 @@ public class AmmoItem extends UnitsItem {
 		super(game, x, y, units);
 		
 		setLabelColor(Color.RED);
-		getSpriteRenderer().setSprite(sprite);
+		
+		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		getCollider().surround(Box.SPRITE);
 	}
 

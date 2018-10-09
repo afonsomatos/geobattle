@@ -8,6 +8,7 @@ import geobattle.core.GameObject;
 import geobattle.living.Player;
 import geobattle.sprite.SolidCross;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 
 public class ShieldItem extends UnitsItem {
 
@@ -16,7 +17,7 @@ public class ShieldItem extends UnitsItem {
 	public ShieldItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
 		
-		getSpriteRenderer().setSprite(sprite);
+		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		getCollider().surround(Box.SPRITE);
 	}
 

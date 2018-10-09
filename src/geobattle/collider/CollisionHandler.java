@@ -27,8 +27,6 @@ public class CollisionHandler {
 		
 		LinkedList<Collider> colliders = getColliders();
 		
-		// TODO: Find more efficient way to handle collisions
-		
 		for (int i = 0; i < colliders.size(); ++i) {
 			for (int j = i + 1; j < colliders.size(); j++) {
 				Collider c1 = colliders.get(i);

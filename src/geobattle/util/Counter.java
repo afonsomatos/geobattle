@@ -4,11 +4,17 @@ public abstract class Counter {
 
 	private double start, step, end;
 	private double value;
+	private boolean loop = true;
 	
 	public Counter(double start, double step, double end) {
 		value = this.start = start;
 		this.step = step;
 		this.end = end;
+	}
+	
+	public Counter(double start, double step, double end, boolean loop) {
+		this(start, step, end);
+		this.loop = loop;
 	}
 	
 	public Counter(double step) {
@@ -38,7 +44,8 @@ public abstract class Counter {
 	public void tick() {
 		value += step;
 		if (start >= end && value <= end || start <= end && value >= end) {
-			value = start;
+			if (loop)
+				reset();
 			fire();
 		}
 	}

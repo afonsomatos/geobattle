@@ -9,6 +9,7 @@ import geobattle.core.Tag;
 import geobattle.extension.ShootExtension;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.weapon.Weapon;
 
 public class Tower extends Enemy {
@@ -26,8 +27,8 @@ public class Tower extends Enemy {
 		setSpeed(0);
 
 		weapon = buildWeapon(target);
-		addBehavior(new ShootExtension(target, weapon));
-		getSpriteRenderer().setSprite(sprite);
+		getExtensionList().add(new ShootExtension(target, weapon));
+		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		getCollider().surround(Box.SPRITE);
 	}
 

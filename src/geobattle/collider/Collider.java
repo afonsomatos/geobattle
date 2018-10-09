@@ -38,7 +38,7 @@ public class Collider {
 	public void surround(Box box) {
 		switch (box) {
 			case SPRITE:
-				Sprite sprite = gameObject.getSpriteRenderer().getSprite();
+				Sprite sprite = gameObject.getSpriteRendererList().get(0).getSprite();
 				width = sprite.getWidth();
 				height = sprite.getHeight();
 				offsetX = -sprite.getCenterX();

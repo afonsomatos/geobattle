@@ -8,6 +8,7 @@ import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.sprite.SolidSquare;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.weapon.projectile.BlockBullet;
 import geobattle.weapon.projectile.Projectile;
 
@@ -88,8 +89,8 @@ public class StarBurstSpecial extends Special {
 					p.setColor(color);
 					break;
 			}
-
-			p.getSpriteRenderer().setSprite(new SolidSquare(8, 8, p.getColor()));
+			
+			p.getSpriteRendererList().add(new SpriteRenderer(new SolidSquare(8, 8, p.getColor())));
 			p.setVelX(Math.cos(delta + step * i) * speed);
 			p.setVelY(Math.sin(delta + step * i) * speed);
 			game.spawnGameObject(p);

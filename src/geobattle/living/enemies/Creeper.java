@@ -13,6 +13,7 @@ import geobattle.living.Player;
 import geobattle.special.StarBurstSpecial;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 
 public class Creeper extends Enemy {
 
@@ -27,12 +28,11 @@ public class Creeper extends Enemy {
 		starBurst.setColor(Color.GREEN);
 		starBurst.setProjectiles(20);
 		
-		addBehavior(new FollowExtension(target));
-		
 		setSpeed(1);
 		setHealth(400);
 
-		getSpriteRenderer().setSprite(sprite);
+		getExtensionList().add(new FollowExtension(target));
+		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		setupCollider();
 	}
 	

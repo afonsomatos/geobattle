@@ -8,6 +8,7 @@ import geobattle.core.GameObject;
 import geobattle.living.Living;
 import geobattle.sprite.SolidCross;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 
 public class HealthItem extends UnitsItem {
 
@@ -17,7 +18,7 @@ public class HealthItem extends UnitsItem {
 		super(game, x, y, units);
 		
 		setLabelColor(Color.GREEN);
-		getSpriteRenderer().setSprite(sprite);
+		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		getCollider().surround(Box.SPRITE);
 	}
 

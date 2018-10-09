@@ -9,6 +9,7 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
@@ -270,7 +271,7 @@ public class Weapon extends GameObject {
 			p.setColor(projectileColor);
 			p.setDamage(damage);
 			
-			p.getSpriteRenderer().setSprite(new SolidSquare(projectileSize, projectileSize, projectileColor));
+			p.getSpriteRendererList().add(new SpriteRenderer(new SolidSquare(projectileSize, projectileSize, projectileColor)));
 			p.getCollider().surround(Box.OBJECT);
 			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);

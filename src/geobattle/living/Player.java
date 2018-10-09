@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.List;
 
 import geobattle.collider.Box;
 import geobattle.collider.Collider;
@@ -15,6 +16,7 @@ import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.sprite.SolidSquare;
 import geobattle.sprite.Sprite;
+import geobattle.sprite.SpriteRenderer;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
@@ -23,8 +25,19 @@ import geobattle.weapon.Weapon;
 public class Player extends Living {
 	
 	public static Sprite sprite	= new SolidSquare(40, 40, Color.CYAN);
-
+	public static Sprite shieldSprite = new Sprite(40, 40, 20, 20);
+	
+	static {
+		shieldSprite.draw(0, 0, (Graphics2D gfx) -> {
+			gfx.setColor(Color.BLUE);
+			final int thickness = 5;
+			gfx.setStroke(new BasicStroke(5));
+			gfx.drawRect(thickness / 2, thickness / 2, 40 - thickness, 40 - thickness);
+		});
+	}
+	
 	private Tank shieldTank = new Tank(300);
+	private SpriteRenderer shieldRenderer;
 	
 	private boolean firing = false;
 	
@@ -57,7 +70,11 @@ public class Player extends Living {
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
 		
-		getSpriteRenderer().setSprite(sprite);
+		shieldRenderer = new SpriteRenderer(shieldSprite);
+		
+		List<SpriteRenderer> slist = getSpriteRendererList();
+		slist.add(new SpriteRenderer(sprite));
+		slist.add(shieldRenderer);
 
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
@@ -137,18 +154,8 @@ public class Player extends Living {
 	
 	@Override
 	public void render(Graphics2D superGfx) {
+		shieldRenderer.setActive(shieldTank.get() > 0);
 		super.render(superGfx);
-		
-		if (shieldTank.get() <= 0)
-			return;
-		
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setColor(Color.BLUE);
-		final int thickness = 5;
-		gfx.setStroke(new BasicStroke(thickness));
-			
-		Rectangle rect = (Rectangle) this.getCollider().getBounds();
-		gfx.drawRect(rect.x + thickness / 2, rect.y + thickness / 2, rect.width - thickness, rect.height - thickness);
 	}
 
 }

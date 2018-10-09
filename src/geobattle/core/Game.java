@@ -43,7 +43,7 @@ public class Game {
 	
 	private Event outOfBorderEvent;
 	private boolean outOfBorders = false;
-	private Counter outOfBorderCounter = new Counter(5, -1, 0) {
+	private Counter outOfBorderCounter = new Counter(5, -1, 0, false) {
 		@Override
 		public void fire() {
 			outOfBorderEvent.setOff(true);
