@@ -17,7 +17,7 @@ import geobattle.item.HealthItem;
 import geobattle.item.ShieldItem;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
-import geobattle.render.Drawer;
+import geobattle.render.Renderer;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.weapon.Arsenal;
@@ -29,7 +29,7 @@ import geobattle.weapon.Unlimited;
 public class Game {
 
 	private boolean RENDER_DEBUG = false;
-	private Drawer debugRender;
+	private Renderer debugRender;
 
 	private Window window;
 	private Schedule schedule = new Schedule();
@@ -202,10 +202,10 @@ public class Game {
 			if (!g.isHidden())
 				g.render(gfx);
 
-		hud.drawer(gfx);
+		hud.render(gfx);
 
 		if (RENDER_DEBUG)
-			debugRender.drawer(gfx);
+			debugRender.render(gfx);
 		 
 		gfx.dispose();
 		window.getBufferStrategy().show();

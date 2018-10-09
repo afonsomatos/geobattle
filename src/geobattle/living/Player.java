@@ -12,9 +12,9 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.render.SolidSquare;
-import geobattle.render.Sprite;
-import geobattle.render.SpriteRenderer;
+import geobattle.render.sprite.SolidSquare;
+import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.SpriteRenderer;
 import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
@@ -35,7 +35,7 @@ public class Player extends Living {
 			gfx.drawRect(thickness / 2, thickness / 2, 40 - thickness, 40 - thickness);
 		});
 	}
-	
+
 	private Tank shieldTank = new Tank(300);
 	private SpriteRenderer shieldRenderer;
 	

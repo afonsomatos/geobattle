@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
-import geobattle.render.Drawer;
+import geobattle.render.Renderer;
 
-class Debug implements Drawer {
+class Debug implements Renderer {
 
 	private Game game;
 	
@@ -55,7 +55,7 @@ class Debug implements Drawer {
 	}
 	
 	@Override
-	public void drawer(Graphics2D gfx) {
+	public void render(Graphics2D gfx) {
 		renderPositionFx(gfx);
 		renderColliderFx(gfx);
 	}

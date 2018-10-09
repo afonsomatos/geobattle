@@ -6,9 +6,9 @@ import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Living;
-import geobattle.render.SolidCross;
-import geobattle.render.Sprite;
-import geobattle.render.SpriteRenderer;
+import geobattle.render.sprite.SolidCross;
+import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.SpriteRenderer;
 
 public class HealthItem extends UnitsItem {
 

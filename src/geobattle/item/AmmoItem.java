@@ -6,9 +6,9 @@ import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Player;
-import geobattle.render.SolidDiamond;
-import geobattle.render.Sprite;
-import geobattle.render.SpriteRenderer;
+import geobattle.render.sprite.SolidDiamond;
+import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.SpriteRenderer;
 import geobattle.weapon.Weapon;
 
 public class AmmoItem extends UnitsItem {

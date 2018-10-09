@@ -7,8 +7,8 @@ import java.util.Random;
 import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.Tag;
-import geobattle.render.SolidSquare;
-import geobattle.render.SpriteRenderer;
+import geobattle.render.sprite.SolidSquare;
+import geobattle.render.sprite.SpriteRenderer;
 import geobattle.weapon.projectile.BlockBullet;
 import geobattle.weapon.projectile.Projectile;
 

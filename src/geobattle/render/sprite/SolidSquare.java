@@ -1,4 +1,4 @@
-package geobattle.render;
+package geobattle.render.sprite;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

@@ -7,8 +7,8 @@ import java.util.List;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
-import geobattle.render.Drawer;
-import geobattle.render.SpriteRenderer;
+import geobattle.render.Renderer;
+import geobattle.render.sprite.SpriteRenderer;
 
 public class GameObject {
 
