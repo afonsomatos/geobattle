@@ -7,9 +7,9 @@ import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.sprite.SolidSquare;
-import geobattle.sprite.Sprite;
-import geobattle.sprite.SpriteRenderer;
+import geobattle.render.SolidSquare;
+import geobattle.render.Sprite;
+import geobattle.render.SpriteRenderer;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
@@ -97,7 +97,7 @@ public class Weapon extends GameObject {
 	}
 	
 	@Override
-	public void render(Graphics2D superGfx) {
+	public void drawer(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.rotate(fireAngle, (int) getX(), (int) getY());
 		gfx.translate(getX(), getY());

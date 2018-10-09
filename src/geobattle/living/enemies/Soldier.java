@@ -10,9 +10,9 @@ import geobattle.core.Tag;
 import geobattle.extension.Extension;
 import geobattle.extension.FollowExtension;
 import geobattle.extension.ShootExtension;
-import geobattle.sprite.SolidSquare;
-import geobattle.sprite.Sprite;
-import geobattle.sprite.SpriteRenderer;
+import geobattle.render.SolidSquare;
+import geobattle.render.Sprite;
+import geobattle.render.SpriteRenderer;
 import geobattle.weapon.Weapon;
 
 public class Soldier extends Enemy {

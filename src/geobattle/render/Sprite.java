@@ -1,9 +1,7 @@
-package geobattle.sprite;
+package geobattle.render;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
-import geobattle.core.Renderer;
 
 public class Sprite extends BufferedImage {
 	
@@ -32,14 +30,14 @@ public class Sprite extends BufferedImage {
 		return centerY;
 	}
 	
-	public void draw(int dx, int dy, Renderer renderer) {
+	public void draw(int dx, int dy, Drawer renderer) {
 		Graphics2D gfx = (Graphics2D) getGraphics();
 		gfx.translate(dx, dy);
-		renderer.render(gfx);
+		renderer.drawer(gfx);
 		gfx.dispose();	
 	}
 	
-	public void draw(Renderer renderer) {
+	public void draw(Drawer renderer) {
 		draw(getCenterX(), getCenterY(), renderer);
 	}
 	

@@ -37,8 +37,8 @@ public class UnitsItem extends Item {
 	}
 	
 	@Override
-	public void render(Graphics2D superGfx) {
-		super.render(superGfx);
+	public void drawer(Graphics2D superGfx) {
+		super.drawer(superGfx);
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		String label = Integer.toString(unitsTank.get());
 		int x = (int) (getX() - gfx.getFontMetrics().stringWidth(label) / 2.0);

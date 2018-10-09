@@ -7,9 +7,10 @@ import java.util.List;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
-import geobattle.sprite.SpriteRenderer;
+import geobattle.render.Drawer;
+import geobattle.render.SpriteRenderer;
 
-public class GameObject implements Renderer {
+public class GameObject implements Drawer {
 
 	private double width 	= 0;
 	private double height 	= 0;
@@ -67,7 +68,7 @@ public class GameObject implements Renderer {
 	}
 	
 	@Override
-	public void render(Graphics2D superGfx) {
+	public void drawer(Graphics2D superGfx) {
 		
 		// Render all sprites
 		for (SpriteRenderer s : spriteRendererList) {

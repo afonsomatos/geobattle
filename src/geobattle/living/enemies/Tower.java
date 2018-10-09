@@ -7,9 +7,9 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.ShootExtension;
-import geobattle.sprite.SolidSquare;
-import geobattle.sprite.Sprite;
-import geobattle.sprite.SpriteRenderer;
+import geobattle.render.SolidSquare;
+import geobattle.render.Sprite;
+import geobattle.render.SpriteRenderer;
 import geobattle.weapon.Weapon;
 
 public class Tower extends Enemy {

@@ -1,9 +1,6 @@
-package geobattle.sprite;
+package geobattle.render;
 
 import java.awt.Graphics2D;
-
-import geobattle.core.GameObject;
-import geobattle.core.Renderer;
 
 public class SpriteRenderer {
 

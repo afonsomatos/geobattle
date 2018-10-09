@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.sprite.Sprite;
+import geobattle.render.Sprite;
 
 public class Collider {
 

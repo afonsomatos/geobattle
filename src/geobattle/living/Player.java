@@ -12,11 +12,11 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.render.SolidSquare;
+import geobattle.render.Sprite;
+import geobattle.render.SpriteRenderer;
 import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
-import geobattle.sprite.SolidSquare;
-import geobattle.sprite.Sprite;
-import geobattle.sprite.SpriteRenderer;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
@@ -153,9 +153,9 @@ public class Player extends Living {
 	}
 	
 	@Override
-	public void render(Graphics2D superGfx) {
+	public void drawer(Graphics2D superGfx) {
 		shieldRenderer.setActive(shieldTank.get() > 0);
-		super.render(superGfx);
+		super.drawer(superGfx);
 	}
 
 }

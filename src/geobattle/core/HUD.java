@@ -6,10 +6,11 @@ import java.awt.Graphics2D;
 
 import geobattle.living.Player;
 import geobattle.object.Compass;
+import geobattle.render.Drawer;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
-class HUD implements Renderer {
+class HUD implements Drawer {
 
 	private Game game;
 	private Compass playerCompass;
@@ -124,7 +125,7 @@ class HUD implements Renderer {
 		
 			playerCompass.setY(middle);
 			playerCompass.setTarget(game.getPlayer());
-			playerCompass.render(gfx);
+			playerCompass.drawer(gfx);
 		}
 
 		gfx.dispose();
@@ -146,7 +147,7 @@ class HUD implements Renderer {
 	}
 	
 	@Override
-	public void render(Graphics2D _gfx) {
+	public void drawer(Graphics2D _gfx) {
 		
 		renderWarnings(_gfx);
 		renderPlayerExitingMap(_gfx);
