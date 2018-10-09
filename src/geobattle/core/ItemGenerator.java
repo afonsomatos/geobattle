@@ -27,7 +27,7 @@ public class ItemGenerator extends GameObject {
 			if (wave % 3 == 0) {
 				game.spawnGameObject(new HealthItem(game, randX, randY, 300));
 			} else if (wave % 5 == 0) {
-				game.spawnGameObject(new AmmoItem(game, randX, randY, 00));
+				game.spawnGameObject(new AmmoItem(game, randX, randY, 100));
 			} else if (wave % 7 == 0) {
 				game.spawnGameObject(new ShieldItem(game, randX, randY, 200));
 			}

@@ -34,7 +34,7 @@ public class Game {
 	private Window window;
 	private Schedule schedule = new Schedule();
 	private Player player;
-	private HUD hud;	
+	private HUD hud;
 	private LevelManager levelManager;
 	private CollisionHandler collisionHandler;
 	
