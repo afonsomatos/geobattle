@@ -61,13 +61,11 @@ public class Soldier extends Enemy {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
 		
 	}
 		

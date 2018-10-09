@@ -17,7 +17,7 @@ class MouseInput implements MouseListener, MouseMotionListener {
 		mouseFollower = new GameObject(game) {
 			@Override
 			public void update() {
-				// TODO Auto-generated method stub
+
 			}
 		};
 		game.spawnGameObject(mouseFollower);		

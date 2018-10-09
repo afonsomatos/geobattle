@@ -56,8 +56,6 @@ class LevelManager {
 			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
 			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
-			/*
-			*/
 		}
 		
 		for (Enemy e : newEnemies)

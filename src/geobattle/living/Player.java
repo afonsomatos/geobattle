@@ -159,7 +159,6 @@ public class Player extends Living {
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
 		
 	}
 
