@@ -2,8 +2,8 @@ package geobattle.extension;
 
 import geobattle.core.GameObject;
 
-public abstract class Extension<T extends GameObject> {
+public interface Extension {
 	
-	public abstract void tick(T gameObject);
+	public void update(GameObject gameObject);
 
 }

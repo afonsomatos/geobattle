@@ -34,6 +34,8 @@ public abstract class Living extends GameObject {
 		});	
 	}
 	
+	public abstract void die();
+	
 	public void suffer(int hit) {
 		healthTank.take(hit);
 	}

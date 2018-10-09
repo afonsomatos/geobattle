@@ -8,8 +8,8 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Extension;
-import geobattle.extension.FollowExtension;
-import geobattle.extension.ShootExtension;
+import geobattle.extension.Follower;
+import geobattle.extension.Shooter;
 import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.SpriteRenderer;
@@ -30,9 +30,8 @@ public class Soldier extends Enemy {
 		
 		weapon = buildWeapon(target);
 		
-		List<Extension> extensionList = getExtensionList();
-		extensionList.add(new ShootExtension(target, weapon));
-		extensionList.add(new FollowExtension(target, 300));
+		addExtension(new Shooter(target, weapon));
+		addExtension(new Follower(target, 300));
 
 		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		getCollider().surround(Box.SPRITE);
@@ -62,6 +61,12 @@ public class Soldier extends Enemy {
 
 	@Override
 	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void die() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -32,7 +32,9 @@ public abstract class GameObject {
 	private Collider collider = null;
 	
 	private List<SpriteRenderer> spriteRendererList = new ArrayList<SpriteRenderer>();
-	private List<Extension> extensionList 			= new ArrayList<Extension>();
+	
+	
+	private List<Extension> extensions = new ArrayList<Extension>();
 
 	// no getGame() please
 	protected Game game;
@@ -51,8 +53,8 @@ public abstract class GameObject {
 		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
 	}
 	
-	public List<Extension> getExtensionList () {
-		return extensionList;
+	public void addExtension(Extension extension) {
+		extensions.add(extension);
 	}
 	
 	public void setActive(boolean active) {
@@ -84,8 +86,8 @@ public abstract class GameObject {
 		
 		update();
 		
-		for (Extension b : extensionList)
-			b.tick(this);
+		for (Extension b : extensions)
+			b.update(this);
 		
 		velX += accX;
 		velY += accY;

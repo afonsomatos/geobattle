@@ -3,17 +3,17 @@ package geobattle.extension;
 import geobattle.core.GameObject;
 import geobattle.weapon.Weapon;
 
-public class ShootExtension extends Extension {
+public class Shooter implements Extension {
 
 	private Weapon weapon;
 	private GameObject target;
 	private boolean automatic = true;
 
-	public ShootExtension() {
+	public Shooter() {
 		this(null, null);
 	}
 	
-	public ShootExtension(GameObject target, Weapon weapon) {
+	public Shooter(GameObject target, Weapon weapon) {
 		this.target = target;
 		this.weapon = weapon;
 	}
@@ -32,7 +32,7 @@ public class ShootExtension extends Extension {
 	}
 	
 	@Override
-	public void tick(GameObject gameObject) {
+	public void update(GameObject gameObject) {
 
 		if (!automatic) return;
 				

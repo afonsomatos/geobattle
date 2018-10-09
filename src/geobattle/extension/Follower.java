@@ -2,28 +2,28 @@ package geobattle.extension;
 
 import geobattle.core.GameObject;
 
-public class FollowExtension extends Extension {
+public class Follower implements Extension {
 
 	private GameObject target = null;
 	private int maxDistance = 0;
 	private int minDistance = 0;
 	
-	public FollowExtension(GameObject target, int minDistance, int maxDistance) {
+	public Follower(GameObject target, int minDistance, int maxDistance) {
 		this.target = target;
 		this.minDistance = minDistance;
 		this.maxDistance = maxDistance;
 	}
 	
-	public FollowExtension(GameObject target, int minDistance) {
+	public Follower(GameObject target, int minDistance) {
 		this(target, minDistance, 0);
 	}
 	
-	public FollowExtension(GameObject target) {
+	public Follower(GameObject target) {
 		this(target, 0, 0);
 	}
 	
 	@Override
-	public void tick(GameObject gameObject) {
+	public void update(GameObject gameObject) {
 		final double dist = gameObject.distance(target);
 		
 		// If target is too far away, stop

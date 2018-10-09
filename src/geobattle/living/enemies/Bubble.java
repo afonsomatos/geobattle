@@ -95,5 +95,11 @@ public class Bubble extends Enemy {
 	public void update() {
 		attackCounter.tick();
 	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

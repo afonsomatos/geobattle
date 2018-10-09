@@ -8,7 +8,7 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extension.FollowExtension;
+import geobattle.extension.Follower;
 import geobattle.living.Player;
 import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
@@ -31,7 +31,8 @@ public class Creeper extends Enemy {
 		setSpeed(1);
 		setHealth(400);
 
-		getExtensionList().add(new FollowExtension(target));
+		addExtension(new Follower(target));
+		
 		getSpriteRendererList().add(new SpriteRenderer(sprite));
 		setupCollider();
 	}
@@ -57,6 +58,12 @@ public class Creeper extends Enemy {
 
 	@Override
 	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void die() {
 		// TODO Auto-generated method stub
 		
 	}

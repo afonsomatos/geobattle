@@ -17,9 +17,14 @@ public abstract class Enemy extends Living {
 		setTag(Tag.Enemy);
 		
 		getCollider().setTag(Tag.Enemy);
-		getExtensionList().add(new Extension<Enemy>() {
+		
+		// Enemies are killable
+		addExtension(new Extension() {
 			@Override
-			public void tick(Enemy enemy) {
+			public void update(GameObject gameObject) {
+				Enemy enemy = (Enemy) gameObject;
+				System.out.println("hey im dead");
+
 				if (enemy.isDead())
 					enemy.kill();
 			}

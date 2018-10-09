@@ -157,4 +157,10 @@ public class Player extends Living {
 		super.render(superGfx);
 	}
 
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
