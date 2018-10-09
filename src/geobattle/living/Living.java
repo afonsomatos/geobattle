@@ -7,10 +7,11 @@ import java.awt.Graphics2D;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
+import geobattle.extension.Extension;
 import geobattle.util.Tank;
 import geobattle.weapon.projectile.Projectile;
 
-public class Living extends GameObject {
+public abstract class Living extends GameObject {
 
 	private Tank healthTank = new Tank();
 	

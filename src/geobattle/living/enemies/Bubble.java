@@ -92,8 +92,7 @@ public class Bubble extends Enemy {
 	}
 
 	@Override
-	public void tick() {
-		super.tick();
+	public void update() {
 		attackCounter.tick();
 	}
 	

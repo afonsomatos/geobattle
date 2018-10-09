@@ -10,7 +10,7 @@ import geobattle.extension.Extension;
 import geobattle.render.Renderer;
 import geobattle.render.sprite.SpriteRenderer;
 
-public class GameObject {
+public abstract class GameObject {
 
 	private double width 	= 0;
 	private double height 	= 0;
@@ -34,6 +34,7 @@ public class GameObject {
 	private List<SpriteRenderer> spriteRendererList = new ArrayList<SpriteRenderer>();
 	private List<Extension> extensionList 			= new ArrayList<Extension>();
 
+	// no getGame() please
 	protected Game game;
 	
 	public GameObject(Game game) {
@@ -77,7 +78,11 @@ public class GameObject {
 		
 	}
 	
-	public void tick() {
+	public abstract void update();
+	
+	public final void tick() {
+		
+		update();
 		
 		for (Extension b : extensionList)
 			b.tick(this);

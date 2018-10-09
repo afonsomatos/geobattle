@@ -54,5 +54,11 @@ public class Creeper extends Enemy {
 		starBurst.send();
 		this.kill();
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

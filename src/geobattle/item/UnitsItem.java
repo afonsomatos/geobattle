@@ -31,6 +31,11 @@ public class UnitsItem extends Item {
 	}
 	
 	@Override
+	public void update() {
+		
+	}
+	
+	@Override
 	public void collected(GameObject collector) {
 		if (unitsTank.empty())
 			this.kill();

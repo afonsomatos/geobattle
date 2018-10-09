@@ -63,7 +63,7 @@ class Wave extends GameObject {
 	}
 	
 	@Override
-	public void tick() {
+	public void update() {
 		counter.tick();
 	}
 	

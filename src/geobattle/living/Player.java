@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.List;
 
 import geobattle.collider.Box;
@@ -79,11 +78,11 @@ public class Player extends Living {
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
 		col.surround(Box.SPRITE);
+		
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
+	public void update() {
 
 		if (!specialReady)
 			specialCounter.tick();

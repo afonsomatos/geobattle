@@ -3,10 +3,11 @@ package geobattle.living.enemies;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.extension.Extension;
 import geobattle.living.Living;
 import geobattle.weapon.Weapon;
 
-public class Enemy extends Living {
+public abstract class Enemy extends Living {
 	
 	private GameObject target = null;
 	
@@ -16,19 +17,13 @@ public class Enemy extends Living {
 		setTag(Tag.Enemy);
 		
 		getCollider().setTag(Tag.Enemy);
-	}
-	
-	@Override
-	public void kill() {
-		super.kill();
-	}
-	
-	@Override
-	public void tick() {
-		super.tick();
-	
-		if (this.isDead())
-			this.kill();
+		getExtensionList().add(new Extension<Enemy>() {
+			@Override
+			public void tick(Enemy enemy) {
+				if (enemy.isDead())
+					enemy.kill();
+			}
+		});
 	}
 	
 	public void setTarget(GameObject target) {

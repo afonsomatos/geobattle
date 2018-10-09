@@ -199,8 +199,8 @@ public class Weapon extends GameObject {
 		}
 	}
 	
-	public void tick() {
-		super.tick();
+	@Override
+	public void update() {
 		
 		if (pausing)
 			fireCounter.tick();

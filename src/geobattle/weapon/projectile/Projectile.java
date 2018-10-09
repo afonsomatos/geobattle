@@ -23,8 +23,7 @@ public abstract class Projectile extends GameObject {
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
+	public void update() {
 		
 		if (getX() < -10 || getY() < -10 || getX() > 10 + getGame().getWidth()
 				|| getY() > 10 + getGame().getHeight())

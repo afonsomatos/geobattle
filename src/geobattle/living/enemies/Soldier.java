@@ -59,5 +59,11 @@ public class Soldier extends Enemy {
 		super.kill();
 		weapon.kill();
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }
