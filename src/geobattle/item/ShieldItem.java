@@ -2,7 +2,6 @@ package geobattle.item;
 
 import java.awt.Color;
 
-import geobattle.collider.Box;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Player;

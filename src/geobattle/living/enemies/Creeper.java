@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import geobattle.collider.Box;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
@@ -13,7 +12,6 @@ import geobattle.extension.Follower;
 import geobattle.living.Player;
 import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.SpriteRenderer;
 import geobattle.special.StarBurstSpecial;
 
 public class Creeper extends Enemy {

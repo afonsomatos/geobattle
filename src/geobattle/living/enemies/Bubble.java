@@ -4,18 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import geobattle.collider.Box;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.render.sprite.SolidSquare;
-import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.SpriteRenderer;
 import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
 import geobattle.util.Counter;
-import geobattle.util.Log;
 import geobattle.weapon.projectile.Projectile;
 
 public class Bubble extends Enemy {
@@ -30,7 +26,6 @@ public class Bubble extends Enemy {
 	};
 
 	private boolean exploded = false;
-	private SpriteRenderer spriteRenderer;
 	
 	public Bubble(Game game, int x, int y) {
 		super(game, x, y, null);

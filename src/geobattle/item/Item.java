@@ -4,8 +4,6 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.SpriteRenderer;
 
 public abstract class Item extends GameObject {
 	

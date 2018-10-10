@@ -4,16 +4,12 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.List;
-
-import geobattle.collider.Box;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.SpriteRenderer;
 import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
@@ -37,8 +33,6 @@ public class Player extends Living {
 	}
 
 	private Tank shieldTank = new Tank(300);
-	private SpriteRenderer shieldRenderer;
-	
 	private boolean firing = false;
 	
 	private Arsenal arsenal = new Arsenal(4);

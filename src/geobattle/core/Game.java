@@ -6,10 +6,6 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import geobattle.collider.CollisionHandler;
 import geobattle.core.Schedule.Event;
 import geobattle.living.Player;
@@ -36,7 +32,6 @@ public class Game {
 	private LevelManager levelManager;
 	private CollisionHandler collisionHandler;
 	
-	private final double TARGET_FPS = 60.0;
 	private int ups = 0;
 	private int fps = 0;
 	
