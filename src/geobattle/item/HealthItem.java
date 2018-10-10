@@ -14,9 +14,9 @@ public class HealthItem extends UnitsItem {
 	
 	public HealthItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
-		
 		setLabelColor(Color.GREEN);
 		setSprite(sprite);
+		getCollider().surround(sprite);
 	}
 
 	@Override
@@ -25,7 +25,6 @@ public class HealthItem extends UnitsItem {
 			Living obj = (Living) collector;
 			setUnits(obj.giveHealth(getUnits()));
 		}
-		super.collected(collector);
 	}
 
 }

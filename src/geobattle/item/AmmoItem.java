@@ -15,9 +15,9 @@ public class AmmoItem extends UnitsItem {
 	
 	public AmmoItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
-		
 		setLabelColor(Color.RED);
 		setSprite(sprite);
+		getCollider().surround(sprite);
 	}
 
 	@Override
@@ -27,7 +27,6 @@ public class AmmoItem extends UnitsItem {
 			Weapon weapon = p.getWeapon();
 			setUnits(weapon.fillAmmo(getUnits()));
 		}
-		super.collected(collector);
 	}
 
 }
