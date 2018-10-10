@@ -70,5 +70,11 @@ public class Soldier extends Enemy {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

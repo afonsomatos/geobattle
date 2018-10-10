@@ -29,4 +29,10 @@ public class AmmoItem extends UnitsItem {
 		}
 	}
 
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -25,5 +25,11 @@ public class ShieldItem extends UnitsItem {
 			setUnits(p.giveShield(getUnits()));
 		}
 	}
+
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

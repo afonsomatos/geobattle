@@ -17,4 +17,10 @@ public class BlockBullet extends Projectile {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

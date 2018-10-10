@@ -12,12 +12,10 @@ import geobattle.util.Util;
 
 public class Compass extends GameObject {
 
-	private double lastAngle = 0;
-	private GameObject target;
-	
-	private SpriteRenderer srend;
-	
 	private static Sprite sprite = new Sprite(40, 40, 20, 20);
+	
+	private double lastAngle = 0;
+	private GameObject target = null;
 
 	static {
 		sprite.draw((Graphics2D gfx) -> {
@@ -40,10 +38,6 @@ public class Compass extends GameObject {
 		});
 	}
 	
-	public Compass(Game game, int x, int y) {
-		this(game, x, y, null);
-	}
-	
 	public Compass(Game game, int x, int y, GameObject target) {
 		super(game, x, y);
 		this.target = target;
@@ -57,15 +51,20 @@ public class Compass extends GameObject {
 	@Override
 	public void update() {
 		// Change angle before rendering
-		Log.i("ok");
 		double angle = 0;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;
-		srend.setRotation(angle);
+		setRotation(angle);
 	}
 
 	@Override
 	public void render(Graphics2D gfx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void spawn() {
 		// TODO Auto-generated method stub
 		
 	}

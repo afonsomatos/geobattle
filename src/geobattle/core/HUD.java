@@ -21,7 +21,7 @@ class HUD implements Renderer {
 	
 	public HUD(Game game) {
 		this.game = game;
-		playerCompass = new Compass(game, game.getWidth()/2, game.getHeight()/2 + 30);
+		playerCompass = new Compass(game, game.getWidth()/2, game.getHeight()/2 + 30, null);
 	}
 	
 	private void renderTopRight(Graphics2D gfx) {

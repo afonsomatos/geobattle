@@ -11,6 +11,8 @@ import geobattle.render.sprite.Sprite;
 
 public abstract class GameObject {
 
+	protected Game game;
+
 	private double width 	= 0;
 	private double height 	= 0;
 	private double x 		= 0;
@@ -21,35 +23,39 @@ public abstract class GameObject {
 	private double accX 	= 0;
 	private double accY 	= 0;
 	private double rotation = 0;
-	
+
 	private boolean active 	= true;
 	private boolean hidden 	= false;
 	private boolean freezed	= false;
 	
-	private Color color 	= Color.WHITE;
-	private Tag tag			= Tag.Neutral;
+	private Color color = Color.WHITE;
+	private Tag tag		= Tag.Neutral;
 	
-	private Collider collider = null;
+	private Collider collider 	= null;
+	private Sprite sprite		= null;
 	
 	private List<Extension> extensions 	= new ArrayList<Extension>();
 	
-	private Sprite sprite;
-	
-	// no getGame() please
-	protected Game game;
-	
 	public GameObject(Game game) {
-		this(game, 0, 0);
+		this.game = game;
 	}
 	
 	public GameObject(Game game, double x, double y) {
-		this.setGame(game);
-		this.setX(x);
-		this.setY(y);
+		this.game = game;
+		this.x = x;
+		this.y = y;
 	}
 
+	protected abstract void spawn();
+	protected abstract void update();
+	protected abstract void render(Graphics2D gfx);
+	
 	public boolean isOutOfBorders() {
 		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
+	}
+	
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
 	}
 	
 	public void addExtension(Extension extension) {
@@ -73,7 +79,8 @@ public abstract class GameObject {
 	}
 	
 	public void render_(Graphics2D superGfx) {
-		
+		if (hidden) return;
+
 		// Render sprites
 		if (sprite != null) {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
@@ -89,10 +96,8 @@ public abstract class GameObject {
 		render(superGfx);
 	}
 	
-	protected abstract void render(Graphics2D gfx);
-	protected abstract void update();
-	
 	public final void tick() {
+		if (!active) return;
 		
 		update();
 		
@@ -114,10 +119,9 @@ public abstract class GameObject {
 	}
 
 	public void move() {
-		if (!this.isFreezed()) {
-			this.x += this.velX;
-			this.y += this.velY;
-		}
+		if (freezed) return;
+		this.x += this.velX;
+		this.y += this.velY;
 	}
 
 	public boolean isFreezed() {

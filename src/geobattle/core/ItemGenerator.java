@@ -20,6 +20,7 @@ public class ItemGenerator extends GameObject {
 	@Override
 	public void update() {
 		int wave = game.getLevelManager().getLevel();
+		
 		// Don't spawn at start or if it's not a new wave
 		if (wave == 0 || wave == lastWave)
 			return;
@@ -38,8 +39,13 @@ public class ItemGenerator extends GameObject {
 	}
 
 	@Override
+	public void spawn() {
+		
+	}
+
+	@Override
 	public void render(Graphics2D gfx) {
-		// Hidden
+
 	}
 	
 }

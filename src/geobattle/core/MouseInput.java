@@ -24,6 +24,11 @@ class MouseInput implements MouseListener, MouseMotionListener {
 			public void render(Graphics2D gfx) {
 				
 			}
+			@Override
+			protected void spawn() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		game.spawnGameObject(mouseFollower);		
 	}

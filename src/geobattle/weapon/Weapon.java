@@ -283,5 +283,11 @@ public class Weapon extends GameObject {
 		if (loadTank.get() != INFINITE_AMMO)
 			loadTank.take(1);
 	}
+
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

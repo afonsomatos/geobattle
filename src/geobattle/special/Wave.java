@@ -78,4 +78,10 @@ class Wave extends GameObject {
 		gfx.dispose();
 	}
 
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

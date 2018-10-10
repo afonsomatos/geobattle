@@ -152,4 +152,10 @@ public class Player extends Living {
 	public void render(Graphics2D gfx) {
 	}
 
+	@Override
+	protected void spawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
