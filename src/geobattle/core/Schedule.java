@@ -3,12 +3,13 @@ package geobattle.core;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-class Schedule {
+public class Schedule {
 
 	private LinkedList<Event> timers = new LinkedList<Event>();
 
 	public void tick() {
 		long now = System.currentTimeMillis();
+		
 		LinkedList<Event> toRemove = new LinkedList<Event>();
 		for (Event t : new ArrayList<Event>(timers)) {
 			if (t.isOff()) {
