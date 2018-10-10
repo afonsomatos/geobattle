@@ -7,7 +7,7 @@ import java.util.List;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
-import geobattle.render.sprite.SpriteRenderer;
+import geobattle.render.sprite.Sprite;
 
 public abstract class GameObject {
 
@@ -20,7 +20,8 @@ public abstract class GameObject {
 	private double velY		= 0;
 	private double accX 	= 0;
 	private double accY 	= 0;
-
+	private double rotation = 0;
+	
 	private boolean active 	= true;
 	private boolean hidden 	= false;
 	private boolean freezed	= false;
@@ -32,8 +33,8 @@ public abstract class GameObject {
 	
 	private List<Extension> extensions 	= new ArrayList<Extension>();
 	
-	private List<SpriteRenderer> spriteRendererList = new ArrayList<SpriteRenderer>();
-
+	private Sprite sprite;
+	
 	// no getGame() please
 	protected Game game;
 	
@@ -63,26 +64,33 @@ public abstract class GameObject {
 		return active;
 	}
 	
-	public List<SpriteRenderer> getSpriteRendererList() {
-		return spriteRendererList;
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
+	
+	public Sprite getSprite() {
+		return sprite;
 	}
 	
 	public void render_(Graphics2D superGfx) {
 		
-		render(superGfx);
-		
-		// Render all sprites
-		for (SpriteRenderer s : spriteRendererList) {
+		// Render sprites
+		if (sprite != null) {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
-			s.render((int) x, (int) y, gfx);
+			int centerX = sprite.getCenterX();
+			int centerY = sprite.getCenterY();
+			
+			gfx.translate(x - centerX, y - centerY);
+			gfx.rotate(rotation, centerX, centerY);
+			gfx.drawImage(sprite.getImage(), 0, 0, null);
 			gfx.dispose();
 		}
 		
+		render(superGfx);
 	}
 	
-	public abstract void render(Graphics2D gfx);
-	
-	public abstract void update();
+	protected abstract void render(Graphics2D gfx);
+	protected abstract void update();
 	
 	public final void tick() {
 		

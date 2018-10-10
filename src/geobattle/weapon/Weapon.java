@@ -270,8 +270,8 @@ public class Weapon extends GameObject {
 			p.setColor(projectileColor);
 			p.setDamage(damage);
 			
-			p.getSpriteRendererList().add(new SpriteRenderer(new SolidSquare(projectileSize, projectileSize, projectileColor)));
-			p.getCollider().surround(Box.OBJECT);
+			p.setSprite(new SolidSquare(projectileSize, projectileSize, projectileColor));
+			p.getCollider().surround(p.getSprite());
 			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);
 			final double delta = fireRecoil + (projectiles == 1 ? 0 : step * i - fireAmplitude / 2);

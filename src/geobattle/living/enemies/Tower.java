@@ -29,8 +29,8 @@ public class Tower extends Enemy {
 
 		weapon = buildWeapon(target);
 		addExtension(new Shooter(target, weapon));
-		getSpriteRendererList().add(new SpriteRenderer(sprite));
-		getCollider().surround(Box.SPRITE);
+		setSprite(sprite);
+		getCollider().surround(sprite);
 	}
 
 	public Weapon buildWeapon(GameObject target) {

@@ -22,13 +22,8 @@ public class Collider {
 	}
 	
 	public Collider(GameObject gameObject, Tag tag) {
-		this(gameObject, tag, Box.OBJECT);
-	}
-	
-	public Collider(GameObject gameObject, Tag tag, Box box) {
 		this.gameObject = gameObject;
 		this.tag = tag;
-		surround(box);
 	}
 
 	public void handleCollision(Collider other) {
@@ -47,24 +42,6 @@ public class Collider {
 		height = gameObject.getHeight();
 		offsetX = -width/2;
 		offsetY = -height/2;
-	}
-	
-	public void surround(Box box) {
-		switch (box) {
-			case SPRITE:
-				Sprite sprite = gameObject.getSpriteRendererList().get(0).getSprite();
-				width = sprite.getWidth();
-				height = sprite.getHeight();
-				offsetX = -sprite.getCenterX();
-				offsetY = -sprite.getCenterY();
-				break;
-			case OBJECT:
-				width = gameObject.getWidth();
-				height = gameObject.getHeight();
-				offsetX = -width/2;
-				offsetY = -height/2;
-				break;
-		}
 	}
 	
 	public GameObject getGameObject() {

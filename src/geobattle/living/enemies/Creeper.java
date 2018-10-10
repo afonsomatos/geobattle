@@ -34,13 +34,13 @@ public class Creeper extends Enemy {
 
 		addExtension(new Follower(target));
 		
-		getSpriteRendererList().add(new SpriteRenderer(sprite));
+		setSprite(sprite);
 		setupCollider();
 	}
 	
 	private void setupCollider() {
 		Collider superCol = this.getCollider();
-		setCollider(new Collider(this, Tag.Enemy, Box.SPRITE) {
+		setCollider(new Collider(this, Tag.Enemy) {
 			@Override
 			public void handleCollision(Collider other) {
 				superCol.handleCollision(other);
@@ -49,6 +49,7 @@ public class Creeper extends Enemy {
 					Creeper.this.explode();		
 			}
 		});
+		getCollider().surround(getSprite());
 	}
 	
 	public void explode() {

@@ -45,20 +45,18 @@ public class Bubble extends Enemy {
 		setHealth(300);
 		
 		setupCollider();
-		
-		spriteRenderer = new SpriteRenderer();
-		getSpriteRendererList().add(spriteRenderer);
 		updateSprite();
 	}
 
 	public void updateSprite() {
-		spriteRenderer.setSprite(new SolidSquare(getWidth(), getHeight(), Color.YELLOW));
+		setSprite(new SolidSquare(getWidth(), getHeight(), Color.YELLOW));
+		getCollider().surround(getSprite());
 	}
 	
 	public void enlarge(double increase) {
 		setWidth(getWidth() + increase);
 		setHeight(getHeight() + increase);
-		getCollider().surround(Box.OBJECT);
+		getCollider().surround(this);
 		updateSprite();
 	}
 

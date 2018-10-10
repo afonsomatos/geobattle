@@ -79,7 +79,7 @@ public class StarBurstSpecial extends Special {
 			p.getCollider().setTag(projectilesTag);
 			p.setDamage(damage);
 			p.setSpeed(speed);
-			p.getCollider().surround(Box.OBJECT);
+			p.getCollider().surround(p);
 			
 			switch (style) {
 				case RAINBOW:
@@ -90,7 +90,7 @@ public class StarBurstSpecial extends Special {
 					break;
 			}
 			
-			p.getSpriteRendererList().add(new SpriteRenderer(new SolidSquare(8, 8, p.getColor())));
+			p.setSprite(new SolidSquare(8, 8, p.getColor()));
 			p.setVelX(Math.cos(delta + step * i) * speed);
 			p.setVelY(Math.sin(delta + step * i) * speed);
 			game.spawnGameObject(p);

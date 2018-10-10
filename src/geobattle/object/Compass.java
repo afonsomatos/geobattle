@@ -47,8 +47,7 @@ public class Compass extends GameObject {
 	public Compass(Game game, int x, int y, GameObject target) {
 		super(game, x, y);
 		this.target = target;
-		srend = new SpriteRenderer(sprite);
-		getSpriteRendererList().add(srend);
+		setSprite(sprite);
 	}
 	
 	public void setTarget(GameObject target) {

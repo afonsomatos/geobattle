@@ -33,9 +33,9 @@ public class Soldier extends Enemy {
 		
 		addExtension(new Shooter(target, weapon));
 		addExtension(new Follower(target, 300));
-
-		getSpriteRendererList().add(new SpriteRenderer(sprite));
-		getCollider().surround(Box.SPRITE);
+		
+		setSprite(sprite);
+		getCollider().surround(sprite);
 	}
 	
 	public Weapon buildWeapon(GameObject target) {

@@ -28,6 +28,7 @@ public class Player extends Living {
 	
 	static {
 		shieldSprite.draw(0, 0, (Graphics2D gfx) -> {
+			gfx.drawImage(sprite.getImage(), 0, 0, null);
 			gfx.setColor(Color.BLUE);
 			final int thickness = 5;
 			gfx.setStroke(new BasicStroke(5));
@@ -69,21 +70,17 @@ public class Player extends Living {
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
 		
-		shieldRenderer = new SpriteRenderer(shieldSprite);
-		
-		List<SpriteRenderer> slist = getSpriteRendererList();
-		slist.add(new SpriteRenderer(sprite));
-		slist.add(shieldRenderer);
+		setSprite(sprite);
 
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
-		col.surround(Box.SPRITE);
+		col.surround(sprite);
 		
 	}
 	
 	@Override
 	public void update() {
-		shieldRenderer.setActive(shieldTank.get() > 0);
+		//shieldRenderer.setActive(shieldTank.get() > 0);
 
 		if (!specialReady)
 			specialCounter.tick();
