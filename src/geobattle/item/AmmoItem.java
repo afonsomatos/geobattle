@@ -19,9 +19,7 @@ public class AmmoItem extends UnitsItem {
 		super(game, x, y, units);
 		
 		setLabelColor(Color.RED);
-		
-		getSpriteRendererList().add(new SpriteRenderer(sprite));
-		getCollider().surround(Box.SPRITE);
+		setSprite(sprite);
 	}
 
 	@Override

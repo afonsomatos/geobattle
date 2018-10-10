@@ -35,6 +35,20 @@ public class Collider {
 		
 	}
 	
+	public void surround(Sprite sprite) {
+		width = sprite.getWidth();
+		height = sprite.getHeight();
+		offsetX = -sprite.getCenterX();
+		offsetY = -sprite.getCenterY();
+	}
+	
+	public void surround(GameObject gameObject) {
+		width = gameObject.getWidth();
+		height = gameObject.getHeight();
+		offsetX = -width/2;
+		offsetY = -height/2;
+	}
+	
 	public void surround(Box box) {
 		switch (box) {
 			case SPRITE:

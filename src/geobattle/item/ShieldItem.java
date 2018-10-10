@@ -12,13 +12,17 @@ import geobattle.render.sprite.SpriteRenderer;
 
 public class ShieldItem extends UnitsItem {
 
-	private static Sprite sprite = new SolidCross(30, 30, Color.CYAN);
+	private static SpriteRenderer srend;
+	
+	static {
+		Sprite sprite = new SolidCross(30, 30, Color.CYAN);
+		srend = new SpriteRenderer(sprite);
+	}
 	
 	public ShieldItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
 		
-		getSpriteRendererList().add(new SpriteRenderer(sprite));
-		getCollider().surround(Box.SPRITE);
+		getCollider().surround(srend.getSprite());
 	}
 
 	@Override
@@ -29,5 +33,5 @@ public class ShieldItem extends UnitsItem {
 		}
 		super.collected(collector);
 	}
-
+	
 }
