@@ -128,7 +128,7 @@ class HUD implements Renderer {
 			playerCompass.setY(middle);
 			playerCompass.setTarget(game.getPlayer());
 			playerCompass.update();
-			playerCompass.render(gfx);
+			playerCompass.render_(gfx);
 		}
 
 		gfx.dispose();

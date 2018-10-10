@@ -64,5 +64,11 @@ public class Compass extends GameObject {
 			angle = lastAngle;
 		srend.setRotation(angle);
 	}
+
+	@Override
+	public void render(Graphics2D gfx) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

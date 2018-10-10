@@ -1,6 +1,7 @@
 package geobattle.living.enemies;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 import geobattle.collider.Box;
@@ -98,6 +99,11 @@ public class Bubble extends Enemy {
 
 	@Override
 	public void die() {
+		
+	}
+
+	@Override
+	public void render(Graphics2D gfx) {
 		
 	}
 	

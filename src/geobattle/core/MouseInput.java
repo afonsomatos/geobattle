@@ -1,5 +1,6 @@
 package geobattle.core;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -18,6 +19,10 @@ class MouseInput implements MouseListener, MouseMotionListener {
 			@Override
 			public void update() {
 
+			}
+			@Override
+			public void render(Graphics2D gfx) {
+				
 			}
 		};
 		game.spawnGameObject(mouseFollower);		

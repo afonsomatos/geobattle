@@ -1,5 +1,7 @@
 package geobattle.core;
 
+import java.awt.Graphics2D;
+
 import geobattle.item.AmmoItem;
 import geobattle.item.HealthItem;
 import geobattle.item.ShieldItem;
@@ -35,4 +37,9 @@ public class ItemGenerator extends GameObject {
 			game.spawnGameObject(new ShieldItem(game, randX, randY, 200));
 	}
 
+	@Override
+	public void render(Graphics2D gfx) {
+		
+	}
+	
 }

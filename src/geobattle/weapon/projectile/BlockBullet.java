@@ -1,5 +1,7 @@
 package geobattle.weapon.projectile;
 
+import java.awt.Graphics2D;
+
 import geobattle.core.Game;
 
 public class BlockBullet extends Projectile {
@@ -8,6 +10,11 @@ public class BlockBullet extends Projectile {
 		super(game, x, y);
 		setWidth(width);
 		setHeight(height);
+	}
+
+	@Override
+	public void render(Graphics2D gfx) {
+		// TODO Auto-generated method stub
 	}
 
 }

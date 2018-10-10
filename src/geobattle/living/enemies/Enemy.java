@@ -3,13 +3,13 @@ package geobattle.living.enemies;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extension.Extension;
 import geobattle.living.Living;
 import geobattle.weapon.Weapon;
 
 public abstract class Enemy extends Living {
 	
 	private GameObject target = null;
+	private Weapon weapon;
 	
 	Enemy(Game game, int x, int y, GameObject target) {
 		super(game, x, y);
@@ -18,18 +18,23 @@ public abstract class Enemy extends Living {
 		
 		getCollider().setTag(Tag.Enemy);
 		
-		// Enemies are killable
-		addExtension(new Extension() {
-			@Override
-			public void update(GameObject gameObject) {
-				Enemy enemy = (Enemy) gameObject;
-
-				if (enemy.isDead())
-					enemy.kill();
+		addExtension((GameObject gameObject) -> {
+			Enemy enemy = (Enemy) gameObject;
+			// Enemies are killable
+			if (enemy.isDead()) {
+				enemy.kill();
 			}
 		});
 	}
 	
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
 	public void setTarget(GameObject target) {
 		this.target = target;
 	}

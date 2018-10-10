@@ -69,7 +69,6 @@ class Wave extends GameObject {
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		super.render(superGfx);
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		final int alpha = 255 - (int) (255 * counter.getValue() / radius);
 		Color color = getColor();
@@ -78,5 +77,5 @@ class Wave extends GameObject {
 		Util.drawCircle(gfx, (int) getX(), (int) getY(), (int) counter.getValue());
 		gfx.dispose();
 	}
-	
+
 }

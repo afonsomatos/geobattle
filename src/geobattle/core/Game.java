@@ -227,7 +227,7 @@ public class Game {
 		
 		for (GameObject g : gameObjects)
 			if (!g.isHidden())
-				g.render(gfx);
+				g.render_(gfx);
 
 		hud.render(gfx);
 

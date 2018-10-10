@@ -30,10 +30,9 @@ public abstract class GameObject {
 	
 	private Collider collider = null;
 	
+	private List<Extension> extensions 	= new ArrayList<Extension>();
+	
 	private List<SpriteRenderer> spriteRendererList = new ArrayList<SpriteRenderer>();
-	
-	
-	private List<Extension> extensions = new ArrayList<Extension>();
 
 	// no getGame() please
 	protected Game game;
@@ -68,7 +67,9 @@ public abstract class GameObject {
 		return spriteRendererList;
 	}
 	
-	public void render(Graphics2D superGfx) {
+	public void render_(Graphics2D superGfx) {
+		
+		render(superGfx);
 		
 		// Render all sprites
 		for (SpriteRenderer s : spriteRendererList) {
@@ -78,6 +79,8 @@ public abstract class GameObject {
 		}
 		
 	}
+	
+	public abstract void render(Graphics2D gfx);
 	
 	public abstract void update();
 	

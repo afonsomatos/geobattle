@@ -17,7 +17,7 @@ public class SpriteRenderer {
 	}
 	
 	public void render(int x, int y, Graphics2D superGfx) {
-		if (sprite == null)
+		if (sprite == null || !active)
 			return;
 		
 		Graphics2D gfx = (Graphics2D) superGfx.create();

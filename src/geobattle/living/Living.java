@@ -57,8 +57,8 @@ public abstract class Living extends GameObject {
 	}
 	
 	@Override
-	public void render(Graphics2D superGfx) {
-		super.render(superGfx);
+	public void render_(Graphics2D superGfx) {
+		super.render_(superGfx);
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		
 		final int width = 40;

@@ -83,6 +83,7 @@ public class Player extends Living {
 	
 	@Override
 	public void update() {
+		shieldRenderer.setActive(shieldTank.get() > 0);
 
 		if (!specialReady)
 			specialCounter.tick();
@@ -152,14 +153,12 @@ public class Player extends Living {
 	}
 	
 	@Override
-	public void render(Graphics2D superGfx) {
-		shieldRenderer.setActive(shieldTank.get() > 0);
-		super.render(superGfx);
+	public void die() {
+		
 	}
 
 	@Override
-	public void die() {
-		
+	public void render(Graphics2D gfx) {
 	}
 
 }

@@ -1,6 +1,7 @@
 package geobattle.living.enemies;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 import geobattle.collider.Box;
 import geobattle.core.Game;
@@ -60,6 +61,12 @@ public class Tower extends Enemy {
 
 	@Override
 	public void die() {
+		
+	}
+
+	@Override
+	public void render(Graphics2D gfx) {
+		// TODO Auto-generated method stub
 		
 	}
 	
