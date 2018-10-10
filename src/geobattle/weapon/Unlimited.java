@@ -2,17 +2,13 @@ package geobattle.weapon;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Random;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.util.Util;
 
 public class Unlimited extends Weapon {
 
-	private Random rand = new Random();
-	
 	public Unlimited(Game game, GameObject origin, Tag tag) {
 		super(game, origin, tag);
 		

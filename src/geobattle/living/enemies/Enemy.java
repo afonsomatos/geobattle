@@ -23,7 +23,6 @@ public abstract class Enemy extends Living {
 			@Override
 			public void update(GameObject gameObject) {
 				Enemy enemy = (Enemy) gameObject;
-				System.out.println("hey im dead");
 
 				if (enemy.isDead())
 					enemy.kill();

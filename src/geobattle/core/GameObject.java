@@ -7,7 +7,6 @@ import java.util.List;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
-import geobattle.render.Renderer;
 import geobattle.render.sprite.SpriteRenderer;
 
 public abstract class GameObject {

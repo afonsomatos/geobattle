@@ -47,7 +47,9 @@ class HUD implements Renderer {
 	}
 	
 	public void renderBottomLeft(Graphics2D gfx) {
-		gfx.drawString("FPS: " + game.getFps(), 10, game.getHeight() - 10);
+		int height = game.getHeight();
+		gfx.drawString("Ups: " + game.getUps(), 10, height - 30);
+		gfx.drawString("Fps: " + game.getFps(), 10, height - 10);
 	}
 	
 	public void renderBottomRight(Graphics2D gfx) {
@@ -125,6 +127,7 @@ class HUD implements Renderer {
 		
 			playerCompass.setY(middle);
 			playerCompass.setTarget(game.getPlayer());
+			playerCompass.update();
 			playerCompass.render(gfx);
 		}
 

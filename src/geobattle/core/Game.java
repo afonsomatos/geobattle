@@ -12,9 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.core.Schedule.Event;
-import geobattle.item.AmmoItem;
-import geobattle.item.HealthItem;
-import geobattle.item.ShieldItem;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.render.Renderer;
@@ -39,9 +36,12 @@ public class Game {
 	private LevelManager levelManager;
 	private CollisionHandler collisionHandler;
 	
+	private final double TARGET_FPS = 60.0;
+	private int ups = 0;
+	private int fps = 0;
+	
 	private int width = 800;
 	private int height = 600;
-	private int fps = 60;
 	
 	private Event outOfBorderEvent;
 	private boolean outOfBorders = false;
@@ -104,30 +104,57 @@ public class Game {
 		spawnGameObject(new ItemGenerator(this));
 		
 		window.setVisible(true);
+		
 		gameLoop();	
 	}
 	
 	public void gameLoop() {
-		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-
-		executor.scheduleAtFixedRate(new Runnable() {
-			public void run() {
-				try {
-					render();
-					
-					if (!paused) {
-						tick();
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+		final double second = Math.pow(10, 9);
+		new Thread(() -> {
+			double ticksPerSecond = 60.0;
+			double nanosPerTick = second / ticksPerSecond;
+			
+			long lastTime = System.nanoTime();
+			long lastPrint = System.nanoTime();
+			
+			int updates = 0;
+			int frames = 0;
+			double delta = 0;
+			
+			while (true) {
+				long now = System.nanoTime();
+				delta += (now - lastTime) / nanosPerTick;
+				lastTime = now;
 				
+				while (delta >= 1) {
+					tick();
+					updates++;
+					delta--;
+				}
+				
+				render();
+				frames++;
+				
+				if (lastTime - lastPrint >= second) {
+					lastPrint = System.nanoTime();
+					
+					ups = updates;
+					fps = frames;
+					
+					updates = 0;
+					frames = 0;
 				}
 			}
-		}, 0, (int) Math.pow(10, 9) / fps, TimeUnit.NANOSECONDS);
+			
+		}).start();
 	}
 	
 	public Window getWindow() {
 		return window;
+	}
+	
+	public int getUps() {
+		return ups;
 	}
 	
 	public boolean isPaused() {

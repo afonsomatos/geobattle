@@ -7,6 +7,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.SpriteRenderer;
+import geobattle.util.Log;
 import geobattle.util.Util;
 
 public class Compass extends GameObject {
@@ -57,6 +58,7 @@ public class Compass extends GameObject {
 	@Override
 	public void update() {
 		// Change angle before rendering
+		Log.i("ok");
 		double angle = 0;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;

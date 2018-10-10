@@ -8,7 +8,6 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.render.sprite.SolidSquare;
-import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.SpriteRenderer;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
