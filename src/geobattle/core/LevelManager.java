@@ -1,5 +1,7 @@
 package geobattle.core;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -10,6 +12,9 @@ import geobattle.living.enemies.Creeper;
 import geobattle.living.enemies.Enemy;
 import geobattle.living.enemies.Soldier;
 import geobattle.living.enemies.Tower;
+import geobattle.render.sprite.SolidCircle;
+import geobattle.render.sprite.SolidSquare;
+import geobattle.util.Log;
 
 class LevelManager {
 
@@ -33,7 +38,6 @@ class LevelManager {
 				level++;
 				loadLevel();
 				event.setOff(true);
-				loadingLevel = false;
 			}
 		});
 		event.setDelay(1000);
@@ -58,8 +62,42 @@ class LevelManager {
 			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 		}
 		
-		for (Enemy e : newEnemies)
-			game.spawnGameObject(e);
+		for (Enemy e : newEnemies) {
+			Color color = e.getColor();
+			
+			GameObject placeHolder = new GameObject(game, e.getX(), e.getY()) {
+
+				@Override
+				protected void spawn() {
+					Color spawnColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 120);
+					setSprite(new SolidCircle(30, spawnColor));
+					Event event = new Event();
+					event.setRunnable(() -> {
+						this.kill();
+						game.spawnGameObject(e);
+						loadingLevel = false;
+					});
+					event.setDelay(4000);
+					event.setRepeat(false);
+					game.getSchedule().add(event);
+				}
+
+				@Override
+				protected void update() {
+					
+				}
+
+				@Override
+				protected void render(Graphics2D gfx) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			};
+	
+			game.spawnGameObject(placeHolder);
+		}
+
 	}
 	
 	public int getLevelCountDown() {

@@ -17,7 +17,7 @@ public class Arsenal {
 	public Weapon[] getSlots() {
 		return slots;
 	}
-
+	
 	public boolean store(int num, Weapon weapon) {
 		if (num < 0 || num >= slots.length)
 			return false;

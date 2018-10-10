@@ -1,5 +1,6 @@
 package geobattle.core;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 class Schedule {
@@ -8,27 +9,35 @@ class Schedule {
 
 	public void tick() {
 		long now = System.currentTimeMillis();
-		LinkedList<Event> timers2 = new LinkedList<Event>(timers);
-		timers2.removeIf(t -> {
-			if (t.isOff())
-				return true;
+		LinkedList<Event> toRemove = new LinkedList<Event>();
+		for (Event t : new ArrayList<Event>(timers)) {
+			if (t.isOff()) {
+				toRemove.add(t);
+				continue;
+			}
 			if (now - t.getStart() >= t.getDelay()) {
 				t.getRunnable().run();
-				if (!t.isRepeat())
-					return true;
+				if (!t.isRepeat()) {
+					toRemove.add(t);
+					continue;
+				}
 				t.setStart(now);
 			}
-			return false;
-		});
-		timers = timers2;
+		}
+
+		timers.removeAll(toRemove);
+	}
+	
+	public void next(long delay, Runnable runnable) {
+		Event newEvent = new Event();
+		newEvent.setDelay(delay);
+		newEvent.setRepeat(false);
+		newEvent.setRunnable(runnable);
+		this.add(newEvent);		
 	}
 	
 	public void next(Runnable runnable) {
-		Event newEvent = new Event();
-		newEvent.setDelay(0);
-		newEvent.setRepeat(false);
-		newEvent.setRunnable(runnable);
-		this.add(newEvent);
+		next(0, runnable);
 	}
 	
 	public void add(Event event) {

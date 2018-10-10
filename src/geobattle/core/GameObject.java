@@ -236,10 +236,6 @@ public abstract class GameObject {
 		return game;
 	}
 
-	private void setGame(Game game) {
-		this.game = game;
-	}
-	
 	public double pointAngle(GameObject obj) {
 		
 		double distX = obj.getX() - getX();

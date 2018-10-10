@@ -25,11 +25,14 @@ class HUD implements Renderer {
 	}
 	
 	private void renderTopRight(Graphics2D gfx) {
-		String txt;
+		String txt = "";
 		
-		if (game.getLevelManager().isLoadingLevel())
+		boolean loading = game.getLevelManager().isLoadingLevel();
+		int countDown = game.getLevelManager().getLevelCountDown();
+		
+		if (loading && countDown > 0)
 			txt = "Next wave in " + game.getLevelManager().getLevelCountDown();
-		else
+		else if (!loading)
 			txt = "Enemies left: " + game.getEnemiesLeft();
 	
 		gfx.drawString(txt, game.getWidth() - gfx.getFontMetrics().stringWidth(txt) - 10, 20);

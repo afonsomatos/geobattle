@@ -20,6 +20,7 @@ public class Tower extends Enemy {
 	public Tower(Game game, int x, int y, GameObject target) {
 		super(game, x, y, target);
 	
+		setColor(Color.PINK);
 		setHealth(400);
 		setWidth(40);
 		setHeight(40);
@@ -70,8 +71,7 @@ public class Tower extends Enemy {
 
 	@Override
 	protected void spawn() {
-		// TODO Auto-generated method stub
-		
+		game.spawnGameObject(weapon);
 	}
 	
 }

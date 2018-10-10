@@ -51,7 +51,6 @@ public class Weapon extends GameObject {
 		fill();
 		
 		setupCounters();
-		game.spawnGameObject(this);
 	}
 	
 	public void setupCounters() {

@@ -27,6 +27,7 @@ public class Creeper extends Enemy {
 		starBurst.setColor(Color.GREEN);
 		starBurst.setProjectiles(20);
 		
+		setColor(Color.GREEN);
 		setSpeed(1);
 		setHealth(400);
 

@@ -24,6 +24,8 @@ public class Soldier extends Enemy {
 		setSpeed(1.0);
 		setHealth(100);
 		
+		setColor(Color.RED);
+		
 		weapon = buildWeapon(target);
 		
 		addExtension(new Shooter(target, weapon));
@@ -73,8 +75,7 @@ public class Soldier extends Enemy {
 
 	@Override
 	protected void spawn() {
-		// TODO Auto-generated method stub
-		
+		game.spawnGameObject(weapon);
 	}
 		
 }

@@ -18,6 +18,7 @@ import geobattle.weapon.Rifle;
 import geobattle.weapon.Shotgun;
 import geobattle.weapon.Sniper;
 import geobattle.weapon.Unlimited;
+import geobattle.weapon.Weapon;
 
 public class Game {
 
@@ -88,6 +89,9 @@ public class Game {
 		ars.store(2, new Rifle(this, player, Tag.Player));
 		ars.store(3, new Unlimited(this, player, Tag.Player));
 		ars.select(0);
+		
+		for (Weapon w : ars.getSlots())
+			this.spawnGameObject(w);
 		
 		player.setTarget(window.getMouseInput().getMouseFollower());
 		spawnGameObject(player);
@@ -235,6 +239,7 @@ public class Game {
 	
 	public void spawnGameObject(GameObject gameObject) {
 		gameObjects.add(gameObject);
+		gameObject.spawn();
 		
 		if (gameObject instanceof Enemy)
 			enemiesLeft++;
