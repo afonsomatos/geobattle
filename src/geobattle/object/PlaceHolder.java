@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Schedule.Event;
 import geobattle.render.sprite.SolidCircle;
+import geobattle.schedule.Event;
 
 public class PlaceHolder extends GameObject {
 	

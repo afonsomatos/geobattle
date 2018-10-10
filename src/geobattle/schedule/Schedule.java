@@ -1,4 +1,4 @@
-package geobattle.core;
+package geobattle.schedule;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -45,64 +45,6 @@ public class Schedule {
 		event.setStart(System.currentTimeMillis());
 		event.setOff(false);
 		timers.add(event);
-	}
-	
-	public static class Event {
-		
-		private boolean repeat, off;
-		private long start, delay;
-		private Runnable runnable;
-		
-		public Event() {
-			
-		}
-		
-		public Event(long delay, boolean repeat, Runnable runnable) {
-			this.delay = delay;
-			this.repeat = repeat;
-			this.runnable = runnable;
-		}
-		
-		public boolean isRepeat() {
-			return repeat;
-		}
-
-		public void setRepeat(boolean repeat) {
-			this.repeat = repeat;
-		}
-
-		public boolean isOff() {
-			return off;
-		}
-
-		public void setOff(boolean off) {
-			this.off = off;
-		}
-
-		public long getStart() {
-			return start;
-		}
-
-		public void setStart(long start) {
-			this.start = start;
-		}
-
-		public long getDelay() {
-			return delay;
-		}
-
-		public void setDelay(long delay) {
-			this.delay = delay;
-		}
-
-		public Runnable getRunnable() {
-			return runnable;
-		}
-
-		public void setRunnable(Runnable runnable) {
-			this.runnable = runnable;
-		}
-
 	}
 
 }

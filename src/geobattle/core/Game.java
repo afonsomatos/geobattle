@@ -6,11 +6,13 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import geobattle.collider.CollisionHandler;
-import geobattle.core.Schedule.Event;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.render.Renderer;
+import geobattle.schedule.Event;
+import geobattle.schedule.Schedule;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.weapon.Arsenal;

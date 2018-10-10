@@ -1,11 +1,8 @@
 package geobattle.core;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.Random;
 
-import geobattle.core.Schedule.Event;
 import geobattle.living.Player;
 import geobattle.living.enemies.Bubble;
 import geobattle.living.enemies.Creeper;
@@ -13,9 +10,7 @@ import geobattle.living.enemies.Enemy;
 import geobattle.living.enemies.Soldier;
 import geobattle.living.enemies.Tower;
 import geobattle.object.PlaceHolder;
-import geobattle.render.sprite.SolidCircle;
-import geobattle.render.sprite.SolidSquare;
-import geobattle.util.Log;
+import geobattle.schedule.Event;
 
 public class LevelManager {
 

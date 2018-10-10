@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.SpriteRenderer;
-import geobattle.util.Log;
 import geobattle.util.Util;
 
 public class Compass extends GameObject {
