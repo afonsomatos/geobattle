@@ -3,10 +3,13 @@ package geobattle.core;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.List;
 
+import geobattle.core.Game.State;
 import geobattle.living.Player;
 import geobattle.object.Compass;
 import geobattle.render.Renderable;
+import geobattle.util.Log;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
@@ -15,7 +18,9 @@ class HUD implements Renderable {
 	private Game game;
 	private Compass playerCompass;
 	
+	private final Font labelsFont = new Font("arial", Font.PLAIN, 16);
 	private final Color labelsColor = Color.WHITE;
+
 	private final Color gettingHitBackgroundColor = new Color(255, 0, 0, 100);
 	private final Color playerOutOfMapBackgroundColor = new Color(0, 0, 0, 100);
 	
@@ -152,23 +157,49 @@ class HUD implements Renderable {
 		renderPlayerExitingMap(gfx);
 	}
 	
-	@Override
-	public void render(Graphics2D _gfx) {
+	public void renderMenu(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		gfx.setColor(Color.WHITE);
 		
-		renderWarnings(_gfx);
-		renderPlayerExitingMap(_gfx);
-		
-		Graphics2D gfx = (Graphics2D) _gfx.create();
-		gfx.setFont(new Font("arial", Font.PLAIN, 16));
-		gfx.setColor(labelsColor);
+		gfx.drawString("Welcome to Geometry Battle!", 10, 20);
+		gfx.drawString("Press [ENTER] to start!", 10, 40);	
 
-		renderTopLeft(gfx);
-		renderTopRight(gfx);
-		renderTopMiddle(gfx);
+		int n = 0;
+		List<Integer> scores = game.getLastScores();
+		int total = scores.size();
+		gfx.drawString("Times played: " + total, 10, 80);
+		for (Integer i : scores) {
+			if (n >= 15) break;
+			gfx.drawString("#" + (total - n) + " ~ " + i, 10, 100 + n * 20);
+			n++;
+		}
 		
-		renderBottomLeft(gfx);
-		renderBottomRight(gfx);
-		renderBottomMiddle(gfx);
+		gfx.dispose();
+	}
+	
+	@Override
+	public void render(Graphics2D superGfx) {
+		State state = game.getState();
+		
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		gfx.setFont(labelsFont);
+		gfx.setColor(labelsColor);
+		
+		if (state == State.MENU) {
+			renderMenu(gfx);
+		} else {
+			renderWarnings(gfx);
+			renderPlayerExitingMap(gfx);
+			
+	
+			renderTopLeft(gfx);
+			renderTopRight(gfx);
+			renderTopMiddle(gfx);
+			
+			renderBottomLeft(gfx);
+			renderBottomRight(gfx);
+			renderBottomMiddle(gfx);
+		}
 		gfx.dispose();
 	}
 

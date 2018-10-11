@@ -27,7 +27,7 @@ public abstract class Living extends GameObject {
 				GameObject otherObj = other.getGameObject();
 				if (otherObj instanceof Projectile) {
 					Projectile projectile = (Projectile) otherObj;
-					if (!godmode)
+					if (!godmode && !Living.this.isDead())
 						Living.this.suffer(projectile.getDamage());
 					projectile.kill();
 				}

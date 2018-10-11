@@ -87,11 +87,17 @@ public class Player extends Living {
 			fire();
 	}
 	
+	public void sendReload() {
+		Weapon weapon = getWeapon();
+		if (weapon != null)
+			weapon.reload();
+	}
+	
 	public boolean isSpecialReady() {
 		return specialReady;
 	}
 	
-	public void fire() {
+	public synchronized void fire() {
 		Weapon weapon = getWeapon();
 		if (weapon == null) return;
 		if (weapon.getAmmoLoad() == 0)
@@ -145,7 +151,7 @@ public class Player extends Living {
 	
 	@Override
 	public void die() {
-		game.setState(State.MENU);
+		game.sendPlayerDead();
 	}
 
 	@Override

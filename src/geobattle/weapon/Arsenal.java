@@ -4,9 +4,11 @@ public class Arsenal {
 	
 	private Weapon[] slots;
 	private int selected;
-
-	private double fireAngle = 0;
 	
+	private Integer lastSelected = null;
+	
+	private double fireAngle = 0;
+
 	public final int size;
 	
 	public Arsenal(int len) {
@@ -16,6 +18,11 @@ public class Arsenal {
 	
 	public Weapon[] getSlots() {
 		return slots;
+	}
+	
+	public void swap() {
+		if (lastSelected != null)
+			select(lastSelected);
 	}
 	
 	public boolean store(int num, Weapon weapon) {
@@ -33,6 +40,7 @@ public class Arsenal {
 		if (num < 0 || num >= slots.length)
 			return false;
 		
+		lastSelected = selected;
 		Weapon weapon = getSelectedWeapon();
 
 		if (weapon != null) {	

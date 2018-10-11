@@ -97,6 +97,7 @@ public abstract class GameObject {
 	}
 	
 	public void stop() {
+		// Stops all movement
 		accX = accY = velX = velY = 0;
 	}
 	

@@ -8,10 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
-import geobattle.core.Game.State;
+import geobattle.io.Window;
 import geobattle.item.ItemGenerator;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
+import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
@@ -61,6 +62,8 @@ public class Game {
 	private int enemiesLeft = 0;
 	private int score;
 	
+	private LinkedList<Integer> lastScores = new LinkedList<Integer>();
+			
 	public enum State {
 		MENU,
 		PLAYING,
@@ -71,28 +74,44 @@ public class Game {
 	
 	private LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	
+	// Follows the mouse input
+	private MouseFollower mouseFollower;
+	
 	public Game() {
-		player = new Player(this);
-		hud = new HUD(this);
-		levelManager = new LevelManager(this);
-		window = new Window(this);
-		collisionHandler = new CollisionHandler(this);
-		debugRender = new Debug(this);
+		player 				= new Player(this);
+		hud 				= new HUD(this);
+		levelManager 		= new LevelManager(this);
+		window 				= new Window(this);
+		collisionHandler 	= new CollisionHandler(this);
+		debugRender 		= new Debug(this);
 
 		outOfBorderEvent = new Event(1000, true, () -> outOfBorderCounter.tick());
 		gettingHitEvent = new Event(500, false, () -> gettingHit = false);
 	}
 	
 	public void open() {
+		// Menu should appear first
 		state = State.MENU;
+
+		window.setVisible(true);
+
+		// Trace mouse input
+		mouseFollower = new MouseFollower(this);
+		window.getMouseInput().setGameObject(mouseFollower);
+		spawnGameObject(mouseFollower);
+
 		gameLoop();
 	}
 	
-	public void setState(State state) {
-		this.state = state;
+	public void end() {
+		state = State.MENU;
+		Log.i("what");
+		lastScores.addFirst(score);
 	}
 	
 	public void start() {
+		state = State.PLAYING;
+		
 		score = 0;
 		levelManager.setLevel(0);
 		gameRunning = true;
@@ -118,13 +137,11 @@ public class Game {
 		for (Weapon w : ars.getSlots())
 			this.spawnGameObject(w);
 		
-		player.setTarget(window.getMouseInput().getMouseFollower());
+		player.setTarget(window.getMouseInput().getMouseObject());
 		spawnGameObject(player);
 		this.player = player;
 
 		spawnGameObject(new ItemGenerator(this));
-		window.setVisible(true);
-		
 	}
 	
 	public void gameLoop() {
@@ -168,6 +185,10 @@ public class Game {
 		}).start();
 	}
 	
+	public List<Integer> getLastScores() {
+		return lastScores;
+	}
+	
 	public Window getWindow() {
 		return window;
 	}
@@ -179,7 +200,11 @@ public class Game {
 	public boolean isPaused() {
 		return paused;
 	}
-
+	
+	public void setState(State state) {
+		this.state = state;
+	}
+	
 	public void togglePaused() {
 		paused = !paused;
 	}
@@ -243,26 +268,22 @@ public class Game {
 		Graphics2D gfx = (Graphics2D) window.getBufferStrategy().getDrawGraphics();
 		
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		gfx.setColor(Color.BLACK);
+		gfx.fillRect(0, 0, width, height);
 		
 		if (state == State.PLAYING) {
-			gfx.setColor(Color.BLACK);
-			gfx.fillRect(0, 0, width, height);
-			
 			for (GameObject g : gameObjects)
 				if (!g.isHidden())
 					g.render_(gfx);
 	
-			hud.render(gfx);
-	
 			if (RENDER_DEBUG)
 				debugRender.render(gfx);
 		} else if (state == State.MENU) {
-			gfx.setColor(Color.BLACK);
-			gfx.fillRect(0, 0, width, height);
-			gfx.setColor(Color.WHITE);
-			gfx.drawString("Welcome to Geometry Battle!", 10, 20);
-			gfx.drawString("Press [ENTER] to start!", 10, 40);
+
 		}
+
+		hud.render(gfx);
 			 
 		gfx.dispose();
 		window.getBufferStrategy().show();
@@ -288,6 +309,10 @@ public class Game {
 	public List<GameObject> getGameObjects() {
 		// Create a clone so the original list doesn't get modified while iterating
 		return new ArrayList<GameObject>(gameObjects);
+	}
+	
+	public void sendPlayerDead() {
+		end();
 	}
 
 	public int getEnemiesLeft() {

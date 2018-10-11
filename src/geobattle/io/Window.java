@@ -1,15 +1,15 @@
-package geobattle.core;
+package geobattle.io;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import geobattle.input.KeyInput;
-import geobattle.input.MouseInput;
+import geobattle.core.Game;
 
-class Window extends Canvas {
+public class Window extends Canvas {
 
 	private static final long serialVersionUID = -2003953519044767223L;
 	
@@ -22,13 +22,18 @@ class Window extends Canvas {
 		int height = game.getHeight();
 		JFrame container = new JFrame(title);
 		
-		JPanel panel = (JPanel) container.getContentPane();
+		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(width, height));
 		panel.setLayout(null);
+		
+		JTextField textInput = new JTextField(20);
+		textInput.setBounds(width/2 - 50, height/2 - 10, 100, 20);
+		//panel.add(textInput);
 		
 		setBounds(0, 0, width, height);
 		panel.add(this);
 		
+		container.add(panel);
 		container.pack();
 		container.setResizable(false);
 		container.setLocationRelativeTo(null);
