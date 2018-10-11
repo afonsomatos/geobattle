@@ -6,6 +6,9 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import geobattle.input.KeyInput;
+import geobattle.input.MouseInput;
+
 class Window extends Canvas {
 
 	private static final long serialVersionUID = -2003953519044767223L;
