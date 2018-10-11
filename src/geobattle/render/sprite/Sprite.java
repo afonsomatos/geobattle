@@ -3,6 +3,7 @@ package geobattle.render.sprite;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
@@ -57,6 +58,7 @@ public class Sprite {
 	
 	public void draw(int dx, int dy, Renderable renderer) {
 		Graphics2D gfx = (Graphics2D) image.getGraphics();
+		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		gfx.translate(dx, dy);
 		renderer.render(gfx);
 		gfx.dispose();	

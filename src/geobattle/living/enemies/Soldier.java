@@ -7,13 +7,13 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.extension.Shooter;
-import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.weapon.Weapon;
 
 public class Soldier extends Enemy {
 
-	public static Sprite sprite = new SolidSquare(24, 24, Color.RED);
+	public static Sprite sprite = new Square(24, 24, Color.RED);
 
 	public boolean follow = false;
 	private Weapon weapon;

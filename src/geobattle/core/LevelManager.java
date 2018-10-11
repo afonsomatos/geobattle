@@ -7,9 +7,9 @@ import geobattle.living.Player;
 import geobattle.living.enemies.Bubble;
 import geobattle.living.enemies.Creeper;
 import geobattle.living.enemies.Enemy;
+import geobattle.living.enemies.EnemySpawner;
 import geobattle.living.enemies.Soldier;
 import geobattle.living.enemies.Tower;
-import geobattle.object.PlaceHolder;
 import geobattle.schedule.Event;
 
 public class LevelManager {
@@ -59,7 +59,7 @@ public class LevelManager {
 		}
 		
 		for (Enemy e : newEnemies) {
-			game.spawnGameObject(new PlaceHolder(game, e, 5000, () -> loadingLevel = false ));
+			game.spawnGameObject(new EnemySpawner(game, e, 5000, () -> loadingLevel = false ));
 		}
 
 	}

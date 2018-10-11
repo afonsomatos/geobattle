@@ -1,21 +1,22 @@
-package geobattle.object;
+package geobattle.living.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.render.sprite.SolidCircle;
+import geobattle.render.sprite.shapes.Aura;
+import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
 
-public class PlaceHolder extends GameObject {
+public class EnemySpawner extends GameObject {
 	
 	private GameObject spawn;
 	private Event event;
 	private Runnable runnable;
 	private long delay;
 	
-	public PlaceHolder(Game game, GameObject spawn, long delay, Runnable run) {
+	public EnemySpawner(Game game, GameObject spawn, long delay, Runnable run) {
 		super(game, spawn.getX(), spawn.getY());
 		this.spawn = spawn;
 		this.runnable = run;
@@ -26,8 +27,8 @@ public class PlaceHolder extends GameObject {
 	protected void spawn() {
 		event = new Event(delay, false, () -> {
 			this.kill();
-			game.spawnGameObject(spawn);
 			runnable.run();
+			game.spawnGameObject(spawn);
 		});
 		game.getSchedule().add(event);
 	}
@@ -37,7 +38,7 @@ public class PlaceHolder extends GameObject {
 		double quota = (double) event.getElapsed() / delay;
 		Color color = spawn.getColor();
 		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
-		setSprite(new SolidCircle(30, placeColor));
+		setSprite(new Aura(30, 7, placeColor));
 	}
 
 	@Override

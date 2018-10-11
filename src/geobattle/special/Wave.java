@@ -9,6 +9,8 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.living.Living;
+import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Aura;
 import geobattle.util.Counter;
 import geobattle.util.Util;
 
@@ -65,17 +67,16 @@ class Wave extends GameObject {
 	@Override
 	public void update() {
 		counter.tick();
+		int currRadius = (int) counter.getValue();
+		int alpha = 255 - (int) (255 * currRadius / radius);
+		Color color = getColor();
+		Color auraColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+		setSprite(new Aura(currRadius, thickness, auraColor));
 	}
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		final int alpha = 255 - (int) (255 * counter.getValue() / radius);
-		Color color = getColor();
-		gfx.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha));
-		gfx.setStroke(new BasicStroke(thickness));
-		Util.drawCircle(gfx, (int) getX(), (int) getY(), (int) counter.getValue());
-		gfx.dispose();
+		
 	}
 
 	@Override

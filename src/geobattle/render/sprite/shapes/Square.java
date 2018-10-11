@@ -1,11 +1,13 @@
-package geobattle.render.sprite;
+package geobattle.render.sprite.shapes;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class SolidSquare extends Sprite {
+import geobattle.render.sprite.Sprite;
 
-	public SolidSquare(int width, int height, Color color) {
+public class Square extends Sprite {
+
+	public Square(int width, int height, Color color) {
 		super(width, height, width/2, height/2);
 		
 		draw(0, 0, (Graphics2D gfx) -> {

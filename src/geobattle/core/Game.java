@@ -12,6 +12,7 @@ import geobattle.item.ItemGenerator;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.render.Renderable;
+import geobattle.render.sprite.shapes.Aura;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.util.Counter;
@@ -100,11 +101,7 @@ public class Game {
 		spawnGameObject(player);
 		this.player = player;
 
-		//spawnGameObject(new HealthItem(this, 400, 400, 300));
-		//spawnGameObject(new ShieldItem(this, 200, 200, 200));
-		
 		spawnGameObject(new ItemGenerator(this));
-		
 		window.setVisible(true);
 		
 		gameLoop();	

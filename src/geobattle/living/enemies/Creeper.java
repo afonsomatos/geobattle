@@ -10,13 +10,13 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.living.Player;
-import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
 
 public class Creeper extends Enemy {
 
-	public static Sprite sprite = new SolidSquare(16, 16, Color.GREEN);
+	public static Sprite sprite = new Square(16, 16, Color.GREEN);
 
 	private StarBurstSpecial starBurst;
 	

@@ -8,7 +8,7 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.render.sprite.SolidSquare;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
 import geobattle.util.Counter;
@@ -17,7 +17,7 @@ import geobattle.weapon.projectile.Projectile;
 public class Bubble extends Enemy {
 
 	private StarBurstSpecial starBurst;
-	private Counter attackCounter = new Counter(0.025, 1) {
+	private Counter attackCounter = new Counter(0.010, 1) {
 		@Override
 		public void fire() {
 			starBurst.setPos(new Point((int)getX(), (int)getY()));
@@ -46,7 +46,7 @@ public class Bubble extends Enemy {
 	}
 
 	public void updateSprite() {
-		setSprite(new SolidSquare(getWidth(), getHeight(), Color.YELLOW));
+		setSprite(new Square(getWidth(), getHeight(), Color.YELLOW));
 		getCollider().surround(getSprite());
 	}
 	

@@ -1,13 +1,14 @@
-package geobattle.render.sprite;
+package geobattle.render.sprite.shapes;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import geobattle.render.sprite.Sprite;
 import geobattle.util.Util;
 
-public class SolidCircle extends Sprite {
+public class Circle extends Sprite {
 
-	public SolidCircle(int radius, Color color) {
+	public Circle(int radius, Color color) {
 		super(radius * 2, radius * 2, radius, radius);
 		
 		draw((Graphics2D gfx) -> {

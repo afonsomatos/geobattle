@@ -5,12 +5,12 @@ import java.awt.Color;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Player;
-import geobattle.render.sprite.SolidCross;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Cross;
 
 public class ShieldItem extends UnitsItem {
 
-	private static Sprite sprite = new SolidCross(30, 30, Color.CYAN);
+	private static Sprite sprite = new Cross(30, 30, Color.CYAN);
 	
 	public ShieldItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);

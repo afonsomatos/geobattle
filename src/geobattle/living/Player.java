@@ -8,8 +8,8 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
@@ -19,7 +19,7 @@ import geobattle.weapon.Weapon;
 
 public class Player extends Living {
 	
-	public static Sprite sprite	= new SolidSquare(40, 40, Color.CYAN);
+	public static Sprite sprite	= new Square(40, 40, Color.CYAN);
 	public static Sprite shieldSprite = new Sprite(40, 40, 20, 20);
 	
 	static {

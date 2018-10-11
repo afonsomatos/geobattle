@@ -1,12 +1,14 @@
-package geobattle.render.sprite;
+package geobattle.render.sprite.shapes;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class SolidCross extends Sprite {
+import geobattle.render.sprite.Sprite;
 
-	public SolidCross(int width, int height, Color color) {
+public class Cross extends Sprite {
+
+	public Cross(int width, int height, Color color) {
 		super(width, height, width/2, height/2);
 		
 		draw((Graphics2D gfx) -> {

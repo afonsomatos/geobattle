@@ -7,13 +7,13 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Shooter;
-import geobattle.render.sprite.SolidSquare;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.weapon.Weapon;
 
 public class Tower extends Enemy {
 	
-	private static Sprite sprite = new SolidSquare(40, 40, Color.PINK);
+	private static Sprite sprite = new Square(40, 40, Color.PINK);
 
 	private Weapon weapon;
 	

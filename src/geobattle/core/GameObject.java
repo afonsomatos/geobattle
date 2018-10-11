@@ -8,6 +8,7 @@ import java.util.List;
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
 import geobattle.render.sprite.Sprite;
+import geobattle.util.Util;
 
 public abstract class GameObject {
 
@@ -55,7 +56,7 @@ public abstract class GameObject {
 	}
 	
 	public void setRotation(double rotation) {
-		this.rotation = rotation;
+		this.rotation = rotation % (Math.PI * 2);
 	}
 	
 	public void addExtension(Extension extension) {

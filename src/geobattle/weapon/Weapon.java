@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.render.sprite.SolidSquare;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
@@ -267,7 +267,7 @@ public class Weapon extends GameObject {
 			p.setColor(projectileColor);
 			p.setDamage(damage);
 			
-			p.setSprite(new SolidSquare(projectileSize, projectileSize, projectileColor));
+			p.setSprite(new Square(projectileSize, projectileSize, projectileColor));
 			p.getCollider().surround(p.getSprite());
 			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);
