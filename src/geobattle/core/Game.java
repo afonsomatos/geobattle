@@ -8,11 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
+import geobattle.core.Game.State;
 import geobattle.item.ItemGenerator;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.render.Renderable;
-import geobattle.render.sprite.shapes.Aura;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.util.Counter;
@@ -61,9 +61,18 @@ public class Game {
 	private int enemiesLeft = 0;
 	private int score;
 	
+	public enum State {
+		MENU,
+		PLAYING,
+		END
+	};
+	
+	public State state = State.MENU;
+	
 	private LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	
 	public Game() {
+		player = new Player(this);
 		hud = new HUD(this);
 		levelManager = new LevelManager(this);
 		window = new Window(this);
@@ -74,16 +83,28 @@ public class Game {
 		gettingHitEvent = new Event(500, false, () -> gettingHit = false);
 	}
 	
+	public void open() {
+		state = State.MENU;
+		gameLoop();
+	}
+	
+	public void setState(State state) {
+		this.state = state;
+	}
+	
 	public void start() {
 		score = 0;
+		levelManager.setLevel(0);
 		gameRunning = true;
+		
+		gameObjects.clear();
 		
 		Log.i("Game starting");
 		
 		levelManager.sendNextLevel();
-		
-		Player player = new Player(this);
-			
+
+		player.stop();
+		player.restoreHealth();
 		player.setX(width / 2);
 		player.setY(height / 2);
 
@@ -104,7 +125,6 @@ public class Game {
 		spawnGameObject(new ItemGenerator(this));
 		window.setVisible(true);
 		
-		gameLoop();	
 	}
 	
 	public void gameLoop() {
@@ -196,7 +216,12 @@ public class Game {
 		Log.i("Player exited the map");
 	}
 	
+	public State getState() {
+		return state;
+	}
+	
 	public void tick() {
+		if (state != State.PLAYING) return;
 		schedule.tick();
 
 		handleOutOfBorders();
@@ -219,20 +244,26 @@ public class Game {
 		
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		Color oldColor = gfx.getColor();
-		gfx.setColor(Color.BLACK);
-		gfx.fillRect(0, 0, width, height);
-		gfx.setColor(oldColor);
-		
-		for (GameObject g : gameObjects)
-			if (!g.isHidden())
-				g.render_(gfx);
-
-		hud.render(gfx);
-
-		if (RENDER_DEBUG)
-			debugRender.render(gfx);
-		 
+		if (state == State.PLAYING) {
+			gfx.setColor(Color.BLACK);
+			gfx.fillRect(0, 0, width, height);
+			
+			for (GameObject g : gameObjects)
+				if (!g.isHidden())
+					g.render_(gfx);
+	
+			hud.render(gfx);
+	
+			if (RENDER_DEBUG)
+				debugRender.render(gfx);
+		} else if (state == State.MENU) {
+			gfx.setColor(Color.BLACK);
+			gfx.fillRect(0, 0, width, height);
+			gfx.setColor(Color.WHITE);
+			gfx.drawString("Welcome to Geometry Battle!", 10, 20);
+			gfx.drawString("Press [ENTER] to start!", 10, 40);
+		}
+			 
 		gfx.dispose();
 		window.getBufferStrategy().show();
 	}

@@ -8,7 +8,6 @@ import java.util.List;
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
 import geobattle.render.sprite.Sprite;
-import geobattle.util.Util;
 
 public abstract class GameObject {
 
@@ -95,6 +94,10 @@ public abstract class GameObject {
 		}
 		
 		render(superGfx);
+	}
+	
+	public void stop() {
+		accX = accY = velX = velY = 0;
 	}
 	
 	public final void tick() {

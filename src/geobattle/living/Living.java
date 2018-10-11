@@ -13,6 +13,7 @@ import geobattle.weapon.projectile.Projectile;
 public abstract class Living extends GameObject {
 
 	private Tank healthTank = new Tank();
+	private boolean godmode = false;
 	
 	public Living(Game game, double x, double y) {
 		super(game, x, y);
@@ -26,17 +27,28 @@ public abstract class Living extends GameObject {
 				GameObject otherObj = other.getGameObject();
 				if (otherObj instanceof Projectile) {
 					Projectile projectile = (Projectile) otherObj;
-					Living.this.suffer(projectile.getDamage());
+					if (!godmode)
+						Living.this.suffer(projectile.getDamage());
 					projectile.kill();
 				}
 			}
 		});	
 	}
 	
+	public void setGodmode(boolean godmode) {
+		this.godmode = godmode;
+	}
+	
 	public abstract void die();
 	
 	public void suffer(int hit) {
 		healthTank.take(hit);
+		if (this.isDead())
+			this.die();
+	}
+	
+	public void restoreHealth() {
+		healthTank.fill();
 	}
 	
 	public int giveHealth(int health) {

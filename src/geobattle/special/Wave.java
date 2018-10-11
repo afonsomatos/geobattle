@@ -1,6 +1,5 @@
 package geobattle.special;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -9,10 +8,8 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.living.Living;
-import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.util.Counter;
-import geobattle.util.Util;
 
 class Wave extends GameObject {
 

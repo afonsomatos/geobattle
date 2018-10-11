@@ -1,13 +1,15 @@
-package geobattle.core;
+package geobattle.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import geobattle.core.Game;
+import geobattle.core.Game.State;
 import geobattle.living.Player;
 import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 
-class KeyInput implements KeyListener {
+public class KeyInput implements KeyListener {
 
 	private Game game;
 	
@@ -38,7 +40,17 @@ class KeyInput implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		Player player = game.getPlayer();
-
+		State state = game.getState();
+		
+		if (state == State.MENU) {
+			if (keyCode == KeyEvent.VK_ENTER) {
+				game.setState(State.PLAYING);
+				game.start();
+				return;
+			}
+		}
+		
+		if (state != State.PLAYING) return;
 		if (Util.contains(movementKeys, keyCode)) {
 			// Movement keys stop all momentum
 			player.setAccX(0);
@@ -70,9 +82,14 @@ class KeyInput implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
+
+		State state = game.getState();
+		
+		
+		if (state != State.PLAYING) return;
+		
 		Player player = game.getPlayer();
 		Arsenal ars = player.getArsenal();
-		
 		switch (keyCode) {
 						
 			// Switch to last used weapon

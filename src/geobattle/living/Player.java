@@ -8,6 +8,7 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.core.Game.State;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.Special;
@@ -58,7 +59,7 @@ public class Player extends Living {
 		setHeight(40);
 		setSpeed(4.0f);
 		setColor(Color.CYAN);
-		setHealth(1000);
+		setHealth(100);
 		
 		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
 		waveSpecial.setDamage(10000);
@@ -68,8 +69,7 @@ public class Player extends Living {
 
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
-		col.surround(sprite);
-		
+		col.surround(sprite);		
 	}
 	
 	@Override
@@ -145,7 +145,7 @@ public class Player extends Living {
 	
 	@Override
 	public void die() {
-		
+		game.setState(State.MENU);
 	}
 
 	@Override

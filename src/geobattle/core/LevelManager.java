@@ -59,7 +59,7 @@ public class LevelManager {
 		}
 		
 		for (Enemy e : newEnemies) {
-			game.spawnGameObject(new EnemySpawner(game, e, 5000, () -> loadingLevel = false ));
+			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));
 		}
 
 	}
