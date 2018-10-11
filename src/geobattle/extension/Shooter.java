@@ -5,14 +5,10 @@ import geobattle.weapon.Weapon;
 
 public class Shooter implements Extension {
 
-	private Weapon weapon;
-	private GameObject target;
+	private Weapon weapon = null;
+	private GameObject target = null;
 	private boolean automatic = true;
 
-	public Shooter() {
-		this(null, null);
-	}
-	
 	public Shooter(GameObject target, Weapon weapon) {
 		this.target = target;
 		this.weapon = weapon;

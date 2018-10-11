@@ -1,10 +1,9 @@
-package geobattle.core;
+package geobattle.item;
 
 import java.awt.Graphics2D;
 
-import geobattle.item.AmmoItem;
-import geobattle.item.HealthItem;
-import geobattle.item.ShieldItem;
+import geobattle.core.Game;
+import geobattle.core.GameObject;
 import geobattle.util.Util;
 
 public class ItemGenerator extends GameObject {

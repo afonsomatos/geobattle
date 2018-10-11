@@ -6,11 +6,11 @@ import java.awt.Graphics2D;
 
 import geobattle.living.Player;
 import geobattle.object.Compass;
-import geobattle.render.Renderer;
+import geobattle.render.Renderable;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
-class HUD implements Renderer {
+class HUD implements Renderable {
 
 	private Game game;
 	private Compass playerCompass;

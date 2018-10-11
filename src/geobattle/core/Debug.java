@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
-import geobattle.render.Renderer;
+import geobattle.render.Renderable;
 
-class Debug implements Renderer {
+class Debug implements Renderable {
 
 	private Game game;
 	

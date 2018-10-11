@@ -6,7 +6,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
-import geobattle.render.Renderer;
+import geobattle.render.Renderable;
 
 public class Sprite {
 	
@@ -55,14 +55,14 @@ public class Sprite {
 		return image;
 	}
 	
-	public void draw(int dx, int dy, Renderer renderer) {
+	public void draw(int dx, int dy, Renderable renderer) {
 		Graphics2D gfx = (Graphics2D) image.getGraphics();
 		gfx.translate(dx, dy);
 		renderer.render(gfx);
 		gfx.dispose();	
 	}
 	
-	public void draw(Renderer renderer) {
+	public void draw(Renderable renderer) {
 		draw(getCenterX(), getCenterY(), renderer);
 	}
 	

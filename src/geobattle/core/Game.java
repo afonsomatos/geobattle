@@ -8,9 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
+import geobattle.item.ItemGenerator;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
-import geobattle.render.Renderer;
+import geobattle.render.Renderable;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.util.Counter;
@@ -25,7 +26,7 @@ import geobattle.weapon.Weapon;
 public class Game {
 
 	private boolean RENDER_DEBUG = false;
-	private Renderer debugRender;
+	private Renderable debugRender;
 
 	private Window window;
 	private Schedule schedule = new Schedule();
