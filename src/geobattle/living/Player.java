@@ -74,7 +74,7 @@ public class Player extends Living {
 	
 	@Override
 	public void update() {
-		//shieldRenderer.setActive(shieldTank.get() > 0);
+		setSprite(shieldTank.get() > 0 ? shieldSprite : sprite);
 
 		if (!specialReady)
 			specialCounter.tick();

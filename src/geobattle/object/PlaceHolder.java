@@ -11,7 +11,7 @@ import geobattle.schedule.Event;
 public class PlaceHolder extends GameObject {
 	
 	private GameObject spawn;
-	private Event spawnEvent;
+	private Event event;
 	private Runnable runnable;
 	private long delay;
 	
@@ -24,20 +24,17 @@ public class PlaceHolder extends GameObject {
 
 	@Override
 	protected void spawn() {
-		spawnEvent = new Event();
-		spawnEvent.setRunnable(() -> {
+		event = new Event(delay, false, () -> {
 			this.kill();
 			game.spawnGameObject(spawn);
 			runnable.run();
 		});
-		spawnEvent.setDelay(delay);
-		game.getSchedule().add(spawnEvent);
+		game.getSchedule().add(event);
 	}
 
 	@Override
 	protected void update() {
-		long elapsed = System.currentTimeMillis() - spawnEvent.getStart();
-		double quota = (double) elapsed / delay;
+		double quota = (double) event.getElapsed() / delay;
 		Color color = spawn.getColor();
 		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
 		setSprite(new SolidCircle(30, placeColor));
