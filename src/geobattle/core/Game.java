@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.io.Window;
@@ -62,7 +64,9 @@ public class Game {
 	private int enemiesLeft = 0;
 	private int score;
 	
-	private LinkedList<Integer> lastScores = new LinkedList<Integer>();
+	private int rounds = 0;
+	
+	private LinkedList<Score> lastScores = new LinkedList<Score>();
 			
 	public enum State {
 		MENU,
@@ -104,14 +108,12 @@ public class Game {
 	}
 	
 	public void end() {
-		state = State.MENU;
-		Log.i("what");
-		lastScores.addFirst(score);
+		state = State.END;
+		window.showScorePanel(score);
+		rounds++;
 	}
 	
-	public void start() {
-		state = State.PLAYING;
-		
+	public void start() {			
 		score = 0;
 		levelManager.setLevel(0);
 		gameRunning = true;
@@ -139,9 +141,20 @@ public class Game {
 		
 		player.setTarget(window.getMouseInput().getMouseObject());
 		spawnGameObject(player);
-		this.player = player;
 
 		spawnGameObject(new ItemGenerator(this));
+		state = State.PLAYING;
+	}
+	
+	public int getRounds() {
+		return rounds;
+	}
+	
+	public void saveScore(String name) {
+		if (state != State.END) return;
+		Log.i("what");
+		lastScores.add(new Score(name, score, rounds));
+		state = State.MENU;
 	}
 	
 	public void gameLoop() {
@@ -185,8 +198,8 @@ public class Game {
 		}).start();
 	}
 	
-	public List<Integer> getLastScores() {
-		return lastScores;
+	public LinkedList<Score> getScores() {
+		return new LinkedList<Score>(lastScores);
 	}
 	
 	public Window getWindow() {

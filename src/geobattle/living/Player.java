@@ -59,7 +59,7 @@ public class Player extends Living {
 		setHeight(40);
 		setSpeed(4.0f);
 		setColor(Color.CYAN);
-		setHealth(100);
+		setHealth(1000);
 		
 		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
 		waveSpecial.setDamage(10000);

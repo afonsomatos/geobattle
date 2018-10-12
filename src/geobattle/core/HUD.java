@@ -3,6 +3,8 @@ package geobattle.core;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.core.Game.State;
@@ -156,7 +158,7 @@ class HUD implements Renderable {
 		renderPlayerGettingHit(gfx);
 		renderPlayerExitingMap(gfx);
 	}
-	
+
 	public void renderMenu(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.setColor(Color.WHITE);
@@ -164,13 +166,15 @@ class HUD implements Renderable {
 		gfx.drawString("Welcome to Geometry Battle!", 10, 20);
 		gfx.drawString("Press [ENTER] to start!", 10, 40);	
 
+		List<Score> scores = game.getScores();
+		scores.sort((Score o1, Score o2) -> o2.getScore() - o1.getScore());
+
 		int n = 0;
-		List<Integer> scores = game.getLastScores();
-		int total = scores.size();
-		gfx.drawString("Times played: " + total, 10, 80);
-		for (Integer i : scores) {
+		gfx.drawString("Times played: " + game.getRounds(), 10, 80);
+		for (Score s : scores) {
 			if (n >= 15) break;
-			gfx.drawString("#" + (total - n) + " ~ " + i, 10, 100 + n * 20);
+			String txt = String.format("#%d ~ %d by %s", s.getRound(), s.getScore(), s.getName());
+			gfx.drawString(txt, 10, 100 + n * 20);
 			n++;
 		}
 		
