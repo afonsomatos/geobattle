@@ -161,6 +161,10 @@ public abstract class GameObject {
 		this.x = x;
 	}
 	
+	public double getVel() {
+		return Math.sqrt(velX * velX + velY * velY);
+	}
+	
 	public double getVelX() {
 		return velX;
 	}
@@ -256,6 +260,11 @@ public abstract class GameObject {
 				Math.pow(obj.getX() - getX(), 2) +
 				Math.pow(obj.getY() - getY(), 2)
 				);
+	}
+	
+	public void invertDirection() {
+		velX *= -1;
+		velY *= -1;
 	}
 	
 	public void setDirection(double x, double y) {

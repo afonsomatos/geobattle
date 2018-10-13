@@ -8,7 +8,6 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.core.Game.State;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.Special;

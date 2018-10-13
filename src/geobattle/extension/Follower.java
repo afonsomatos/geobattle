@@ -1,6 +1,7 @@
 package geobattle.extension;
 
 import geobattle.core.GameObject;
+import geobattle.util.Log;
 
 public class Follower implements Extension {
 
@@ -26,21 +27,17 @@ public class Follower implements Extension {
 	public void update(GameObject gameObject) {
 		final double dist = gameObject.distance(target);
 		
-		// If target is too far away, stop
-		if (maxDistance != 0 && dist > maxDistance) {
-			gameObject.setVelX(0);
-			gameObject.setVelY(0);
-			return;
-		}
-		
+		// Point velocity vector to target
 		gameObject.setDirection(target);
 		
-		// If this object is too close to its target
-		if (gameObject.distance(target) < minDistance) {
+		// If target is too far away or too close
+		if (maxDistance != 0 && dist > maxDistance
+				|| Math.abs(minDistance - dist) <= gameObject.getVel()) {
+			gameObject.stop();
+		} else if (dist < minDistance) {
 			// Step back
-			gameObject.setVelX(-gameObject.getVelX());
-			gameObject.setVelY(-gameObject.getVelY());
-		}
+			gameObject.invertDirection();
+		} // else, direction is already set
+		
 	}
-
 }

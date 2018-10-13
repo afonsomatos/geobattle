@@ -45,7 +45,6 @@ public class Arsenal {
 
 		if (weapon != null) {	
 			fireAngle = weapon.getFireAngle(); // Save firing direction
-			weapon.setActive(false);
 			weapon.setHidden(true);
 		}
 		
@@ -55,7 +54,6 @@ public class Arsenal {
 		// If the slot isn't empty
 		if (weapon != null) {
 			weapon.setFireAngle(fireAngle);
-			weapon.setActive(true);
 			weapon.setHidden(false);
 		}
 

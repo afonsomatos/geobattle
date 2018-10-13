@@ -29,7 +29,7 @@ public class Soldier extends Enemy {
 		weapon = buildWeapon(target);
 		
 		addExtension(new Shooter(target, weapon));
-		addExtension(new Follower(target, 300));
+		addExtension(new Follower(target, 150));
 		
 		setSprite(sprite);
 		getCollider().surround(sprite);
