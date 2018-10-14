@@ -29,7 +29,8 @@ public class Shooter implements Extension {
 	
 	@Override
 	public void update(GameObject gameObject) {
-
+		if (!target.isActive()) return;
+		
 		if (!automatic) return;
 				
 		if (weapon.getAmmoLoad() == 0 && weapon.getAmmoSaved() > 0)

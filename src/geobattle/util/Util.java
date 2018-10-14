@@ -1,5 +1,6 @@
 package geobattle.util;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
 
@@ -24,6 +25,13 @@ public final class Util {
 			if (i == item)
 				return true;
 		return false;
+	}
+	
+	public static void drawStringOutline(Graphics2D gfx, String str, int x, int y) {
+		gfx.drawString(str, x - 1, y - 1);
+		gfx.drawString(str, x - 1, y + 1);
+		gfx.drawString(str, x + 1, y - 1);
+		gfx.drawString(str, x + 1, y + 1);
 	}
 	
 	public static int randomInteger(int lower, int upper) {

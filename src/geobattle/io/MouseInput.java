@@ -12,9 +12,14 @@ public class MouseInput extends MouseAdapter {
 
 	private Game game;
 	private GameObject gameObject = null;
+	private boolean active = true;
 	
 	public MouseInput(Game game) {
 		this.game = game;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	public void setGameObject(GameObject gameObject) {
@@ -34,6 +39,7 @@ public class MouseInput extends MouseAdapter {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		if (!active) return;
 		if (game.getState() == State.PLAYING) {
 			game.getPlayer().fire();
 			// Prevents concurrent modification
@@ -43,6 +49,7 @@ public class MouseInput extends MouseAdapter {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		if (!active) return;
 		if (game.getState() == State.PLAYING) {
 			Player player = game.getPlayer();
 			if (player != null) {
@@ -54,6 +61,7 @@ public class MouseInput extends MouseAdapter {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		if (!active) return;
 		if (game.getState() == State.PLAYING) {
 			Player player = game.getPlayer();
 			if (player != null) {
@@ -65,23 +73,27 @@ public class MouseInput extends MouseAdapter {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		if (!active) return;
 		updateMouseObject(e);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		if (!active) return;
 		if (gameObject != null)
 			gameObject.setHidden(false);
 	}
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
+		if (!active) return;
 		if (gameObject != null)
 			gameObject.setHidden(true);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		if (!active) return;
 		updateMouseObject(e);	
 	}
 	

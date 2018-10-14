@@ -11,6 +11,7 @@ public class GameCanvas extends Canvas {
 		
 	private Game game;
 	private MouseInput mouseInput;
+	private KeyInput keyInput;
 	
 	GameCanvas(Game game) {
 		this.game = game;
@@ -19,7 +20,8 @@ public class GameCanvas extends Canvas {
 		setBounds(0, 0, game.getWidth(), game.getHeight());
 		
 		mouseInput = new MouseInput(game);
-		addKeyListener(new KeyInput(game));
+		keyInput = new KeyInput(game);
+		addKeyListener(keyInput);
 		addMouseListener(mouseInput);
 		addMouseMotionListener(mouseInput);
 		
@@ -27,6 +29,10 @@ public class GameCanvas extends Canvas {
 	
 	public MouseInput getMouseInput() {
 		return mouseInput;
+	}
+	
+	public KeyInput getKeyInput() {
+		return keyInput;
 	}
 	
 }

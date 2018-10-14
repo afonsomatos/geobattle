@@ -3,15 +3,12 @@ package geobattle.core;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
-import geobattle.core.Game.State;
 import geobattle.living.Player;
 import geobattle.object.Compass;
 import geobattle.render.Renderable;
-import geobattle.util.Log;
+import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
@@ -181,6 +178,39 @@ class HUD implements Renderable {
 		gfx.dispose();
 	}
 	
+	public void renderGameOver(Graphics2D superGfx) {
+		if (!game.isGameOver()) return;
+		
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		gfx.setColor(gettingHitBackgroundColor);
+		gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
+		gfx.setFont(labelsFont.deriveFont(Font.BOLD, 40));
+
+		String str = "Game Over";
+		int h = gfx.getFontMetrics().getHeight();
+		int w = gfx.getFontMetrics().stringWidth(str);
+		int x = game.getWidth() / 2 - w/2;
+		int y = game.getHeight() / 2 - h/2;
+		
+		gfx.setColor(Color.BLACK);
+		Util.drawStringOutline(gfx, str, x, y);
+		gfx.setColor(Color.WHITE);
+		gfx.drawString(str, x, y);
+		
+		gfx.setFont(labelsFont.deriveFont(Font.BOLD, 36));
+		str = "Your score was " + game.getScore();
+		w = gfx.getFontMetrics().stringWidth(str);
+		x = game.getWidth() / 2 - w/2;
+		y = game.getHeight() / 2 + 60;
+		
+		gfx.setColor(Color.BLACK);
+		Util.drawStringOutline(gfx, str, x, y);
+		gfx.setColor(Color.WHITE);
+		gfx.drawString(str, x, y);
+		
+		gfx.dispose();
+	}
+	
 	@Override
 	public void render(Graphics2D superGfx) {
 		
@@ -188,6 +218,7 @@ class HUD implements Renderable {
 		gfx.setFont(labelsFont);
 		gfx.setColor(labelsColor);
 		
+		renderGameOver(gfx);
 		renderWarnings(gfx);
 		renderPlayerExitingMap(gfx);
 		renderTopLeft(gfx);

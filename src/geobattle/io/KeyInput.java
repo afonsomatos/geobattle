@@ -13,6 +13,7 @@ import geobattle.weapon.Arsenal;
 public class KeyInput extends KeyAdapter {
 
 	private Game game;
+	private boolean active = true;
 	
 	private final static Integer[] MOVEMENT_KEYS = {
 			KeyEvent.VK_W,
@@ -21,14 +22,19 @@ public class KeyInput extends KeyAdapter {
 			KeyEvent.VK_D
 	};
 	
-	private Integer lastSelected = null;
 	private int dirmask = 0;
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 	
 	public KeyInput(Game game) {
 		this.game = game;
 	}
 	
 	public void updateMovement() {
+		if (!active) return;
+				
 		Player player = game.getPlayer();
 		double speed = player.getSpeed();
 		double newVelX, newVelY;
@@ -53,6 +59,8 @@ public class KeyInput extends KeyAdapter {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if (!active) return;
+
 		int keyCode = e.getKeyCode();
 		State state = game.getState();
 		

@@ -2,6 +2,8 @@ package geobattle.core;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -61,6 +63,8 @@ public class Game implements Launchable {
 	private Event gettingHitEvent;
 	private boolean gettingHit;
 	
+	private boolean gameOver;
+	
 	private boolean paused = false;
 	private boolean gameRunning = false;
 	private int enemiesLeft;
@@ -118,6 +122,11 @@ public class Game implements Launchable {
 		outOfBorders 	= false;
 		gettingHit 		= false;
 		gameRunning 	= true;
+		gameOver			= false;
+		
+		// Enable input
+		window.getGameCanvas().getMouseInput().setActive(true);
+		window.getGameCanvas().getKeyInput().setActive(true);
 		
 		outOfBorderCounter.reset();
 
@@ -224,6 +233,10 @@ public class Game implements Launchable {
 		paused = !paused;
 	}
 	
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
 	public boolean isOutOfBorders() {
 		return outOfBorders;
 	}
@@ -279,7 +292,8 @@ public class Game implements Launchable {
 		 */
 	}
 	
-	public void render() {
+	public synchronized void render() {
+
 		BufferStrategy bfs = window.getGameCanvas().getBufferStrategy();
 		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
 		
@@ -295,8 +309,6 @@ public class Game implements Launchable {
 	
 			if (RENDER_DEBUG)
 				debugRender.render(gfx);
-		} else if (state == State.MENU) {
-
 		}
 
 		hud.render(gfx);
@@ -328,7 +340,19 @@ public class Game implements Launchable {
 	}
 	
 	public void sendPlayerDead() {
-		end();
+		gameOver = true;
+		
+		// Disable all input
+		window.getGameCanvas().getMouseInput().setActive(false);
+		window.getGameCanvas().getKeyInput().setActive(false);
+		
+		// Remove player from sight
+		player.getWeapon().setHidden(true);
+		player.setActive(false);
+		player.kill();
+		
+		// Wait a little bit before ending
+		schedule.next(5000, this::end);
 	}
 
 	public int getEnemiesLeft() {

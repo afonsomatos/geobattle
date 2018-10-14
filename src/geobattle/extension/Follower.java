@@ -25,6 +25,11 @@ public class Follower implements Extension {
 	
 	@Override
 	public void update(GameObject gameObject) {
+		if (!target.isActive()) {
+			gameObject.stop();
+			return;
+		}
+		
 		final double dist = gameObject.distance(target);
 		
 		// Point velocity vector to target
