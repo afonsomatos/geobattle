@@ -197,11 +197,11 @@ class HUD implements Renderable {
 		gfx.setColor(Color.WHITE);
 		gfx.drawString(str, x, y);
 		
-		gfx.setFont(labelsFont.deriveFont(Font.BOLD, 36));
+		gfx.setFont(labelsFont.deriveFont(Font.BOLD, 24));
 		str = "Your score was " + game.getScore();
 		w = gfx.getFontMetrics().stringWidth(str);
 		x = game.getWidth() / 2 - w/2;
-		y = game.getHeight() / 2 + 60;
+		y = game.getHeight() / 2 + 30;
 		
 		gfx.setColor(Color.BLACK);
 		Util.drawStringOutline(gfx, str, x, y);

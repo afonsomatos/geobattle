@@ -267,6 +267,7 @@ public class Game implements Launchable {
 	
 	private void playerExitedMap() {
 		Log.i("Player exited the map");
+		player.die();
 	}
 	
 	public State getState() {
@@ -342,6 +343,10 @@ public class Game implements Launchable {
 	public void sendPlayerDead() {
 		gameOver = true;
 		
+		// Player is not out of borders
+		player.setX(0);
+		player.setY(0);
+		
 		// Disable all input
 		window.getGameCanvas().getMouseInput().setActive(false);
 		window.getGameCanvas().getKeyInput().setActive(false);
@@ -352,7 +357,7 @@ public class Game implements Launchable {
 		player.kill();
 		
 		// Wait a little bit before ending
-		schedule.next(5000, this::end);
+		schedule.next(3000, this::end);
 	}
 
 	public int getEnemiesLeft() {
