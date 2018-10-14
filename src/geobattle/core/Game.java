@@ -45,8 +45,8 @@ public class Game implements Launchable {
 	private int ups = 0;
 	private int fps = 0;
 	
-	private int width = 800;
-	private int height = 600;
+	private int width;
+	private int height;
 	
 	private Event outOfBorderEvent;
 	private boolean outOfBorders;
@@ -86,7 +86,6 @@ public class Game implements Launchable {
 	private void setup() {
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
-		window 				= new Window(this);
 		collisionHandler 	= new CollisionHandler(this);
 		debugRender 		= new Debug(this);
 
@@ -390,6 +389,8 @@ public class Game implements Launchable {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				Log.i(opt.getScreen());
+				window = new Window(Game.this, opt.getScreen(), opt.isFullScreen());
 				open();
 				dispatcher.dispatch();
 			}

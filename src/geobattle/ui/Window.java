@@ -2,7 +2,11 @@ package geobattle.ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -33,7 +37,7 @@ public class Window extends JFrame {
 	
 	private Game game;
 	
-	public Window(Game game) {
+	public Window(Game game, int screen, boolean fullscreen) {
 		this.game = game;
 		setTitle("Geometry Battle");
 		
@@ -51,12 +55,27 @@ public class Window extends JFrame {
 		// Show menu at first
 		cardLayout.show(this.getContentPane(), MENU);
 		
-		pack();
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		// Get screen location and size
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
+		Rectangle screenBounds = gd.getDefaultConfiguration().getBounds();
 		
+		if (fullscreen) {
+			setExtendedState(MAXIMIZED_BOTH);
+			setUndecorated(true);
+	        gd.setFullScreenWindow(this);
+		}
+		
+		pack();
+
+		// Center window in given screen
+		Dimension dim = getSize();
+		setLocation(
+				(int)(screenBounds.getX() + screenBounds.getWidth() / 2.0 - dim.getWidth() / 2.0),
+				(int)(screenBounds.getY() + screenBounds.getHeight() / 2.0 - dim.getHeight() / 2.0));
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
 	}
 	
 	public void sendGameOver(int score) {
@@ -64,13 +83,16 @@ public class Window extends JFrame {
 		
 		while (true) {
 			name = JOptionPane.showInputDialog(this, "What's your nickname?", "Save Score", JOptionPane.QUESTION_MESSAGE);
-			if (name.length() >= 3)
+			if (name == null || name.length() >= 3)
 				break;
 			JOptionPane.showMessageDialog(this, "Nicknames must be 3 letters minimum", "Invalid Nickname", JOptionPane.ERROR_MESSAGE);
 		}
 		
-		game.saveScore(name, score);
-		menu.updateHighScore();
+		if (name != null) {
+			game.saveScore(name, score);
+			menu.updateHighScore();		
+		}
+		
 		cardLayout.show(container, MENU);
 	}
 	
