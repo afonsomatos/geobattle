@@ -49,7 +49,7 @@ public class Game implements Launchable {
 	private int height = 600;
 	
 	private Event outOfBorderEvent;
-	private boolean outOfBorders = false;
+	private boolean outOfBorders;
 	private Counter outOfBorderCounter = new Counter(5, -1, 0, false) {
 		@Override
 		public void fire() {
@@ -59,11 +59,11 @@ public class Game implements Launchable {
 	};
 	
 	private Event gettingHitEvent;
-	private boolean gettingHit = false;
+	private boolean gettingHit;
 	
 	private boolean paused = false;
 	private boolean gameRunning = false;
-	private int enemiesLeft = 0;
+	private int enemiesLeft;
 	private int score;
 	
 	private int rounds = 0;
@@ -84,7 +84,6 @@ public class Game implements Launchable {
 	private MouseFollower mouseFollower;
 	
 	private void setup() {
-		player 				= new Player(this);
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
 		window 				= new Window(this);
@@ -111,25 +110,27 @@ public class Game implements Launchable {
 	public void end() {
 		state = State.END;
 		window.sendGameOver(score);
-		cleanup();
 		rounds++;
 	}
 	
-	private void cleanup() {
-		gameObjects.clear();
-		enemiesLeft = 0;
-	}
-	
 	public void start() {			
-		score = 0;
-		levelManager.setLevel(0);
-		gameRunning = true;
+		score 			= 0;
+		enemiesLeft 	= 0;
+		outOfBorders 	= false;
+		gettingHit 		= false;
+		gameRunning 	= true;
 		
+		outOfBorderCounter.reset();
+
+		schedule.clear();
 		gameObjects.clear();
+		levelManager.setLevel(0);
 		
 		Log.i("Game starting");
 		
 		levelManager.sendNextLevel();
+
+		player = new Player(this);
 
 		player.stop();
 		player.restoreHealth();

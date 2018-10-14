@@ -37,6 +37,10 @@ public class Schedule {
 		this.add(newEvent);		
 	}
 	
+	public void clear() {
+		timers.clear();
+	}
+	
 	public void next(Runnable runnable) {
 		next(0, runnable);
 	}

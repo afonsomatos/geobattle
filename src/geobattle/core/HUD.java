@@ -183,27 +183,20 @@ class HUD implements Renderable {
 	
 	@Override
 	public void render(Graphics2D superGfx) {
-		State state = game.getState();
 		
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.setFont(labelsFont);
 		gfx.setColor(labelsColor);
 		
-		if (state == State.MENU) {
-			renderMenu(gfx);
-		} else {
-			renderWarnings(gfx);
-			renderPlayerExitingMap(gfx);
-			
-	
-			renderTopLeft(gfx);
-			renderTopRight(gfx);
-			renderTopMiddle(gfx);
-			
-			renderBottomLeft(gfx);
-			renderBottomRight(gfx);
-			renderBottomMiddle(gfx);
-		}
+		renderWarnings(gfx);
+		renderPlayerExitingMap(gfx);
+		renderTopLeft(gfx);
+		renderTopRight(gfx);
+		renderTopMiddle(gfx);
+		renderBottomLeft(gfx);
+		renderBottomRight(gfx);
+		renderBottomMiddle(gfx);
+		
 		gfx.dispose();
 	}
 
