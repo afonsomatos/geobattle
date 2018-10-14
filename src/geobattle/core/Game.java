@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.io.Window;
@@ -18,7 +16,10 @@ import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
+import geobattle.ui.Launcher.Launchable;
+import geobattle.ui.Launcher.LauncherOption;
 import geobattle.util.Counter;
+import geobattle.util.Dispatcher;
 import geobattle.util.Log;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Rifle;
@@ -27,7 +28,7 @@ import geobattle.weapon.Sniper;
 import geobattle.weapon.Unlimited;
 import geobattle.weapon.Weapon;
 
-public class Game {
+public class Game implements Launchable {
 
 	private boolean RENDER_DEBUG = false;
 	private Renderable debugRender;
@@ -81,7 +82,7 @@ public class Game {
 	// Follows the mouse input
 	private MouseFollower mouseFollower;
 	
-	public Game() {
+	private void setup() {
 		player 				= new Player(this);
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
@@ -95,6 +96,8 @@ public class Game {
 	
 	public void open() {
 		// Menu should appear first
+		setup();
+		
 		state = State.MENU;
 
 		window.setVisible(true);
@@ -370,6 +373,21 @@ public class Game {
 
 	public Schedule getSchedule() {
 		return schedule;
+	}
+
+	@Override
+	public void launch(LauncherOption opt, Dispatcher dispatcher) {
+		width = opt.getWidth();
+		height = opt.getHeight();
+		
+		// Open game in a new thread
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				open();
+				dispatcher.dispatch();
+			}
+		}).start();
 	}
 
 }
