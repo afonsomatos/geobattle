@@ -1,9 +1,14 @@
 package geobattle.ui;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,11 +21,16 @@ import geobattle.util.Dispatcher;
 public class Launcher extends JFrame {
 
 	private JLabel dimLabel 		= new JLabel("Dimensions: ");
+	private JLabel screenLabel 		= new JLabel("Screen: ");
 	private JTextField widthText	= new JTextField("800");
 	private JTextField heightText	= new JTextField("600");
+	private JCheckBox fullScreen	= new JCheckBox("Fullscreen");
 	private JButton startBtn		= new JButton("Start");
 	private JButton cancelBtn		= new JButton("Cancel");
 	private JLabel statusLabel		= new JLabel("Ready");
+	
+	private JComboBox<String> screenCombo;
+	private GraphicsDevice[] gfxDevices;
 	
 	private Launchable launchable;
 	
@@ -28,9 +38,9 @@ public class Launcher extends JFrame {
 		this.launchable = launchable;
 		
 		setTitle("Geometry Battle Game Launcher");
-		setSize(350, 130);
+		setSize(400, 160);
 		
-		GridLayout layout = new GridLayout(2, 3, 10, 10);
+		GridLayout layout = new GridLayout(3, 3, 10, 10);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(layout);
@@ -39,12 +49,18 @@ public class Launcher extends JFrame {
 		widthText.setHorizontalAlignment(JTextField.CENTER);
 		heightText.setHorizontalAlignment(JTextField.CENTER);
 		
+		fullScreen.addActionListener((ActionEvent e) -> fullScreen());
 		startBtn.addActionListener((ActionEvent e) -> start());
 		cancelBtn.addActionListener((ActionEvent e) -> dispose());
+		
+		findScreens();
 		
 		panel.add(dimLabel);
 		panel.add(widthText);
 		panel.add(heightText);
+		panel.add(screenLabel);
+		panel.add(screenCombo);
+		panel.add(fullScreen);
 		panel.add(startBtn);
 		panel.add(cancelBtn);
 		panel.add(statusLabel);
@@ -54,6 +70,31 @@ public class Launcher extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
+	}
+
+	private void findScreens() {
+        gfxDevices = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+
+        String[] screens = new String[gfxDevices.length];
+        for (int i = 0; i < screens.length; ++i) {
+        	screens[i] = i + "";
+        	// Rectangle bounds = gfxDevices[i].getDefaultConfiguration().getBounds();
+			// String.format("%d ~ %dx%d", i, (int) bounds.getWidth(), (int) bounds.getHeight());
+        }
+        
+        screenCombo = new JComboBox<String>(screens);		
+	}
+	
+	private void fullScreen() {
+		boolean checked = fullScreen.isSelected();
+		widthText.setEnabled(!checked);
+		heightText.setEnabled(!checked);
+		if (checked) {
+			int screen = screenCombo.getSelectedIndex();
+			Rectangle bounds = gfxDevices[screen].getDefaultConfiguration().getBounds();
+			widthText.setText((int) bounds.getWidth() + "");
+			heightText.setText((int) bounds.getHeight() + "");
+		}
 	}
 	
 	private void changeStatus(String status) {
@@ -74,6 +115,8 @@ public class Launcher extends JFrame {
 		}
 		
 		LauncherOption opt = new LauncherOption();
+		opt.setFullScreen(fullScreen.isSelected());
+		opt.setScreen(screenCombo.getSelectedIndex());
 		opt.setWidth(width);
 		opt.setHeight(height);
 
@@ -92,15 +135,37 @@ public class Launcher extends JFrame {
 		
 		private int width;
 		private int height;
+		private int screen;
+		private boolean fullScreen;
 		
-		public void setWidth(int width) {
+		private LauncherOption() {
+			
+		}
+		
+		private void setFullScreen(boolean fullScreen) {
+			this.fullScreen = fullScreen;
+		}
+		
+		private void setScreen(int screen) {
+			this.screen = screen;
+		}
+		
+		private void setWidth(int width) {
 			this.width = width;
 		}
 		
-		public void setHeight(int height) {
+		private void setHeight(int height) {
 			this.height = height;
 		}
 
+		public boolean isFullScreen() {
+			return fullScreen;
+		}
+		
+		public int getScreen() {
+			return screen;
+		}
+		
 		public int getWidth() {
 			return width;
 		}
