@@ -117,6 +117,7 @@ public class Game implements Launchable {
 	
 	private void cleanup() {
 		gameObjects.clear();
+		enemiesLeft = 0;
 	}
 	
 	public void start() {			
