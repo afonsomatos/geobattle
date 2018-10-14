@@ -3,21 +3,22 @@ package geobattle.core;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
-import geobattle.io.Window;
 import geobattle.item.ItemGenerator;
+import geobattle.launcher.Launchable;
+import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
-import geobattle.ui.Launcher.Launchable;
-import geobattle.ui.Launcher.LauncherOption;
+import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
@@ -95,16 +96,13 @@ public class Game implements Launchable {
 	}
 	
 	public void open() {
-		// Menu should appear first
 		setup();
-		
-		state = State.MENU;
 
-		window.setVisible(true);
+		state = State.MENU;
 
 		// Trace mouse input
 		mouseFollower = new MouseFollower(this);
-		window.getMouseInput().setGameObject(mouseFollower);
+		window.getGameCanvas().getMouseInput().setGameObject(mouseFollower);
 		spawnGameObject(mouseFollower);
 
 		gameLoop();
@@ -112,8 +110,13 @@ public class Game implements Launchable {
 	
 	public void end() {
 		state = State.END;
-		window.showScorePanel(score);
+		window.sendGameOver(score);
+		cleanup();
 		rounds++;
+	}
+	
+	private void cleanup() {
+		gameObjects.clear();
 	}
 	
 	public void start() {			
@@ -142,22 +145,17 @@ public class Game implements Launchable {
 		for (Weapon w : ars.getSlots())
 			this.spawnGameObject(w);
 		
-		player.setTarget(window.getMouseInput().getMouseObject());
+		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
 		spawnGameObject(player);
 
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
+		
+		gameLoop();
 	}
 	
 	public int getRounds() {
 		return rounds;
-	}
-	
-	public void saveScore(String name) {
-		if (state != State.END) return;
-		Log.i("what");
-		lastScores.add(new Score(name, score, rounds));
-		state = State.MENU;
 	}
 	
 	public void gameLoop() {
@@ -173,7 +171,7 @@ public class Game implements Launchable {
 			int frames = 0;
 			double delta = 0;
 			
-			while (true) {
+			while (state == State.PLAYING) {
 				long now = System.nanoTime();
 				delta += (now - lastTime) / nanosPerTick;
 				lastTime = now;
@@ -281,7 +279,8 @@ public class Game implements Launchable {
 	}
 	
 	public void render() {
-		Graphics2D gfx = (Graphics2D) window.getBufferStrategy().getDrawGraphics();
+		BufferStrategy bfs = window.getGameCanvas().getBufferStrategy();
+		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
 		
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -302,7 +301,7 @@ public class Game implements Launchable {
 		hud.render(gfx);
 			 
 		gfx.dispose();
-		window.getBufferStrategy().show();
+		bfs.show();
 	}
 	
 	public void spawnGameObject(GameObject gameObject) {
@@ -375,6 +374,11 @@ public class Game implements Launchable {
 		return schedule;
 	}
 
+	public void saveScore(String name, int score) {
+		lastScores.add(new Score(name, score, rounds));
+		System.out.printf("%s had %d score in round %d", name, score, rounds);
+	}
+	
 	@Override
 	public void launch(LauncherOption opt, Dispatcher dispatcher) {
 		width = opt.getWidth();

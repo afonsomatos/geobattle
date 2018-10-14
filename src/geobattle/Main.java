@@ -1,7 +1,7 @@
 package geobattle;
 
 import geobattle.core.Game;
-import geobattle.ui.Launcher;
+import geobattle.launcher.Launcher;
 
 public class Main {
 	

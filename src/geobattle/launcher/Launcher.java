@@ -1,4 +1,4 @@
-package geobattle.ui;
+package geobattle.launcher;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import geobattle.util.Dispatcher;
 
+@SuppressWarnings("serial")
 public class Launcher extends JFrame {
 
 	private JLabel dimLabel 		= new JLabel("Dimensions: ");
@@ -125,55 +126,6 @@ public class Launcher extends JFrame {
 			changeStatus("Launched");
 			dispose();
 		});
-	}
-	
-	public interface Launchable {
-		void launch(LauncherOption opt, Dispatcher dispatcher);
-	}
-
-	public class LauncherOption {
-		
-		private int width;
-		private int height;
-		private int screen;
-		private boolean fullScreen;
-		
-		private LauncherOption() {
-			
-		}
-		
-		private void setFullScreen(boolean fullScreen) {
-			this.fullScreen = fullScreen;
-		}
-		
-		private void setScreen(int screen) {
-			this.screen = screen;
-		}
-		
-		private void setWidth(int width) {
-			this.width = width;
-		}
-		
-		private void setHeight(int height) {
-			this.height = height;
-		}
-
-		public boolean isFullScreen() {
-			return fullScreen;
-		}
-		
-		public int getScreen() {
-			return screen;
-		}
-		
-		public int getWidth() {
-			return width;
-		}
-
-		public int getHeight() {
-			return height;
-		}
-		
 	}
 	
 }
