@@ -56,7 +56,8 @@ public class Game implements Launchable {
 		@Override
 		public void fire() {
 			outOfBorderEvent.setOff(true);
-			playerExitedMap();
+			if (outOfBorders)
+				playerExitedMap();
 		}
 	};
 	
@@ -260,6 +261,7 @@ public class Game implements Launchable {
 			outOfBorderEvent.setOff(false);
 			if (outOfBorders) {
 				outOfBorderCounter.reset();
+				System.out.println(outOfBorderCounter.getValue());
 				schedule.add(outOfBorderEvent);
 			}
 		}

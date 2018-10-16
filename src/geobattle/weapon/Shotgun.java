@@ -12,7 +12,7 @@ public class Shotgun extends Weapon {
 		super(game, origin, tag);
 		
 		setRecoil(0.05);
-		setDamage(100);
+		setDamage(50);
 		setFireSpeed(0.02);
 		setReloadSpeed(0.01);
 		setFireAmplitude(Math.PI / 4);
