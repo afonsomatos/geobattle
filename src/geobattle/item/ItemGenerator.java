@@ -45,9 +45,9 @@ public class ItemGenerator extends GameObject {
 		if (wave % 1 == 0) {
 			
 			Weapon weapon = new Unlimited(game, game.getPlayer(), Tag.Player);
-			weapon.setAmmoSaved(6);
+			weapon.setAmmoSaved(60);
 			weapon.setProjectileColor(Color.GREEN);
-			weapon.setAmmoCapacity(3);
+			weapon.setAmmoCapacity(30);
 			weapon.fill();
 			
 			Color col = Util.randomColor();
