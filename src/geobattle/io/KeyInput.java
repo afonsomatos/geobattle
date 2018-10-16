@@ -3,6 +3,7 @@ package geobattle.io;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 import geobattle.core.Game;
 import geobattle.core.Game.State;
@@ -24,12 +25,18 @@ public class KeyInput extends KeyAdapter {
 	
 	private int dirmask = 0;
 	
+	private HashMap<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
+	
 	public void setActive(boolean active) {
 		this.active = active;
 	}
 	
 	public KeyInput(Game game) {
 		this.game = game;
+	}
+	
+	public boolean isPressingKey(int keyCode) {
+		return keys.containsKey(keyCode) && keys.get(keyCode);
 	}
 	
 	public void updateMovement() {
@@ -59,8 +66,9 @@ public class KeyInput extends KeyAdapter {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		keys.put(e.getKeyCode(), true);
 		if (!active) return;
-
+		
 		int keyCode = e.getKeyCode();
 		State state = game.getState();
 		
@@ -86,6 +94,8 @@ public class KeyInput extends KeyAdapter {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		keys.put(e.getKeyCode(), false);
+		
 		int keyCode = e.getKeyCode();
 		State state = game.getState();
 		

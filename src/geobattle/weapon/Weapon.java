@@ -153,6 +153,10 @@ public class Weapon extends GameObject {
 	public int getAmmoLoad() {
 		return loadTank.get();
 	}
+	
+	public void setAmmoCapacity(int capacity) {
+		loadTank.setMax(capacity);
+	}
 
 	public void setAmmoLoad(int ammoLoad) {
 		loadTank.set(ammoLoad);

@@ -30,6 +30,11 @@ public class Tank {
 		return quant - taken;
 	}
 	
+	public void setMax(int quant) {
+		quantity = Math.min(quant, quantity);
+		maxQuantity = quant;
+	}
+	
 	public void set(int charge) {
 		if (charge > maxQuantity)
 			maxQuantity = charge;
