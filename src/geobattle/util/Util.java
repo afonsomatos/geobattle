@@ -16,6 +16,10 @@ public final class Util {
 		return val;
 	}
 	
+	public static Color randomColor() {
+		return new Color(randomInteger(0,255), randomInteger(0,255), randomInteger(0,255));
+	}
+	
 	public static int clamp(int min, int val, int max) {
 		return (int) clamp(min, val, max);
 	}

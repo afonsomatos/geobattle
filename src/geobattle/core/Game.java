@@ -2,13 +2,12 @@ package geobattle.core;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.item.ItemGenerator;
@@ -18,12 +17,14 @@ import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
+import geobattle.render.sprite.shapes.CircleCross;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
+import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Rifle;
 import geobattle.weapon.Shotgun;
@@ -162,6 +163,8 @@ public class Game implements Launchable {
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
 		
+		//setSprite(new CircleCross(20, Util.randomColor(), Util.randomColor()));
+		
 		gameLoop();
 	}
 	
@@ -277,6 +280,7 @@ public class Game implements Launchable {
 	}
 	
 	public void tick() {
+		if (paused) return;
 		if (state != State.PLAYING) return;
 		schedule.tick();
 
@@ -306,7 +310,8 @@ public class Game implements Launchable {
 		gfx.fillRect(0, 0, width, height);
 		
 		if (state == State.PLAYING) {
-			for (GameObject g : gameObjects)
+			LinkedList<GameObject> clone = new LinkedList<GameObject>(gameObjects);
+			for (GameObject g : clone)
 				if (!g.isHidden())
 					g.render_(gfx);
 	

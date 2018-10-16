@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 import geobattle.render.Renderable;
 
-public class Sprite {
+public class Sprite implements Renderable {
 	
 	private static final GraphicsConfiguration GFX_CONFIG =
 			GraphicsEnvironment
@@ -54,6 +54,11 @@ public class Sprite {
 	
 	public BufferedImage getImage() {
 		return image;
+	}
+	
+	@Override
+	public void render(Graphics2D gfx) {
+		gfx.drawImage(image, -centerX, -centerY, null);
 	}
 	
 	public void draw(int dx, int dy, Renderable renderer) {
