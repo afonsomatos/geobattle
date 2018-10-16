@@ -2,7 +2,11 @@ package geobattle.util;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public final class Util {
 
@@ -48,6 +52,20 @@ public final class Util {
 	
 	public static void drawCircle(Graphics2D gfx, int x, int y, int radius) {
 		gfx.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+	}
+	
+	public static Color[] randomColors(int size) {
+		/* ugh */
+		Set<Color> set = new HashSet<Color>();
+		Color[] cols = new Color[size];
+		while (size-- > 0) {
+			Color col;
+			do col = randomColor();
+			while (set.contains(col));
+			set.add(col);
+		}
+		set.toArray(cols);
+		return cols;
 	}
 	
 	public static void fillCircle(Graphics2D gfx, int x, int y, int radius) {

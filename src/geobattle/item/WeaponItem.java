@@ -14,10 +14,9 @@ import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
-public class WeaponItem extends Item {
+class WeaponItem extends Item {
 
 	private Weapon weapon;
-	
 	private boolean used = false;
 	
 	public WeaponItem(Game game, double x, double y, Sprite sprite, Weapon weapon) {
@@ -53,9 +52,6 @@ public class WeaponItem extends Item {
 			
 			weapon = weapon2;
 		}
-		
-		// Make item disappear
-		//this.kill();
 	}
 
 	@Override

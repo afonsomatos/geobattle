@@ -8,7 +8,7 @@ import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
 
-public class HealthItem extends UnitsItem {
+class HealthItem extends UnitsItem {
 
 	private static Sprite sprite = new Cross(30, 30, Color.GREEN);
 	

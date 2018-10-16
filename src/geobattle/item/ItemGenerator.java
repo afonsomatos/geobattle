@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
@@ -43,15 +44,14 @@ public class ItemGenerator extends GameObject {
 		
 		// Every round
 		if (wave % 1 == 0) {
-			
 			Weapon weapon = new Unlimited(game, game.getPlayer(), Tag.Player);
 			weapon.setAmmoSaved(60);
 			weapon.setProjectileColor(Color.GREEN);
 			weapon.setAmmoCapacity(30);
 			weapon.fill();
 			
-			Color col = Util.randomColor();
-			Sprite sprite = new CircleCross(20, Util.randomColor(), Util.randomColor());
+			Color[] cols = Util.randomColors(2);
+			Sprite sprite = new CircleCross(20, cols[0], cols[1]);
 			WeaponItem wi = new WeaponItem(game, randX, randY, sprite, weapon);
 			itemsToKill.add(wi);
 			game.spawnGameObject(wi);

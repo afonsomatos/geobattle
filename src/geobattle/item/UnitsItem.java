@@ -7,7 +7,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.util.Tank;
 
-public abstract class UnitsItem extends Item {
+abstract class UnitsItem extends Item {
 	
 	private Tank unitsTank = new Tank();
 	private Color labelColor = Color.WHITE;

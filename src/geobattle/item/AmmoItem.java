@@ -9,7 +9,7 @@ import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Diamond;
 import geobattle.weapon.Weapon;
 
-public class AmmoItem extends UnitsItem {
+class AmmoItem extends UnitsItem {
 
 	private static Sprite sprite = new Diamond(30, 30, Color.WHITE);
 	
