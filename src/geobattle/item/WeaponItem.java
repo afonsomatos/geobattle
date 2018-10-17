@@ -1,5 +1,6 @@
 package geobattle.item;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.sun.glass.events.KeyEvent;
@@ -42,8 +43,8 @@ class WeaponItem extends Item {
 			Player player = (Player) collector;
 			Arsenal ars = player.getArsenal();
 			
-			Palette[] pal = Palette.randomUnique(2);
-			setSprite(new CircleCross(20, pal[0].getColor(), pal[1].getColor()));
+			Color[] cols = Palette.random(2);
+			setSprite(new CircleCross(20, cols[0], cols[1]));
 			Weapon weapon2 = ars.getSelectedWeapon();
 			
 			// Replace weapon

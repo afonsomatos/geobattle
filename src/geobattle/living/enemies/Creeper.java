@@ -24,7 +24,7 @@ public class Creeper extends Enemy {
 		super(game, x, y, target);
 		
 		starBurst = new StarBurstSpecial(game, Tag.Enemy);
-		starBurst.setColor(Color.GREEN);
+		starBurst.setColor(getColor());
 		starBurst.setProjectiles(20);
 		
 		setColor(Color.GREEN);

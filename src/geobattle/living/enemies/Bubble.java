@@ -12,6 +12,7 @@ import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
 import geobattle.util.Counter;
+import geobattle.util.Palette;
 import geobattle.weapon.projectile.Projectile;
 
 public class Bubble extends Enemy {
@@ -34,7 +35,7 @@ public class Bubble extends Enemy {
 		starBurst.setStyle(Style.RAINBOW);
 		starBurst.setProjectiles(8);
 		
-		setColor(Color.YELLOW);
+		setColor(Palette.YELLOW);
 		
 		setWidth(10);
 		setHeight(10);
@@ -46,7 +47,7 @@ public class Bubble extends Enemy {
 	}
 
 	public void updateSprite() {
-		setSprite(new Square(getWidth(), getHeight(), Color.YELLOW));
+		setSprite(new Square(getWidth(), getHeight(), getColor()));
 		getCollider().surround(getSprite());
 	}
 	

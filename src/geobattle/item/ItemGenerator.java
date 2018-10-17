@@ -69,7 +69,7 @@ public class ItemGenerator extends GameObject {
 		
 		if (wave % 2 == 0) {
 			loc = getRandomItemLocation();
-			
+
 			// Create random weapon
 			Weapon weapon = new Unlimited(game, game.getPlayer(), Tag.Player);
 			weapon.setAmmoSaved(10);
@@ -77,8 +77,8 @@ public class ItemGenerator extends GameObject {
 			weapon.setAmmoCapacity(10);
 			weapon.fill();
 			
-			Palette[] pal = Palette.randomUnique(2);
-			Sprite sprite = new CircleCross(20, pal[0].getColor(), pal[1].getColor());
+			Color[] cols = Palette.random(2);
+			Sprite sprite = new CircleCross(20, cols[0], cols[1]);
 			WeaponItem wi = new WeaponItem(game, loc.getX(), loc.getY(), sprite, weapon);
 			newItems.add(wi);
 			expiringItems.add(wi);
