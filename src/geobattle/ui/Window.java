@@ -124,6 +124,7 @@ public class Window extends JFrame {
 			
 			String text = "<html>Welcome to Geometry Battle!";
 			text += "<br>Please press [ENTER] to start playing!";
+			text += "<br>Press Q to quit.";
 			
 			JLabel welcomeLabel = new JLabel(text);
 			welcomeLabel.setForeground(fg);
@@ -138,6 +139,16 @@ public class Window extends JFrame {
 			
 			updateHighScore();
 			
+			getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0, false), "quit");
+			getActionMap().put("quit", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (JOptionPane.showConfirmDialog(null, "Are you sure?", "Quit", 
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
+						System.exit(0);
+				}				
+			});
+
 			getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK, false), "option");
 			getActionMap().put("option", new AbstractAction() {
 				@Override

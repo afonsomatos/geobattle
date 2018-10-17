@@ -39,7 +39,7 @@ public class Slime extends Enemy {
 		Sprite getSprite() {
 			return sprite;
 		}
-		
+
 		int getHealth() {
 			return health;
 		}

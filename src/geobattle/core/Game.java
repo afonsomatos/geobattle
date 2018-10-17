@@ -37,8 +37,8 @@ public class Game implements Launchable {
 	private boolean RENDER_DEBUG = false;
 	private Renderable debugRender;
 
-	private Window window;
 	private Schedule schedule = new Schedule();
+	private Window window;
 	private Player player;
 	private HUD hud;
 	
@@ -50,6 +50,9 @@ public class Game implements Launchable {
 	
 	private int width;
 	private int height;
+	
+	private int score = 0;
+	private int rounds = 0;
 	
 	private Event outOfBorderEvent;
 	private boolean outOfBorders;
@@ -67,10 +70,7 @@ public class Game implements Launchable {
 	private boolean gameOver;
 	
 	private boolean paused = false;
-	private boolean gameRunning = false;
 	private int enemiesLeft;
-	private int score;
-	private int rounds = 0;
 	private boolean godmode = false;
 	
 	private LinkedList<Score> lastScores = new LinkedList<Score>();
@@ -135,7 +135,6 @@ public class Game implements Launchable {
 		enemiesLeft 	= 0;
 		outOfBorders 	= false;
 		gettingHit 		= false;
-		gameRunning 	= true;
 		gameOver		= false;
 		
 		// Enable input
@@ -166,7 +165,7 @@ public class Game implements Launchable {
 		ars.store(0, new Shotgun(this, player, Tag.Player));
 		ars.store(1, new Sniper(this, player, Tag.Player));
 		ars.store(2, new Rifle(this, player, Tag.Player));
-		//ars.store(3, new Unlimited(this, player, Tag.Player));
+		ars.store(3, new Unlimited(this, player, Tag.Player));
 		ars.select(0);
 		
 		for (Weapon w : ars.getSlots())
@@ -406,10 +405,6 @@ public class Game implements Launchable {
 
 	public int getHeight() {
 		return height;
-	}
-
-	public boolean isGameRunning() {
-		return gameRunning;
 	}
 
 	public HUD getHud() {

@@ -2,10 +2,17 @@ package geobattle.ui;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import geobattle.core.Game;
 import geobattle.io.KeyInput;
 import geobattle.io.MouseInput;
+import geobattle.util.Log;
 
 public class GameCanvas extends Canvas {
 		
@@ -24,7 +31,6 @@ public class GameCanvas extends Canvas {
 		addKeyListener(keyInput);
 		addMouseListener(mouseInput);
 		addMouseMotionListener(mouseInput);
-		
 	}
 	
 	public MouseInput getMouseInput() {
