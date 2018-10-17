@@ -72,11 +72,7 @@ public class KeyInput extends KeyAdapter {
 		int keyCode = e.getKeyCode();
 		State state = game.getState();
 		
-		if (state == State.MENU) {
-			if (keyCode == KeyEvent.VK_ENTER) {
-				game.start();
-			}
-		} else if (state == State.PLAYING) {
+		if (state == State.PLAYING) {
 			if (Util.contains(MOVEMENT_KEYS, keyCode)) {
 				if (keyCode == KeyEvent.VK_D)
 					dirmask = (dirmask & ~2) | 1;

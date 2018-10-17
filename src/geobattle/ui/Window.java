@@ -8,6 +8,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -18,11 +19,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import geobattle.core.Game;
 import geobattle.core.Score;
+import geobattle.util.Log;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame {
@@ -102,7 +107,11 @@ public class Window extends JFrame {
 	
 	private class Menu extends JPanel {
 		
+		private JPanel optionsPanel = new JPanel();
+		private JTextArea optionsTxt = new JTextArea(10, 20);
 		private JLabel highScoreLabel = new JLabel();
+		
+		private String options = "";
 		
 		Menu() {
 			Font font = new Font("arial", Font.PLAIN, 16);
@@ -120,11 +129,22 @@ public class Window extends JFrame {
 			welcomeLabel.setForeground(fg);
 			welcomeLabel.setFont(font);
 
+			optionsPanel = new JPanel();
+			optionsPanel.add(new JScrollPane(optionsTxt));
+			
 			highScoreLabel = new JLabel();
 			highScoreLabel.setForeground(fg);
 			highScoreLabel.setFont(font);
 			
 			updateHighScore();
+			
+			getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK, false), "option");
+			getActionMap().put("option", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					writeOptions();
+				}
+			});
 			
 			getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), "enter");
 			getActionMap().put("enter", new AbstractAction() {
@@ -133,12 +153,19 @@ public class Window extends JFrame {
 					gameCanvas.createBufferStrategy(3);
 					cardLayout.show(container, CANVAS);
 					gameCanvas.requestFocusInWindow();
-					game.start();
+					game.start(options);
 				}
 			});
 			
 			add(welcomeLabel);
 			add(highScoreLabel);
+		}
+		
+		private void writeOptions() {
+			if (JOptionPane.showConfirmDialog(null, optionsPanel, "Options", 
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
+				options = optionsTxt.getText();
+			}
 		}
 		
 		private void updateHighScore() {

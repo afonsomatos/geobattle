@@ -71,8 +71,10 @@ public class Game implements Launchable {
 	private boolean gameRunning = false;
 	private int enemiesLeft;
 	private int score;
-	
 	private int rounds = 0;
+
+	
+	private boolean godmode = false;
 	
 	private LinkedList<Score> lastScores = new LinkedList<Score>();
 			
@@ -118,13 +120,27 @@ public class Game implements Launchable {
 		rounds++;
 	}
 	
-	public void start() {			
+	private void parseOpts(String opts) {
+		Log.i("opts: <<< " + opts + " >>>");
+		
+		String[] lines = opts.split("\n");
+		for(String l : lines) {
+			if (l.equals("godmode")) {
+				godmode = true;
+				Log.i("godmode activated!");
+			}
+		}
+	}
+	
+	public void start(String opts) {
+		parseOpts(opts);
+		
 		score 			= 0;
 		enemiesLeft 	= 0;
 		outOfBorders 	= false;
 		gettingHit 		= false;
 		gameRunning 	= true;
-		gameOver			= false;
+		gameOver		= false;
 		
 		// Enable input
 		window.getGameCanvas().getMouseInput().setActive(true);
@@ -142,6 +158,9 @@ public class Game implements Launchable {
 
 		player = new Player(this);
 
+		if (godmode)
+			player.setGodmode(true);
+		
 		player.stop();
 		player.restoreHealth();
 		player.setX(width / 2);

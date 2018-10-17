@@ -44,7 +44,7 @@ public class EnemySpawner extends GameObject {
 
 	@Override
 	protected void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
+
 	}
 	
 }
