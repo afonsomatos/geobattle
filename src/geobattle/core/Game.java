@@ -64,7 +64,6 @@ public class Game implements Launchable {
 	
 	private Event gettingHitEvent;
 	private boolean gettingHit;
-	
 	private boolean gameOver;
 	
 	private boolean paused = false;
@@ -72,8 +71,6 @@ public class Game implements Launchable {
 	private int enemiesLeft;
 	private int score;
 	private int rounds = 0;
-
-	
 	private boolean godmode = false;
 	
 	private LinkedList<Score> lastScores = new LinkedList<Score>();
@@ -121,7 +118,6 @@ public class Game implements Launchable {
 	}
 	
 	private void parseOpts(String opts) {
-		Log.i("opts: <<< " + opts + " >>>");
 		
 		String[] lines = opts.split("\n");
 		for(String l : lines) {

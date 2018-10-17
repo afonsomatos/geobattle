@@ -17,6 +17,10 @@ public class EnemySpawner extends GameObject {
 	private Runnable runnable;
 	private long delay;
 	
+	public EnemySpawner(Game game, GameObject spawn, long delay) {
+		this(game, spawn, delay, null);
+	}
+	
 	public EnemySpawner(Game game, GameObject spawn, long delay, Runnable run) {
 		super(game, spawn.getX(), spawn.getY());
 		this.spawn = spawn;
@@ -28,7 +32,8 @@ public class EnemySpawner extends GameObject {
 	protected void spawn() {
 		event = new Event(delay, false, () -> {
 			this.kill();
-			runnable.run();
+			if (runnable != null)
+				runnable.run();
 			game.spawnGameObject(spawn);
 		});
 		game.getSchedule().add(event);

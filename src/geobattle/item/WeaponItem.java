@@ -30,17 +30,18 @@ class WeaponItem extends Item {
 
 	@Override
 	public void collected(GameObject collector) {
-		if (game.getWindow().getGameCanvas().getKeyInput().isPressingKey(KeyEvent.VK_G)) {
-			if (used) return;
-			used = true;
-		} else {
-			used = false;
-			return;
-		}
-		
-		Log.i("weapon item");
 		if (collector instanceof Player) {
 			Player player = (Player) collector;
+			
+			if (game.getWindow().getGameCanvas().getKeyInput().isPressingKey(KeyEvent.VK_G)) {
+				if (used) return;
+			} else {
+				used = false;
+				return;
+			}
+
+			used = true;
+			Log.i("weapon item");
 			Arsenal ars = player.getArsenal();
 			
 			Color[] cols = Palette.random(2);

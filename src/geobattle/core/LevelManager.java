@@ -8,6 +8,7 @@ import geobattle.living.enemies.Bubble;
 import geobattle.living.enemies.Creeper;
 import geobattle.living.enemies.Enemy;
 import geobattle.living.enemies.EnemySpawner;
+import geobattle.living.enemies.Slime;
 import geobattle.living.enemies.Soldier;
 import geobattle.living.enemies.Tower;
 import geobattle.schedule.Event;
@@ -51,10 +52,12 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
+		
 		for (int i = 0; i < 1; ++i) {	
 			newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
+			newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 		}
 		
