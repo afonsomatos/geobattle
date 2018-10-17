@@ -10,6 +10,7 @@ import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.CircleCross;
 import geobattle.util.Log;
+import geobattle.util.Palette;
 import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
@@ -41,7 +42,8 @@ class WeaponItem extends Item {
 			Player player = (Player) collector;
 			Arsenal ars = player.getArsenal();
 			
-			setSprite(new CircleCross(20, Util.randomColor(), Util.randomColor()));
+			Palette[] pal = Palette.randomUnique(2);
+			setSprite(new CircleCross(20, pal[0].getColor(), pal[1].getColor()));
 			Weapon weapon2 = ars.getSelectedWeapon();
 			
 			// Replace weapon

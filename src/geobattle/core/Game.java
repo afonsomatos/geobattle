@@ -162,9 +162,6 @@ public class Game implements Launchable {
 
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
-		
-		//setSprite(new CircleCross(20, Util.randomColor(), Util.randomColor()));
-		
 		gameLoop();
 	}
 	

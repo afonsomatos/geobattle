@@ -20,10 +20,6 @@ public final class Util {
 		return val;
 	}
 	
-	public static Color randomColor() {
-		return new Color(randomInteger(0,255), randomInteger(0,255), randomInteger(0,255));
-	}
-	
 	public static int clamp(int min, int val, int max) {
 		return (int) clamp(min, val, max);
 	}
@@ -54,19 +50,6 @@ public final class Util {
 		gfx.drawOval(x - radius, y - radius, radius * 2, radius * 2);
 	}
 	
-	public static Color[] randomColors(int size) {
-		/* ugh */
-		Set<Color> set = new HashSet<Color>();
-		Color[] cols = new Color[size];
-		while (size-- > 0) {
-			Color col;
-			do col = randomColor();
-			while (set.contains(col));
-			set.add(col);
-		}
-		set.toArray(cols);
-		return cols;
-	}
 	
 	public static void fillCircle(Graphics2D gfx, int x, int y, int radius) {
 		gfx.fillOval(x - radius, y - radius, radius * 2, radius * 2);
