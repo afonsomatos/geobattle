@@ -8,6 +8,7 @@ import geobattle.core.GameObject;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
+import geobattle.util.Log;
 
 public class EnemySpawner extends GameObject {
 	
@@ -35,7 +36,7 @@ public class EnemySpawner extends GameObject {
 
 	@Override
 	protected void update() {
-		double quota = (double) event.getElapsed() / delay;
+		double quota = event.getPercentage();
 		Color color = spawn.getColor();
 		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
 		setSprite(new Aura(30, 7, placeColor));

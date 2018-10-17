@@ -1,5 +1,8 @@
 package geobattle.schedule;
 
+import geobattle.util.Log;
+import geobattle.util.Util;
+
 public class Event {
 	
 	private boolean repeat = false;
@@ -7,6 +10,9 @@ public class Event {
 	
 	private long start = 0;
 	private long delay = 0;
+	private long elapsed = 0;
+	
+	private long extraDelay = 0;
 	
 	private Runnable runnable;
 	
@@ -20,8 +26,28 @@ public class Event {
 		this.runnable = runnable;
 	}
 	
+	void setElapsed(long elapsed) {
+		this.elapsed = elapsed;
+	}
+	
+	void removeExtraDelay() {
+		this.extraDelay = 0;
+	}
+	
+	void addExtraDelay(long extraDelay) {
+		this.extraDelay += extraDelay;
+	}
+	
+	long getExtraDelay() {
+		return extraDelay;
+	}
+	
+	public double getPercentage() {
+		return Util.clamp(0, (double) elapsed / delay, 1);
+	}
+	
 	public long getElapsed() {
-		return System.currentTimeMillis() - start;
+		return elapsed;
 	}
 	
 	public boolean isRepeat() {

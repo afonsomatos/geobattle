@@ -232,6 +232,8 @@ public class Game implements Launchable {
 	
 	public void togglePaused() {
 		paused = !paused;
+		if (paused) schedule.pause();
+		else schedule.unpause();
 	}
 	
 	public boolean isGameOver() {
@@ -277,9 +279,11 @@ public class Game implements Launchable {
 	}
 	
 	public void tick() {
+		// must always be recording time
+		schedule.tick();
+
 		if (paused) return;
 		if (state != State.PLAYING) return;
-		schedule.tick();
 
 		handleOutOfBorders();
 		
