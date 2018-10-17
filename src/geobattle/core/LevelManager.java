@@ -52,7 +52,6 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		
 		for (int i = 0; i < 1; ++i) {	
 			newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));

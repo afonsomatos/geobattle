@@ -166,11 +166,12 @@ public class Game implements Launchable {
 		ars.store(0, new Shotgun(this, player, Tag.Player));
 		ars.store(1, new Sniper(this, player, Tag.Player));
 		ars.store(2, new Rifle(this, player, Tag.Player));
-		ars.store(3, new Unlimited(this, player, Tag.Player));
+		//ars.store(3, new Unlimited(this, player, Tag.Player));
 		ars.select(0);
 		
 		for (Weapon w : ars.getSlots())
-			this.spawnGameObject(w);
+			if (w != null)
+				this.spawnGameObject(w);
 		
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
 		spawnGameObject(player);

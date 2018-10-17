@@ -32,29 +32,34 @@ class WeaponItem extends Item {
 	public void collected(GameObject collector) {
 		if (collector instanceof Player) {
 			Player player = (Player) collector;
+			Arsenal ars = player.getArsenal();
+			Weapon selectedWeapon = ars.getSelectedWeapon();
 			
-			if (game.getWindow().getGameCanvas().getKeyInput().isPressingKey(KeyEvent.VK_G)) {
-				if (used) return;
-			} else {
-				used = false;
-				return;
+			if (selectedWeapon != null) {
+				if (game.getWindow().getGameCanvas().getKeyInput().isPressingKey(KeyEvent.VK_G)) {
+					if (used) return;
+				} else {
+					used = false;
+					return;
+				}
 			}
 
 			used = true;
 			Log.i("weapon item");
-			Arsenal ars = player.getArsenal();
-			
+
 			Color[] cols = Palette.random(2);
 			setSprite(new CircleCross(20, cols[0], cols[1]));
-			Weapon weapon2 = ars.getSelectedWeapon();
 			
-			// Replace weapon
-			ars.getSelectedWeapon().kill();
+			if (selectedWeapon != null) {
+				selectedWeapon.kill();
+			} else {
+				this.kill();
+			}
 			ars.store(ars.getSelected(), weapon);
 			
 			game.spawnGameObject(weapon);
 			
-			weapon = weapon2;
+			weapon = selectedWeapon;
 		}
 	}
 

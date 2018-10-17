@@ -91,10 +91,7 @@ public class Slime extends Enemy {
 		double x = getX() + Math.cos(theta) * spawnRadius;
 		double y = getY() + Math.sin(theta) * spawnRadius;
 		
-		Type typeSmaller = Type.SMALL;
-		if (type == Type.LARGE)
-			typeSmaller = Type.MEDIUM;
-		
+		Type typeSmaller = type == Type.LARGE ? Type.MEDIUM : Type.SMALL;
 		Slime slime = new Slime(game, (int)x, (int)y, getTarget(), typeSmaller);
 		EnemySpawner enemySpawner = new EnemySpawner(game, slime, 200);
 		game.spawnGameObject(slime);
