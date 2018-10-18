@@ -39,7 +39,9 @@ import geobattle.weapon.Weapon;
 
 public class Game implements Launchable {
 
-	private boolean RENDER_DEBUG = false;
+	private boolean debug 	= false;
+	private boolean godmode = false;
+	
 	private Renderable debugRender;
 
 	private Schedule schedule = new Schedule();
@@ -76,7 +78,6 @@ public class Game implements Launchable {
 	
 	private boolean paused = false;
 	private int enemiesLeft;
-	private boolean godmode = false;
 	
 	private LinkedList<Score> lastScores = new LinkedList<Score>();
 			
@@ -126,7 +127,10 @@ public class Game implements Launchable {
 		
 		String[] lines = opts.split("\n");
 		for(String l : lines) {
-			if (l.equals("godmode")) {
+			if (l.equals("debug")) {
+				debug = true;
+				Log.i("debug activated.");
+			} else if (l.equals("godmode")) {
 				godmode = true;
 				Log.i("godmode activated!");
 			}
@@ -338,7 +342,7 @@ public class Game implements Launchable {
 				if (!g.isHidden())
 					g.render_(gfx);
 	
-			if (RENDER_DEBUG)
+			if (debug)
 				debugRender.render(gfx);
 		}
 

@@ -1,19 +1,20 @@
 package geobattle.collider;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 
-public class CollisionHandler {
+public final class CollisionHandler {
 
 	private Game game;
 	private CollisionMatrix collisionMatrix;
 	
 	public CollisionHandler(Game game) {
 		this.game = game;
-		
 		collisionMatrix = new CollisionMatrix()
 				.add(Tag.Player, Tag.Enemy)
 				.add(Tag.Player, Tag.Item)
@@ -26,10 +27,11 @@ public class CollisionHandler {
 	
 	public void handleCollisions() {
 		
-		LinkedList<Collider> colliders = getColliders();
+		List<Collider> colliders = getColliders();
 		
-		for (int i = 0; i < colliders.size(); ++i) {
-			for (int j = i + 1; j < colliders.size(); j++) {
+		int size = colliders.size();
+		for (int i = 0; i < size; ++i) {
+			for (int j = i + 1; j < size; j++) {
 				Collider c1 = colliders.get(i);
 				Collider c2 = colliders.get(j);
 				if (collisionMatrix.collidesWith(c1.getTag(), c2.getTag()) &&
@@ -41,16 +43,13 @@ public class CollisionHandler {
 		}
 	}
 	
-	public LinkedList<Collider> getColliders() {
-		
-		LinkedList<Collider> colliders = new LinkedList<Collider>();
-		
+	public List<Collider> getColliders() {
+		List<Collider> colliders = new ArrayList<Collider>();
 		for (GameObject g : game.getGameObjects()) {
 			Collider c = g.getCollider();
 			if (c != null)
 				colliders.add(c);
 		}
-		
 		return colliders;
 	}
 

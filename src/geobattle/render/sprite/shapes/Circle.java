@@ -13,7 +13,7 @@ public class Circle extends Sprite {
 		
 		draw((Graphics2D gfx) -> {
 			gfx.setColor(color);
-			Util.fillCircle(gfx, 0, 0, radius);
+			Util.Graphics.fillCircle(gfx, 0, 0, radius);
 		});
 	}
 

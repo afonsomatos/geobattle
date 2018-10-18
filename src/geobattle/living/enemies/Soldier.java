@@ -2,6 +2,7 @@ package geobattle.living.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;

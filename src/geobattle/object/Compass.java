@@ -21,7 +21,7 @@ public class Compass extends GameObject {
 			
 			// Draw capsule
 			gfx.setColor(new Color(255, 0, 0, 175));
-			Util.fillCircle(gfx, 0, 0, radius);
+			Util.Graphics.fillCircle(gfx, 0, 0, radius);
 
 			// Draw arrow
 			double theta = Math.PI / 4;

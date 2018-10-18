@@ -15,7 +15,7 @@ public class Aura extends Sprite {
 		draw((Graphics2D gfx) -> {
 			gfx.setColor(color);
 			gfx.setStroke(new BasicStroke(thickness));
-			Util.drawCircle(gfx, 0, 0, radius);
+			Util.Graphics.drawCircle(gfx, 0, 0, radius);
 		});
 	}
 
