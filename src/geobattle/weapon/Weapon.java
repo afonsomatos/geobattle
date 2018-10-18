@@ -271,6 +271,7 @@ public class Weapon extends GameObject {
 			p.setColor(projectileColor);
 			p.setDamage(damage);
 			
+			// Change sprite inside blocket
 			p.setSprite(new Square(projectileSize, projectileSize, projectileColor));
 			p.getCollider().surround(p.getSprite());
 			

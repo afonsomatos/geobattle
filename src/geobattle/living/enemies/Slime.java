@@ -93,7 +93,6 @@ public class Slime extends Enemy {
 		
 		Type typeSmaller = type == Type.LARGE ? Type.MEDIUM : Type.SMALL;
 		Slime slime = new Slime(game, (int)x, (int)y, getTarget(), typeSmaller);
-		EnemySpawner enemySpawner = new EnemySpawner(game, slime, 200);
 		game.spawnGameObject(slime);
 	}
 	

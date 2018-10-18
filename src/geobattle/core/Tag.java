@@ -5,5 +5,7 @@ public enum Tag {
 	Enemy,
 	Neutral,
 	Blackhole,
-	Item
+	Item,
+	
+	PlayerOrbit
 }

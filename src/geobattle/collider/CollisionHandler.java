@@ -16,7 +16,8 @@ public class CollisionHandler {
 		
 		collisionMatrix = new CollisionMatrix()
 				.add(Tag.Player, Tag.Enemy)
-				.add(Tag.Player, Tag.Item);
+				.add(Tag.Player, Tag.Item)
+				.add(Tag.Enemy, Tag.PlayerOrbit);
 	}
 	
 	public CollisionMatrix getCollisionMatrix() {

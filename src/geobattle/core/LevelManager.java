@@ -52,17 +52,16 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		for (int i = 0; i < 1; ++i) {	
-			newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
-			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
-			newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
+		for (int i = 0; i < 30; ++i) {	
+			//newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
+			//newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
+			//newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
 			newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
 			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 		}
 		
-		for (Enemy e : newEnemies) {
+		for (Enemy e : newEnemies)
 			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));
-		}
 
 	}
 	

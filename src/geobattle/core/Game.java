@@ -5,26 +5,30 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
+import geobattle.collider.Collider;
 import geobattle.collider.CollisionHandler;
+import geobattle.extension.Orbit;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
+import geobattle.living.Living;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
-import geobattle.render.sprite.shapes.CircleCross;
+import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
-import geobattle.util.Util;
+import geobattle.util.Palette;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Rifle;
 import geobattle.weapon.Shotgun;
@@ -171,6 +175,51 @@ public class Game implements Launchable {
 		for (Weapon w : ars.getSlots())
 			if (w != null)
 				this.spawnGameObject(w);
+		
+		//
+		GameObject g = new GameObject(this) {
+			
+			private int damage = 100;
+			private Map<GameObject, Boolean> canAttack = new HashMap<GameObject, Boolean>();
+
+			@Override
+			protected void spawn() {
+				setSprite(new Circle(300, Palette.BEIGE));
+				setCollider(new Collider(this, Tag.PlayerOrbit) {
+					@Override
+						public void handleCollision(Collider other) {
+							GameObject go = other.getGameObject();
+							if (go instanceof Living) {
+								if (canAttack.containsKey(go) && !canAttack.get(go)) {
+									return;
+								} else {
+									((Living) go).suffer(damage);
+									canAttack.put(go, false);
+									schedule.next(0, () -> canAttack.put(go, true));
+								}
+							}
+						}
+				});
+				getCollider().surround(getSprite());
+			}
+
+			@Override
+			protected void update() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void render(Graphics2D gfx) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		
+		player.addExtension(new Orbit(g));
+		spawnGameObject(g);
+		//
 		
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
 		spawnGameObject(player);
