@@ -4,15 +4,21 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
+
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.extension.Orbit;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Circle;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
+import geobattle.util.Palette;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
@@ -31,6 +37,8 @@ public class Player extends Living {
 			gfx.drawRect(thickness / 2, thickness / 2, 40 - thickness, 40 - thickness);
 		});
 	}
+	
+	private GameObject asteroid;
 
 	private Tank shieldTank = new Tank(300);
 	private boolean firing = false;
@@ -70,6 +78,52 @@ public class Player extends Living {
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
 		col.surround(sprite);		
+		
+		buildAsteroid();
+	}
+	
+	private void buildAsteroid() {
+		asteroid = new GameObject(game) {
+			
+			private int damage = 100;
+			private Map<GameObject, Boolean> canAttack = new HashMap<GameObject, Boolean>();
+
+			@Override
+			protected void spawn() {
+				setSprite(new Circle(10, Palette.BEIGE));
+				setCollider(new Collider(this, Tag.PlayerOrbit) {
+					@Override
+						public void handleCollision(Collider other) {
+							GameObject go = other.getGameObject();
+							if (go instanceof Living) {
+								if (canAttack.containsKey(go) && !canAttack.get(go)) {
+									return;
+								} else {
+									((Living) go).suffer(damage);
+									canAttack.put(go, false);
+									game.getSchedule().next(0, () -> canAttack.put(go, true));
+								}
+							}
+						}
+				});
+				getCollider().surround(getSprite());
+			}
+
+			@Override
+			protected void update() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void render(Graphics2D gfx) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		
+		addExtension(new Orbit(asteroid));
 	}
 	
 	@Override
@@ -151,6 +205,7 @@ public class Player extends Living {
 	
 	@Override
 	public void die() {
+		asteroid.kill();
 		game.sendPlayerDead();
 	}
 
@@ -161,7 +216,7 @@ public class Player extends Living {
 	@Override
 	protected void spawn() {
 		// TODO Auto-generated method stub
-		
+		game.spawnGameObject(asteroid);
 	}
 
 }

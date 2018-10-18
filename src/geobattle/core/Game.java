@@ -12,6 +12,7 @@ import java.util.Map;
 
 import geobattle.collider.Collider;
 import geobattle.collider.CollisionHandler;
+import geobattle.extension.Extension;
 import geobattle.extension.Orbit;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
@@ -176,49 +177,6 @@ public class Game implements Launchable {
 			if (w != null)
 				this.spawnGameObject(w);
 		
-		//
-		GameObject g = new GameObject(this) {
-			
-			private int damage = 100;
-			private Map<GameObject, Boolean> canAttack = new HashMap<GameObject, Boolean>();
-
-			@Override
-			protected void spawn() {
-				setSprite(new Circle(300, Palette.BEIGE));
-				setCollider(new Collider(this, Tag.PlayerOrbit) {
-					@Override
-						public void handleCollision(Collider other) {
-							GameObject go = other.getGameObject();
-							if (go instanceof Living) {
-								if (canAttack.containsKey(go) && !canAttack.get(go)) {
-									return;
-								} else {
-									((Living) go).suffer(damage);
-									canAttack.put(go, false);
-									schedule.next(0, () -> canAttack.put(go, true));
-								}
-							}
-						}
-				});
-				getCollider().surround(getSprite());
-			}
-
-			@Override
-			protected void update() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			protected void render(Graphics2D gfx) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		};
-		
-		player.addExtension(new Orbit(g));
-		spawnGameObject(g);
 		//
 		
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());

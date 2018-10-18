@@ -58,6 +58,10 @@ public abstract class GameObject {
 		this.rotation = rotation % (Math.PI * 2);
 	}
 	
+	public void removeExtension(Extension extension) {
+		extensions.remove(extension);
+	}
+	
 	public void addExtension(Extension extension) {
 		extensions.add(extension);
 	}
