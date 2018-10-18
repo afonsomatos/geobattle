@@ -123,7 +123,7 @@ public class Player extends Living {
 			
 		};
 		
-		addExtension(new Orbit(asteroid));
+		addExtension(new Orbit(asteroid, 70, 0.1));
 	}
 	
 	@Override

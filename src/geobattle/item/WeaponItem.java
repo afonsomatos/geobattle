@@ -47,7 +47,7 @@ class WeaponItem extends Item {
 			used = true;
 			Log.i("weapon item");
 
-			Color[] cols = Palette.random(2);
+			Color[] cols = Palette.randomWithout(2, Palette.BLACK);
 			setSprite(new CircleCross(20, cols[0], cols[1]));
 			
 			if (selectedWeapon != null) {

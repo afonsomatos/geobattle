@@ -3,8 +3,6 @@ package geobattle.schedule;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import geobattle.util.Log;
-
 public class Schedule {
 
 	private LinkedList<Event> timers = new LinkedList<Event>();

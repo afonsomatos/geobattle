@@ -6,21 +6,26 @@ public class Orbit implements Extension {
 
 	private GameObject object;
 	
-	private int radius = 100;
-	private double angVel = 0.15;
+	private int radius;
+	private double angVel;
 	private double theta = 0;
 			
-	public Orbit(GameObject object) {
+	public Orbit(GameObject object, int radius, double angVel) {
 		this.object = object;
+		this.radius = 70;
+		this.angVel = angVel;
 	}
 	
 	@Override
 	public void update(GameObject origin) {
-		if (object == null) return;
-		theta = (theta + angVel) % (Math.PI * 2);
-		int x = (int) (radius * Math.cos(theta) + origin.getX());
-		int y = (int) (radius * Math.sin(theta) + origin.getY());
-		object.setX(x);
-		object.setY(y);
+		// Check if there is nothing orbiting around
+		if (object == null)
+			return;
+		
+		theta += angVel;
+		theta %= Math.PI * 2;
+		object.setX((int) (radius * Math.cos(theta) + origin.getX()));
+		object.setY((int) (radius * Math.sin(theta) + origin.getY()));
 	}
+	
 }

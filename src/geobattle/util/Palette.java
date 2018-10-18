@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public final class Palette {
 	
@@ -46,15 +49,21 @@ public final class Palette {
 		
 	}
 	
-	public static Color random() {
-		return palette[rand.nextInt(palette.length)];
+	public static Color[] randomWithout(int x, Color... colors) {
+		List<Color> all = new LinkedList<>(Arrays.asList(palette));
+		all.removeAll(Arrays.asList(colors));
+		Collections.shuffle(all);
+		return all.subList(0, x).toArray(new Color[x]);
 	}
 	
-	public static Color[] _random(int x) {
-		Color[] res = new Color[x];
-		while (x-- > 0)
-			res[x] = random();
-		return res;
+	public static Color randomWithout(Color... colors) {
+		List<Color> all = new LinkedList<>(Arrays.asList(palette));
+		all.removeAll(Arrays.asList(colors));
+		return all.get(rand.nextInt(all.size()));
+	}
+	
+	public static Color random() {
+		return palette[rand.nextInt(palette.length)];
 	}
 	
 	public static Color[] random(int x) {
