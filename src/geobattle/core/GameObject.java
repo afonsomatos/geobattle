@@ -22,7 +22,8 @@ public abstract class GameObject {
 	private double velY		= 0;
 	private double accX 	= 0;
 	private double accY 	= 0;
-	private double rotation = 0;
+	private double rotation			= 0;
+	private double rotationSpeed 	= 0;
 	
 	private boolean active 	= true;
 	private boolean hidden 	= false;
@@ -113,9 +114,7 @@ public abstract class GameObject {
 		for (Extension b : extensions)
 			b.update(this);
 		
-		velX += accX;
-		velY += accY;
-		
+
 		this.move();
 	}
 	
@@ -126,11 +125,17 @@ public abstract class GameObject {
 	public Collider getCollider() {
 		return collider;
 	}
+	
+	public void setRotationSpeed(double rotationSpeed) {
+		this.rotationSpeed = rotationSpeed;
+	}
 
 	public void move() {
 		if (freezed) return;
-		this.x += this.velX;
-		this.y += this.velY;
+		rotation += rotationSpeed;
+		rotation %= Math.PI * 2;
+		x += (velX += accX);
+		y += (velY += accY);
 	}
 
 	public boolean isFreezed() {

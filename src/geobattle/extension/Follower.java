@@ -9,6 +9,9 @@ public class Follower implements Extension {
 	private int maxDistance = 0;
 	private int minDistance = 0;
 	
+	private boolean finished = true;
+	private Runnable reached = null;
+	
 	public Follower(GameObject target, int minDistance, int maxDistance) {
 		this.target = target;
 		this.minDistance = minDistance;
@@ -23,8 +26,13 @@ public class Follower implements Extension {
 		this(target, 0, 0);
 	}
 	
+	public void setReached(Runnable reached) {
+		this.reached = reached;
+	}
+	
 	@Override
 	public void update(GameObject gameObject) {
+		
 		if (!target.isActive()) {
 			gameObject.stop();
 			return;
@@ -42,7 +50,14 @@ public class Follower implements Extension {
 		} else if (dist < minDistance) {
 			// Step back
 			gameObject.invertDirection();
-		} // else, direction is already set
+		} 
+		
+		// In case there is no velocity, it means it reached its destination
+		if (gameObject.getVel() == 0 ^ finished) {
+			finished = !finished;
+			if (finished)
+				reached.run();
+		}
 		
 	}
 }

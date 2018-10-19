@@ -59,7 +59,7 @@ public class Player extends Living {
 		this(game, 0, 0);
 	}
 
-	//
+	
 	public Player(Game game, int x, int y) {
 		super(game, x, y);
 		
@@ -80,7 +80,7 @@ public class Player extends Living {
 		col.setTag(Tag.Player);
 		col.surround(sprite);		
 		
-		buildAsteroid();
+		buildAsteroid();		
 	}
 	
 	private void buildAsteroid() {
@@ -102,7 +102,7 @@ public class Player extends Living {
 								} else {
 									((Living) go).suffer(damage);
 									canAttack.put(go, false);
-									game.getSchedule().next(0, () -> canAttack.put(go, true));
+									game.getSchedule().next(200, () -> canAttack.put(go, true));
 								}
 							}
 						}

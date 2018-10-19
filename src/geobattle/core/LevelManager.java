@@ -10,6 +10,7 @@ import geobattle.living.enemies.Enemy;
 import geobattle.living.enemies.EnemySpawner;
 import geobattle.living.enemies.Slime;
 import geobattle.living.enemies.Soldier;
+import geobattle.living.enemies.Slicer;
 import geobattle.living.enemies.Tower;
 import geobattle.schedule.Event;
 
@@ -52,22 +53,25 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		for (int i = 2; i < level + 2; ++i) {
-			if (i % 3 == 0)
-				newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
-			if (i % 4 == 0)
-				newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
-			if (i % 5 == 0)
-				newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
+		for (int i = 0; i < level; ++i) {
 			if (i % 6 == 0)
+				newEnemies.add(new Slicer(game, 300, 300, player));
+			else if (i % 5 == 0)
+				newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
+			else if (i % 4 == 0)
+				newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
+			else if (i % 3 == 0)
+				newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
+			else if (i % 2 == 0)
 				newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
-			if (i % 2 == 0)
+			else if (i % 1 == 0)
 				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 		}
 		
+		
 		for (Enemy e : newEnemies)
 			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));
-
+		
 	}
 	
 	public int getLevelCountDown() {
