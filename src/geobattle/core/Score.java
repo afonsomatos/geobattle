@@ -1,6 +1,6 @@
 package geobattle.core;
 
-public class Score {
+public final class Score {
 
 	private String name;
 	private int score;

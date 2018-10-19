@@ -23,7 +23,7 @@ public abstract class GameObject {
 	private double accX 	= 0;
 	private double accY 	= 0;
 	private double rotation = 0;
-
+	
 	private boolean active 	= true;
 	private boolean hidden 	= false;
 	private boolean freezed	= false;

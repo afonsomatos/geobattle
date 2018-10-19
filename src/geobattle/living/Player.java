@@ -58,7 +58,8 @@ public class Player extends Living {
 	public Player(Game game) {
 		this(game, 0, 0);
 	}
-	
+
+	//
 	public Player(Game game, int x, int y) {
 		super(game, x, y);
 		
@@ -123,7 +124,7 @@ public class Player extends Living {
 			
 		};
 		
-		addExtension(new Orbit(asteroid, 70, 0.1));
+		addExtension(new Orbit(asteroid, 90, 0.15));
 	}
 	
 	@Override
@@ -215,7 +216,6 @@ public class Player extends Living {
 
 	@Override
 	protected void spawn() {
-		// TODO Auto-generated method stub
 		game.spawnGameObject(asteroid);
 	}
 

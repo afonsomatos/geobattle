@@ -12,7 +12,7 @@ public class Orbit implements Extension {
 			
 	public Orbit(GameObject object, int radius, double angVel) {
 		this.object = object;
-		this.radius = 70;
+		this.radius = radius;
 		this.angVel = angVel;
 	}
 	
