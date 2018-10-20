@@ -73,7 +73,7 @@ public class Follower implements Extension {
 			following = true;
 		}
 		
-		if (stopped) {
+		if (stopped && reached != null) {
 			reached.run();
 		}
 		
