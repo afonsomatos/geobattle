@@ -9,6 +9,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;
+import geobattle.living.Living;
 import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
@@ -20,7 +21,7 @@ public class Creeper extends Enemy {
 
 	private StarBurstSpecial starBurst;
 	
-	public Creeper(Game game, int x, int y, GameObject target) {
+	public Creeper(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 		
 		starBurst = new StarBurstSpecial(game, Tag.Enemy);

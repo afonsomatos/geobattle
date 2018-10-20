@@ -8,6 +8,7 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.extension.Shooter;
+import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.weapon.Weapon;
@@ -19,7 +20,7 @@ public class Soldier extends Enemy {
 	public boolean follow = false;
 	private Weapon weapon;
 
-	public Soldier(Game game, int x, int y, GameObject target) {
+	public Soldier(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 		
 		setSpeed(1.0);

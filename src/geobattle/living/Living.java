@@ -42,6 +42,10 @@ public abstract class Living extends GameObject {
 	
 	public abstract void die();
 	
+	public boolean hasGodMode() {
+		return godmode;
+	}
+	
 	public void suffer(int hit) {
 		if (godmode) return;
 		healthTank.take(hit);

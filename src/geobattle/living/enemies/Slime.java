@@ -1,20 +1,16 @@
 package geobattle.living.enemies;
 
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
-import com.sun.xml.internal.bind.v2.model.util.ArrayInfoUtil;
-
-import geobattle.util.Log;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;
+import geobattle.living.Living;
 import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
-import geobattle.schedule.Event;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
@@ -54,11 +50,11 @@ public class Slime extends Enemy {
 	private Type type = Type.LARGE;
 	private boolean canAttack = true;
 	
-	public Slime(Game game, int x, int y, GameObject target) {
+	public Slime(Game game, int x, int y, Living target) {
 		this(game, x, y, target, Type.LARGE);
 	}
 	
-	Slime(Game game, int x, int y, GameObject target, Type type) {
+	Slime(Game game, int x, int y, Living target, Type type) {
 		super(game, x, y, target);
 		this.type = type;
 		setHealth(type.getHealth());

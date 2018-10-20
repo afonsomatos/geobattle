@@ -7,6 +7,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Shooter;
+import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.weapon.Weapon;
@@ -17,7 +18,7 @@ public class Tower extends Enemy {
 
 	private Weapon weapon;
 	
-	public Tower(Game game, int x, int y, GameObject target) {
+	public Tower(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 	
 		setColor(Color.PINK);

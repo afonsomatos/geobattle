@@ -12,13 +12,14 @@ import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
 import geobattle.schedule.Event;
+import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
 public class Slicer extends Enemy {
 	
 	private enum State {
-		PURSUIT(0.1),
+		PURSUIT(0.2),
 		REST(0.05),
 		SLICING(0.3);
 		
@@ -43,7 +44,7 @@ public class Slicer extends Enemy {
 	private double radarDistance = 400;
 		
 	// Max distance from the target after an attack
-	private int aimMaxError = 0;
+	private int aimMaxError = 30;
 	
 	// Interval between attacks in (ms)
 	private int attackDelay = 3000;
@@ -59,7 +60,7 @@ public class Slicer extends Enemy {
 	// Flag toggled between slices
 	private boolean canSlice = true;
 	
-	private State state = State.REST;
+	private State state;
 	private Follower follower;
 	
 	public Slicer(Game game, int x, int y, Living target) {
@@ -67,8 +68,14 @@ public class Slicer extends Enemy {
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		setSpeed(SPEED);
+		setState(State.REST);
 		setupCollider();
 		setupAttackBehavior();
+	}
+	
+	public void setState(State state) {
+		this.state = state;
+		setRotationSpeed(state.getRotationSpeed());
 	}
 	
 	public void setupCollider() {
@@ -78,17 +85,17 @@ public class Slicer extends Enemy {
 			@Override
 			public void enterCollision(Collider other) {
 				GameObject obj = other.getGameObject();
-				GameObject target = Slicer.this.getTarget();
+				Living target = Slicer.this.getTarget();
 				if (obj != target) return;
-				state = State.SLICING;
+				setState(State.SLICING);
 			}
 			
 			@Override
 			public void leaveCollision(Collider other) {
 				GameObject obj = other.getGameObject();
-				GameObject target = Slicer.this.getTarget();
+				Living target = Slicer.this.getTarget();
 				if (obj != target) return;
-				state = State.REST;
+				setState(State.REST);
 			}
 			
 			@Override
@@ -97,11 +104,10 @@ public class Slicer extends Enemy {
 				if (!canSlice) return;
 				
 				GameObject obj = other.getGameObject();
-				GameObject target = Slicer.this.getTarget();
+				Living target = Slicer.this.getTarget();
 				if (obj != target) return;
 				
-				Living alive = (Living) target;
-				alive.suffer(damage);
+				target.suffer(damage);
 				canSlice = false;
 				game.getSchedule().next(sliceDelay, () -> canSlice = true);
 			}
@@ -116,6 +122,10 @@ public class Slicer extends Enemy {
 		
 		// Perform pursuit every X random seconds
 		attackEvent = new Event(Util.insertRandomError(attackDelay, attackDelayError), true, () -> {
+			// No need to move if he's already slicing
+			if (state == State.SLICING)
+				return;
+			
 			aim.setX(Util.insertRandomError(target.getX(), aimMaxError));
 			aim.setY(Util.insertRandomError(target.getY(), aimMaxError));
 			attackEvent.setDelay(Util.insertRandomError(attackDelay, attackDelayError));
@@ -126,7 +136,7 @@ public class Slicer extends Enemy {
 		follower.setActive(false);
 		follower.setReached(() -> {
 			if (state != State.SLICING)
-				state = State.REST;
+				setState(State.REST);
 			follower.setActive(false);
 		});
 		
@@ -146,8 +156,7 @@ public class Slicer extends Enemy {
 	@Override
 	protected void update() {
 		if (follower.isActive() && state != State.SLICING)
-			state = State.PURSUIT;
-		setRotationSpeed(state.getRotationSpeed());
+			setState(State.PURSUIT);
 	}
 
 	@Override

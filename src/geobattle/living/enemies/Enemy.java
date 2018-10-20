@@ -8,10 +8,10 @@ import geobattle.weapon.Weapon;
 
 public abstract class Enemy extends Living {
 	
-	private GameObject target = null;
+	private Living target = null;
 	private Weapon weapon;
 	
-	Enemy(Game game, int x, int y, GameObject target) {
+	Enemy(Game game, int x, int y, Living target) {
 		super(game, x, y);
 		this.target = target;
 		setTag(Tag.Enemy);
@@ -35,11 +35,11 @@ public abstract class Enemy extends Living {
 		this.weapon = weapon;
 	}
 
-	public void setTarget(GameObject target) {
+	public void setTarget(Living target) {
 		this.target = target;
 	}
 	
-	public GameObject getTarget() {
+	public Living getTarget() {
 		return this.target;
 	}
 

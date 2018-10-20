@@ -165,6 +165,8 @@ public class Player extends Living {
 	
 	@Override
 	public void suffer(int hit) {
+		if (this.hasGodMode()) return;
+		
 		game.playerGotHit();
 		int remainder = shieldTank.take(hit);
 		if (remainder > 0)
