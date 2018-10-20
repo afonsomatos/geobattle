@@ -17,6 +17,8 @@ import geobattle.weapon.projectile.Projectile;
 
 public class Bubble extends Enemy {
 
+	private final static int HEALTH = 500;
+	
 	private StarBurstSpecial starBurst;
 	private Counter attackCounter = new Counter(0.010, 1) {
 		@Override
@@ -31,6 +33,8 @@ public class Bubble extends Enemy {
 	public Bubble(Game game, int x, int y) {
 		super(game, x, y, null);
 		
+		setHealth(HEALTH);
+
 		starBurst = new StarBurstSpecial(game, Tag.Enemy);
 		starBurst.setStyle(Style.RAINBOW);
 		starBurst.setProjectiles(8);
@@ -39,8 +43,6 @@ public class Bubble extends Enemy {
 		
 		setWidth(10);
 		setHeight(10);
-		setSpeed(0.2);
-		setHealth(300);
 		
 		setupCollider();
 		updateSprite();

@@ -11,7 +11,7 @@ public class Rifle extends Weapon {
 	public Rifle(Game game, GameObject origin, Tag tag) {
 		super(game, origin, tag);
 		
-		setDamage(15);
+		setDamage(45);
 		setProjectiles(1);
 		setRadius(70);
 		

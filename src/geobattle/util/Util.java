@@ -1,6 +1,7 @@
 package geobattle.util;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.Random;
 
 public final class Util {
@@ -35,6 +36,15 @@ public final class Util {
 	
 	public static int insertRandomError(int value, int maxError) {
 		return value + randomInteger(-maxError, maxError);
+	}
+	
+	public static Point randomVec(double norm) {
+		double theta = Util.randomDouble(0, Math.PI * 2);
+		return new Point((int) (norm * Math.cos(theta)), (int) (norm * Math.sin(theta)));
+	}
+	
+	public static Point randomVec(double minNorm, double maxNorm) {
+		return randomVec(randomDouble(minNorm, maxNorm));
 	}
 	
 	public static int randomAbs(int value) {

@@ -1,9 +1,12 @@
 package geobattle.collider;
 
 import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -20,7 +23,7 @@ public class Collider {
 	private int offsetX = 0;
 	private int offsetY = 0;
 	
-	private List<Collider> colliding;
+	private Set<Collider> currentCollisions = new HashSet<Collider>();
 	
 	public Collider(GameObject gameObject) {
 		this(gameObject, Tag.Neutral);
@@ -31,28 +34,22 @@ public class Collider {
 		this.tag = tag;
 	}
 
-	void updateColliding(List<Collider> colliders) {
+	void updateCollisions(Set<Collider> updatedCollisions) {
 		
-		// Get lost collisions
-		if (colliding != null) {
-			List<Collider> lostColliders = new LinkedList<>(colliding);
-			lostColliders.removeAll(colliders);
-			for (Collider other : lostColliders)
-				leaveCollision(other);
-		}
+		// Check gained collisions
+		updatedCollisions
+			.stream()
+			.filter(b -> !currentCollisions.contains(b))
+			.forEach(this::enterCollision);
 		
-		// Check new collisions!
-		List<Collider> newColliders = new LinkedList<>(colliders);
-		if (colliding != null)
-			newColliders.removeAll(colliding);
-		for (Collider other : newColliders)
-			enterCollision(other);
+		// Check lost collisions
+		currentCollisions
+			.stream()
+			.filter(a -> !updatedCollisions.contains(a))
+			.forEach(this::leaveCollision);
 		
-		colliding = colliders;			
-
-		// Handle collision
-		for (Collider other : colliders)
-			handleCollision(other);
+		currentCollisions = updatedCollisions;		
+		updatedCollisions.forEach(this::handleCollision);
 	}
 	
 	public void enterCollision(Collider other) 		{}

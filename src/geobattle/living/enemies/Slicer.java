@@ -55,7 +55,7 @@ public class Slicer extends Enemy {
 	private int sliceDelay = 100;
 
 	// Damage it takes when slicing
-	private int damage = 10;
+	private int damage = 20;
 	
 	// Flag toggled between slices
 	private boolean canSlice = true;

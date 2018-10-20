@@ -82,6 +82,9 @@ public class Player extends Living {
 		col.surround(sprite);		
 		
 		buildAsteroid();
+		asteroid.setActive(false);
+
+		asteroid = new Empty(game);
 	}
 	
 	private void buildAsteroid() {
