@@ -60,9 +60,11 @@ public class KeyInput extends KeyAdapter {
 		else
 			newVelY = -speed;
 		
-		// In case of a diagonal movement, distribute speed between axis
-		newVelX /= Math.sqrt(2);
-		newVelY /= Math.sqrt(2);
+		if (newVelX != 0 && newVelY != 0) {
+			// In case of a diagonal movement, distribute speed between axis
+			newVelX /= Math.sqrt(2);
+			newVelY /= Math.sqrt(2);
+		}
 		
 		player.setVelX(newVelX);
 		player.setVelY(newVelY);
