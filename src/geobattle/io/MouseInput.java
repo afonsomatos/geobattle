@@ -28,8 +28,8 @@ public class MouseInput extends MouseAdapter {
 	
 	public void updateMouseObject(MouseEvent e) {
 		if (gameObject != null) {
-			gameObject.setX(e.getX());
-			gameObject.setY(e.getY());
+			gameObject.setX(e.getX() / game.getScale());
+			gameObject.setY(e.getY() / game.getScale());
 		}
 	}
 	

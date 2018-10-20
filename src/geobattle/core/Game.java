@@ -17,19 +17,16 @@ import geobattle.extension.Orbit;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
-import geobattle.living.Living;
 import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
-import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
-import geobattle.util.Palette;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Rifle;
 import geobattle.weapon.Shotgun;
@@ -54,9 +51,11 @@ public class Game implements Launchable {
 	
 	private int ups = 0;
 	private int fps = 0;
-	
-	private int width;
-	private int height;
+
+	private int width = 1024;
+	private int height = 576;
+	private double ratio = 16.0 / 9.0;
+	private double scale;
 	
 	private int score = 0;
 	private int rounds = 0;
@@ -195,6 +194,14 @@ public class Game implements Launchable {
 		return rounds;
 	}
 	
+	public HUD getHUD() {
+		return hud;
+	}
+	
+	public double getRatio() {
+		return ratio;
+	}
+	
 	public void gameLoop() {
 		final double second = Math.pow(10, 9);
 		new Thread(() -> {
@@ -330,9 +337,11 @@ public class Game implements Launchable {
 
 		BufferStrategy bfs = window.getGameCanvas().getBufferStrategy();
 		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
-		
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+		
+		Log.i("scale: " + scale);
+		gfx.scale(scale, scale); // this is the key to scaling
+		
 		gfx.setColor(Color.BLACK);
 		gfx.fillRect(0, 0, width, height);
 		
@@ -346,8 +355,9 @@ public class Game implements Launchable {
 				debugRender.render(gfx);
 		}
 
+		
 		hud.render(gfx);
-			 
+
 		gfx.dispose();
 		bfs.show();
 	}
@@ -426,6 +436,10 @@ public class Game implements Launchable {
 		return score;
 	}
 
+	public double getScale() {
+		return scale;
+	}
+	
 	public LevelManager getLevelManager() {
 		return levelManager;
 	}
@@ -441,15 +455,16 @@ public class Game implements Launchable {
 	
 	@Override
 	public void launch(LauncherOption opt, Dispatcher dispatcher) {
-		width = opt.getWidth();
-		height = opt.getHeight();
+		// width = opt.getWidth();
+		// height = opt.getHeight();
+		
+		scale = opt.getWidth() / (double) width;
 		
 		// Open game in a new thread
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Log.i(opt.getScreen());
-				window = new Window(Game.this, opt.getScreen(), opt.isFullScreen());
+				window = new Window(Game.this, opt.getScreen(), opt.isFullScreen(), opt.getWidth(), opt.getHeight());
 				open();
 				dispatcher.dispatch();
 			}

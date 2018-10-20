@@ -20,11 +20,11 @@ public class GameCanvas extends Canvas {
 	private MouseInput mouseInput;
 	private KeyInput keyInput;
 	
-	GameCanvas(Game game) {
-		this.game = game;
-
+	GameCanvas(Window window) {
+		this.game = window.getGame();
+		
 		setBackground(Color.BLACK);
-		setBounds(0, 0, game.getWidth(), game.getHeight());
+		setBounds(0, 0, window.getRealWidth(), window.getRealHeight());
 		
 		mouseInput = new MouseInput(game);
 		keyInput = new KeyInput(game);

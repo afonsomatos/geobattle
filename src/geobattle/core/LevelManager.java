@@ -53,6 +53,10 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
+		int i = 10;
+		while (--i >= 0)
+			newEnemies.add(new Slicer(game, rand.nextInt(width), rand.nextInt(height), player));
+		/*
 		for (int i = 0; i < level; ++i) {
 			if (i % 6 == 0)
 				newEnemies.add(new Slicer(game, 300, 300, player));
@@ -67,7 +71,7 @@ public class LevelManager {
 			else if (i % 1 == 0)
 				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 		}
-		
+		*/
 		
 		for (Enemy e : newEnemies)
 			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));

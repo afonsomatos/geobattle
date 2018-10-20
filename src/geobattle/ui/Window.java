@@ -35,6 +35,9 @@ public class Window extends JFrame {
 	private final String CANVAS = "canvas";
 	private final String MENU	= "menu";
 	
+	private int realWidth;
+	private int realHeight;
+
 	private Menu menu;
 	private GameCanvas gameCanvas;
 	private JPanel container;
@@ -42,14 +45,16 @@ public class Window extends JFrame {
 	
 	private Game game;
 	
-	public Window(Game game, int screen, boolean fullscreen) {
-		this.game = game;
+	public Window(Game game, int screen, boolean fullscreen, int width, int height) {
+		this.game 	= game;
+		this.realWidth = width;
+		this.realHeight = height;
 		setTitle("Geometry Battle");
 		
 		menu = new Menu();
 		menu.requestFocus();
 
-		gameCanvas = new GameCanvas(game);
+		gameCanvas = new GameCanvas(this);
 		container = (JPanel) getContentPane();
 		cardLayout = new CardLayout();
 		container.setLayout(cardLayout);
@@ -81,6 +86,28 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
+	}
+	
+	public int getRealWidth() {
+		return realWidth;
+	}
+
+	public void setRealWidth(int realWidth) {
+		this.realWidth = realWidth;
+	}
+
+	public int getRealHeight() {
+		return realHeight;
+	}
+
+	public void setRealHeight(int realHeight) {
+		this.realHeight = realHeight;
+	}
+
+
+
+	public Game getGame() {
+		return game;
 	}
 	
 	public void sendGameOver(int score) {
