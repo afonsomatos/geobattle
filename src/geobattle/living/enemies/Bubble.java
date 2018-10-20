@@ -34,7 +34,7 @@ public class Bubble extends Enemy {
 		starBurst = new StarBurstSpecial(game, Tag.Enemy);
 		starBurst.setStyle(Style.RAINBOW);
 		starBurst.setProjectiles(8);
-		
+		starBurst.setDamage(25);
 		setColor(Palette.YELLOW);
 		
 		setWidth(10);

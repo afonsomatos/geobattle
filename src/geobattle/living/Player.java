@@ -81,8 +81,7 @@ public class Player extends Living {
 		col.setTag(Tag.Player);
 		col.surround(sprite);		
 		
-		//buildAsteroid();
-		asteroid = new Empty(game);
+		buildAsteroid();
 	}
 	
 	private void buildAsteroid() {
@@ -93,7 +92,7 @@ public class Player extends Living {
 
 			@Override
 			protected void spawn() {
-				setSprite(new Circle(20, Palette.BEIGE));
+				setSprite(new Circle(10, Palette.GREY));
 				setCollider(new Collider(this, Tag.PlayerOrbit) {
 					@Override
 						public void handleCollision(Collider other) {

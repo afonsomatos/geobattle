@@ -47,7 +47,7 @@ public class Slicer extends Enemy {
 	private int aimMaxError = 30;
 	
 	// Interval between attacks in (ms)
-	private int attackDelay = 3000;
+	private int attackDelay = 1000;
 	private int attackDelayError = 500;
 	private Event attackEvent;
 			

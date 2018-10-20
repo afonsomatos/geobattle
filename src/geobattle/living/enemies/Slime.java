@@ -17,9 +17,9 @@ import geobattle.util.Util;
 public class Slime extends Enemy {
 	
 	private enum Type {
-		SMALL(new Square(16, 16, Palette.ORANGE), 50, 100),
-		MEDIUM(new Square(32, 32, Palette.ORANGE), 100, 250),
-		LARGE(new Square(64, 64, Palette.ORANGE), 250, 500)
+		SMALL(new Square(16, 16, Palette.ORANGE), 50, 50),
+		MEDIUM(new Square(32, 32, Palette.ORANGE), 100, 100),
+		LARGE(new Square(64, 64, Palette.ORANGE), 250, 300)
 		;
 		
 		private Sprite sprite;
