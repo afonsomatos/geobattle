@@ -6,20 +6,39 @@ import geobattle.util.Log;
 public class Follower implements Extension {
 
 	private GameObject target = null;
-	private int maxDistance = 0;
-	private int minDistance = 0;
+	private double maxDistance = 0;
+	private double minDistance = 0;
 	
-	private boolean finished = true;
+	private boolean following = false;
+	private boolean finished = false;
 	private Runnable reached = null;
 	
-	public Follower(GameObject target, int minDistance, int maxDistance) {
+	private boolean active = true;
+	
+	public Follower(GameObject target, double minDistance, double maxDistance) {
 		this.target = target;
 		this.minDistance = minDistance;
 		this.maxDistance = maxDistance;
 	}
 	
-	public Follower(GameObject target, int minDistance) {
+	public Follower(GameObject target, double minDistance) {
 		this(target, minDistance, 0);
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	public boolean isFollowing() {
+		return following;
+	}
+	
+	public void setMaxDistance(double maxDistance) {
+		this.maxDistance = maxDistance;
 	}
 	
 	public Follower(GameObject target) {
@@ -32,31 +51,30 @@ public class Follower implements Extension {
 	
 	@Override
 	public void update(GameObject gameObject) {
-		
-		if (!target.isActive()) {
-			gameObject.stop();
-			return;
-		}
-		
+		if (!active) return;
+
+		boolean stopped = false;
 		final double dist = gameObject.distance(target);
 		
 		// Point velocity vector to target
-		gameObject.setDirection(target);
+		boolean moving = gameObject.setDirection(target);
+		stopped = !moving;
 		
 		// If target is too far away or too close
 		if (maxDistance != 0 && dist > maxDistance
 				|| Math.abs(minDistance - dist) <= gameObject.getVel()) {
 			gameObject.stop();
+			stopped = true;
+			following = false;
 		} else if (dist < minDistance) {
 			// Step back
 			gameObject.invertDirection();
-		} 
+		} else {
+			following = true;
+		}
 		
-		// In case there is no velocity, it means it reached its destination
-		if (gameObject.getVel() == 0 ^ finished) {
-			finished = !finished;
-			if (finished)
-				reached.run();
+		if (stopped) {
+			reached.run();
 		}
 		
 	}

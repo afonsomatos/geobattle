@@ -53,7 +53,7 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		int i = 10;
+		int i = 1;
 		while (--i >= 0)
 			newEnemies.add(new Slicer(game, rand.nextInt(width), rand.nextInt(height), player));
 		/*

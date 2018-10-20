@@ -276,7 +276,7 @@ public abstract class GameObject {
 		velY *= -1;
 	}
 	
-	public void setDirection(double x, double y) {
+	public boolean setDirection(double x, double y) {
 		double diffX = x - this.getX();
 		double diffY = y - this.getY();
 		double distance = Math.sqrt(diffX * diffX + diffY * diffY);
@@ -284,15 +284,17 @@ public abstract class GameObject {
 		if (distance <= this.getSpeed()) {
 			this.setVelX(0);
 			this.setVelY(0);
+			return false;
 		} else {
 			this.setVelX(this.getSpeed() / distance * diffX);
 			this.setVelY(this.getSpeed()/ distance * diffY);
+			return true;
 		}
 		
 	}
 	
-	public void setDirection(GameObject obj) {
-		setDirection(obj.getX(), obj.getY());
+	public boolean setDirection(GameObject obj) {
+		return setDirection(obj.getX(), obj.getY());
 	}
 
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import geobattle.collider.Collider;
+import geobattle.core.Empty;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -80,7 +81,8 @@ public class Player extends Living {
 		col.setTag(Tag.Player);
 		col.surround(sprite);		
 		
-		buildAsteroid();		
+		//buildAsteroid();
+		asteroid = new Empty(game);
 	}
 	
 	private void buildAsteroid() {
@@ -91,7 +93,7 @@ public class Player extends Living {
 
 			@Override
 			protected void spawn() {
-				setSprite(new Circle(10, Palette.BEIGE));
+				setSprite(new Circle(20, Palette.BEIGE));
 				setCollider(new Collider(this, Tag.PlayerOrbit) {
 					@Override
 						public void handleCollision(Collider other) {

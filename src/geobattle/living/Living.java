@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
+import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.weapon.projectile.Projectile;
 
@@ -42,6 +43,7 @@ public abstract class Living extends GameObject {
 	public abstract void die();
 	
 	public void suffer(int hit) {
+		if (godmode) return;
 		healthTank.take(hit);
 		if (this.isDead())
 			this.die();

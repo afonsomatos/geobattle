@@ -1,6 +1,9 @@
 package geobattle.collider;
 
 import java.awt.Rectangle;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -17,6 +20,8 @@ public class Collider {
 	private int offsetX = 0;
 	private int offsetY = 0;
 	
+	private List<Collider> colliding;
+	
 	public Collider(GameObject gameObject) {
 		this(gameObject, Tag.Neutral);
 	}
@@ -26,9 +31,33 @@ public class Collider {
 		this.tag = tag;
 	}
 
-	public void handleCollision(Collider other) {
+	void updateColliding(List<Collider> colliders) {
 		
+		// Get lost collisions
+		if (colliding != null) {
+			List<Collider> lostColliders = new LinkedList<>(colliding);
+			lostColliders.removeAll(colliders);
+			for (Collider other : lostColliders)
+				leaveCollision(other);
+		}
+		
+		// Check new collisions!
+		List<Collider> newColliders = new LinkedList<>(colliders);
+		if (colliding != null)
+			newColliders.removeAll(colliding);
+		for (Collider other : newColliders)
+			enterCollision(other);
+		
+		colliding = colliders;			
+
+		// Handle collision
+		for (Collider other : colliders)
+			handleCollision(other);
 	}
+	
+	public void enterCollision(Collider other) 		{}
+	public void leaveCollision(Collider other) 		{}
+	public void handleCollision(Collider other) 	{}
 	
 	public void surround(Sprite sprite) {
 		width = sprite.getWidth();

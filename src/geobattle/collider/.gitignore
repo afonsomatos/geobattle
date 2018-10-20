@@ -8,3 +8,5 @@
 /CollisionHandler.class
 /CollisionMatrix.class
 /Tag.class
+/Pair.class
+/Collision.class

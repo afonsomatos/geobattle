@@ -51,6 +51,7 @@ public class Game implements Launchable {
 	
 	private int ups = 0;
 	private int fps = 0;
+	private final int TARGET_FPS = 120;
 
 	private int width = 1024;
 	private int height = 576;
@@ -203,10 +204,13 @@ public class Game implements Launchable {
 	}
 	
 	public void gameLoop() {
-		final double second = Math.pow(10, 9);
+		final long NANOS_PER_SECOND = (long) Math.pow(10, 9);
+		final long NANOS_PER_MILLIS = (long) Math.pow(10, 6);
+		final long rateLimit = NANOS_PER_SECOND / 200; 
+		
 		new Thread(() -> {
 			double ticksPerSecond = 60.0;
-			double nanosPerTick = second / ticksPerSecond;
+			double nanosPerTick = NANOS_PER_SECOND / ticksPerSecond;
 			
 			long lastTime = System.nanoTime();
 			long lastPrint = System.nanoTime();
@@ -215,9 +219,12 @@ public class Game implements Launchable {
 			int frames = 0;
 			double delta = 0;
 			
+			long elapsed;
+			
 			while (state == State.PLAYING) {
 				long now = System.nanoTime();
 				delta += (now - lastTime) / nanosPerTick;
+				elapsed = now - lastTime;
 				lastTime = now;
 				
 				while (delta >= 1) {
@@ -229,7 +236,7 @@ public class Game implements Launchable {
 				render();
 				frames++;
 				
-				if (lastTime - lastPrint >= second) {
+				if (lastTime - lastPrint >= NANOS_PER_SECOND) {
 					lastPrint = System.nanoTime();
 					
 					ups = updates;
@@ -238,6 +245,16 @@ public class Game implements Launchable {
 					updates = 0;
 					frames = 0;
 				}
+				
+			   final long delayms =  ((now + rateLimit) - System.nanoTime()) / NANOS_PER_MILLIS;
+			    if (delayms > 0) {
+			        // more than a millisecond wait, do it....
+			    	try {
+			    		Thread.sleep(delayms);
+			    	} catch (InterruptedException ie) {
+			    		// ignore.
+			    	}
+			    }
 			}
 			
 		}).start();
@@ -339,7 +356,6 @@ public class Game implements Launchable {
 		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		Log.i("scale: " + scale);
 		gfx.scale(scale, scale); // this is the key to scaling
 		
 		gfx.setColor(Color.BLACK);

@@ -29,6 +29,18 @@ public final class Util {
 		gfx.drawString(str, x + 1, y + 1);
 	}
 	
+	public static double insertRandomError(double value, double maxError) {
+		return value + randomDouble(-maxError, maxError);
+	}
+	
+	public static int insertRandomError(int value, int maxError) {
+		return value + randomInteger(-maxError, maxError);
+	}
+	
+	public static int randomAbs(int value) {
+		return randomInteger(-value, value);
+	}
+	
 	public static int randomInteger(int lower, int upper) {
 		return lower + rand.nextInt(upper - lower);
 	}
