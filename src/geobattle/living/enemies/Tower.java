@@ -14,23 +14,22 @@ import geobattle.weapon.Weapon;
 
 public class Tower extends Enemy {
 	
-	private static Sprite sprite = new Square(40, 40, Color.PINK);
+	private final static Sprite SPRITE = new Square(40, 40, Color.PINK);
+	private final static int HEALTH = 400;
 
 	private Weapon weapon;
 	
 	public Tower(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 	
-		setColor(Color.PINK);
-		setHealth(400);
-		setWidth(40);
-		setHeight(40);
+		setHealth(HEALTH);
 		setSpeed(0);
 
 		weapon = buildWeapon(target);
 		addExtension(new Shooter(target, weapon));
-		setSprite(sprite);
-		getCollider().surround(sprite);
+		
+		setSprite(SPRITE);
+		getCollider().surround(SPRITE);
 	}
 
 	public Weapon buildWeapon(GameObject target) {
@@ -66,7 +65,6 @@ public class Tower extends Enemy {
 
 	@Override
 	public void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
 		
 	}
 

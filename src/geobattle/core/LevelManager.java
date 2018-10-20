@@ -53,8 +53,8 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
-		
+		newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
+	
 		/*
 
 		for (int i = 1; i < level + 1; ++i) {
