@@ -4,19 +4,22 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.core.Game;
-import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Shooter;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.util.Interval;
+import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
+import geobattle.weapon.WeaponFactory;
 
 public class Tower extends Enemy {
 	
-	private final static Sprite SPRITE = new Square(40, 40, Color.PINK);
+	private final static Sprite SPRITE = new Square(40, 40, Palette.PINK);
 	private final static int HEALTH = 400;
-
+	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
+	
 	private Weapon weapon;
 	
 	public Tower(Game game, int x, int y, Living target) {
@@ -25,27 +28,15 @@ public class Tower extends Enemy {
 		setHealth(HEALTH);
 		setSpeed(0);
 
-		weapon = buildWeapon(target);
-		addExtension(new Shooter(target, weapon));
+		weapon = WeaponFactory.Sniper.create(game, this, Tag.Enemy);
+		weapon.setLock(target);
+		
+		Shooter shooter = new Shooter(target, weapon);
+		shooter.setDelay(SHOOT_DELAY);
+		addExtension(shooter);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);
-	}
-
-	public Weapon buildWeapon(GameObject target) {
-		Weapon weapon = new Weapon(getGame(), this, Tag.Enemy);
-		
-		weapon.setDamage(80);
-		weapon.setReloadSpeed(0.0025);
-		weapon.setFireSpeed(0.005);
-		weapon.setAmmoLoad(50);
-		weapon.setColor(Color.MAGENTA);
-		weapon.setProjectileColor(Color.MAGENTA);
-		weapon.setProjectileSpeed(10.0);
-		weapon.setLock(target);
-		weapon.fill();
-		
-		return weapon;
 	}
 	
 	@Override

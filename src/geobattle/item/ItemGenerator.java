@@ -5,18 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.CircleCross;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
-import geobattle.weapon.Unlimited;
 import geobattle.weapon.Weapon;
+import geobattle.weapon.WeaponFactory;
 
 public class ItemGenerator extends GameObject {
 
@@ -71,7 +69,7 @@ public class ItemGenerator extends GameObject {
 			loc = getRandomItemLocation();
 
 			// Create random weapon
-			Weapon weapon = new Unlimited(game, game.getPlayer(), Tag.Player);
+			Weapon weapon = WeaponFactory.Unlimited.create(game, game.getPlayer(), Tag.Player);
 			weapon.setAmmoSaved(10);
 			weapon.setProjectileColor(Color.GREEN);
 			weapon.setAmmoCapacity(10);

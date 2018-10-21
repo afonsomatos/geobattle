@@ -4,53 +4,43 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.core.Game;
-import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.extension.Shooter;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.util.Interval;
+import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
+import geobattle.weapon.WeaponFactory;
 
 public class Soldier extends Enemy {
 
-	public static Sprite sprite = new Square(24, 24, Color.RED);
-
-	public boolean follow = false;
+	private final static Sprite SPRITE = new Square(24, 24, Palette.RED);
+	private final static int HEALTH = 100;
+	private final static double SPEED = 1.0;
+	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
+	
 	private Weapon weapon;
 
 	public Soldier(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 		
-		setSpeed(1.0);
-		setHealth(100);
+		setSpeed(SPEED);
+		setHealth(HEALTH);
 		
-		setColor(Color.RED);
+		weapon = WeaponFactory.Rifle.create(game, this, Tag.Enemy);
+		weapon.setLock(target);
 		
-		weapon = buildWeapon(target);
+		Shooter shooter = new Shooter(target, weapon);
+		shooter.setDelay(SHOOT_DELAY);
 		
-		addExtension(new Shooter(target, weapon));
+		addExtension(shooter);
 		addExtension(new Follower(target, 150));
 		
-		setSprite(sprite);
-		getCollider().surround(sprite);
-	}
-	
-	public Weapon buildWeapon(GameObject target) {
-		Weapon weapon = new Weapon(getGame(), this, Tag.Enemy);
-		
-		weapon.setDamage(20);
-		weapon.setColor(Color.RED);
-		weapon.setAmmoLoad(30);
-		weapon.setReloadSpeed(0.005);
-		weapon.setFireSpeed(0.01);
-		weapon.setProjectileColor(Color.GRAY);
-		weapon.setProjectileSpeed(8.0);
-		weapon.setLock(target);
-		weapon.fill();
-		
-		return weapon;
+		setSprite(SPRITE);
+		getCollider().surround(SPRITE);
 	}
 	
 	@Override
@@ -71,8 +61,7 @@ public class Soldier extends Enemy {
 
 	@Override
 	public void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

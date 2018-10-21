@@ -51,10 +51,20 @@ public final class Util {
 		return randomInteger(-value, value);
 	}
 	
+	public static int randomInteger(Interval<Integer> inter) {
+		return randomInteger(inter.start, inter.end);
+	}
+	
 	public static int randomInteger(int lower, int upper) {
+		if (lower >= upper)
+			return lower;
 		return lower + rand.nextInt(upper - lower);
 	}
-
+	
+	public static double randomDouble(Interval<Double> inter) {
+		return randomDouble(inter.start, inter.end);
+	}
+	
 	public static double randomDouble(double lower, double upper) {
 		return lower + rand.nextDouble() * (upper - lower);
 	}

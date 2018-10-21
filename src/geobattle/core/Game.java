@@ -5,15 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import geobattle.collider.Collider;
 import geobattle.collider.CollisionHandler;
-import geobattle.extension.Extension;
-import geobattle.extension.Orbit;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
@@ -28,11 +23,8 @@ import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
 import geobattle.weapon.Arsenal;
-import geobattle.weapon.Rifle;
-import geobattle.weapon.Shotgun;
-import geobattle.weapon.Sniper;
-import geobattle.weapon.Unlimited;
 import geobattle.weapon.Weapon;
+import geobattle.weapon.WeaponFactory;
 
 public class Game implements Launchable {
 
@@ -171,18 +163,19 @@ public class Game implements Launchable {
 		player.setY(height / 2);
 
 		Arsenal ars = player.getArsenal();
-		ars.store(0, new Shotgun(this, player, Tag.Player));
-		ars.store(1, new Sniper(this, player, Tag.Player));
-		ars.store(2, new Rifle(this, player, Tag.Player));
-		ars.store(3, new Unlimited(this, player, Tag.Player));
+		
+		ars.store(0, WeaponFactory.Shotgun.create(this, player, Tag.Player));
+		ars.store(1, WeaponFactory.Sniper.create(this, player, Tag.Player));
+		ars.store(2, WeaponFactory.Rifle.create(this, player, Tag.Player));
+		ars.store(3, WeaponFactory.Unlimited.create(this, player, Tag.Player));
+
+		for (Weapon w : ars.getSlots()) {
+			if (w == null) continue;
+			spawnGameObject(w);
+		}
+		
 		ars.select(0);
-		
-		for (Weapon w : ars.getSlots())
-			if (w != null)
-				this.spawnGameObject(w);
-		
-		//
-		
+
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
 		spawnGameObject(player);
 

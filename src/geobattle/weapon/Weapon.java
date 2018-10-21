@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.render.Renderable;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
@@ -27,23 +28,40 @@ public class Weapon extends GameObject {
 	private Tank loadTank = new Tank();
 	private Tank ammoTank = new Tank();
 	
-	private int projectiles = 1;
-	private int damage = 10;
-	private int projectileSize = 8;
-	private double projectileSpeed = 2.0f;
-	private Color projectileColor = Color.CYAN;
+	private int projectiles 		= 1;
+	private int damage 				= 10;
+	private int projectileSize 		= 8;
+	private double projectileSpeed 	= 2.0f;
+	private Color projectileColor 	= Color.CYAN;
 	
 	private GameObject lock = null;
 	private GameObject origin = null;
 	
 	private double fireAmplitude = Math.PI / 4;
 	private double radius = 70;
-	private double fireAngle = 0;
+	private double fireAngle = 32;
 	private double recoil = 0;
 	
-	public Weapon(Game game, GameObject origin, Tag tag) {
+	private Renderable drawer;
+	
+	Weapon(Game game) {
+		this(game, null, Tag.Neutral);
+	}
+	
+	Weapon(Game game, GameObject origin, Tag tag) {
 		super(game);
 		this.origin = origin;
+
+		drawer = (Graphics2D superGfx) -> {
+			Graphics2D gfx = (Graphics2D) superGfx.create();
+			gfx.setColor(getColor());
+			// (0, 0) is the firing point
+			final int side = 10;
+			final int x[] = {0, side, side};
+			final int y[] = {0, side, -side};
+			gfx.fillPolygon(x, y, 3);
+			gfx.dispose();
+		};
 		
 		setTag(tag);
 		setWidth(15);
@@ -81,23 +99,16 @@ public class Weapon extends GameObject {
 		this.recoil = recoil;
 	}
 	
-	protected void draw(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setColor(getColor());
-		// (0, 0) is the firing point
-		final int side = 10;
-		final int x[] = {0, side, side};
-		final int y[] = {0, side, -side};
-		gfx.fillPolygon(x, y, 3);
-		gfx.dispose();
+	public void setDrawer(Renderable drawer) {
+		this.drawer = drawer;
 	}
-	
+
 	@Override
 	public void render(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.rotate(fireAngle, (int) getX(), (int) getY());
 		gfx.translate(getX(), getY());
-		draw(gfx);
+		drawer.render(gfx);
 		gfx.dispose();
 	}
 	

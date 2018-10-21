@@ -1,6 +1,8 @@
 package geobattle.extension;
 
 import geobattle.core.GameObject;
+import geobattle.util.Interval;
+import geobattle.util.Util;
 import geobattle.weapon.Weapon;
 
 public class Shooter implements Extension {
@@ -9,6 +11,10 @@ public class Shooter implements Extension {
 	private GameObject target = null;
 	private boolean automatic = true;
 
+	// Delay to fire and reload the weapon
+	private Interval<Integer> delay;
+	private boolean pausing = false;
+	
 	public Shooter(GameObject target, Weapon weapon) {
 		this.target = target;
 		this.weapon = weapon;
@@ -17,6 +23,10 @@ public class Shooter implements Extension {
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 		weapon.setLock(target);
+	}
+	
+	public void setDelay(Interval<Integer> delay) {
+		this.delay = delay;
 	}
 	
 	public void setTarget(GameObject target) {
@@ -29,14 +39,22 @@ public class Shooter implements Extension {
 	
 	@Override
 	public void update(GameObject gameObject) {
-		if (!target.isActive()) return;
+		if (!target.isActive() || !automatic || pausing)
+			return;
 		
-		if (!automatic) return;
-				
 		if (weapon.getAmmoLoad() == 0 && weapon.getAmmoSaved() > 0)
 			weapon.reload();
 		else if (weapon.canFire())
 			weapon.fire(target);
+		
+		if (delay != null) {
+			int wait = Util.randomInteger(delay);
+			if (wait > 0) {
+				pausing = true;
+				gameObject.getGame().getSchedule().next(wait, () -> pausing = false);
+			}
+		}
+		
 	}
 	
 }
