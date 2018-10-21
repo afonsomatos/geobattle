@@ -23,8 +23,8 @@ public class Launcher extends JFrame {
 
 	private JLabel dimLabel 		= new JLabel("Dimensions: ");
 	private JLabel screenLabel 		= new JLabel("Screen: ");
-	private JTextField widthText	= new JTextField("1280");
-	private JTextField heightText	= new JTextField("720");
+	private JTextField widthText	= new JTextField("1024");
+	private JTextField heightText	= new JTextField("576");
 	private JCheckBox fullScreen	= new JCheckBox("Fullscreen");
 	private JButton startBtn		= new JButton("Start");
 	private JButton cancelBtn		= new JButton("Cancel");

@@ -75,7 +75,7 @@ public class ItemGenerator extends GameObject {
 			weapon.setAmmoCapacity(10);
 			weapon.fill();
 			
-			Color[] cols = Palette.random(2);
+			Color[] cols = Palette.randomWithout(2, Palette.BLACK);
 			Sprite sprite = new CircleCross(20, cols[0], cols[1]);
 			WeaponItem wi = new WeaponItem(game, loc.getX(), loc.getY(), sprite, weapon);
 			newItems.add(wi);

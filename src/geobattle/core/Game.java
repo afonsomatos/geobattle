@@ -180,6 +180,12 @@ public class Game implements Launchable {
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
 		spawnGameObject(player);
 
+///		
+		GameObject g = new Empty(this, 300, 300);
+	
+		
+		///
+		
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
 		gameLoop();
@@ -200,7 +206,7 @@ public class Game implements Launchable {
 	public void gameLoop() {
 		final long NANOS_PER_SECOND = (long) Math.pow(10, 9);
 		final long NANOS_PER_MILLIS = (long) Math.pow(10, 6);
-		final long rateLimit = NANOS_PER_SECOND / 200; 
+		final long rateLimit = NANOS_PER_SECOND / TARGET_FPS; 
 		
 		new Thread(() -> {
 			double ticksPerSecond = 60.0;

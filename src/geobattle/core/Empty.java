@@ -4,6 +4,10 @@ import java.awt.Graphics2D;
 
 public class Empty extends GameObject {
 
+	public Empty(Game game, int x, int y) {
+		super(game, x, y);
+	}
+	
 	public Empty(Game game) {
 		super(game);
 	}

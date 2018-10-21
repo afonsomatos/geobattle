@@ -23,7 +23,6 @@ public class Creeper extends Enemy {
 	private static final double SPEED = 1.0;
 	private static final int HEALTH = 400;
 	
-	
 	private StarBurstSpecial starBurst;
 	
 	public Creeper(Game game, int x, int y, Living target) {
