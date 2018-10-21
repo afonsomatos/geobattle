@@ -17,7 +17,8 @@ import geobattle.weapon.WeaponFactory;
 
 public class Soldier extends Enemy {
 
-	private final static Sprite SPRITE = new Square(24, 24, Palette.RED);
+	private final static Color COLOR = Palette.RED;
+	private final static Sprite SPRITE = new Square(24, 24, COLOR);
 	private final static int HEALTH = 100;
 	private final static double SPEED = 1.0;
 	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
@@ -27,6 +28,7 @@ public class Soldier extends Enemy {
 	public Soldier(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 		
+		setColor(COLOR);
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 		

@@ -16,7 +16,8 @@ import geobattle.weapon.WeaponFactory;
 
 public class Tower extends Enemy {
 	
-	private final static Sprite SPRITE = new Square(40, 40, Palette.PINK);
+	private final static Color COLOR = Palette.PINK;
+	private final static Sprite SPRITE = new Square(40, 40, COLOR);
 	private final static int HEALTH = 400;
 	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
 	
@@ -25,6 +26,7 @@ public class Tower extends Enemy {
 	public Tower(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
 	
+		setColor(COLOR);
 		setHealth(HEALTH);
 		setSpeed(0);
 

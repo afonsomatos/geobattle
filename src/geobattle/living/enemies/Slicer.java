@@ -1,5 +1,6 @@
 package geobattle.living.enemies;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
@@ -12,7 +13,6 @@ import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
 import geobattle.schedule.Event;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
@@ -34,8 +34,9 @@ public class Slicer extends Enemy {
 			return rotationSpeed;
 		}
 	};
-	
-	private static final Sprite SPRITE = new Cross(50, 50, 5, Palette.ORANGE);
+
+	private static final Color COLOR = Palette.ORANGE;
+	private static final Sprite SPRITE = new Cross(50, 50, 5, COLOR);
 	
 	private static final int HEALTH = 600;
 	private static final double SPEED = 3.0;
@@ -68,6 +69,7 @@ public class Slicer extends Enemy {
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		setSpeed(SPEED);
+		setColor(COLOR);
 		setState(State.REST);
 		setupCollider();
 		setupAttackBehavior();

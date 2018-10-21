@@ -14,11 +14,16 @@ import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
+import geobattle.util.Palette;
 
 public class Creeper extends Enemy {
 
-	public static Sprite sprite = new Square(16, 16, Color.GREEN);
-
+	private static final Color COLOR = Palette.GREEN;
+	private static final Sprite SPRITE = new Square(16, 16, COLOR);
+	private static final double SPEED = 1.0;
+	private static final int HEALTH = 400;
+	
+	
 	private StarBurstSpecial starBurst;
 	
 	public Creeper(Game game, int x, int y, Living target) {
@@ -28,13 +33,13 @@ public class Creeper extends Enemy {
 		starBurst.setColor(getColor());
 		starBurst.setProjectiles(20);
 		
-		setColor(Color.GREEN);
-		setSpeed(1);
-		setHealth(400);
+		setColor(COLOR);
+		setSpeed(SPEED);
+		setHealth(HEALTH);
 
 		addExtension(new Follower(target));
 		
-		setSprite(sprite);
+		setSprite(SPRITE);
 		setupCollider();
 	}
 	
@@ -49,7 +54,7 @@ public class Creeper extends Enemy {
 					Creeper.this.explode();		
 			}
 		});
-		getCollider().surround(getSprite());
+		getCollider().surround(SPRITE);
 	}
 	
 	public void explode() {
@@ -70,13 +75,11 @@ public class Creeper extends Enemy {
 
 	@Override
 	public void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected void spawn() {
-		// TODO Auto-generated method stub
 		
 	}
 	

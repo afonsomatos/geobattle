@@ -38,6 +38,10 @@ public final class Util {
 		return value + randomInteger(-maxError, maxError);
 	}
 	
+	public static Point randomVec(Interval<Double> inter) {
+		return randomVec(inter.start, inter.end);
+	}
+	
 	public static Point randomVec(double norm) {
 		double theta = Util.randomDouble(0, Math.PI * 2);
 		return new Point((int) (norm * Math.cos(theta)), (int) (norm * Math.sin(theta)));

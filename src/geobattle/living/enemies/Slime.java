@@ -1,5 +1,6 @@
 package geobattle.living.enemies;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
@@ -11,15 +12,18 @@ import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.util.Interval;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
 public class Slime extends Enemy {
 	
+	private static final Color COLOR = Palette.ORANGE;
+	
 	private enum Type {
-		SMALL	(new Square(16, 16, Palette.ORANGE), 050, 015, 2, 500, null),
-		MEDIUM	(new Square(32, 32, Palette.ORANGE), 100, 050, 1.5, 1000, SMALL),
-		LARGE	(new Square(64, 64, Palette.ORANGE), 250, 150, 1, 1500, MEDIUM);
+		SMALL	(new Square(16, 16, COLOR), 050, 015, 2, 500, null),
+		MEDIUM	(new Square(32, 32, COLOR), 100, 050, 1.5, 1000, SMALL),
+		LARGE	(new Square(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM);
 		
 		final Sprite sprite;
 		final int health;
@@ -43,9 +47,8 @@ public class Slime extends Enemy {
 	
 	}
 	
-	// Spawning distance from entity is of [min, max[
-	private double minSpawnRadius = 30.0;
-	private double maxSpawnRadius = 90.0;
+	// Spawning distance from entity
+	private Interval<Double> spawnRadius = new Interval<Double>(30.0, 90.0);
 	
 	// Flag toggled between strikes
 	private boolean canAttack = true;
@@ -59,6 +62,7 @@ public class Slime extends Enemy {
 	Slime(Game game, int x, int y, Living target, Type type) {
 		super(game, x, y, target);
 		this.type = type;
+		setColor(COLOR);
 		setHealth(type.health);
 		setSpeed(type.speed);
 		setSprite(type.sprite);
@@ -85,7 +89,7 @@ public class Slime extends Enemy {
 	}
 	
 	public void spawn(Type child) {
-		Point pos = Util.randomVec(minSpawnRadius, maxSpawnRadius);
+		Point pos = Util.randomVec(spawnRadius);
 		int x = (int) (pos.x + getX());
 		int y = (int) (pos.y + getY());
 		game.spawnGameObject(new Slime(game, x, y, getTarget(), child));

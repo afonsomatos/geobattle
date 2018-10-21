@@ -17,6 +17,7 @@ import geobattle.weapon.projectile.Projectile;
 
 public class Bubble extends Enemy {
 
+	private static final Color COLOR = Palette.YELLOW;
 	private final static int HEALTH = 500;
 	
 	private StarBurstSpecial starBurst;
@@ -33,13 +34,13 @@ public class Bubble extends Enemy {
 	public Bubble(Game game, int x, int y) {
 		super(game, x, y, null);
 		
+		setColor(COLOR);
 		setHealth(HEALTH);
 
 		starBurst = new StarBurstSpecial(game, Tag.Enemy);
 		starBurst.setStyle(Style.RAINBOW);
 		starBurst.setProjectiles(8);
 		starBurst.setDamage(25);
-		setColor(Palette.YELLOW);
 		
 		setWidth(10);
 		setHeight(10);
@@ -107,7 +108,6 @@ public class Bubble extends Enemy {
 
 	@Override
 	protected void spawn() {
-		// TODO Auto-generated method stub
 		
 	}
 	
