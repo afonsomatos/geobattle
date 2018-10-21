@@ -16,6 +16,7 @@ import geobattle.living.Player;
 import geobattle.living.enemies.Enemy;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
+import geobattle.render.sprite.Sprite;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.ui.Window;
@@ -468,6 +469,8 @@ public class Game implements Launchable {
 		// height = opt.getHeight();
 		
 		scale = opt.getWidth() / (double) width;
+		
+		Log.i("scale: " + scale);
 		
 		// Open game in a new thread
 		new Thread(new Runnable() {

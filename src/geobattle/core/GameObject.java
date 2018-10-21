@@ -92,9 +92,9 @@ public abstract class GameObject {
 			int centerX = sprite.getCenterX();
 			int centerY = sprite.getCenterY();
 			
-			gfx.translate(x - centerX, y - centerY);
-			gfx.rotate(rotation, centerX, centerY);
-			gfx.drawImage(sprite.getImage(), 0, 0, null);
+			gfx.translate(x, y);
+			gfx.rotate(rotation, 0, 0);
+			sprite.render(gfx);
 			gfx.dispose();
 		}
 		
