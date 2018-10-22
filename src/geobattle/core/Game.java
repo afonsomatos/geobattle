@@ -15,6 +15,7 @@ import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
+import geobattle.living.enemies.Bomber;
 import geobattle.living.enemies.Enemy;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
@@ -181,8 +182,8 @@ public class Game implements Launchable {
 			spawnGameObject(w);
 		}
 		
-		//spawnGameObject(new Bomb(this, 500, 500));
-		
+		spawnGameObject(new Bomber(this, 400, 400, player));
+		//spawnGameObject(new Bomb(this, 500, 500, Tag.Neutral));
 		
 		ars.select(0);
 

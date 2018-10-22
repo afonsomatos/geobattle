@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import geobattle.living.Player;
+import geobattle.living.enemies.Bomber;
 import geobattle.living.enemies.Bubble;
 import geobattle.living.enemies.Creeper;
 import geobattle.living.enemies.Enemy;
@@ -54,6 +55,9 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
+		//newEnemies.add(new Bomber(game, 400, 400, player));
+		
+		/*
 		for (int i = 1; i < level + 1; ++i) {
 			if (i % 7 == 0)
 				newEnemies.add(new Fly(game, rand.nextInt(width), rand.nextInt(height), player));
@@ -73,7 +77,7 @@ public class LevelManager {
 		
 		for (Enemy e : newEnemies)
 			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));
-		
+		*/
 	}
 	
 	public int getLevelCountDown() {

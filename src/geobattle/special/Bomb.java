@@ -16,13 +16,14 @@ import geobattle.util.Util;
 
 public class Bomb extends GameObject {
 
-	private final static Sprite SPRITE = new Sprite(30, 40, 15, 25);
-	
+	private final static Sprite SPRITE = new Sprite(30, 40, 15, 20);
+	// 30 40 15 20
 	static {
 		SPRITE.draw(new Circle(15, Palette.GREY));
-		SPRITE.draw(gfx -> {
-			gfx.setColor(Palette.RED);
-			gfx.fillRect(-5, -20, 5, 10);
+		SPRITE.draw(g -> {
+			g.rotate(0.3);
+			g.setColor(Palette.GREY);
+			g.fillRect(-5, -20, 10, 10);
 		});
 	}
 	
@@ -77,16 +78,6 @@ public class Bomb extends GameObject {
 
 	@Override
 	protected void render(Graphics2D gfx) {
-		Sprite sprite = new Sprite(30, 40, 15, 25);
-		sprite.draw(new Circle(15, Palette.GREY));
-		sprite.draw(g -> {
-			g.rotate(0.3);
-			g.setColor(Palette.GREY);
-			g.fillRect(-5, -20, 10, 10);
-		});
-		
-		setSprite(sprite);
-		
 		gfx.setColor(FUSE_COLOR);
 		gfx.setStroke(new BasicStroke(FUSE_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		gfx.drawArc((int)getX()+6, (int)getY()-28, 30, 30, 160, - (int) (FUSE_ARC_DEGREE* (1 - explode.getPercentage())));

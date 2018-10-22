@@ -55,6 +55,10 @@ public abstract class GameObject {
 		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
 	}
 	
+	public boolean isOutOfBorders(int margin) {
+		return getX() > (getGame().getWidth() - margin) || getY() > (getGame().getHeight() - margin) || getX() < margin || getY() < margin;
+	}
+	
 	public void setRotation(double rotation) {
 		this.rotation = rotation % (Math.PI * 2);
 	}

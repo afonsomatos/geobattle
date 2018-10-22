@@ -2,6 +2,7 @@ package geobattle.util;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
 import java.util.Random;
 
 public final class Util {
@@ -65,6 +66,10 @@ public final class Util {
 		return lower + rand.nextInt(upper - lower);
 	}
 	
+	public static boolean randomBoolean() {
+		return rand.nextBoolean();
+	}
+	
 	public static double randomDouble(Interval<Double> inter) {
 		return randomDouble(inter.start, inter.end);
 	}
@@ -89,6 +94,10 @@ public final class Util {
 
 		public static void fillCircle(Graphics2D gfx, int x, int y, int radius) {
 			gfx.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+		}
+		
+		public static Ellipse2D.Double getEllipse(int x, int y, int width, int height) {
+			return new Ellipse2D.Double(x - width/2, y - height/2, width, height);
 		}
 		
 		private Graphics() {
