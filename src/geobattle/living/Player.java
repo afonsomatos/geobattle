@@ -16,6 +16,7 @@ import geobattle.extension.Orbit;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Circle;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.special.BombSpecial;
 import geobattle.special.Special;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
@@ -49,7 +50,7 @@ public class Player extends Living {
 	
 	private Special special;
 	private boolean specialReady = true;
-	private Counter specialCounter = new Counter(0.01) {
+	private Counter specialCounter = new Counter(0.1) {
 		@Override
 		public void fire() {
 			specialReady = true;
@@ -71,9 +72,15 @@ public class Player extends Living {
 		setHealth(200);
 		setShield(100);
 		
+		/*
 		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
+		*/
+		
+		BombSpecial bombSpecial = new BombSpecial(game, Tag.Player);
+		bombSpecial.setDamage(500);
+		special = bombSpecial;
 		
 		setSprite(sprite);
 

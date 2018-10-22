@@ -1,7 +1,9 @@
 package geobattle.core;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -19,10 +21,14 @@ import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
+import geobattle.special.Bomb;
+import geobattle.special.WaveSpecial;
 import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
+import geobattle.util.Palette;
+import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
@@ -175,16 +181,13 @@ public class Game implements Launchable {
 			spawnGameObject(w);
 		}
 		
+		//spawnGameObject(new Bomb(this, 500, 500));
+		
+		
 		ars.select(0);
 
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
 		spawnGameObject(player);
-
-///		
-		GameObject g = new Empty(this, 300, 300);
-	
-		
-		///
 		
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;

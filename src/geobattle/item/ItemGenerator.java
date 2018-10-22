@@ -50,7 +50,7 @@ public class ItemGenerator extends GameObject {
 		Point loc;
 		List<Item> newItems = new LinkedList<Item>();
 		
-		if (wave % 3 == 0) {
+		if (wave % 5 == 0) {
 			loc = getRandomItemLocation();
 			newItems.add(new HealthItem(game, loc.getX(), loc.getY(), 300));
 		}
@@ -60,7 +60,7 @@ public class ItemGenerator extends GameObject {
 			newItems.add(new AmmoItem(game, loc.getX(), loc.getY(), 100));
 		}
 		
-		if (wave % 7 == 0) {
+		if (wave % 3 == 0) {
 			loc = getRandomItemLocation();
 			newItems.add(new ShieldItem(game, loc.getX(), loc.getY(), 200));
 		}
