@@ -70,7 +70,6 @@ public class Bomber extends Enemy {
 			attackEvent.setOff(true);
 		
 		attackEvent = new Event(Util.randomInteger(attackInterval), true, () -> {
-			Log.i("planted bomb!");
 			bombSpecial.setPos(new Point((int)getX(), (int)getY()));
 			bombSpecial.send();
 			attackEvent.setDelay(Util.randomInteger(attackInterval));
