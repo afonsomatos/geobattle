@@ -12,14 +12,23 @@ import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
 import geobattle.util.Palette;
+import geobattle.util.Util;
 
 public class Bomb extends GameObject {
 
-	private final static Sprite SPRITE = new Circle(15, Palette.GREY);
+	private final static Sprite SPRITE = new Sprite(30, 40, 15, 25);
+	
+	static {
+		SPRITE.draw(new Circle(15, Palette.GREY));
+		SPRITE.draw(gfx -> {
+			gfx.setColor(Palette.RED);
+			gfx.fillRect(-5, -20, 5, 10);
+		});
+	}
 	
 	private final static Color FUSE_COLOR = Palette.BROWN;
 	private final static int FUSE_THICKNESS = 3;
-	private final static int FUSE_ARC_DEGREE = -120;
+	private final static int FUSE_ARC_DEGREE = 100;
 	
 	private int damage = 500;
 	private long delay = 2000;
@@ -63,14 +72,24 @@ public class Bomb extends GameObject {
 
 	@Override
 	protected void update() {
-		
+
 	}
 
 	@Override
 	protected void render(Graphics2D gfx) {
+		Sprite sprite = new Sprite(30, 40, 15, 25);
+		sprite.draw(new Circle(15, Palette.GREY));
+		sprite.draw(g -> {
+			g.rotate(0.3);
+			g.setColor(Palette.GREY);
+			g.fillRect(-5, -20, 10, 10);
+		});
+		
+		setSprite(sprite);
+		
 		gfx.setColor(FUSE_COLOR);
 		gfx.setStroke(new BasicStroke(FUSE_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		gfx.drawArc((int)getX(), (int)getY()-30, 30, 30, 180, (int) (FUSE_ARC_DEGREE* (1 - explode.getPercentage())));
+		gfx.drawArc((int)getX()+6, (int)getY()-28, 30, 30, 160, - (int) (FUSE_ARC_DEGREE* (1 - explode.getPercentage())));
 	}
 
 }
