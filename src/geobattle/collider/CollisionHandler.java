@@ -21,6 +21,8 @@ public final class CollisionHandler {
 		collisionMatrix = new CollisionMatrix()
 				.add(Tag.Player, Tag.Enemy)
 				.add(Tag.Player, Tag.Item)
+				.add(Tag.Void, Tag.Player)
+				.add(Tag.Void, Tag.Enemy)
 				.add(Tag.Enemy, Tag.PlayerOrbit);
 	}
 	

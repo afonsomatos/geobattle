@@ -78,12 +78,14 @@ public class Player extends Living {
 		special = waveSpecial;
 		*/
 		
-		BombSpecial bombSpecial = new BombSpecial(game, Tag.Player);
+		BombSpecial bombSpecial = new BombSpecial(game, Tag.Void);
 		bombSpecial.setDamage(500);
 		special = bombSpecial;
 		
 		setSprite(sprite);
 
+		setTag(Tag.Player);
+		
 		Collider col = getCollider();
 		col.setTag(Tag.Player);
 		col.surround(sprite);		

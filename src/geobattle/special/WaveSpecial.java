@@ -46,7 +46,6 @@ public class WaveSpecial extends Special {
 		
 		Wave wave = new Wave(game, pos.getX(), pos.getY(), getTag());
 		wave.setColor(color);
-		wave.setTag(tag);
 		wave.setSpeed(speed);
 		wave.setDamage(damage);
 		wave.setRadius(radius);

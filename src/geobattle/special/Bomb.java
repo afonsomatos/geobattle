@@ -28,11 +28,10 @@ public class Bomb extends GameObject {
 	
 	public Bomb(Game game, double x, double y, Tag tag) {
 		super(game, x, y);
-		
+		setTag(tag);
 		setSprite(SPRITE);
 		
 		waveSpecial.setDamage(damage);
-		waveSpecial.setTag(tag);
 		waveSpecial.setRadius(100);
 		waveSpecial.setSpeed(0.03);
 		waveSpecial.setColor(Palette.ORANGE);
@@ -51,6 +50,7 @@ public class Bomb extends GameObject {
 	}
 
 	private void explode() {
+		waveSpecial.setTag(getTag());
 		waveSpecial.setPos(new Point((int)getX(), (int)getY()));
 		waveSpecial.send();
 		this.kill();

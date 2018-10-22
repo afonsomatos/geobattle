@@ -10,6 +10,7 @@ import geobattle.core.Tag;
 import geobattle.living.Living;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.util.Counter;
+import geobattle.util.Log;
 
 class Wave extends GameObject {
 

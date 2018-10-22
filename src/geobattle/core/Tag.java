@@ -7,5 +7,7 @@ public enum Tag {
 	Blackhole,
 	Item,
 	
-	PlayerOrbit
+	PlayerOrbit,
+	
+	Void,
 }
