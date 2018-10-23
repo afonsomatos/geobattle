@@ -45,7 +45,7 @@ public class Player extends Living {
 	private Tank shieldTank = new Tank(300);
 	private boolean firing = false;
 	
-	private Arsenal arsenal = new Arsenal(4);
+	private Arsenal arsenal = new Arsenal(5);
 	private GameObject target = null;
 	
 	private Special special;

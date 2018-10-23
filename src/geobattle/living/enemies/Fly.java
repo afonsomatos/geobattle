@@ -7,6 +7,8 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.infection.Infection;
+import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
@@ -22,6 +24,8 @@ public class Fly extends Enemy {
 	private final static Color WING_COLOR = Palette.BROWN;
 	private final static Sprite SPRITE = new Sprite(SIZE, SIZE, SIZE/2, SIZE/2);
 	
+	private final static InfectionFactory BITE;
+			
 	private final static int HEALTH = 200;
 	private final static double SPEED = 2.0;
 	
@@ -29,12 +33,18 @@ public class Fly extends Enemy {
 	private double moveScale = Util.randomDouble(5, 10);
 	
 	private double delta = 0;
-	private int damage = 50;
+	private int damage = 20;
 	
 	private boolean canBite = true;
 	private int biteDelay = 2000;
 	
 	static {
+		BITE = new InfectionFactory()
+				.setColor(Palette.MAGENTA)
+				.setDamage(10)
+				.setHits(4)
+				.setDelay(500);
+		
 		// Draw wings and shell
 		SPRITE.draw(new Cross(SIZE, SIZE, 1, WING_COLOR));
 		SPRITE.draw(new Square(BODY_SIZE + 4, BODY_SIZE + 4, WING_COLOR));
@@ -54,6 +64,17 @@ public class Fly extends Enemy {
 		setupCollider();
 	}
 	
+	private void bite() {
+		Living target = getTarget();
+		// spread infection
+		Infection infection = BITE.create(game, target);
+		game.spawnGameObject(infection);
+		// cause damage
+		target.suffer(damage);
+		canBite = false;
+		game.getSchedule().next(biteDelay, () -> { canBite = true; });
+	}
+	
 	private void setupCollider() {
 		Collider superCol = getCollider();
 		Collider newCol = new Collider(this, Tag.Enemy) {
@@ -64,10 +85,7 @@ public class Fly extends Enemy {
 				GameObject obj = other.getGameObject();
 				Living target = getTarget();
 				if (obj != target || !canBite) return;
-				// bite!
-				target.suffer(damage);
-				canBite = false;
-				game.getSchedule().next(biteDelay, () -> { canBite = true; });
+				bite();
 			}
 		};
 		newCol.surround(this);

@@ -3,10 +3,15 @@ package geobattle.living;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
+import geobattle.infection.Infection;
+import geobattle.schedule.Event;
 import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.weapon.projectile.Projectile;
@@ -19,6 +24,9 @@ public abstract class Living extends GameObject {
 	public Living(Game game, double x, double y) {
 		super(game, x, y);
 		setupCollider();
+	}
+	
+	public void addInfection(Infection infection) {
 	}
 	
 	private final void setupCollider() {

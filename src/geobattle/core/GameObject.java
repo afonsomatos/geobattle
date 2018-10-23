@@ -93,8 +93,8 @@ public abstract class GameObject {
 		// Render sprites
 		if (sprite != null) {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
-			int centerX = sprite.getCenterX();
-			int centerY = sprite.getCenterY();
+			//int centerX = sprite.getCenterX();
+			//int centerY = sprite.getCenterY();
 			
 			gfx.translate(x, y);
 			gfx.rotate(rotation, 0, 0);
@@ -102,7 +102,9 @@ public abstract class GameObject {
 			gfx.dispose();
 		}
 		
-		render(superGfx);
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		render(gfx);
+		gfx.dispose();
 	}
 	
 	public void stop() {
@@ -128,6 +130,14 @@ public abstract class GameObject {
 
 	public Collider getCollider() {
 		return collider;
+	}
+	
+	public void invertRotation() {
+		rotationSpeed *= -1;
+	}
+	
+	public double getRotation() {
+		return rotation;
 	}
 	
 	public void setRotationSpeed(double rotationSpeed) {
