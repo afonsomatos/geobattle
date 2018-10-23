@@ -176,10 +176,7 @@ public class Game implements Launchable {
 		ars.store(1, WeaponFactory.Sniper.create(this, player, Tag.Player));
 		ars.store(2, WeaponFactory.Rifle.create(this, player, Tag.Player));
 		ars.store(3, WeaponFactory.Unlimited.create(this, player, Tag.Player));
-		
-		Weapon infectw = WeaponFactory.Rifle.create(this, player, Tag.Player);
-		infectw.setInfect(true);
-		ars.store(4, infectw);
+		ars.store(4, WeaponFactory.Syringe.create(this, player, Tag.Player));
 		
 		for (Weapon w : ars.getSlots()) {
 			if (w == null) continue;

@@ -7,7 +7,6 @@ import java.util.Random;
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.render.sprite.shapes.Square;
-import geobattle.weapon.projectile.BlockBullet;
 import geobattle.weapon.projectile.Projectile;
 
 public class StarBurstSpecial extends Special {
@@ -69,7 +68,7 @@ public class StarBurstSpecial extends Special {
 		double delta = rand.nextDouble() * (Math.PI * 2);
 		
 		for (int i = 0; i < projectiles; ++i) {
-			Projectile p = new BlockBullet(game,
+			Projectile p = new Projectile(game,
 					(int) (pos.getX() + Math.cos(delta + step * i) * radius),
 					(int) (pos.getY() + Math.sin(delta + step * i) * radius),
 					8, 8);

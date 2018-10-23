@@ -5,6 +5,7 @@ import java.awt.Color;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
 import geobattle.util.Palette;
 
@@ -14,6 +15,7 @@ public class WeaponFactory {
 	public final static WeaponFactory Sniper;
 	public final static WeaponFactory Shotgun;
 	public final static WeaponFactory Unlimited;
+	public final static WeaponFactory Syringe;
 
 	static {
 		// Ready to create weapons
@@ -76,23 +78,47 @@ public class WeaponFactory {
 					gfx.setColor(Color.RED);
 					gfx.fillPolygon(x, y, 3);
 				});
+		
+		// SYRINGE
+		InfectionFactory virus = new InfectionFactory()
+				.setColor(Palette.MINT)
+				.setDamage(30)
+				.setHits(5)
+				.setDelay(500);
+		
+		Syringe = new WeaponFactory()
+				.setColor(Color.WHITE)
+				.setSize(15)
+				.setInfect(true)
+				.setInfectionFactory(virus)
+				.setProjectileColor(Palette.MINT)
+				.setProjectileSpeed(9)
+				.setAmmoSaved(20)
+				.setDamage(0)
+				.setAmmoLoad(4)
+				.setFireSpeed(0.02)
+				.setReloadSpeed(0.08);
 	}
 	
-	private Renderable drawer		= null;
 	private double fireSpeed		= 0.1;
 	private double reloadSpeed		= 0.01;
 	private int projectiles 		= 1;
 	private int damage 				= 10;
 	private int projectileSize 		= 8;
-	private double projectileSpeed 	= 2.0f;
-	private Color projectileColor 	= Color.CYAN;
-	private Color color				= Color.WHITE;
+	private double projectileSpeed 	= 5.0f;
 	private double fireAmplitude 	= Math.PI / 4;
 	private double radius 			= 70;
 	private double fireAngle 		= 32;
 	private double recoil 			= 0;
 	private int ammoSaved			= 60;
 	private int ammoLoad			= 30;
+	private int size				= 10;
+	private boolean infect			= false;
+	
+	private Color projectileColor 				= Color.CYAN;
+	private Color color							= Color.WHITE;
+	private Renderable drawer					= null;
+	private InfectionFactory infectionFactory 	= null;
 	
 	private WeaponFactory() {
 		
@@ -100,6 +126,16 @@ public class WeaponFactory {
 	
 	private WeaponFactory setProjectiles(int projectiles) {
 		this.projectiles = projectiles;
+		return this;
+	}
+	
+	private WeaponFactory setInfectionFactory(InfectionFactory infectionFactory) {
+		this.infectionFactory = infectionFactory;
+		return this;
+	}
+
+	private WeaponFactory setInfect(boolean infect) {
+		this.infect = infect;
 		return this;
 	}
 
@@ -110,6 +146,11 @@ public class WeaponFactory {
 	
 	private WeaponFactory setDrawer(Renderable drawer) {
 		this.drawer = drawer;
+		return this;
+	}
+	
+	private WeaponFactory setSize(int size) {
+		this.size = size;
 		return this;
 	}
 	
@@ -186,6 +227,9 @@ public class WeaponFactory {
 		weapon.setAmmoSaved(ammoSaved);
 		weapon.setColor(color);
 		weapon.setRecoil(recoil);
+		weapon.setSize(size);
+		weapon.setInfect(infect);
+		weapon.setInfectionFactory(infectionFactory);
 		weapon.fill();
 		return weapon;
 	}

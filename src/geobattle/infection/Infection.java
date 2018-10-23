@@ -3,7 +3,9 @@ package geobattle.infection;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
+import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Living;
@@ -14,7 +16,9 @@ import geobattle.util.Palette;
 import geobattle.util.Util;
 
 public class Infection extends GameObject {
-
+	
+	private final static int COLLIDER_PADDING = 30;
+	
 	private final static Color COLOR = Palette.MAGENTA;
 	private final static double ROTATION_SPEED = 0.03;
 	
@@ -37,6 +41,16 @@ public class Infection extends GameObject {
 		event = new Event(delay, true, this::infect);
 		setColor(COLOR);
 		setRotationSpeed(ROTATION_SPEED);
+		
+		Collider col = host.getCollider();
+		if (col != null)
+			surround(col);
+	}
+	
+	public void surround(Collider collider) {
+		Rectangle bounds = collider.getBounds();
+		double len = Math.max(bounds.getWidth(), bounds.getHeight());
+		setRadius((int) len / 2 + COLLIDER_PADDING);
 	}
 	
 	public void setSpikes(int spikes) {

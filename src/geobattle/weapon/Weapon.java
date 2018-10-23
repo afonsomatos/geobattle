@@ -2,23 +2,17 @@ package geobattle.weapon;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
-import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.infection.Infection;
-import geobattle.living.Living;
+import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Counter;
-import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.util.Util;
-import geobattle.weapon.projectile.BlockBullet;
 import geobattle.weapon.projectile.Projectile;
-import javafx.geometry.Bounds;
 
 public class Weapon extends GameObject {
 	
@@ -34,7 +28,10 @@ public class Weapon extends GameObject {
 	private Tank loadTank = new Tank();
 	private Tank ammoTank = new Tank();
 	
-	private boolean infect			= false;
+	private boolean infect = false;
+	private InfectionFactory infectionFactory = null;
+	
+	private int size				= 10;
 	private int projectiles 		= 1;
 	private int damage 				= 10;
 	private int projectileSize 		= 8;
@@ -63,9 +60,8 @@ public class Weapon extends GameObject {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
 			gfx.setColor(getColor());
 			// (0, 0) is the firing point
-			final int side = 10;
-			final int x[] = {0, side, side};
-			final int y[] = {0, side, -side};
+			final int x[] = {0, size, size};
+			final int y[] = {0, size, -size};
 			gfx.fillPolygon(x, y, 3);
 			gfx.dispose();
 		};
@@ -102,6 +98,18 @@ public class Weapon extends GameObject {
 		};
 	}
 	
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
+	public void setInfect(boolean infect) {
+		this.infect = infect;
+	}
+
+	public void setInfectionFactory(InfectionFactory infection) {
+		this.infectionFactory = infection;
+	}
+	
 	public void setRecoil(double recoil) {
 		this.recoil = recoil;
 	}
@@ -109,7 +117,7 @@ public class Weapon extends GameObject {
 	public void setDrawer(Renderable drawer) {
 		this.drawer = drawer;
 	}
-
+	
 	@Override
 	public void render(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
@@ -117,10 +125,6 @@ public class Weapon extends GameObject {
 		gfx.translate(getX(), getY());
 		drawer.render(gfx);
 		gfx.dispose();
-	}
-	
-	public void setInfect(boolean infect) {
-		this.infect = infect;
 	}
 	
 	public void fill() {
@@ -287,28 +291,14 @@ public class Weapon extends GameObject {
 
 		for (int i = 0; i < projectiles; ++i) {
 			
-			Projectile p = new BlockBullet(game, (int) this.getX(), (int) this.getY(), projectileSize, projectileSize);
+			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY(), projectileSize, projectileSize);
 			p.getCollider().setTag(getTag());
 			p.setSpeed(projectileSpeed);
 			p.setColor(projectileColor);
 			p.setDamage(damage);
 			
-			if (infect) {
-				p.setCollider(new Collider(p, getTag()) {
-					@Override
-					public void enterCollision(Collider other) {
-						GameObject g = other.getGameObject();
-						if (!(g instanceof Living)) return;
-						Living l = (Living) g;
-						Infection i = new Infection(game, l);
-						Log.i("infected " + l);
-						Rectangle bounds = other.getBounds();
-						double len = Math.max(bounds.getWidth(), bounds.getHeight());
-						i.setRadius((int)len/2 + 30);
-						game.spawnGameObject(i);
-					}
-				});
-			}
+			if (infect && infectionFactory != null)
+				p.insertInfection(infectionFactory, getTag());
 			
 			// Change sprite inside blocket
 			p.setSprite(new Square(projectileSize, projectileSize, projectileColor));

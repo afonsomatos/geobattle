@@ -55,9 +55,8 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		boolean debug=true;
+		boolean debug=false;
 		
-		game.spawnGameObject(new Fly(game, 300, 300, player));
 		
 		if (!debug) {
 			
@@ -79,10 +78,10 @@ public class LevelManager {
 			else if (i % 1 == 0)
 				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
 		}
+		}
 	
 		for (Enemy e : newEnemies)
 			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));
-		}
 
 	}
 	

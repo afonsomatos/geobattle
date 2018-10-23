@@ -5,7 +5,7 @@ import geobattle.core.Game;
 import geobattle.living.Living;
 
 public class InfectionFactory {
-
+	
 	private Integer damage;
 	private Integer delay;
 	private Integer hits;
