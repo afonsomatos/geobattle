@@ -23,9 +23,14 @@ public class Fly extends Enemy {
 	private final static Color COLOR = Palette.YELLOW;
 	private final static Color WING_COLOR = Palette.BROWN;
 	private final static Sprite SPRITE = new Sprite(SIZE, SIZE, SIZE/2, SIZE/2);
+
+	private final static InfectionFactory BITE = new InfectionFactory()
+												.setColor(Palette.MAGENTA)
+												.setDamage(10)
+												.setHits(4)
+												.setSpikes(3)
+												.setDelay(500);
 	
-	private final static InfectionFactory BITE;
-			
 	private final static int HEALTH = 200;
 	private final static double SPEED = 2.0;
 	
@@ -33,23 +38,18 @@ public class Fly extends Enemy {
 	private double moveScale = Util.randomDouble(5, 10);
 	
 	private double delta = 0;
-	private int damage = 20;
+	private int damage = 50;
 	
 	private boolean canBite = true;
 	private int biteDelay = 2000;
 	
+	private Infection lastInfection = null;
+	
 	static {
-		BITE = new InfectionFactory()
-				.setColor(Palette.MAGENTA)
-				.setDamage(10)
-				.setHits(4)
-				.setDelay(500);
-		
-		// Draw wings and shell
+		// draw wings and shell
 		SPRITE.draw(new Cross(SIZE, SIZE, 1, WING_COLOR));
 		SPRITE.draw(new Square(BODY_SIZE + 4, BODY_SIZE + 4, WING_COLOR));
-		
-		// Draw body
+		// draw body
 		SPRITE.draw(new Square(BODY_SIZE, BODY_SIZE, COLOR));
 	}
 	
@@ -65,10 +65,15 @@ public class Fly extends Enemy {
 	}
 	
 	private void bite() {
+		if (!canBite) return;
 		Living target = getTarget();
-		// spread infection
+		// remove last infection
+		if (lastInfection != null && !lastInfection.isGone())
+			lastInfection.destroy();
+		// spread new infection
 		Infection infection = BITE.create(game, target);
 		game.spawnGameObject(infection);
+		lastInfection = infection;
 		// cause damage
 		target.suffer(damage);
 		canBite = false;
@@ -84,7 +89,7 @@ public class Fly extends Enemy {
 				superCol.handleCollision(other);
 				GameObject obj = other.getGameObject();
 				Living target = getTarget();
-				if (obj != target || !canBite) return;
+				if (obj != target) return;
 				bite();
 			}
 		};

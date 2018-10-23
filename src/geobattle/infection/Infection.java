@@ -74,7 +74,7 @@ public class Infection extends GameObject {
 		host.suffer(damage);
 	}
 	
-	private void destroy() {
+	public void destroy() {
 		event.setOff(true);
 		this.kill();
 		gone = true;
