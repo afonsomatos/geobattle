@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
+import geobattle.living.enemies.Creeper;
 import geobattle.render.Renderable;
+import geobattle.util.Log;
 
 class Debug implements Renderable {
 
@@ -13,6 +15,26 @@ class Debug implements Renderable {
 	
 	public Debug(Game game) {
 		this.game = game;
+	}
+	
+	public void renderVelocityFx(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		
+		for (GameObject g: game.getGameObjects()) {
+			if (g instanceof Creeper) {
+				Log.i(g.getVel() + " CREPER");
+			}
+			
+			int x = (int) g.getX();
+			int y =  (int)g.getY();
+			int vx =  (int)(g.getVelX() * 40);
+			int vy =  (int)(g.getVelY() * 40);
+			
+			gfx.setColor(Color.RED);
+			gfx.drawLine(x, y, x + vx, y + vy);
+		}
+		
+		gfx.dispose();
 	}
 	
 	public void renderPositionFx(Graphics2D superGfx) {
@@ -58,6 +80,7 @@ class Debug implements Renderable {
 	public void render(Graphics2D gfx) {
 		renderPositionFx(gfx);
 		renderColliderFx(gfx);
+		renderVelocityFx(gfx);
 	}
 
 }

@@ -55,29 +55,27 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		//newEnemies.add(new Bomber(game, 400, 400, player));
-		
-		/*
-		for (int i = 1; i < level + 1; ++i) {
-			if (i % 7 == 0)
-				newEnemies.add(new Fly(game, rand.nextInt(width), rand.nextInt(height), player));
-			else if (i % 6 == 0)
-				newEnemies.add(new Slicer(game, 300, 300, player));
-			else if (i % 5 == 0)
-				newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
-			else if (i % 4 == 0)
-				newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
-			else if (i % 3 == 0)
-				newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 2 == 0)
-				newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
-			else if (i % 1 == 0)
-				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
-		}
-		
+		int i = level;
+		if (i == 0) return;
+		if (i % 8 == 0)
+			newEnemies.add(new Bomber(game, rand.nextInt(width), rand.nextInt(height), player));
+		else if (i % 7 == 0)
+			newEnemies.add(new Fly(game, rand.nextInt(width), rand.nextInt(height), player));
+		else if (i % 6 == 0)
+			newEnemies.add(new Slicer(game, rand.nextInt(width), rand.nextInt(height), player));
+		else if (i % 5 == 0)
+			newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height), player));
+		else if (i % 4 == 0)
+			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), player));
+		else if (i % 3 == 0)
+			newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
+		else if (i % 2 == 0)
+			newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
+		else if (i % 1 == 0)
+			newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height), player));
+	
 		for (Enemy e : newEnemies)
 			game.spawnGameObject(new EnemySpawner(game, e, 3000, () -> loadingLevel = false ));
-		*/
 	}
 	
 	public int getLevelCountDown() {

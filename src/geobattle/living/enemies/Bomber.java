@@ -12,19 +12,17 @@ import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.special.BombSpecial;
 import geobattle.util.Interval;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
 public class Bomber extends Enemy {
 
 	private final static Sprite SPRITE = new Sprite(90, 60, 50, 30);
-	private final static int HEALTH = 5000;
+	private final static int HEALTH = 1000;
 	private final static int MARGIN = 100;
 	
 	static {
 		SPRITE.draw(g -> {
-			
 			g.setColor(Palette.NAVY);
 			int side = 50;
 			int[] xs = {0, -side, -side};
@@ -53,7 +51,7 @@ public class Bomber extends Enemy {
 	private BombSpecial bombSpecial;
 	
 	private Event attackEvent;
-	private Interval<Integer> attackInterval = new Interval<Integer>(1000, 1500);
+	private Interval<Integer> attackInterval = new Interval<Integer>(750, 1500);
 
 	public Bomber(Game game, int x, int y, Living target) {
 		super(game, x, y, target);
@@ -61,8 +59,8 @@ public class Bomber extends Enemy {
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		getCollider().surround(SPRITE);
-		setSpeed(3);
-		setVelX(3);
+		setSpeed(6);
+		setVelX(6);
 	}
 	
 	public void resetEvent() {
@@ -92,7 +90,7 @@ public class Bomber extends Enemy {
 	@Override
 	protected void update() {
 		// make him reappear
-		if (!this.isOutOfBorders(MARGIN)) {
+		if (!this.isOutOfBorders(-MARGIN)) {
 			if (!onMap) {
 				resetEvent();
 			}

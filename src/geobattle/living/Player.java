@@ -80,6 +80,7 @@ public class Player extends Living {
 		
 		BombSpecial bombSpecial = new BombSpecial(game, Tag.Void);
 		bombSpecial.setDamage(500);
+		bombSpecial.setColor(getColor());
 		special = bombSpecial;
 		
 		setSprite(sprite);

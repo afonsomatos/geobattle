@@ -40,6 +40,7 @@ public class Bomb extends GameObject {
 		super(game, x, y);
 		setTag(tag);
 		setSprite(SPRITE);
+		setColor(FUSE_COLOR);
 		
 		waveSpecial.setDamage(damage);
 		waveSpecial.setRadius(100);
@@ -78,7 +79,7 @@ public class Bomb extends GameObject {
 
 	@Override
 	protected void render(Graphics2D gfx) {
-		gfx.setColor(FUSE_COLOR);
+		gfx.setColor(getColor());
 		gfx.setStroke(new BasicStroke(FUSE_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		gfx.drawArc((int)getX()+6, (int)getY()-28, 30, 30, 160, - (int) (FUSE_ARC_DEGREE* (1 - explode.getPercentage())));
 	}

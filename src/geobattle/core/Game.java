@@ -182,9 +182,6 @@ public class Game implements Launchable {
 			spawnGameObject(w);
 		}
 		
-		spawnGameObject(new Bomber(this, 400, 400, player));
-		//spawnGameObject(new Bomb(this, 500, 500, Tag.Neutral));
-		
 		ars.select(0);
 
 		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
