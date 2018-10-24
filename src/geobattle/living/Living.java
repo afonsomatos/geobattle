@@ -14,7 +14,7 @@ import geobattle.infection.Infection;
 import geobattle.schedule.Event;
 import geobattle.util.Log;
 import geobattle.util.Tank;
-import geobattle.weapon.projectile.Projectile;
+import geobattle.weapon.Projectile;
 
 public abstract class Living extends GameObject {
 

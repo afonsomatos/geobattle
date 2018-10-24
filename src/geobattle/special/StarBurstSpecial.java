@@ -7,7 +7,7 @@ import java.util.Random;
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.render.sprite.shapes.Square;
-import geobattle.weapon.projectile.Projectile;
+import geobattle.weapon.Projectile;
 
 public class StarBurstSpecial extends Special {
 	

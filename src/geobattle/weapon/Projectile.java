@@ -1,4 +1,4 @@
-package geobattle.weapon.projectile;
+package geobattle.weapon;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -20,8 +20,8 @@ public class Projectile extends GameObject {
 		super(game, x, y);
 		setWidth(width);
 		setHeight(height);
-		this.setDamage(damage);
-		this.setCollider(new Collider(this));
+		setDamage(damage);
+		setCollider(new Collider(this));
 	}
 	
 	public void setDamage(int damage) {
@@ -49,21 +49,17 @@ public class Projectile extends GameObject {
 	
 	@Override
 	public void update() {
-		
-		if (getX() < -10 || getY() < -10 || getX() > 10 + getGame().getWidth()
-				|| getY() > 10 + getGame().getHeight())
+		if (this.isOutOfBorders(-10))
 			this.kill();
 	}
 
 	@Override
 	protected void spawn() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
 		
 	}
 }

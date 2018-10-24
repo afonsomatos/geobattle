@@ -13,7 +13,7 @@ import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
 import geobattle.util.Counter;
 import geobattle.util.Palette;
-import geobattle.weapon.projectile.Projectile;
+import geobattle.weapon.Projectile;
 
 public class Bubble extends Enemy {
 

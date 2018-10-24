@@ -15,7 +15,7 @@ public class WeaponFactory {
 	public final static WeaponFactory Sniper;
 	public final static WeaponFactory Shotgun;
 	public final static WeaponFactory Unlimited;
-	public final static WeaponFactory Syringe;
+	public final static WeaponFactory Virus;
 
 	static {
 		// Ready to create weapons
@@ -82,11 +82,11 @@ public class WeaponFactory {
 		// SYRINGE
 		InfectionFactory virus = new InfectionFactory()
 				.setColor(Palette.MINT)
-				.setDamage(30)
+				.setDamage(60)
 				.setHits(5)
 				.setDelay(500);
 		
-		Syringe = new WeaponFactory()
+		Virus = new WeaponFactory()
 				.setColor(Color.WHITE)
 				.setSize(15)
 				.setInfect(true)

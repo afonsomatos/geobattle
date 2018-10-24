@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import geobattle.collider.Collider;
-import geobattle.core.Empty;
+import geobattle.core.GameAdapter;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -94,7 +94,7 @@ public class Player extends Living {
 		buildAsteroid();
 		asteroid.setActive(false);
 
-		asteroid = new Empty(game);
+		asteroid = new GameAdapter(game);
 	}
 	
 	private void buildAsteroid() {

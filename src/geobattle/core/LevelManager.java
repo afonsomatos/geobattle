@@ -57,7 +57,6 @@ public class LevelManager {
 		
 		boolean debug=false;
 		
-		
 		if (!debug) {
 			
 		for (int i = 1; i < level + 1; ++i) {

@@ -12,7 +12,6 @@ import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
-import geobattle.weapon.projectile.Projectile;
 
 public class Weapon extends GameObject {
 	
