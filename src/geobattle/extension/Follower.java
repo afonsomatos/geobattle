@@ -29,6 +29,10 @@ public class Follower implements Extension {
 		return active;
 	}
 	
+	public void setTarget(GameObject target) {
+		this.target = target;
+	}
+	
 	public void setActive(boolean active) {
 		this.active = active;
 	}

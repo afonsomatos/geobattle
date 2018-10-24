@@ -8,6 +8,7 @@ import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.living.Living;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
@@ -108,6 +109,12 @@ public class Bubble extends Enemy {
 
 	@Override
 	protected void spawn() {
+		
+	}
+
+	@Override
+	protected void handleNewTarget(Living target) {
+		// TODO Auto-generated method stub
 		
 	}
 	

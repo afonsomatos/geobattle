@@ -140,5 +140,11 @@ public class Bomber extends Enemy {
 	protected void render(Graphics2D gfx) {
 
 	}
+
+	@Override
+	protected void handleNewTarget(Living target) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

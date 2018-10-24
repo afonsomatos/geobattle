@@ -55,7 +55,7 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		newEnemies.add(new Fly(game, rand.nextInt(width), rand.nextInt(height), player));
+		newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
 		
 		boolean debug=true;
 		

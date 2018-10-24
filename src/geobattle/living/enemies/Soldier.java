@@ -23,6 +23,9 @@ public class Soldier extends Enemy {
 	private final static double SPEED = 1.0;
 	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
 	
+	private Shooter shooter;
+	private Follower follower;
+	
 	private Weapon weapon;
 
 	public Soldier(Game game, int x, int y, Living target) {
@@ -35,11 +38,13 @@ public class Soldier extends Enemy {
 		weapon = WeaponFactory.Rifle.create(game, this, Tag.Enemy);
 		weapon.setLock(target);
 		
-		Shooter shooter = new Shooter(target, weapon);
+		shooter = new Shooter(target, weapon);
 		shooter.setDelay(SHOOT_DELAY);
 		
+		follower = new Follower(target, 150);
+		
 		addExtension(shooter);
-		addExtension(new Follower(target, 150));
+		addExtension(follower);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);
@@ -69,6 +74,13 @@ public class Soldier extends Enemy {
 	@Override
 	protected void spawn() {
 		game.spawnGameObject(weapon);
+	}
+
+	@Override
+	protected void handleNewTarget(Living target) {
+		follower.setTarget(target);
+		shooter.setTarget(target);
+		weapon.setLock(target);
 	}
 		
 }

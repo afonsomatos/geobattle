@@ -79,7 +79,6 @@ public class WeaponFactory {
 					gfx.fillPolygon(x, y, 3);
 				});
 		
-		// SYRINGE
 		InfectionFactory virus = new InfectionFactory()
 				.setColor(Palette.MINT)
 				.setDamage(60)

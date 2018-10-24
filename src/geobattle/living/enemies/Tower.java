@@ -19,8 +19,11 @@ public class Tower extends Enemy {
 	private final static Color COLOR = Palette.PINK;
 	private final static Sprite SPRITE = new Square(40, 40, COLOR);
 	private final static int HEALTH = 400;
-	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
 	
+	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
+	private final static Interval<Integer> SHOOT_RADAR = new Interval<Integer>(0, 300);
+	
+	private Shooter shooter;
 	private Weapon weapon;
 	
 	public Tower(Game game, int x, int y, Living target) {
@@ -33,8 +36,9 @@ public class Tower extends Enemy {
 		weapon = WeaponFactory.Sniper.create(game, this, Tag.Enemy);
 		weapon.setLock(target);
 		
-		Shooter shooter = new Shooter(target, weapon);
+		shooter = new Shooter(target, weapon);
 		shooter.setDelay(SHOOT_DELAY);
+		shooter.setRadar(SHOOT_RADAR);
 		addExtension(shooter);
 		
 		setSprite(SPRITE);
@@ -64,6 +68,12 @@ public class Tower extends Enemy {
 	@Override
 	protected void spawn() {
 		game.spawnGameObject(weapon);
+	}
+
+	@Override
+	protected void handleNewTarget(Living target) {
+		shooter.setTarget(target);
+		weapon.setLock(target);
 	}
 	
 }

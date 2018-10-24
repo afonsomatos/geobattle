@@ -118,4 +118,10 @@ public class Slime extends Enemy {
 		
 	}
 
+	@Override
+	protected void handleNewTarget(Living target) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

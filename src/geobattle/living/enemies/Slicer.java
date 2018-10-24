@@ -119,7 +119,6 @@ public class Slicer extends Enemy {
 	}
 	
 	public void setupAttackBehavior() {
-		GameObject target = getTarget();
 		GameObject aim = new GameAdapter(game);
 		
 		// Perform pursuit every X random seconds
@@ -128,6 +127,7 @@ public class Slicer extends Enemy {
 			if (state == State.SLICING)
 				return;
 			
+			GameObject target = getTarget();
 			aim.setX(Util.insertRandomError(target.getX(), aimMaxError));
 			aim.setY(Util.insertRandomError(target.getY(), aimMaxError));
 			attackEvent.setDelay(Util.insertRandomError(attackDelay, attackDelayError));
@@ -163,6 +163,12 @@ public class Slicer extends Enemy {
 
 	@Override
 	protected void render(Graphics2D gfx) {
+		
+	}
+
+	@Override
+	protected void handleNewTarget(Living target) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -8,7 +8,7 @@ import geobattle.weapon.Weapon;
 
 public abstract class Enemy extends Living {
 	
-	private Living target = null;
+	private Living target;
 	private Weapon weapon;
 	
 	Enemy(Game game, int x, int y, Living target) {
@@ -37,6 +37,8 @@ public abstract class Enemy extends Living {
 
 	public void setTarget(Living target) {
 		this.target = target;
+		// update activites towards target
+		handleNewTarget(target);
 	}
 	
 	public Living getTarget() {
@@ -46,5 +48,7 @@ public abstract class Enemy extends Living {
 	public Weapon buildWeapon() {
 		return null;
 	}
+	
+	protected abstract void handleNewTarget(Living target);
 	
 }
