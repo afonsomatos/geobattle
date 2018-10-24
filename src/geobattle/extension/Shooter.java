@@ -24,6 +24,10 @@ public class Shooter implements Extension {
 		this.weapon = weapon;
 	}
 	
+	public Interval<Integer> getRadar() {
+		return radar;
+	}
+	
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 		weapon.setLock(target);
@@ -45,22 +49,35 @@ public class Shooter implements Extension {
 		this.automatic = false;
 	}
 	
-	@Override
-	public void update(GameObject gameObject) {
-		if (!target.isActive() || !automatic || pausing)
-			return;
+	private boolean canShoot(GameObject gameObject) {
+		// Target is not available
+		if (target == null || !target.isActive())
+			return false;
 		
+		// Shooting is suspended
+		if (!automatic || pausing)
+			return false;
+		
+		// Target is not in radar
 		if (radar != null) {
 			double dist = gameObject.distance(target);
-			if (dist < radar.start || dist > radar.end) {
-				return;
-			}
+			if (dist < radar.start || dist > radar.end)
+				return false;
 		}
+		
+		return true;
+	}
+	
+	@Override
+	public void update(GameObject gameObject) {
+		if (!canShoot(gameObject)) return;
 		
 		if (weapon.getAmmoLoad() == 0 && weapon.getAmmoSaved() > 0)
 			weapon.reload();
 		else if (weapon.canFire())
 			weapon.fire(target);
+		else
+			; // Cannot use weapon
 		
 		if (delay != null) {
 			int wait = Util.randomInteger(delay);
@@ -69,7 +86,6 @@ public class Shooter implements Extension {
 				gameObject.getGame().getSchedule().next(wait, () -> pausing = false);
 			}
 		}
-		
 	}
 	
 }

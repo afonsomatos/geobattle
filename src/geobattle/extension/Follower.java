@@ -1,7 +1,6 @@
 package geobattle.extension;
 
 import geobattle.core.GameObject;
-import geobattle.util.Log;
 
 public class Follower implements Extension {
 
@@ -10,7 +9,6 @@ public class Follower implements Extension {
 	private double minDistance = 0;
 	
 	private boolean following = false;
-	private boolean finished = false;
 	private Runnable reached = null;
 	
 	private boolean active = true;
@@ -77,9 +75,7 @@ public class Follower implements Extension {
 			following = true;
 		}
 		
-		if (stopped && reached != null) {
+		if (stopped && reached != null)
 			reached.run();
-		}
-		
 	}
 }

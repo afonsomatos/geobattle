@@ -10,6 +10,7 @@ import geobattle.living.enemies.Creeper;
 import geobattle.living.enemies.Enemy;
 import geobattle.living.enemies.EnemySpawner;
 import geobattle.living.enemies.Fly;
+import geobattle.living.enemies.Sentry;
 import geobattle.living.enemies.Slime;
 import geobattle.living.enemies.Soldier;
 import geobattle.living.enemies.Slicer;
@@ -55,7 +56,14 @@ public class LevelManager {
 		
 		Random rand = new Random();
 		
-		newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height), player));
+		Sentry sentry = new Sentry(game, width/2, height/2, Tag.Enemy);
+		sentry.getCollider().setTag(Tag.Player);
+		sentry.setTag(Tag.Player);
+		
+		for (int i = 0; i < 200; ++i)
+			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height), sentry));
+		newEnemies.add(sentry);
+		
 		
 		boolean debug=true;
 		
