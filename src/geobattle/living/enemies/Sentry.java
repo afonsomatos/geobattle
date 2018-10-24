@@ -101,8 +101,7 @@ public class Sentry extends Enemy {
 		}
 				
 		// face him if he's here and alive
-		if (target != null && !target.isDead())
-			setRotation(pointAngle(getTarget()));
+		setRotation(weapon.getFireAngle() + Math.PI);
 		
 	}
 
