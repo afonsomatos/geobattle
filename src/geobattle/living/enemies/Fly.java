@@ -18,8 +18,8 @@ import geobattle.util.Util;
 
 public class Fly extends Enemy {
 
-	private final static int SIZE = 80;
-	private final static int BODY_SIZE = 20;
+	private final static int SIZE = 60;
+	private final static int BODY_SIZE = 15;
 	private final static Color COLOR = Palette.YELLOW;
 	private final static Color WING_COLOR = Palette.BROWN;
 	private final static Sprite SPRITE = new Sprite(SIZE, SIZE, SIZE/2, SIZE/2);
