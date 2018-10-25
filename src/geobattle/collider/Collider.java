@@ -14,7 +14,6 @@ import geobattle.render.sprite.Sprite;
 
 public class Collider {
 
-	private Tag tag;
 	private GameObject gameObject;
 	
 	private int width = 0;
@@ -26,12 +25,7 @@ public class Collider {
 	private Set<Collider> currentCollisions = new HashSet<Collider>();
 	
 	public Collider(GameObject gameObject) {
-		this(gameObject, Tag.Neutral);
-	}
-	
-	public Collider(GameObject gameObject, Tag tag) {
 		this.gameObject = gameObject;
-		this.tag = tag;
 	}
 
 	void updateCollisions(Set<Collider> updatedCollisions) {
@@ -86,14 +80,6 @@ public class Collider {
 		this.offsetY = offsetY;
 	}
 
-	public Tag getTag() {
-		return tag;
-	}
-
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
-	
 	public Rectangle getBounds() {
 		return new Rectangle(
 				(int) gameObject.getX() + offsetX,

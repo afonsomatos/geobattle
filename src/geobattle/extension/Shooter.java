@@ -19,6 +19,10 @@ public class Shooter implements Extension {
 	
 	private boolean pausing = false;
 	
+	public Shooter(Weapon weapon) {
+		this.weapon = weapon;
+	}
+	
 	public Shooter(GameObject target, Weapon weapon) {
 		this.target = target;
 		this.weapon = weapon;

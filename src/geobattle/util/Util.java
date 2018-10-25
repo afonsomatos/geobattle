@@ -2,7 +2,9 @@ package geobattle.util;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 public final class Util {
@@ -87,6 +89,22 @@ public final class Util {
 	}
 	
 	public final static class Graphics {
+		
+		public static void drawStringCentered(Graphics2D gfx, int x, int y, String txt) {
+		    FontRenderContext frc = 
+		            new FontRenderContext(null, true, true);
+
+		    Rectangle2D r2D = gfx.getFont().getStringBounds(txt, frc);
+		    int rWidth = (int) Math.round(r2D.getWidth());
+		    int rHeight = (int) Math.round(r2D.getHeight());
+		    int rX = (int) Math.round(r2D.getX());
+		    int rY = (int) Math.round(r2D.getY());
+
+		    int a = x - (rWidth / 2) - rX;
+		    int b = y - (rHeight / 2) - rY;
+
+		    gfx.drawString(txt, a, b);
+		}
 		
 		public static void drawCircle(Graphics2D gfx, int x, int y, int radius) {
 			gfx.drawOval(x - radius, y - radius, radius * 2, radius * 2);

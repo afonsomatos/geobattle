@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,23 +16,20 @@ import geobattle.schedule.Event;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
-public class Slicer extends Enemy {
+public class Slicer extends Bot {
 	
 	private enum State {
 		PURSUIT(0.2),
 		REST(0.05),
 		SLICING(0.3);
 		
-		private double rotationSpeed;
+		public final double rotationSpeed;
 		
 		// Angular velocity for each stage of its activity
 		State(double rotationSpeed) {
 			this.rotationSpeed = rotationSpeed;
 		}
 		
-		double getRotationSpeed() {
-			return rotationSpeed;
-		}
 	};
 
 	private static final Color COLOR = Palette.ORANGE;
@@ -64,8 +61,8 @@ public class Slicer extends Enemy {
 	private State state;
 	private Follower follower;
 	
-	public Slicer(Game game, int x, int y, Living target) {
-		super(game, x, y, target);
+	public Slicer(Game game, int x, int y) {
+		super(game, x, y);
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		setSpeed(SPEED);
@@ -73,16 +70,20 @@ public class Slicer extends Enemy {
 		setState(State.REST);
 		setupCollider();
 		setupAttackBehavior();
+		
+		getTriggerMap().add("spawn", () -> {
+			game.getSchedule().add(attackEvent);
+		});
 	}
 	
-	public void setState(State state) {
+	private void setState(State state) {
 		this.state = state;
-		setRotationSpeed(state.getRotationSpeed());
+		setRotationSpeed(state.rotationSpeed);
 	}
 	
 	public void setupCollider() {
 		Collider superCol = getCollider();
-		Collider newCol = new Collider(this, Tag.Enemy) {
+		Collider newCol = new Collider(this) {
 
 			@Override
 			public void enterCollision(Collider other) {
@@ -127,7 +128,10 @@ public class Slicer extends Enemy {
 			if (state == State.SLICING)
 				return;
 			
-			GameObject target = getTarget();
+			Living target = getTarget();
+			if (target == null)
+				return;
+			
 			aim.setX(Util.insertRandomError(target.getX(), aimMaxError));
 			aim.setY(Util.insertRandomError(target.getY(), aimMaxError));
 			attackEvent.setDelay(Util.insertRandomError(attackDelay, attackDelayError));
@@ -144,32 +148,11 @@ public class Slicer extends Enemy {
 		
 		addExtension(follower);
 	}
-	
-	@Override
-	public void die() {
-		
-	}
-
-	@Override
-	protected void spawn() {
-		game.getSchedule().add(attackEvent);
-	}
 
 	@Override
 	protected void update() {
 		if (follower.isActive() && state != State.SLICING)
 			setState(State.PURSUIT);
-	}
-
-	@Override
-	protected void render(Graphics2D gfx) {
-		
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,26 +10,27 @@ import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
 import geobattle.util.Log;
 
-public class EnemySpawner extends GameObject {
+public class BotSpawner extends GameObject {
 	
-	private GameObject spawn;
+	private Bot spawn;
 	private Event event;
 	private Runnable runnable;
 	private long delay;
 	
-	public EnemySpawner(Game game, GameObject spawn, long delay) {
+	public BotSpawner(Game game, Bot spawn, long delay) {
 		this(game, spawn, delay, null);
 	}
 	
-	public EnemySpawner(Game game, GameObject spawn, long delay, Runnable run) {
+	public BotSpawner(Game game, Bot spawn, long delay, Runnable run) {
 		super(game, spawn.getX(), spawn.getY());
 		this.spawn = spawn;
 		this.runnable = run;
 		this.delay = delay;
+
+		getTriggerMap().add("spawn", this::setup);
 	}
 
-	@Override
-	protected void spawn() {
+	private void setup() {
 		event = new Event(delay, false, () -> {
 			this.kill();
 			if (runnable != null)
@@ -41,15 +42,11 @@ public class EnemySpawner extends GameObject {
 
 	@Override
 	protected void update() {
+		if (!hasSpawned()) return;
 		double quota = event.getPercentage();
 		Color color = spawn.getColor();
 		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
 		setSprite(new Aura(30, 7, placeColor));
-	}
-
-	@Override
-	protected void render(Graphics2D gfx) {
-
 	}
 	
 }

@@ -18,6 +18,7 @@ import geobattle.render.sprite.shapes.Circle;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.BombSpecial;
 import geobattle.special.Special;
+import geobattle.special.TroopsSpecial;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
 import geobattle.util.Palette;
@@ -25,7 +26,7 @@ import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
-public class Player extends Living {
+public class Player extends Living implements WeaponHolder {
 	
 	public static Sprite sprite	= new Square(40, 40, Color.CYAN);
 	public static Sprite shieldSprite = new Sprite(40, 40, 20, 20);
@@ -76,35 +77,40 @@ public class Player extends Living {
 		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
-		*/
 		
 		BombSpecial bombSpecial = new BombSpecial(game, Tag.Void);
 		bombSpecial.setDamage(500);
 		bombSpecial.setColor(getColor());
 		special = bombSpecial;
+		 */
+		
+		special = new TroopsSpecial(game, Tag.Player, Tag.Enemy);
 		
 		setSprite(sprite);
 
 		setTag(Tag.Player);
 		
-		Collider col = getCollider();
-		col.setTag(Tag.Player);
-		col.surround(sprite);		
+		getCollider().surround(sprite);		
 		
-		buildAsteroid();
-		asteroid.setActive(false);
+		//buildAsteroid();
+		//asteroid.setActive(false);
 
-		asteroid = new GameAdapter(game);
+		//asteroid = new GameAdapter(game);
+		
+		//getTriggerMap().add("spawn", () -> game.spawnGameObject(asteroid));
+		//getTriggerMap().add("die", asteroid::kill);
+		
+		getTriggerMap().add("die", game::sendPlayerDead);
 	}
 	
 	private void buildAsteroid() {
+		/*
 		asteroid = new GameObject(game) {
 			
 			private int damage = 100;
 			private Map<GameObject, Boolean> canAttack = new HashMap<GameObject, Boolean>();
-
-			@Override
-			protected void spawn() {
+			
+			public void make() {
 				setSprite(new Circle(10, Palette.GREY));
 				setCollider(new Collider(this, Tag.PlayerOrbit) {
 					@Override
@@ -123,22 +129,11 @@ public class Player extends Living {
 				});
 				getCollider().surround(getSprite());
 			}
-
-			@Override
-			protected void update() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			protected void render(Graphics2D gfx) {
-				// TODO Auto-generated method stub
-				
-			}
-			
 		};
+		asteroid.getTriggerMap().add("spawn", asteroid::make);
 		
 		addExtension(new Orbit(asteroid, 90, 0.15));
+		*/
 	}
 	
 	@Override
@@ -200,6 +195,7 @@ public class Player extends Living {
 		this.firing = firing;
 	}
 	
+	@Override
 	public Weapon getWeapon() {
 		return arsenal.getSelectedWeapon();
 	}
@@ -220,19 +216,4 @@ public class Player extends Living {
 		return shieldTank.get();
 	}
 	
-	@Override
-	public void die() {
-		asteroid.kill();
-		game.sendPlayerDead();
-	}
-
-	@Override
-	public void render(Graphics2D gfx) {
-	}
-
-	@Override
-	protected void spawn() {
-		game.spawnGameObject(asteroid);
-	}
-
 }

@@ -35,3 +35,6 @@
 /Empty.class
 /Adapter.class
 /GameAdapter.class
+/GameObject$Triggers.class
+/TEam.class
+/Team.class

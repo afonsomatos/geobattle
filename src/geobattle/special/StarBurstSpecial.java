@@ -28,9 +28,8 @@ public class StarBurstSpecial extends Special {
 	private Style style = Style.SOLID;
 	private Color color = Color.BLACK;
 	
-	public StarBurstSpecial(Game game, Tag tag) {
+	public StarBurstSpecial(Game game) {
 		super(game);
-		setTag(tag);
 	}
 	
 	public void setColor(Color color) {
@@ -73,7 +72,7 @@ public class StarBurstSpecial extends Special {
 					(int) (pos.getY() + Math.sin(delta + step * i) * radius),
 					8, 8);
 
-			p.getCollider().setTag(projectilesTag);
+			p.setTag(projectilesTag);
 			p.setDamage(damage);
 			p.setSpeed(speed);
 			p.getCollider().surround(p);

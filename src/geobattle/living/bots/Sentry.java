@@ -1,24 +1,21 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extension.Follower;
 import geobattle.extension.Shooter;
 import geobattle.living.Living;
+import geobattle.living.WeaponHolder;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
-import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Interval;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
 
-public class Sentry extends Enemy {
+public class Sentry extends Bot implements WeaponHolder {
 
 	private final static Color COLOR = Palette.BEIGE;
 	private final static Color AURA_COLOR = Palette.MINT;
@@ -37,38 +34,42 @@ public class Sentry extends Enemy {
 		});
 	}
 	
-	private final static int HEALTH = 30000;
+	private final static int HEALTH = 400;
 	private final static double SPEED = 1.0;
-	
-	private Tag targetTag = null;
 	
 	private Shooter shooter;
 	private Weapon weapon;
 
-	public Sentry(Game game, int x, int y, Tag targetTag) {
-		super(game, x, y, null);
-		this.targetTag = targetTag;
+	public Sentry(Game game, int x, int y) {
+		super(game, x, y);
 		setColor(COLOR);
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 		
-		weapon = WeaponFactory.Unlimited.create(game, this, Tag.Player);
+		weapon = WeaponFactory.Rifle.create(game, this, Tag.Neutral);
 		shooter = new Shooter(null, weapon);
 		
 		addExtension(shooter);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);
+		
+		getTriggerMap().add("newTag", () -> weapon.setTag(getTag()));
+		getTriggerMap().add("kill", weapon::kill);
+		getTriggerMap().add("spawn", () -> game.spawnGameObject(weapon));
+		getTriggerMap().add("newTarget", () -> {
+			Living target = getTarget();
+			shooter.setTarget(target);
+			weapon.setLock(target);
+		});
+
 	}
 	
 	@Override
-	public void kill() {
-		super.kill();
-		weapon.kill();
-	}
-
-	@Override
 	public void update() {
+		// TODO: slow af
+		
+		if (this.isFocused() && getTarget() != null) return;
 		
 		Interval<Integer> radar = shooter.getRadar();
 		double maxDistance = radar != null ? radar.end : Double.POSITIVE_INFINITY;
@@ -81,7 +82,7 @@ public class Sentry extends Enemy {
 			if (g == this) continue;
 			if (!(g instanceof Living)) continue;
 			// if it doesnt have the target tag discart
-			if (g.getTag() != targetTag) continue;
+			if (game.areTagsFriends(getTag(), g.getTag())) continue;
 			// see if this is the nearest
 			double t = distance(g);
 			if (t < min) {
@@ -106,24 +107,8 @@ public class Sentry extends Enemy {
 	}
 
 	@Override
-	public void die() {
-		
+	public Weapon getWeapon() {
+		return weapon;
 	}
 
-	@Override
-	public void render(Graphics2D sgfx) {
-
-	}
-
-	@Override
-	protected void spawn() {
-		game.spawnGameObject(weapon);
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		shooter.setTarget(target);
-		weapon.setLock(target);
-	}
-		
 }

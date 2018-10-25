@@ -1,36 +1,26 @@
 package geobattle.special;
 
-import java.awt.Color;
-
 import geobattle.core.Game;
 import geobattle.core.Tag;
-import geobattle.util.Palette;
+import geobattle.living.bots.Sentry;
 
 public class TroopsSpecial extends Special {
 
-	private int damage = 500;
-	private Color color = Palette.BROWN;
+	private Tag targetTag;
 	
-	public TroopsSpecial(Game game, Tag tag) {
+	public TroopsSpecial(Game game, Tag teamTag, Tag targetTag) {
 		super(game);
-		setTag(tag);
+		setTag(teamTag);
+		this.targetTag = targetTag;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-	
 	@Override
 	public void send() {
 		Game game = getGame();
-		Bomb bomb = new Bomb(game, getPos().getX(), getPos().getY(), getTag());
-		bomb.setColor(color);
-		bomb.setDamage(damage);
-		game.spawnGameObject(bomb);
+		Sentry sentry = new Sentry(game, getPos().x, getPos().y);
+		sentry.addTargetTag(targetTag);
+		sentry.setTag(getTag());
+		game.spawnGameObject(sentry);
 	}
 
 }

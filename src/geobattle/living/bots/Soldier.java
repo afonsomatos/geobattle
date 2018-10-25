@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,6 +8,7 @@ import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.extension.Shooter;
 import geobattle.living.Living;
+import geobattle.living.WeaponHolder;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Interval;
@@ -15,7 +16,7 @@ import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
 
-public class Soldier extends Enemy {
+public class Soldier extends Bot implements WeaponHolder {
 
 	private final static Color COLOR = Palette.RED;
 	private final static Sprite SPRITE = new Square(24, 24, COLOR);
@@ -25,62 +26,46 @@ public class Soldier extends Enemy {
 	
 	private Shooter shooter;
 	private Follower follower;
-	
+
 	private Weapon weapon;
 
-	public Soldier(Game game, int x, int y, Living target) {
-		super(game, x, y, target);
+	public Soldier(Game game, int x, int y) {
+		super(game, x, y);
 		
 		setColor(COLOR);
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 		
 		weapon = WeaponFactory.Rifle.create(game, this, Tag.Enemy);
-		weapon.setLock(target);
 		
-		shooter = new Shooter(target, weapon);
+		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);
 		
-		follower = new Follower(target, 150);
+		follower = new Follower(null, 150);
 		
 		addExtension(shooter);
 		addExtension(follower);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);
+		
+		getTriggerMap().add("kill", weapon::kill);
+		getTriggerMap().add("spawn", () -> {
+			game.spawnGameObject(weapon);
+		});
+		
+		getTriggerMap().add("newTarget", () -> {
+			Living newTarget = getTarget();
+			follower.setTarget(newTarget);
+			shooter.setTarget(newTarget);
+			weapon.setLock(newTarget);
+		});
+		
+	}
+
+	@Override
+	public Weapon getWeapon() {
+		return weapon;
 	}
 	
-	@Override
-	public void kill() {
-		super.kill();
-		weapon.kill();
-	}
-
-	@Override
-	public void update() {
-		
-	}
-
-	@Override
-	public void die() {
-		
-	}
-
-	@Override
-	public void render(Graphics2D gfx) {
-
-	}
-
-	@Override
-	protected void spawn() {
-		game.spawnGameObject(weapon);
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		follower.setTarget(target);
-		shooter.setTarget(target);
-		weapon.setLock(target);
-	}
-		
 }

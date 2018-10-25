@@ -33,7 +33,7 @@ public class Projectile extends GameObject {
 	}
 	
 	public void insertInfection(InfectionFactory infectionFactory, Tag tag) {
-		setCollider(new Collider(this, tag) {
+		setCollider(new Collider(this) {
 			@Override
 			public void enterCollision(Collider other) {
 				GameObject obj = other.getGameObject();

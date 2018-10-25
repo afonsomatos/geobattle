@@ -7,16 +7,18 @@ import geobattle.core.GameObject;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
+import geobattle.util.Palette;
 
 class HealthItem extends UnitsItem {
 
-	private static Sprite sprite = new Cross(30, 30, Color.GREEN);
+	private final static Sprite SPRITE = new Cross(30, 30, Palette.GREEN);
+	private final static Color LABEL_COLOR = Palette.GREEN;
 	
 	public HealthItem(Game game, double x, double y, int units) {
 		super(game, x, y, units);
-		setLabelColor(Color.GREEN);
-		setSprite(sprite);
-		getCollider().surround(sprite);
+		setLabelColor(LABEL_COLOR);
+		setSprite(SPRITE);
+		getCollider().surround(SPRITE);
 	}
 
 	@Override

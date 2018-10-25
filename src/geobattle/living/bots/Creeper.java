@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +16,7 @@ import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
 import geobattle.util.Palette;
 
-public class Creeper extends Enemy {
+public class Creeper extends Bot {
 
 	private static final Color COLOR = Palette.GREEN;
 	private static final Sprite SPRITE = new Square(16, 16, COLOR);
@@ -24,11 +24,12 @@ public class Creeper extends Enemy {
 	private static final int HEALTH = 400;
 	
 	private StarBurstSpecial starBurst;
+	private Follower follower = new Follower(null);
 	
-	public Creeper(Game game, int x, int y, Living target) {
-		super(game, x, y, target);
+	public Creeper(Game game, int x, int y) {
+		super(game, x, y);
 		
-		starBurst = new StarBurstSpecial(game, Tag.Enemy);
+		starBurst = new StarBurstSpecial(game);
 		starBurst.setColor(getColor());
 		starBurst.setProjectiles(20);
 		
@@ -36,20 +37,26 @@ public class Creeper extends Enemy {
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 
-		addExtension(new Follower(target));
+		addExtension(follower);
 		
 		setSprite(SPRITE);
 		setupCollider();
+		
+		getTriggerMap().add("newTarget", () -> {
+			follower.setTarget(getTarget());
+			
+		});
+		
 	}
 	
 	private void setupCollider() {
-		Collider superCol = this.getCollider();
-		setCollider(new Collider(this, Tag.Enemy) {
+		Collider superCol = getCollider();
+		setCollider(new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
 				superCol.handleCollision(other);
 				GameObject obj = other.getGameObject();
-				if (obj instanceof Player)
+				if (getTarget() == obj)
 					Creeper.this.explode();		
 			}
 		});
@@ -58,34 +65,9 @@ public class Creeper extends Enemy {
 	
 	public void explode() {
 		starBurst.setPos(new Point((int)getX(), (int)getY()));
+		starBurst.setTag(getTag());
 		starBurst.send();
-		this.kill();
+		kill();
 	}
 
-	@Override
-	public void update() {
-		
-	}
-
-	@Override
-	public void die() {
-		
-	}
-
-	@Override
-	public void render(Graphics2D gfx) {
-		
-	}
-
-	@Override
-	protected void spawn() {
-		
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

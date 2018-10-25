@@ -1,12 +1,14 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.core.Game;
+import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.extension.Shooter;
 import geobattle.living.Living;
+import geobattle.living.WeaponHolder;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Interval;
@@ -14,7 +16,7 @@ import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
 
-public class Tower extends Enemy {
+public class Tower extends Bot implements WeaponHolder {
 	
 	private final static Color COLOR = Palette.PINK;
 	private final static Sprite SPRITE = new Square(40, 40, COLOR);
@@ -26,54 +28,42 @@ public class Tower extends Enemy {
 	private Shooter shooter;
 	private Weapon weapon;
 	
-	public Tower(Game game, int x, int y, Living target) {
-		super(game, x, y, target);
+	public Tower(Game game, int x, int y) {
+		super(game, x, y);
 	
 		setColor(COLOR);
 		setHealth(HEALTH);
 		setSpeed(0);
 
 		weapon = WeaponFactory.Sniper.create(game, this, Tag.Enemy);
-		weapon.setLock(target);
 		
-		shooter = new Shooter(target, weapon);
+		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);
 		shooter.setRadar(SHOOT_RADAR);
 		addExtension(shooter);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);
+		
+		getTriggerMap().add("kill", weapon::kill);
+		getTriggerMap().add("newTarget", this::targetLock);
+		getTriggerMap().add("spawn", this::spawnWeapon);
 	}
 	
-	@Override
-	public void kill() {
-		super.kill();
-		weapon.kill();
-	}
-
-	@Override
-	public void update() {
-	}
-
-	@Override
-	public void die() {
-		
-	}
-
-	@Override
-	public void render(Graphics2D gfx) {
-		
-	}
-
-	@Override
-	protected void spawn() {
-		game.spawnGameObject(weapon);
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
+	private void targetLock() {
+		Living target = getTarget();
 		shooter.setTarget(target);
 		weapon.setLock(target);
 	}
 	
+
+	private void spawnWeapon() {
+		game.spawnGameObject(weapon);
+	}
+
+	@Override
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
 }

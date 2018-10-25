@@ -12,21 +12,19 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.infection.Infection;
 import geobattle.schedule.Event;
+import geobattle.triggers.TriggerMap;
 import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.weapon.Projectile;
 
 public abstract class Living extends GameObject {
-
+	
 	private Tank healthTank = new Tank();
 	private boolean godmode = false;
 	
 	public Living(Game game, double x, double y) {
 		super(game, x, y);
 		setupCollider();
-	}
-	
-	public void addInfection(Infection infection) {
 	}
 	
 	private final void setupCollider() {
@@ -48,17 +46,20 @@ public abstract class Living extends GameObject {
 		this.godmode = godmode;
 	}
 	
-	public abstract void die();
-	
 	public boolean hasGodMode() {
 		return godmode;
+	}
+	
+	public void die() {
+		getTriggerMap().call("die");
 	}
 	
 	public void suffer(int hit) {
 		if (godmode) return;
 		healthTank.take(hit);
-		if (this.isDead())
-			this.die();
+		if (isDead()) {
+			die();
+		}
 	}
 	
 	public void restoreHealth() {
@@ -84,6 +85,8 @@ public abstract class Living extends GameObject {
 	@Override
 	public void render_(Graphics2D superGfx) {
 		super.render_(superGfx);
+		
+		if (godmode) return;
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		
 		final int width = 40;

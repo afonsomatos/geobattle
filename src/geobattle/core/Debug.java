@@ -5,9 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
-import geobattle.living.enemies.Creeper;
 import geobattle.render.Renderable;
-import geobattle.util.Log;
 
 class Debug implements Renderable {
 
@@ -21,10 +19,6 @@ class Debug implements Renderable {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		
 		for (GameObject g: game.getGameObjects()) {
-			if (g instanceof Creeper) {
-				Log.i(g.getVel() + " CREPER");
-			}
-			
 			int x = (int) g.getX();
 			int y =  (int)g.getY();
 			int vx =  (int)(g.getVelX() * 40);

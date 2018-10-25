@@ -1,9 +1,7 @@
 package geobattle.core;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -15,21 +13,15 @@ import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
-import geobattle.living.enemies.Bomber;
-import geobattle.living.enemies.Enemy;
+import geobattle.living.bots.Bot;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
-import geobattle.render.sprite.Sprite;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
-import geobattle.special.Bomb;
-import geobattle.special.WaveSpecial;
 import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
-import geobattle.util.Palette;
-import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
@@ -104,6 +96,22 @@ public class Game implements Launchable {
 		gettingHitEvent = new Event(500, false, () -> gettingHit = false);
 	}
 	
+	public boolean areTagsFriends(Tag t1, Tag t2) {
+		return !collisionHandler.getCollisionMatrix().collidesWith(t1, t2);
+	}
+	
+	public void rivalTags(Tag... tags) {
+		for (int i = 0; i < tags.length; ++i)
+			for (int j = i + 1; j < tags.length; ++j)
+				collisionHandler.getCollisionMatrix().add(tags[i], tags[j]);
+	}
+	
+	public void friendTags(Tag... tags) {
+		for (int i = 0; i < tags.length; ++i)
+			for (int j = i + 1; j < tags.length; ++j)
+				collisionHandler.getCollisionMatrix().remove(tags[i], tags[j]);
+	}
+	
 	public void open() {
 		setup();
 
@@ -114,7 +122,10 @@ public class Game implements Launchable {
 		window.getGameCanvas().getMouseInput().setGameObject(mouseFollower);
 		spawnGameObject(mouseFollower);
 
+		rivalTags(Tag.Enemy, Tag.Player);
+		
 		gameLoop();
+		
 	}
 	
 	public void end() {
@@ -169,7 +180,7 @@ public class Game implements Launchable {
 		player.restoreHealth();
 		player.setX(width / 2);
 		player.setY(height / 2);
-
+			
 		Arsenal ars = player.getArsenal();
 		
 		ars.store(0, WeaponFactory.Shotgun.create(this, player, Tag.Player));
@@ -356,6 +367,8 @@ public class Game implements Launchable {
 
 		BufferStrategy bfs = window.getGameCanvas().getBufferStrategy();
 		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
+		gfx.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		gfx.scale(scale, scale); // this is the key to scaling
@@ -384,14 +397,14 @@ public class Game implements Launchable {
 		gameObjects.add(gameObject);
 		gameObject.spawn();
 		
-		if (gameObject instanceof Enemy)
+		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy)
 			enemiesLeft++;
 	}
 	
 	public void killGameObject(GameObject gameObject) {
 		gameObjects.remove(gameObject);
 		
-		if (gameObject instanceof Enemy) {
+		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy) {
 			score += 10;
 			enemiesLeft--;
 		}

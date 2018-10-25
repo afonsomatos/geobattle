@@ -9,13 +9,14 @@ abstract class Item extends GameObject {
 	
 	public Item(Game game, double x, double y) {
 		super(game, x, y);
-		setCollider(new Collider(this, Tag.Item) {
+		setCollider(new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
 				super.handleCollision(other);
 				collected(other.getGameObject());
 			}
 		});
+		setTag(Tag.Item);
 	}
 	
 	public abstract void collected(GameObject collector);

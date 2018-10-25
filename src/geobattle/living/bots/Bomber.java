@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
@@ -15,7 +15,7 @@ import geobattle.util.Interval;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
-public class Bomber extends Enemy {
+public class Bomber extends Bot {
 
 	private final static Sprite SPRITE = new Sprite(90, 60, 50, 30);
 	private final static int HEALTH = 1000;
@@ -53,14 +53,17 @@ public class Bomber extends Enemy {
 	private Event attackEvent;
 	private Interval<Integer> attackInterval = new Interval<Integer>(750, 1500);
 
-	public Bomber(Game game, int x, int y, Living target) {
-		super(game, x, y, target);
+	public Bomber(Game game, int x, int y) {
+		super(game, x, y);
 		bombSpecial = new BombSpecial(game, Tag.Enemy);
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		getCollider().surround(SPRITE);
 		setSpeed(6);
 		setVelX(6);
+		
+		getTriggerMap().add("die", () -> attackEvent.setOff(true));
+		getTriggerMap().add("spawn", this::resetEvent);
 	}
 	
 	public void resetEvent() {
@@ -74,17 +77,6 @@ public class Bomber extends Enemy {
 		});
 		
 		game.getSchedule().add(attackEvent);
-	}
-
-	@Override
-	public void die() {
-		// TODO Auto-generated method stub
-		attackEvent.setOff(true);
-	}
-
-	@Override
-	protected void spawn() {
-		resetEvent();
 	}
 
 	@Override
@@ -136,15 +128,4 @@ public class Bomber extends Enemy {
 		
 	}
 
-	@Override
-	protected void render(Graphics2D gfx) {
-
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

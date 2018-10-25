@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +16,7 @@ import geobattle.util.Interval;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
-public class Slime extends Enemy {
+public class Slime extends Bot {
 	
 	private static final Color COLOR = Palette.ORANGE;
 	
@@ -55,24 +55,39 @@ public class Slime extends Enemy {
 	
 	private final Type type;
 	
-	public Slime(Game game, int x, int y, Living target) {
-		this(game, x, y, target, Type.LARGE);
+	public Slime(Game game, int x, int y) {
+		this(game, x, y, Type.LARGE);
 	}
 	
-	Slime(Game game, int x, int y, Living target, Type type) {
-		super(game, x, y, target);
+	Slime(Game game, int x, int y, Type type) {
+		super(game, x, y);
 		this.type = type;
 		setColor(COLOR);
 		setHealth(type.health);
 		setSpeed(type.speed);
 		setSprite(type.sprite);
-		addExtension(new Follower(target));
+		
+		Follower follower = new Follower(null);
+		addExtension(follower);
+
+		getTriggerMap().add("die", this::divide);
+		getTriggerMap().add("newTarget", () -> {
+			follower.setTarget(getTarget());
+		});
+		
 		setupCollider();
+	}
+	
+	private void divide() {
+		if (type.child != null) {
+			spawn(type.child);
+			spawn(type.child);
+		}
 	}
 
 	private void setupCollider() {
 		Collider superCol = getCollider();
-		Collider newCol = new Collider(this, Tag.Enemy) {
+		Collider newCol = new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
 				superCol.handleCollision(other);
@@ -88,40 +103,14 @@ public class Slime extends Enemy {
 		setCollider(newCol);
 	}
 	
-	public void spawn(Type child) {
+	private void spawn(Type child) {
 		Point pos = Util.randomVec(spawnRadius);
 		int x = (int) (pos.x + getX());
 		int y = (int) (pos.y + getY());
-		game.spawnGameObject(new Slime(game, x, y, getTarget(), child));
+		Slime slime = new Slime(game, x, y, child);
+		slime.setTarget(getTarget());
+		slime.setTag(getTag());
+		game.spawnGameObject(slime);
 	}
 	
-	@Override
-	public void die() {
-		if (type.child != null) {
-			spawn(type.child);
-			spawn(type.child);
-		}
- 	}
-
-	@Override
-	protected void spawn() {
-		
-	}
-
-	@Override
-	protected void update() {
-		
-	}
-
-	@Override
-	protected void render(Graphics2D gfx) {
-		
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

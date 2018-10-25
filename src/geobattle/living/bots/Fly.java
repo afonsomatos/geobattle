@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +16,7 @@ import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
-public class Fly extends Enemy {
+public class Fly extends Bot {
 
 	private final static int SIZE = 60;
 	private final static int BODY_SIZE = 15;
@@ -53,8 +53,8 @@ public class Fly extends Enemy {
 		SPRITE.draw(new Square(BODY_SIZE, BODY_SIZE, COLOR));
 	}
 	
-	public Fly(Game game, int x, int y, Living target) {
-		super(game, x, y, target);
+	public Fly(Game game, int x, int y) {
+		super(game, x, y);
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		setColor(COLOR);
@@ -82,7 +82,7 @@ public class Fly extends Enemy {
 	
 	private void setupCollider() {
 		Collider superCol = getCollider();
-		Collider newCol = new Collider(this, Tag.Enemy) {
+		Collider newCol = new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
 				// take damage
@@ -95,16 +95,6 @@ public class Fly extends Enemy {
 		};
 		newCol.surround(this);
 		setCollider(newCol);
-	}
-
-	@Override
-	public void die() {
-		
-	}
-
-	@Override
-	protected void spawn() {
-		
 	}
 
 	@Override
@@ -124,17 +114,6 @@ public class Fly extends Enemy {
 		
 		setVelX(vx);
 		setVelY(vy);
-	}
-
-	@Override
-	protected void render(Graphics2D gfx) {
-		
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

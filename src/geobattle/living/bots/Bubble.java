@@ -1,4 +1,4 @@
-package geobattle.living.enemies;
+package geobattle.living.bots;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +16,7 @@ import geobattle.util.Counter;
 import geobattle.util.Palette;
 import geobattle.weapon.Projectile;
 
-public class Bubble extends Enemy {
+public class Bubble extends Bot {
 
 	private static final Color COLOR = Palette.YELLOW;
 	private final static int HEALTH = 500;
@@ -33,15 +33,17 @@ public class Bubble extends Enemy {
 	private boolean exploded = false;
 	
 	public Bubble(Game game, int x, int y) {
-		super(game, x, y, null);
+		super(game, x, y);
 		
 		setColor(COLOR);
 		setHealth(HEALTH);
 
-		starBurst = new StarBurstSpecial(game, Tag.Enemy);
+		starBurst = new StarBurstSpecial(game);
 		starBurst.setStyle(Style.RAINBOW);
 		starBurst.setProjectiles(8);
 		starBurst.setDamage(25);
+		
+		getTriggerMap().add("newTag", () -> starBurst.setTag(getTag()));
 		
 		setWidth(10);
 		setHeight(10);
@@ -65,7 +67,7 @@ public class Bubble extends Enemy {
 	private void setupCollider() {
 		Collider superCol = this.getCollider();
 		Bubble bubble = this;
-		setCollider(new Collider(this, Tag.Enemy) {
+		setCollider(new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
 				if (exploded) return;
@@ -97,25 +99,4 @@ public class Bubble extends Enemy {
 		attackCounter.tick();
 	}
 
-	@Override
-	public void die() {
-		
-	}
-
-	@Override
-	public void render(Graphics2D gfx) {
-		
-	}
-
-	@Override
-	protected void spawn() {
-		
-	}
-
-	@Override
-	protected void handleNewTarget(Living target) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

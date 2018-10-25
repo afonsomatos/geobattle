@@ -36,10 +36,6 @@ abstract class UnitsItem extends Item {
 	}
 	
 	@Override
-	public abstract void collected(GameObject collector);
-	
-
-	@Override
 	public void render(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		String label = Integer.toString(unitsTank.get());

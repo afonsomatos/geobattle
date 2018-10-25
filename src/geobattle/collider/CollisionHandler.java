@@ -18,12 +18,19 @@ public final class CollisionHandler {
 	
 	public CollisionHandler(Game game) {
 		this.game = game;
+		/*
 		collisionMatrix = new CollisionMatrix()
 				.add(Tag.Player, Tag.Enemy)
 				.add(Tag.Player, Tag.Item)
 				.add(Tag.Void, Tag.Player)
 				.add(Tag.Void, Tag.Enemy)
-				.add(Tag.Enemy, Tag.PlayerOrbit);
+				.add(Tag.Enemy, Tag.PlayerOrbit)
+				
+				.add(Tag.Team1, Tag.Team2)
+				.add(Tag.Team1, Tag.Team3)
+				.add(Tag.Team2, Tag.Team3);
+		*/
+		collisionMatrix = new CollisionMatrix();
 	}
 	
 	public CollisionMatrix getCollisionMatrix() {
@@ -44,7 +51,7 @@ public final class CollisionHandler {
 			
 			for (int j = i + 1; j < size; j++) {
 				Collider c2 = colliders.get(j);
-				if (collisionMatrix.collidesWith(c1.getTag(), c2.getTag()) &&
+				if (collisionMatrix.collidesWith(c1.getGameObject().getTag(), c2.getGameObject().getTag()) &&
 						c1.getBounds().intersects(c2.getBounds())) {
 					
 					collisions.get(c1).add(c2);
@@ -58,7 +65,6 @@ public final class CollisionHandler {
 		// update colliders info
 		for (Collider col : colliders)
 			col.updateCollisions(collisions.get(col));
-		
 	}
 	
 	public List<Collider> getColliders() {

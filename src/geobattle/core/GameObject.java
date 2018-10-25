@@ -7,7 +7,9 @@ import java.util.List;
 
 import geobattle.collider.Collider;
 import geobattle.extension.Extension;
+import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
+import geobattle.triggers.TriggerMap;
 
 public abstract class GameObject {
 
@@ -27,6 +29,7 @@ public abstract class GameObject {
 	
 	private boolean active 	= true;
 	private boolean hidden 	= false;
+	private boolean spawned = false;
 	private boolean freezed	= false;
 	
 	private Color color = Color.WHITE;
@@ -35,7 +38,9 @@ public abstract class GameObject {
 	private Collider collider 	= null;
 	private Sprite sprite		= null;
 	
+	private List<Renderable> drawers	= new ArrayList<Renderable>();
 	private List<Extension> extensions 	= new ArrayList<Extension>();
+	private TriggerMap triggerMap		= new TriggerMap();
 	
 	public GameObject(Game game) {
 		this.game = game;
@@ -46,13 +51,33 @@ public abstract class GameObject {
 		this.x = x;
 		this.y = y;
 	}
+	
+	protected void addDrawer(Renderable drawer) {
+		drawers.add(drawer);
+	}
+	
+	protected void removeDrawer(Renderable drawer) {
+		drawers.remove(drawer);
+	}
 
-	protected abstract void spawn();
-	protected abstract void update();
-	protected abstract void render(Graphics2D gfx);
+	public boolean hasSpawned() {
+		return spawned;
+	}
+	
+	protected void spawn() {
+		spawned = true;
+		getTriggerMap().call("spawn");
+	}
+	
+	protected void update() {
+		
+	}
+	protected  void render(Graphics2D gfx) {
+		
+	}
 	
 	public boolean isOutOfBorders() {
-		return getX() > getGame().getWidth() || getY() > getGame().getHeight() || getX() < 0 || getY() < 0;
+		return isOutOfBorders(0);
 	}
 	
 	public boolean isOutOfBorders(int margin) {
@@ -61,6 +86,10 @@ public abstract class GameObject {
 	
 	public void setRotation(double rotation) {
 		this.rotation = rotation % (Math.PI * 2);
+	}
+	
+	public TriggerMap getTriggerMap() {
+		return triggerMap;
 	}
 	
 	public void removeExtension(Extension extension) {
@@ -105,6 +134,13 @@ public abstract class GameObject {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		render(gfx);
 		gfx.dispose();
+		
+		for (Renderable drawer : drawers) {
+			gfx = (Graphics2D) superGfx.create();
+			drawer.render(gfx);
+			gfx.dispose();
+		}
+		
 	}
 	
 	public void stop() {
@@ -222,6 +258,7 @@ public abstract class GameObject {
 
 	public void setTag(Tag tag) {
 		this.tag = tag;
+		getTriggerMap().call("newTag");
 	}
 
 	public double getSpeed() {
@@ -257,6 +294,7 @@ public abstract class GameObject {
 	}
 	
 	public void kill() {
+		getTriggerMap().call("kill");
 		this.getGame().killGameObject(this);
 	}
 	

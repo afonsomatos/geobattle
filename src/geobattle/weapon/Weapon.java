@@ -296,7 +296,7 @@ public class Weapon extends GameObject {
 		for (int i = 0; i < projectiles; ++i) {
 			
 			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY(), projectileSize, projectileSize);
-			p.getCollider().setTag(getTag());
+			p.setTag(getTag());
 			p.setSpeed(projectileSpeed);
 			p.setColor(projectileColor);
 			p.setDamage(damage);

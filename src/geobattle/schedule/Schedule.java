@@ -9,7 +9,7 @@ public class Schedule {
 	private long startPause;
 	private boolean paused = false;
 	
-	public void tick() {
+	public synchronized void tick() {
 		if (paused) return;
 		
 		long now = System.currentTimeMillis();

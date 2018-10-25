@@ -13,11 +13,6 @@ public class GameAdapter extends GameObject {
 	}
 
 	@Override
-	protected void spawn() {
-		
-	}
-
-	@Override
 	protected void update() {
 		
 	}
