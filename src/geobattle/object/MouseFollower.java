@@ -7,29 +7,16 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
+import geobattle.render.sprite.shapes.Square;
+import geobattle.util.Log;
 
 public class MouseFollower extends GameObject {
 
-	private static Sprite sprite = new Cross(10, 10, 5, Color.WHITE);
+	private final static Sprite SPRITE = new Square(10, 10, Color.WHITE);
 	
 	public MouseFollower(Game game) {
 		super(game);
-		setSprite(sprite);
+		setSprite(SPRITE);
 	}
-
-	@Override
-	protected void spawn() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	protected void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
-	}
-
+	
 }

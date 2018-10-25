@@ -165,6 +165,9 @@ public class Game implements Launchable {
 
 		schedule.clear();
 		gameObjects.clear();
+		
+		spawnGameObject(mouseFollower);
+		
 		levelManager.setLevel(0);
 		
 		Log.i("Game starting");
@@ -196,7 +199,7 @@ public class Game implements Launchable {
 		
 		ars.select(0);
 
-		player.setTarget(window.getGameCanvas().getMouseInput().getMouseObject());
+		player.setTarget(mouseFollower);
 		spawnGameObject(player);
 		
 		spawnGameObject(new ItemGenerator(this));

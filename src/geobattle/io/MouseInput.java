@@ -7,6 +7,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Game.State;
 import geobattle.living.Player;
+import geobattle.util.Log;
 
 public class MouseInput extends MouseAdapter {
 
@@ -80,6 +81,7 @@ public class MouseInput extends MouseAdapter {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (!active) return;
+		Log.i("hey");
 		if (gameObject != null)
 			gameObject.setHidden(false);
 	}
