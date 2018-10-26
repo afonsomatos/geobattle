@@ -93,6 +93,8 @@ public class KeyInput extends KeyAdapter {
 					dirmask = (dirmask & ~4) | 8;
 				
 				updateMovement();
+			} else if (keyCode == KeyEvent.VK_SPACE) {
+				game.getPlayer().setFiring(true);
 			}
 		}
 	}
@@ -131,6 +133,8 @@ public class KeyInput extends KeyAdapter {
 					dirmask &= ~8;
 				
 				updateMovement();
+			} else if (keyCode == KeyEvent.VK_SPACE) {
+				game.getPlayer().setFiring(false);
 			}
 		}
 	}

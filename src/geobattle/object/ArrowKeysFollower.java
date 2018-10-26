@@ -1,15 +1,11 @@
 package geobattle.object;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.sun.glass.events.KeyEvent;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.io.KeyInput;
 import geobattle.living.Player;
-import geobattle.util.Log;
 
 public class ArrowKeysFollower extends GameObject {
 
@@ -18,9 +14,53 @@ public class ArrowKeysFollower extends GameObject {
 	// Slice mechanism
 	private int totalSlices 	= 100;
 	private int sliceDir 		= 0;
-	private double sliceSpeed	= 1.2;
+	private double sliceSpeed	= 2.5;
 	private double currentSlice	= 0;
 	
+	private final static int A = -1; 	// Rotate anti-clockwise
+	private final static int C = 1;		// Rotate clock-wise
+	private final static int L = 0;		// Stop and make leap
+	private final static int X = 2;		// Don't do anything
+	
+	private final static int[][] DIR_MAP_V1 = new int[][] {
+		/*R   U	  L	  D */
+		{ A, L, L, C }, // first quarter
+		{ L, L, C, A }, // second quarter
+		{ L, C, A, L }, // thrid quarter
+		{ C, A, L, L }, // fourth quarter
+		
+		{ L, A, L, C }, // right axis
+		{ A, L, C, L }, // down axis
+		{ L, C, L, A }, // left axis
+		{ C, L, A, L }  // up axis
+	};
+	
+	private final static int[][] DIR_MAP_V2 = new int[][] {
+		/*R   U	  L	  D */
+		{ A, L, C, C }, // first quarter
+		{ A, C, C, A }, // second quarter
+		{ C, C, A, A }, // thrid quarter
+		{ C, A, A, C }, // fourth quarter
+		
+		{ L, A, A, C }, // right axis
+		{ A, C, C, L }, // down axis
+		{ C, C, L, A }, // left axis
+		{ C, L, A, C }  // up axis
+	};
+	
+	private final static int[][] DIR_MAP_V3 = new int[][] {
+		/*R   U	  L	  D */
+		{ C, X, A, X }, // first quarter
+		{ C, X, A, X }, // second quarter
+		{ C, X, A, X }, // thrid quarter
+		{ C, X, A, X }, // fourth quarter
+		     
+		{ C, X, A, X }, // right axis
+		{ C, X, A, X }, // down axis
+		{ C, X, A, X }, // left axis
+		{ C, X, A, X }  // up axis
+	};
+
 	public ArrowKeysFollower(Game game) {
 		super(game);
 	}
@@ -50,63 +90,36 @@ public class ArrowKeysFollower extends GameObject {
 				KeyEvent.VK_DOWN,
 		};
 		
-		int[][] dirMap = new int[][] {
-			/*R   U	  L	  D */
-			{-1,  0,  0,  1 }, // first quarter
-			{ 0,  0,  1, -1 }, // second quarter
-			{ 0,  1, -1,  0 }, // thrid quarter
-			{ 1, -1,  0,  0	}, // fourth quarter
-			
-			{ 0, -1,  0,  1 }, // right axis
-			{-1,  0,  1,  0 }, // down axis
-			{ 0,  1,  0, -1 }, // left axis
-			{ 1,  0, -1,  0 }  // up axis
-		};
+		int[][] dirMap = DIR_MAP_V2;
 		
 		int slice = getSlice();
 		int currQuarter = (int) slice / quarter;
 		int dirs[];
 		
-		Log.i("Curr slice: " + slice);
-		Log.i("Curr quarter: " + currQuarter);
-		
-		// Detect if axis or not
-		if (slice % quarter == 0) {
+		if (slice % quarter == 0)
 			dirs = dirMap[4 + currQuarter];
-			Log.i("Axis deteted!");
-		} else {
+		else
 			dirs = dirMap[currQuarter];
-			Log.i("Quarter detected!");
-		}
 		
 		int dir = 0, i;
-		boolean moving = false;
-		for (i = keys.length - 1; i >= 0; --i) {
+		for (i = keys.length - 1; i >= 0; --i)
 			if (ki.isPressingKey(keys[i])) {
 				dir = dirs[i];
-				moving = true;
 				break;
 			}
-		}
 		
 		if (i >= 0) {
-			Log.i("new dir: " + dir);
-			// Make a slice leap
 			if (dir == 0)
 				currentSlice = quarters[i];
-			sliceDir = dir;
-		} else {
+			if (dir != X)
+				sliceDir = dir;
+		} else
 			// No keys pressed, stop
 			sliceDir = 0;
-		}
-		
 	}
 	
 	@Override
 	public void update() {
-		
-		// Each slice represents one angle
-		double sliceAngle = 2 * Math.PI / totalSlices;
 		
 		handleArrowInput();
 		
@@ -115,8 +128,7 @@ public class ArrowKeysFollower extends GameObject {
 		currentSlice %= totalSlices;
 		int slice = getSlice();
 		
-		// Get its angle
-		double theta = slice * sliceAngle;
+		double theta =  2 * Math.PI * slice / totalSlices;
 		
 		// Set position in relation with the player
 		Player player = game.getPlayer();

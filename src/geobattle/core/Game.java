@@ -118,8 +118,8 @@ public class Game implements Launchable {
 		state = State.MENU;
 
 
-
 		rivalTags(Tag.Enemy, Tag.Player);
+		rivalTags(Tag.Item, Tag.Player);
 		
 		gameLoop();
 		
@@ -390,6 +390,7 @@ public class Game implements Launchable {
 		gfx.fillRect(0, 0, width, height);
 		
 		if (state == State.PLAYING) {
+			// problem... wish there was mutex
 			LinkedList<GameObject> clone = new LinkedList<GameObject>(gameObjects);
 			for (GameObject g : clone)
 				if (!g.isHidden())

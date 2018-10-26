@@ -19,7 +19,7 @@ public abstract class Bot extends Living {
 	private Living target = null;
 	
 	// Focus on the current target
-	private boolean focused = true;
+	private boolean focused = false;
 	
 	// Objects to target
 	private List<Tag> targetTags = new LinkedList<Tag>();

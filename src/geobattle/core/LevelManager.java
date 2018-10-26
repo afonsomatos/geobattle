@@ -90,6 +90,7 @@ public class LevelManager {
 			game.spawnGameObject(team3.get(i));
 		}*/
 		
+		/*
 		int quant = 10;
 		int radius = 300;
 		
@@ -115,13 +116,11 @@ public class LevelManager {
 			sentries[i].setTarget(sentries[(i + 1) % quant]);
 			game.spawnGameObject(sentries[i]);
 		}
+		*/
 		
-		/*
 		List<Bot> newEnemies = new LinkedList<Bot>();
-		newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height)));
-		newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height)));
 
-		boolean debug=true;
+		boolean debug=false;
 		
 		if (!debug) {
 			
@@ -150,7 +149,7 @@ public class LevelManager {
 				game.spawnGameObject(new BotSpawner(game, e, 3000, () -> loadingLevel = false ));
 			}
 		}
-		*/
+		
 	}
 	
 	public int getLevelCountDown() {
