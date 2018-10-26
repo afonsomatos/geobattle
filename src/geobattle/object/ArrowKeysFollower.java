@@ -22,6 +22,13 @@ public class ArrowKeysFollower extends GameObject {
 	private final static int L = 0;		// Stop and make leap
 	private final static int X = 2;		// Don't do anything
 	
+	private final static int[] KEYS = new int[] {
+		KeyEvent.VK_RIGHT,
+		KeyEvent.VK_UP,
+		KeyEvent.VK_LEFT,
+		KeyEvent.VK_DOWN,
+	};
+	
 	private final static int[][] DIR_MAP_V1 = new int[][] {
 		/*R   U	  L	  D */
 		{ A, L, L, C }, // first quarter
@@ -60,9 +67,28 @@ public class ArrowKeysFollower extends GameObject {
 		{ C, X, A, X }, // left axis
 		{ C, X, A, X }  // up axis
 	};
-
+	
+	public enum ArrowMap {
+		V1(DIR_MAP_V1),
+		V2(DIR_MAP_V2),
+		V3(DIR_MAP_V3);
+		
+		public final int[][] map;
+		
+		ArrowMap(int[][] map) {
+			this.map = map;
+		}
+	}
+	
+	// Direction map to use
+	public ArrowMap arrowMap;  
+	
 	public ArrowKeysFollower(Game game) {
 		super(game);
+	}
+	
+	public void setArrowMap(ArrowMap arrowMap) {
+		this.arrowMap = arrowMap;
 	}
 	
 	public int getSlice() {
@@ -77,20 +103,13 @@ public class ArrowKeysFollower extends GameObject {
 		int quarter = totalSlices / 4;
 		
 		int[] quarters = new int[] {
-				0,
-				3 * quarter,
-				2 * quarter,
-				1 * quarter
+			0,
+			3 * quarter,
+			2 * quarter,
+			1 * quarter
 		};
 		
-		int[] keys = new int[] {
-				KeyEvent.VK_RIGHT,
-				KeyEvent.VK_UP,
-				KeyEvent.VK_LEFT,
-				KeyEvent.VK_DOWN,
-		};
-		
-		int[][] dirMap = DIR_MAP_V2;
+		int[][] dirMap = arrowMap.map;
 		
 		int slice = getSlice();
 		int currQuarter = (int) slice / quarter;
@@ -102,8 +121,8 @@ public class ArrowKeysFollower extends GameObject {
 			dirs = dirMap[currQuarter];
 		
 		int dir = 0, i;
-		for (i = keys.length - 1; i >= 0; --i)
-			if (ki.isPressingKey(keys[i])) {
+		for (i = KEYS.length - 1; i >= 0; --i)
+			if (ki.isPressingKey(KEYS[i])) {
 				dir = dirs[i];
 				break;
 			}

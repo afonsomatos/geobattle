@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.item.ItemGenerator;
@@ -15,6 +18,7 @@ import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
 import geobattle.living.bots.Bot;
 import geobattle.object.ArrowKeysFollower;
+import geobattle.object.ArrowKeysFollower.ArrowMap;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
 import geobattle.schedule.Event;
@@ -29,6 +33,9 @@ import geobattle.weapon.WeaponFactory;
 
 public class Game implements Launchable {
 
+	private Properties properties;
+
+	private boolean arrows 	= true;
 	private boolean debug 	= false;
 	private boolean godmode = false;
 	
@@ -50,8 +57,6 @@ public class Game implements Launchable {
 	private int height = 576;
 	private double ratio = 16.0 / 9.0;
 	private double scale;
-	
-	private boolean arrows = true;
 	
 	private int score = 0;
 	private int rounds = 0;
@@ -133,22 +138,26 @@ public class Game implements Launchable {
 	
 	private void parseOpts(String opts) {
 		
-		String[] lines = opts.split("\n");
-		for(String l : lines) {
-			if (l.equals("debug")) {
-				debug = true;
-				Log.i("debug activated.");
-			} else if (l.equals("godmode")) {
-				godmode = true;
-				Log.i("godmode activated!");
-			} else if (l.equals("arrows")) {
-				arrows = true;
-				Log.i("arrows activated");
-			}
+		properties = new Properties();
+		
+		try {
+			// Load options on top of these
+			properties.load(new StringReader(opts));
+		} catch (IOException ioe) {
+			Log.e("Failed parsing options, ignoring");
 		}
+		
+		arrows	= Boolean.parseBoolean(properties.getProperty("arrows", 	"false"));
+		godmode = Boolean.parseBoolean(properties.getProperty("godmode", 	"false"));
+		debug	= Boolean.parseBoolean(properties.getProperty("debug", 		"false"));
+	}
+	
+	public Properties getProperties() {
+		return properties;
 	}
 	
 	public void start(String opts) {
+
 		parseOpts(opts);
 		
 		score 			= 0;
@@ -171,6 +180,16 @@ public class Game implements Launchable {
 		if (arrows) {
 			ArrowKeysFollower obj = new ArrowKeysFollower(this);
 			playerTarget = obj;
+			
+			String map = properties.getProperty("arrows.mode", "V1");
+			ArrowMap arrowMap = ArrowMap.V1;
+			if (map.equals("V2"))
+				arrowMap = ArrowMap.V2;
+			else if (map.equals("V3"))
+				arrowMap = ArrowMap.V3;
+			
+			obj.setArrowMap(arrowMap);
+			
 		} else {
 			MouseFollower obj = new MouseFollower(this);
 			window.getGameCanvas().getMouseInput().setGameObject(obj);
