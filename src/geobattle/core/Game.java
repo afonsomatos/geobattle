@@ -14,6 +14,7 @@ import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
 import geobattle.living.bots.Bot;
+import geobattle.object.ArrowKeysFollower;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
 import geobattle.schedule.Event;
@@ -50,6 +51,8 @@ public class Game implements Launchable {
 	private double ratio = 16.0 / 9.0;
 	private double scale;
 	
+	private boolean arrows = true;
+	
 	private int score = 0;
 	private int rounds = 0;
 	
@@ -83,9 +86,6 @@ public class Game implements Launchable {
 	
 	private LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	
-	// Follows the mouse input
-	private MouseFollower mouseFollower;
-	
 	private void setup() {
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
@@ -117,10 +117,7 @@ public class Game implements Launchable {
 
 		state = State.MENU;
 
-		// Trace mouse input
-		mouseFollower = new MouseFollower(this);
-		window.getGameCanvas().getMouseInput().setGameObject(mouseFollower);
-		spawnGameObject(mouseFollower);
+
 
 		rivalTags(Tag.Enemy, Tag.Player);
 		
@@ -144,6 +141,9 @@ public class Game implements Launchable {
 			} else if (l.equals("godmode")) {
 				godmode = true;
 				Log.i("godmode activated!");
+			} else if (l.equals("arrows")) {
+				arrows = true;
+				Log.i("arrows activated");
 			}
 		}
 	}
@@ -166,7 +166,17 @@ public class Game implements Launchable {
 		schedule.clear();
 		gameObjects.clear();
 		
-		spawnGameObject(mouseFollower);
+		// Trace mouse input
+		GameObject playerTarget;
+		if (arrows) {
+			ArrowKeysFollower obj = new ArrowKeysFollower(this);
+			playerTarget = obj;
+		} else {
+			MouseFollower obj = new MouseFollower(this);
+			window.getGameCanvas().getMouseInput().setGameObject(obj);
+			playerTarget = obj;
+		}
+		spawnGameObject(playerTarget);
 		
 		levelManager.setLevel(0);
 		
@@ -199,7 +209,7 @@ public class Game implements Launchable {
 		
 		ars.select(0);
 
-		player.setTarget(mouseFollower);
+		player.setTarget(playerTarget);
 		spawnGameObject(player);
 		
 		spawnGameObject(new ItemGenerator(this));

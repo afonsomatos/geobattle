@@ -8,6 +8,7 @@ import java.util.HashMap;
 import geobattle.core.Game;
 import geobattle.core.Game.State;
 import geobattle.living.Player;
+import geobattle.object.ArrowKeysFollower;
 import geobattle.util.Log;
 import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
@@ -16,13 +17,6 @@ public class KeyInput extends KeyAdapter {
 
 	private Game game;
 	private boolean active = true;
-	
-	private final static Integer[] ARROW_KEYS = {
-			KeyEvent.VK_UP,
-			KeyEvent.VK_DOWN,
-			KeyEvent.VK_LEFT,
-			KeyEvent.VK_RIGHT
-	};
 	
 	private final static Integer[] MOVEMENT_KEYS = {
 			KeyEvent.VK_W,
@@ -78,11 +72,6 @@ public class KeyInput extends KeyAdapter {
 		player.setVelY(newVelY);
 	}
 	
-	private void handleArrowKey(int keyCode) {
-		
-	//	double angle = game.getPlayer().pointAngle(game.
-		
-	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -104,10 +93,6 @@ public class KeyInput extends KeyAdapter {
 					dirmask = (dirmask & ~4) | 8;
 				
 				updateMovement();
-			} else if (Util.contains(ARROW_KEYS, keyCode)) {
-				
-				handleArrowKey(keyCode);
-				
 			}
 		}
 	}
