@@ -36,7 +36,7 @@ public class Collider {
 			.filter(b -> !currentCollisions.contains(b))
 			.forEach(this::enterCollision);
 		
-		// Check lost collisions
+		// Check lost collisionaas
 		currentCollisions
 			.stream()
 			.filter(a -> !updatedCollisions.contains(a))
@@ -46,6 +46,7 @@ public class Collider {
 		updatedCollisions.forEach(this::handleCollision);
 	}
 	
+	// TODO: Change this to sets
 	public void enterCollision(Collider other) 		{}
 	public void leaveCollision(Collider other) 		{}
 	public void handleCollision(Collider other) 	{}

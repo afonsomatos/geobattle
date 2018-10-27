@@ -8,12 +8,15 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
+import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.util.Util;
 
 public class Weapon extends GameObject {
+	
+	private Sprite sprite;
 	
 	private boolean reloading = false;
 	private boolean pausing = false;
@@ -54,8 +57,20 @@ public class Weapon extends GameObject {
 	Weapon(Game game, GameObject origin, Tag tag) {
 		super(game);
 		this.origin = origin;
+		
+		paint();
 
-		drawer = (Graphics2D superGfx) -> {
+		setTag(tag);
+		setWidth(15);
+		setHeight(15);
+		fill();
+		
+		setupCounters();
+	}
+	
+	public void paint() {
+		sprite = new Sprite(50, 50, 25, 25);
+		sprite.draw((Graphics2D superGfx) -> {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
 			gfx.setColor(getColor());
 			// (0, 0) is the firing point
@@ -63,14 +78,8 @@ public class Weapon extends GameObject {
 			final int y[] = {0, size, -size};
 			gfx.fillPolygon(x, y, 3);
 			gfx.dispose();
-		};
-		
-		setTag(tag);
-		setWidth(15);
-		setHeight(15);
-		fill();
-		
-		setupCounters();
+		});
+		setSprite(sprite);
 	}
 	
 	public void setupCounters() {
@@ -115,15 +124,6 @@ public class Weapon extends GameObject {
 	
 	public void setDrawer(Renderable drawer) {
 		this.drawer = drawer;
-	}
-	
-	@Override
-	public void render(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.rotate(fireAngle, (int) getX(), (int) getY());
-		gfx.translate(getX(), getY());
-		drawer.render(gfx);
-		gfx.dispose();
 	}
 	
 	public void fill() {
@@ -235,6 +235,8 @@ public class Weapon extends GameObject {
 		
 		updatePosition();
 		tickReloading();
+		
+		setRotation(fireAngle);
 	}
 
 	public void setLock(GameObject lock) {

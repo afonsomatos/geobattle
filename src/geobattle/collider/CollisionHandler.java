@@ -18,18 +18,6 @@ public final class CollisionHandler {
 	
 	public CollisionHandler(Game game) {
 		this.game = game;
-		/*
-		collisionMatrix = new CollisionMatrix()
-				.add(Tag.Player, Tag.Enemy)
-				.add(Tag.Player, Tag.Item)
-				.add(Tag.Void, Tag.Player)
-				.add(Tag.Void, Tag.Enemy)
-				.add(Tag.Enemy, Tag.PlayerOrbit)
-				
-				.add(Tag.Team1, Tag.Team2)
-				.add(Tag.Team1, Tag.Team3)
-				.add(Tag.Team2, Tag.Team3);
-		*/
 		collisionMatrix = new CollisionMatrix();
 	}
 	

@@ -7,6 +7,7 @@ import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
+import geobattle.render.sprite.Sprite;
 import geobattle.util.Palette;
 
 public class WeaponFactory {
@@ -58,6 +59,16 @@ public class WeaponFactory {
 				.setProjectileColor(Palette.RED)
 				.setProjectileSpeed(20.0f);
 	
+		Sprite unlimitedSprite = new Sprite(200, 200, 100, 100);
+		unlimitedSprite.draw(gfx -> {
+			int side = 30;
+			int x[] = {0, side, side};
+			int y[] = {0, side, -side};
+			gfx.translate(15, 0);
+			gfx.setColor(Palette.RED);
+			gfx.fillPolygon(x, y, 3);
+		});
+		
 		Unlimited = new WeaponFactory()
 				.setRadius(85)
 				.setProjectiles(1)
@@ -70,14 +81,7 @@ public class WeaponFactory {
 				.setProjectileSpeed(20.0f)
 				.setDamage(10000)
 				.setProjectileSize(30)
-				.setDrawer(gfx -> {
-					int side = 30;
-					int x[] = {0, side, side};
-					int y[] = {0, side, -side};
-					gfx.translate(15, 0);
-					gfx.setColor(Color.RED);
-					gfx.fillPolygon(x, y, 3);
-				});
+				.setSprite(unlimitedSprite);
 		
 		InfectionFactory virus = new InfectionFactory()
 				.setColor(Palette.MINT)
@@ -114,9 +118,9 @@ public class WeaponFactory {
 	private int size				= 10;
 	private boolean infect			= false;
 	
+	private Sprite sprite						= null;
 	private Color projectileColor 				= Color.CYAN;
 	private Color color							= Color.WHITE;
-	private Renderable drawer					= null;
 	private InfectionFactory infectionFactory 	= null;
 	
 	private WeaponFactory() {
@@ -140,11 +144,6 @@ public class WeaponFactory {
 
 	private WeaponFactory setAmmoSaved(int ammoSaved) {
 		this.ammoSaved = ammoSaved;
-		return this;
-	}
-	
-	private WeaponFactory setDrawer(Renderable drawer) {
-		this.drawer = drawer;
 		return this;
 	}
 	
@@ -183,6 +182,11 @@ public class WeaponFactory {
 		return this;
 	}
 
+	private WeaponFactory setSprite(Sprite sprite) {
+		this.sprite = sprite;
+		return this;
+	}
+	
 	private WeaponFactory setProjectileSpeed(double projectileSpeed) {
 		this.projectileSpeed = projectileSpeed;
 		return this;
@@ -210,8 +214,6 @@ public class WeaponFactory {
 	
 	public Weapon create(Game game, GameObject origin, Tag tag) {
 		Weapon weapon = new Weapon(game, origin, tag);
-		if (drawer != null)
-			weapon.setDrawer(drawer);
 		weapon.setDamage(damage);
 		weapon.setProjectiles(projectiles);
 		weapon.setRadius(radius);
@@ -229,6 +231,12 @@ public class WeaponFactory {
 		weapon.setSize(size);
 		weapon.setInfect(infect);
 		weapon.setInfectionFactory(infectionFactory);
+		
+		if (sprite == null)
+			weapon.paint();
+		else
+			weapon.setSprite(sprite);
+		
 		weapon.fill();
 		return weapon;
 	}

@@ -23,7 +23,6 @@ public class Zombie extends Bot {
 	private final static double SPEED_DEAD	= 6.0;
 	
 	private int damage = 200;
-	private int damageDelay = 1000;
 	
 	private boolean zombie = false;
 	private Follower follower;

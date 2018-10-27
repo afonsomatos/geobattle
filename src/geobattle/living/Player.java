@@ -21,6 +21,7 @@ import geobattle.special.Special;
 import geobattle.special.TroopsSpecial;
 import geobattle.special.WaveSpecial;
 import geobattle.util.Counter;
+import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;

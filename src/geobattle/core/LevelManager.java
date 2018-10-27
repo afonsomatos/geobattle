@@ -131,14 +131,12 @@ public class LevelManager {
 		game.spawnGameObject(soldierBuildHouse);
 		*/
 		
-		Zombie zombie = new Zombie(game, 300, 300);
-		zombie.setTarget(player);
-		zombie.setTag(Tag.Enemy);
-		game.spawnGameObject(zombie);
-		
 		List<Bot> newEnemies = new LinkedList<Bot>();
 		
-		newEnemies.add(zombie);
+		int q = 200;
+		while(--q >= 0)
+			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height)));
+		
 		
 		boolean debug=true;
 		
@@ -163,11 +161,13 @@ public class LevelManager {
 				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height)));
 		}
 	
-			for (Bot e : newEnemies) {
-				e.setTarget(player);
-				e.setTag(Tag.Enemy);
-				game.spawnGameObject(new BotSpawner(game, e, 3000, () -> loadingLevel = false ));
-			}
+
+		}
+		
+		for (Bot e : newEnemies) {
+			e.setTarget(player);
+			e.setTag(Tag.Enemy);
+			game.spawnGameObject(new BotSpawner(game, e, 3000, () -> loadingLevel = false ));
 		}
 		
 	}
