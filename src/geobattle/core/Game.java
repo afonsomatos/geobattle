@@ -91,6 +91,14 @@ public class Game implements Launchable {
 	
 	private LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	
+	public void pause() {
+		paused = true;
+	}
+	
+	public void unpause() {
+		paused = false;
+	}
+	
 	private void setup() {
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
@@ -181,13 +189,15 @@ public class Game implements Launchable {
 			ArrowKeysFollower obj = new ArrowKeysFollower(this);
 			playerTarget = obj;
 			
-			String map = properties.getProperty("arrows.mode", "V1");
+			String map = properties.getProperty("arrows.mode", "2");
 			ArrowMap arrowMap = ArrowMap.V1;
-			if (map.equals("V2"))
+			if (map.equals("2"))
 				arrowMap = ArrowMap.V2;
-			else if (map.equals("V3"))
+			else if (map.equals("3"))
 				arrowMap = ArrowMap.V3;
 			
+			Double speed = Double.valueOf(properties.getProperty("arrows.speed", "1.5"));
+			obj.setSliceSpeed(speed);
 			obj.setArrowMap(arrowMap);
 			
 		} else {

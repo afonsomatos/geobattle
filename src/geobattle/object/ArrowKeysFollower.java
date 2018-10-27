@@ -44,7 +44,7 @@ public class ArrowKeysFollower extends GameObject {
 	
 	private final static int[][] DIR_MAP_V2 = new int[][] {
 		/*R   U	  L	  D */
-		{ A, L, C, C }, // first quarter
+		{ A, A, C, C }, // first quarter
 		{ A, C, C, A }, // second quarter
 		{ C, C, A, A }, // thrid quarter
 		{ C, A, A, C }, // fourth quarter
@@ -85,6 +85,10 @@ public class ArrowKeysFollower extends GameObject {
 	
 	public ArrowKeysFollower(Game game) {
 		super(game);
+	}
+	
+	public void setSliceSpeed(double speed) {
+		this.sliceSpeed = speed;
 	}
 	
 	public void setArrowMap(ArrowMap arrowMap) {

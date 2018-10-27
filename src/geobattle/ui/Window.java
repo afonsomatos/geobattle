@@ -27,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 
 import geobattle.core.Game;
 import geobattle.core.Score;
+import geobattle.core.Game.State;
 import geobattle.util.Log;
 
 @SuppressWarnings("serial")
@@ -86,6 +87,24 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
+		
+		container.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK, false), "menu");
+		container.getActionMap().put("menu", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (game.getState() != State.PLAYING) return;
+				game.pause();
+				if (JOptionPane.showConfirmDialog(Window.this, "Are you sure?", "Back to Menu", 
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
+				{
+					game.unpause();
+					game.end();
+				}
+				game.unpause();
+				
+			}				
+		});
+		
 	}
 	
 	public int getRealWidth() {
@@ -170,7 +189,7 @@ public class Window extends JFrame {
 			getActionMap().put("quit", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (JOptionPane.showConfirmDialog(null, "Are you sure?", "Quit", 
+					if (JOptionPane.showConfirmDialog(Menu.this, "Are you sure?", "Quit", 
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
 						System.exit(0);
 				}				
@@ -200,7 +219,7 @@ public class Window extends JFrame {
 		}
 		
 		private void writeOptions() {
-			if (JOptionPane.showConfirmDialog(null, optionsPanel, "Options", 
+			if (JOptionPane.showConfirmDialog(Menu.this, optionsPanel, "Options", 
 					JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
 				options = optionsTxt.getText();
 			}
