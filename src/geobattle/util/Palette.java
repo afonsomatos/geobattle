@@ -50,14 +50,14 @@ public final class Palette {
 	}
 
 	public static Color[] randomWithout(int x, Color... colors) {
-		List<Color> all = new LinkedList<>(Arrays.asList(palette));
+		List<Color> all = new ArrayList<>(Arrays.asList(palette));
 		all.removeAll(Arrays.asList(colors));
 		Collections.shuffle(all);
 		return all.subList(0, x).toArray(new Color[x]);
 	}
 	
 	public static Color randomWithout(Color... colors) {
-		List<Color> all = new LinkedList<>(Arrays.asList(palette));
+		List<Color> all = new ArrayList<>(Arrays.asList(palette));
 		all.removeAll(Arrays.asList(colors));
 		return all.get(rand.nextInt(all.size()));
 	}

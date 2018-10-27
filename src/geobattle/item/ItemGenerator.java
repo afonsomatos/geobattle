@@ -3,6 +3,7 @@ package geobattle.item;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ItemGenerator extends GameObject {
 
 	private final int MARGIN = 100;
 	private int lastWave = 0;
-	private List<Item> expiringItems = new LinkedList<Item>();
+	private List<Item> expiringItems = new ArrayList<Item>();
 	
 	public ItemGenerator(Game game) {
 		super(game);
@@ -48,7 +49,7 @@ public class ItemGenerator extends GameObject {
 			i.kill();
 		
 		Point loc;
-		List<Item> newItems = new LinkedList<Item>();
+		List<Item> newItems = new ArrayList<Item>();
 		
 		if (wave % 5 == 0) {
 			loc = getRandomItemLocation();

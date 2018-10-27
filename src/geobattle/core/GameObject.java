@@ -11,7 +11,7 @@ import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.triggers.TriggerMap;
 
-public abstract class GameObject {
+public class GameObject {
 
 	protected Game game;
 

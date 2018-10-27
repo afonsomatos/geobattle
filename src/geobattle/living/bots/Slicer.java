@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
-import geobattle.core.GameAdapter;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -121,7 +120,7 @@ public class Slicer extends Bot {
 	}
 	
 	public void setupAttackBehavior() {
-		GameObject aim = new GameAdapter(game);
+		GameObject aim = new GameObject(game);
 		
 		// Perform pursuit every X random seconds
 		attackEvent = new Event(Util.insertRandomError(attackDelay, attackDelayError), true, () -> {

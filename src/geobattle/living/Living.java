@@ -98,12 +98,12 @@ public abstract class Living extends GameObject {
 		final int health = healthTank.get();
 		final int healthCapacity = healthTank.max();
 		
-		gfx.setColor(Palette.WHITE);
-		gfx.fillRect(x - 1, y - 1, width + 2, height + 2);
-		
 		gfx.setColor(new Color(200, (int) 255.0 * health / healthCapacity, 0));
 		gfx.fillRect(x, y, (int) (width * (double) health / healthCapacity), height);
 		
+		gfx.setColor(Palette.WHITE);
+		gfx.setStroke(new BasicStroke(1));
+		gfx.drawRect(x, y, width, height);
 		gfx.dispose();
 	}
 	

@@ -162,7 +162,7 @@ public class Player extends Living implements WeaponHolder {
 		return specialReady;
 	}
 	
-	public synchronized void fire() {
+	public void fire() {
 		Weapon weapon = getWeapon();
 		if (weapon == null) return;
 		if (weapon.getAmmoLoad() == 0)

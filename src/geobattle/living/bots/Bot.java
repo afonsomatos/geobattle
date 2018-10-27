@@ -1,6 +1,7 @@
 package geobattle.living.bots;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public abstract class Bot extends Living {
 	private boolean focused = false;
 	
 	// Objects to target
-	private List<Tag> targetTags = new LinkedList<Tag>();
+	private List<Tag> targetTags = new ArrayList<Tag>();
 	
 	public Bot(Game game, int x, int y) {
 		super(game, x, y);
@@ -40,7 +41,7 @@ public abstract class Bot extends Living {
 		String txt = tag.getName();
 		
 		int x = (int) getX();
-		int y = (int) (getY() + getCollider().getHeight() / 2) + 20;
+		int y = (int) (getY() + getCollider().getHeight() / 2) + TAG_COLLIDER_MARGIN;
 		Util.Graphics.drawStringCentered(gfx, x, y, txt);
 		gfx.dispose();
 	}

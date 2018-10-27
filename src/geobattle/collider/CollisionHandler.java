@@ -48,15 +48,12 @@ public final class CollisionHandler {
 					
 				}
 			}
+			c1.updateCollisions(collisions.get(c1));
 		}
-		
-		// update colliders info
-		for (Collider col : colliders)
-			col.updateCollisions(collisions.get(col));
 	}
 	
-	public List<Collider> getColliders() {
-		List<Collider> colliders = new ArrayList<Collider>();
+	public ArrayList<Collider> getColliders() {
+		ArrayList<Collider> colliders = new ArrayList<Collider>();
 		for (GameObject g : game.getGameObjects()) {
 			Collider c = g.getCollider();
 			if (c != null)

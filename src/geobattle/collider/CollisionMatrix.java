@@ -8,6 +8,8 @@ import geobattle.util.Log;
 
 public final class CollisionMatrix {
 	
+	// TODO: Longs have at most 64 bits, so the current implementation fails
+	// when there are more than 64 tags.
 	private Map<Integer, Long> matrix = new HashMap<Integer, Long>();
 	
 	public CollisionMatrix add(Tag tag1, Tag tag2) {

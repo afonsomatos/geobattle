@@ -7,6 +7,8 @@ import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -79,7 +81,7 @@ public class Game implements Launchable {
 	private boolean paused = false;
 	private int enemiesLeft;
 	
-	private LinkedList<Score> lastScores = new LinkedList<Score>();
+	private List<Score> lastScores = new ArrayList<Score>();
 			
 	public enum State {
 		MENU,
@@ -89,7 +91,8 @@ public class Game implements Launchable {
 	
 	public State state = State.MENU;
 	
-	private LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
+	private List<GameObject> gameObjects =
+			Collections.synchronizedList(new ArrayList<GameObject>(500));
 	
 	public void pause() {
 		paused = true;
@@ -274,12 +277,10 @@ public class Game implements Launchable {
 			int frames = 0;
 			double delta = 0;
 			
-			long elapsed;
 			
 			while (state == State.PLAYING) {
 				long now = System.nanoTime();
 				delta += (now - lastTime) / nanosPerTick;
-				elapsed = now - lastTime;
 				lastTime = now;
 				
 				while (delta >= 1) {
@@ -315,8 +316,8 @@ public class Game implements Launchable {
 		}).start();
 	}
 	
-	public LinkedList<Score> getScores() {
-		return new LinkedList<Score>(lastScores);
+	public List<Score> getScores() {
+		return new ArrayList<Score>(lastScores);
 	}
 	
 	public Window getWindow() {
@@ -405,7 +406,7 @@ public class Game implements Launchable {
 		 */
 	}
 	
-	public synchronized void render() {
+	public void render() {
 
 		BufferStrategy bfs = window.getGameCanvas().getBufferStrategy();
 		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
@@ -419,12 +420,15 @@ public class Game implements Launchable {
 		gfx.fillRect(0, 0, width, height);
 		
 		if (state == State.PLAYING) {
-			// problem... wish there was mutex
-			LinkedList<GameObject> clone = new LinkedList<GameObject>(gameObjects);
-			for (GameObject g : clone)
-				if (!g.isHidden())
-					g.render_(gfx);
-	
+			
+			synchronized (gameObjects) {
+				
+			gameObjects
+				.stream()
+				.filter(obj -> !obj.isHidden())
+				.forEach(obj -> obj.render_(gfx));
+			}
+
 			if (debug)
 				debugRender.render(gfx);
 		}
@@ -437,7 +441,10 @@ public class Game implements Launchable {
 	}
 	
 	public void spawnGameObject(GameObject gameObject) {
+		synchronized(gameObjects) {
+			
 		gameObjects.add(gameObject);
+		}
 		gameObject.spawn();
 		
 		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy)

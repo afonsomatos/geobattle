@@ -2,10 +2,11 @@ package geobattle.schedule;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Schedule {
 
-	private LinkedList<Event> timers = new LinkedList<Event>();
+	private List<Event> timers = new ArrayList<Event>();
 	private long startPause;
 	private boolean paused = false;
 	
@@ -14,7 +15,7 @@ public class Schedule {
 		
 		long now = System.currentTimeMillis();
 		
-		LinkedList<Event> toRemove = new LinkedList<Event>();
+		List<Event> toRemove = new ArrayList<Event>();
 		for (Event t : new ArrayList<Event>(timers)) {
 			if (t.isOff()) {
 				toRemove.add(t);

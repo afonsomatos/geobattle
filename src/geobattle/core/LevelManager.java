@@ -1,5 +1,6 @@
 package geobattle.core;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -131,12 +132,10 @@ public class LevelManager {
 		game.spawnGameObject(soldierBuildHouse);
 		*/
 		
-		List<Bot> newEnemies = new LinkedList<Bot>();
-		
-		int q = 200;
+		List<Bot> newEnemies = new ArrayList<Bot>();
+		int q = 100;
 		while(--q >= 0)
 			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height)));
-		
 		
 		boolean debug=true;
 		
