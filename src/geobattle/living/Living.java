@@ -14,6 +14,7 @@ import geobattle.infection.Infection;
 import geobattle.schedule.Event;
 import geobattle.triggers.TriggerMap;
 import geobattle.util.Log;
+import geobattle.util.Palette;
 import geobattle.util.Tank;
 import geobattle.weapon.Projectile;
 
@@ -96,12 +97,13 @@ public abstract class Living extends GameObject {
 		
 		final int health = healthTank.get();
 		final int healthCapacity = healthTank.max();
+		
+		gfx.setColor(Palette.WHITE);
+		gfx.fillRect(x - 1, y - 1, width + 2, height + 2);
+		
 		gfx.setColor(new Color(200, (int) 255.0 * health / healthCapacity, 0));
 		gfx.fillRect(x, y, (int) (width * (double) health / healthCapacity), height);
 		
-		gfx.setStroke(new BasicStroke(1));
-		gfx.setColor(Color.WHITE);
-		gfx.drawRect(x, y, width, height);
 		gfx.dispose();
 	}
 	
