@@ -91,8 +91,7 @@ public class Game implements Launchable {
 	
 	public State state = State.MENU;
 	
-	private List<GameObject> gameObjects =
-			Collections.synchronizedList(new ArrayList<GameObject>(500));
+	private List<GameObject> gameObjects = new ArrayList<GameObject>(500);
 	
 	public void pause() {
 		paused = true;
@@ -421,13 +420,10 @@ public class Game implements Launchable {
 		
 		if (state == State.PLAYING) {
 			
-			synchronized (gameObjects) {
-				
-			gameObjects
+			getGameObjects()
 				.stream()
 				.filter(obj -> !obj.isHidden())
 				.forEach(obj -> obj.render_(gfx));
-			}
 
 			if (debug)
 				debugRender.render(gfx);
@@ -441,10 +437,7 @@ public class Game implements Launchable {
 	}
 	
 	public void spawnGameObject(GameObject gameObject) {
-		synchronized(gameObjects) {
-			
 		gameObjects.add(gameObject);
-		}
 		gameObject.spawn();
 		
 		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy)

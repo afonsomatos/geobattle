@@ -133,11 +133,8 @@ public class LevelManager {
 		*/
 		
 		List<Bot> newEnemies = new ArrayList<Bot>();
-		int q = 100;
-		while(--q >= 0)
-			newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height)));
 		
-		boolean debug=true;
+		boolean debug=false;
 		
 		if (!debug) {
 			
