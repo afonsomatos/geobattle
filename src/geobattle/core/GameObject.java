@@ -148,6 +148,11 @@ public abstract class GameObject {
 		accX = accY = velX = velY = 0;
 	}
 	
+	public void moveTo(GameObject obj) {
+		x = obj.x;
+		y = obj.y;
+	}
+	
 	public final void tick() {
 		if (!active) return;
 		

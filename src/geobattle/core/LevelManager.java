@@ -4,9 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import geobattle.living.Living;
 import geobattle.living.Player;
 import geobattle.living.bots.Bomber;
 import geobattle.living.bots.Bot;
+import geobattle.living.bots.BotBuildHouse;
 import geobattle.living.bots.BotSpawner;
 import geobattle.living.bots.Bubble;
 import geobattle.living.bots.Creeper;
@@ -118,9 +120,17 @@ public class LevelManager {
 		}
 		*/
 		
+		BotBuildHouse slicerBuildHouse = new BotBuildHouse(game, 200, 200, Slicer.class, player);
+		slicerBuildHouse.setTag(Tag.Enemy);
+		game.spawnGameObject(slicerBuildHouse);
+		
+		BotBuildHouse soldierBuildHouse = new BotBuildHouse(game, 400, 400, Soldier.class, player);
+		soldierBuildHouse.setTag(Tag.Enemy);
+		game.spawnGameObject(soldierBuildHouse);
+		
 		List<Bot> newEnemies = new LinkedList<Bot>();
 
-		boolean debug=false;
+		boolean debug=true;
 		
 		if (!debug) {
 			

@@ -13,6 +13,7 @@ import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
 import geobattle.schedule.Event;
+import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
