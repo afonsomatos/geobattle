@@ -18,6 +18,7 @@ import geobattle.living.bots.Slicer;
 import geobattle.living.bots.Slime;
 import geobattle.living.bots.Soldier;
 import geobattle.living.bots.Tower;
+import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
 
 public class LevelManager {
@@ -120,6 +121,7 @@ public class LevelManager {
 		}
 		*/
 		
+		/*
 		BotBuildHouse slicerBuildHouse = new BotBuildHouse(game, 200, 200, Slicer.class, player);
 		slicerBuildHouse.setTag(Tag.Enemy);
 		game.spawnGameObject(slicerBuildHouse);
@@ -127,9 +129,17 @@ public class LevelManager {
 		BotBuildHouse soldierBuildHouse = new BotBuildHouse(game, 400, 400, Soldier.class, player);
 		soldierBuildHouse.setTag(Tag.Enemy);
 		game.spawnGameObject(soldierBuildHouse);
+		*/
+		
+		Zombie zombie = new Zombie(game, 300, 300);
+		zombie.setTarget(player);
+		zombie.setTag(Tag.Enemy);
+		game.spawnGameObject(zombie);
 		
 		List<Bot> newEnemies = new LinkedList<Bot>();
-
+		
+		newEnemies.add(zombie);
+		
 		boolean debug=true;
 		
 		if (!debug) {

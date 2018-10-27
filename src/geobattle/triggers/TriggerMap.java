@@ -23,6 +23,11 @@ public class TriggerMap {
 		map.get(key).addFirst(runnable);
 	}
 	
+	public void clear(Object key) {
+		if (map.containsKey(key))
+			map.get(key).clear();
+	}
+	
 	public void remove(Object key, Runnable runnable) {
 		List<Runnable> set = map.get(key);
 		if (set != null)

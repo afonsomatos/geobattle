@@ -39,6 +39,10 @@ public class Follower implements Extension {
 		return following;
 	}
 	
+	public void setMinDistance(double minDistance) {
+		this.minDistance = minDistance;
+	}
+	
 	public void setMaxDistance(double maxDistance) {
 		this.maxDistance = maxDistance;
 	}

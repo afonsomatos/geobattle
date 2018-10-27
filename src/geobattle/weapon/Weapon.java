@@ -197,15 +197,10 @@ public class Weapon extends GameObject {
 	}
 	
 	public void updatePosition() {
-		if (origin == null || lock == null) {
-			// last pos, todo
-			setX(origin.getX() + radius);
-			setY(origin.getY());
-			fireAngle = Math.PI;
+		if (origin == null)		
 			return;
-		}
 		
-		if (origin.distance(lock) > radius) {
+		if (lock != null && origin.distance(lock) > radius) {
 
 			double distY = origin.getY() - lock.getY();
 			double distX = origin.getX() - lock.getX();
