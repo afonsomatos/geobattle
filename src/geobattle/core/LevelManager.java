@@ -139,7 +139,9 @@ public class LevelManager {
 		if (!debug) {
 			
 		for (int i = 1; i < level + 1; ++i) {
-			if (i % 8 == 0)
+			if (i % 9 == 0)
+				newEnemies.add(new Zombie(game, rand.nextInt(width), rand.nextInt(height)));
+			else if (i % 8 == 0)
 				newEnemies.add(new Bomber(game, rand.nextInt(width), rand.nextInt(height)));
 			else if (i % 7 == 0)
 				newEnemies.add(new Fly(game, rand.nextInt(width), rand.nextInt(height)));
@@ -156,7 +158,6 @@ public class LevelManager {
 			else if (i % 1 == 0)
 				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height)));
 		}
-	
 
 		}
 		

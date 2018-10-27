@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
+import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
@@ -46,6 +47,8 @@ public class BotSpawner extends GameObject {
 		double quota = event.getPercentage();
 		Color color = spawn.getColor();
 		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
+		// TODO: Too slow, find a way to change transparency of Sprite.getImage()
+		// to make this more efficient.
 		setSprite(new Aura(30, 7, placeColor));
 	}
 	

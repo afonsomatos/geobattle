@@ -2,6 +2,7 @@ package geobattle.core;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,19 +123,18 @@ public class GameObject {
 		// Render sprites
 		if (sprite != null) {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
-			//int centerX = sprite.getCenterX();
-			//int centerY = sprite.getCenterY();
-			
 			gfx.translate(x, y);
 			gfx.rotate(rotation, 0, 0);
 			sprite.render(gfx);
 			gfx.dispose();
 		}
 		
+		// Render custom
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		render(gfx);
 		gfx.dispose();
 		
+		// Render all extra drawers
 		for (Renderable drawer : drawers) {
 			gfx = (Graphics2D) superGfx.create();
 			drawer.render(gfx);
@@ -148,21 +148,25 @@ public class GameObject {
 		accX = accY = velX = velY = 0;
 	}
 	
+	public void moveTo(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void moveTo(GameObject obj) {
 		x = obj.x;
 		y = obj.y;
 	}
 	
-	public final void tick() {
+	public void tick() {
 		if (!active) return;
 		
 		update();
 		
 		for (Extension b : extensions)
 			b.update(this);
-		
 
-		this.move();
+		move();
 	}
 	
 	public void setCollider(Collider collider) {
@@ -200,7 +204,7 @@ public class GameObject {
 	public void setFreezed(boolean freezed) {
 		this.freezed = freezed;
 	}
-
+	
 	public double getX() {
 		return x;
 	}
@@ -300,7 +304,7 @@ public class GameObject {
 	
 	public void kill() {
 		getTriggerMap().call("kill");
-		this.getGame().killGameObject(this);
+		game.killGameObject(this);
 	}
 	
 	public void setHeight(double height) {
@@ -312,12 +316,12 @@ public class GameObject {
 	}
 
 	public double pointAngle(GameObject obj) {
-		
 		double distX = obj.getX() - getX();
 		double fireAngle = Math.acos(distX /  distance(obj));
 		
 		if (getY() > obj.getY())
 			fireAngle *= -1;
+		
 		return fireAngle;
 	}
 	
