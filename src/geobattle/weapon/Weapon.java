@@ -11,6 +11,7 @@ import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Counter;
+import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.util.Util;
 
@@ -47,6 +48,7 @@ public class Weapon extends GameObject {
 	private double radius = 70;
 	private double fireAngle = 32;
 	private double recoil = 0;
+	private int padding = 0;
 	
 	private Renderable drawer;
 	
@@ -69,17 +71,23 @@ public class Weapon extends GameObject {
 	}
 	
 	public void paint() {
-		sprite = new Sprite(50, 50, 25, 25);
+		sprite = new Sprite(size * 2, size * 2, size, size);
 		sprite.draw((Graphics2D superGfx) -> {
 			Graphics2D gfx = (Graphics2D) superGfx.create();
 			gfx.setColor(getColor());
 			// (0, 0) is the firing point
 			final int x[] = {0, size, size};
 			final int y[] = {0, size, -size};
+			gfx.translate(0, 0);
 			gfx.fillPolygon(x, y, 3);
 			gfx.dispose();
 		});
+		sprite.setCenterX(padding);
 		setSprite(sprite);
+	}
+	
+	public void setPadding(int padding) {
+		this.padding = padding;
 	}
 	
 	public void setupCounters() {

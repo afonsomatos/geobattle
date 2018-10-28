@@ -57,6 +57,7 @@ public class Follower implements Extension {
 	
 	@Override
 	public void update(GameObject gameObject) {
+		if (target == null) return;
 		if (!active) return;
 
 		boolean stopped = false;

@@ -67,7 +67,7 @@ public class Sentry extends Bot implements WeaponHolder {
 	
 	@Override
 	public void update() {
-		// TODO: slow af
+		// TODO: Very slow
 		
 		if (this.isFocused() && getTarget() != null) return;
 		
@@ -81,6 +81,7 @@ public class Sentry extends Bot implements WeaponHolder {
 			// we only aim at the living
 			if (g == this) continue;
 			if (!(g instanceof Living)) continue;
+			if (((Living)g).isDead()) continue;
 			// if it doesnt have the target tag discart
 			if (game.areTagsFriends(getTag(), g.getTag())) continue;
 			// see if this is the nearest

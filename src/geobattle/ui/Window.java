@@ -227,14 +227,14 @@ public class Window extends JFrame {
 		
 		private void updateHighScore() {
 			List<Score> scores = game.getScores();
-			scores.sort((Score o1, Score o2) -> o2.getScore() - o1.getScore());
+			scores.sort((Score o1, Score o2) -> o2.score - o1.score);
 
 			String highScoreTxt = "<html>Times played: " + game.getRounds();
 			
 			int n = 0;
 			for (Score s : scores) {
 				if (n >= 15) break;
-				String txt = String.format("#%d ~ %d by %s", s.getRound(), s.getScore(), s.getName());
+				String txt = String.format("#%d ~ %d by %s", s.round, s.score, s.name);
 				highScoreTxt += "<br>" + txt;
 				n++;
 			}

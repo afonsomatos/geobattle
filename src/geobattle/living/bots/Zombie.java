@@ -55,14 +55,6 @@ public class Zombie extends Bot {
 				if (obj != target) return;
 				if (!zombie) return;
 				target.suffer(damage);
-				setSpeed(0);
-			}
-			
-			@Override
-			public void leaveCollision(Collider other) {
-				GameObject obj = other.getGameObject();
-				Living target = Zombie.this.getTarget();
-				if (obj != target) return;
 				humanoid();
 			}
 			

@@ -7,6 +7,7 @@ import geobattle.util.Palette;
 
 public class Tag {
 
+	private static final int MAX_TAGS = 64;
 	private static int nextId = 0;
 	
 	// Common tags
@@ -26,6 +27,7 @@ public class Tag {
 	
 	public Tag(String name) {
 		id = nextId++;
+		nextId %= MAX_TAGS;
 		this.name = name;
 	}
 	

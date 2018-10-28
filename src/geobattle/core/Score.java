@@ -2,26 +2,14 @@ package geobattle.core;
 
 public final class Score {
 
-	private String name;
-	private int score;
-	private int round;
+	public final String name;
+	public final int score;
+	public final int round;
 	
 	public Score(String name, int score, int round) {
 		this.name = name;
 		this.score = score;
 		this.round = round;
-	}
-	
-	public int getRound() {
-		return round;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public int getScore() {
-		return score;
 	}
 	
 }

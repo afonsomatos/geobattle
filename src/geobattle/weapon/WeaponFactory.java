@@ -8,6 +8,7 @@ import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
+import geobattle.util.Log;
 import geobattle.util.Palette;
 
 public class WeaponFactory {
@@ -58,16 +59,6 @@ public class WeaponFactory {
 				.setColor(Palette.GREEN)
 				.setProjectileColor(Palette.RED)
 				.setProjectileSpeed(20.0f);
-	
-		Sprite unlimitedSprite = new Sprite(200, 200, 100, 100);
-		unlimitedSprite.draw(gfx -> {
-			int side = 30;
-			int x[] = {0, side, side};
-			int y[] = {0, side, -side};
-			gfx.translate(15, 0);
-			gfx.setColor(Palette.RED);
-			gfx.fillPolygon(x, y, 3);
-		});
 		
 		Unlimited = new WeaponFactory()
 				.setRadius(85)
@@ -81,7 +72,9 @@ public class WeaponFactory {
 				.setProjectileSpeed(20.0f)
 				.setDamage(10000)
 				.setProjectileSize(30)
-				.setSprite(unlimitedSprite);
+				.setColor(Palette.PURPLE)
+				.setSize(30)
+				.setPadding(15);
 		
 		InfectionFactory virus = new InfectionFactory()
 				.setColor(Palette.MINT)
@@ -113,6 +106,7 @@ public class WeaponFactory {
 	private double radius 			= 70;
 	private double fireAngle 		= 32;
 	private double recoil 			= 0;
+	private int padding				= 0;
 	private int ammoSaved			= 60;
 	private int ammoLoad			= 30;
 	private int size				= 10;
@@ -147,8 +141,14 @@ public class WeaponFactory {
 		return this;
 	}
 	
+	private WeaponFactory setPadding(int padding) {
+		this.padding = padding;
+		return this;
+	}
+	
 	private WeaponFactory setSize(int size) {
 		this.size = size;
+		Log.i("size: " + size);
 		return this;
 	}
 	
@@ -231,6 +231,7 @@ public class WeaponFactory {
 		weapon.setSize(size);
 		weapon.setInfect(infect);
 		weapon.setInfectionFactory(infectionFactory);
+		weapon.setPadding(padding);
 		
 		if (sprite == null)
 			weapon.paint();

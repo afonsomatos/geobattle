@@ -156,28 +156,6 @@ class HUD implements Renderable {
 		renderPlayerExitingMap(gfx);
 	}
 
-	public void renderMenu(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setColor(Color.WHITE);
-		
-		gfx.drawString("Welcome to Geometry Battle!", 10, 20);
-		gfx.drawString("Press [ENTER] to start!", 10, 40);	
-
-		List<Score> scores = game.getScores();
-		scores.sort((Score o1, Score o2) -> o2.getScore() - o1.getScore());
-
-		int n = 0;
-		gfx.drawString("Times played: " + game.getRounds(), 10, 80);
-		for (Score s : scores) {
-			if (n >= 15) break;
-			String txt = String.format("#%d ~ %d by %s", s.getRound(), s.getScore(), s.getName());
-			gfx.drawString(txt, 10, 100 + n * 20);
-			n++;
-		}
-		
-		gfx.dispose();
-	}
-	
 	public void renderGameOver(Graphics2D superGfx) {
 		if (!game.isGameOver()) return;
 		

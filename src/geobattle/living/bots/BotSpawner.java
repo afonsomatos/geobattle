@@ -27,7 +27,6 @@ public class BotSpawner extends GameObject {
 		this.spawn = spawn;
 		this.runnable = run;
 		this.delay = delay;
-
 		getTriggerMap().add("spawn", this::setup);
 	}
 
@@ -39,6 +38,7 @@ public class BotSpawner extends GameObject {
 			game.spawnGameObject(spawn);
 		});
 		game.getSchedule().add(event);
+		setSprite(new Aura(30, 7, spawn.getColor()));
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class BotSpawner extends GameObject {
 		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
 		// TODO: Too slow, find a way to change transparency of Sprite.getImage()
 		// to make this more efficient.
-		setSprite(new Aura(30, 7, placeColor));
+		// setSprite(new Aura(30, 7, placeColor));
 	}
 	
 }

@@ -40,3 +40,7 @@
 /Team.class
 /Settings.class
 /Flow.class
+/GameRunnable.class
+/Test$Runnable.class
+/Test.class
+/Test$GameRunnable.class
