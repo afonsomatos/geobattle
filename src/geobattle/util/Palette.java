@@ -48,7 +48,7 @@ public final class Palette {
 	private Palette() {
 		
 	}
-
+	
 	public static Color[] randomWithout(int x, Color... colors) {
 		List<Color> all = new ArrayList<>(Arrays.asList(palette));
 		all.removeAll(Arrays.asList(colors));

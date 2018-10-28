@@ -35,6 +35,13 @@ public class Test {
 	
 	static {
 		
+		map.put("levelmanager", game -> {
+			Bot b = new Bubble(game, 200, 200);
+			b.setTag(Tag.Enemy);
+			b.setTarget(game.getPlayer());
+			game.spawnGameObject(new BotSpawner(game, b, 3000, () -> game.getLevelManager().setLoadingLevel(false) ));
+		});
+		
 		map.put("spawnx200", game -> {
 			Random rand = new Random();
 			int width = game.getWidth();
@@ -108,7 +115,7 @@ public class Test {
 			
 			game.rivalTags(afonso, tomas, manuel);
 			
-			int quant = 15;
+			int quant = 100;
 			//team1
 			LinkedList<Bot> team1 = new LinkedList<Bot>();
 			for (int i = 0; i < quant; ++i)

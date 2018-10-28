@@ -3,13 +3,17 @@ package geobattle.collider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.util.Log;
 
 public class CollisionHandler {
 
@@ -27,7 +31,15 @@ public class CollisionHandler {
 	
 	public void handleCollisions() {
 		
-		List<Collider> colliders = getColliders();
+		// Get all the colliders
+		List<GameObject> gameObjects = game.getGameObjects();
+		
+		List<Collider> colliders = 
+		gameObjects
+			.parallelStream()
+			.map(g -> g.getCollider())
+			.filter(Objects::nonNull)
+			.collect(Collectors.toCollection(() -> new ArrayList<>(gameObjects.size())));
 		
 		HashMap<Collider, Set<Collider>> collisions = new HashMap<Collider, Set<Collider>>();
 		
@@ -50,16 +62,6 @@ public class CollisionHandler {
 			}
 			c1.updateCollisions(collisions.get(c1));
 		}
-	}
-	
-	public ArrayList<Collider> getColliders() {
-		ArrayList<Collider> colliders = new ArrayList<Collider>();
-		for (GameObject g : game.getGameObjects()) {
-			Collider c = g.getCollider();
-			if (c != null)
-				colliders.add(c);
-		}
-		return colliders;
 	}
 
 }

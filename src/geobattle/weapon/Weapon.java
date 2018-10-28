@@ -9,7 +9,9 @@ import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Circle;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Triangle;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.util.Tank;
@@ -33,6 +35,8 @@ public class Weapon extends GameObject {
 	
 	private boolean infect = false;
 	private InfectionFactory infectionFactory = null;
+	
+	private ProjectileFactory projectileFactory = null;
 	
 	private int size				= 10;
 	private int projectiles 		= 1;
@@ -300,7 +304,7 @@ public class Weapon extends GameObject {
 
 		for (int i = 0; i < projectiles; ++i) {
 			
-			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY(), projectileSize, projectileSize);
+			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY());
 			p.setTag(getTag());
 			p.setSpeed(projectileSpeed);
 			p.setColor(projectileColor);
@@ -310,9 +314,8 @@ public class Weapon extends GameObject {
 				p.insertInfection(infectionFactory, getTag());
 			
 			// Change sprite inside blocket
-			p.setSprite(new Square(projectileSize, projectileSize, projectileColor));
+			p.setSprite(new Circle(projectileSize/2, projectileColor));
 			p.getCollider().surround(p.getSprite());
-			
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);
 			final double delta = fireRecoil + (projectiles == 1 ? 0 : step * i - fireAmplitude / 2);
 			p.setVelX(-Math.cos(fireAngle + delta) * p.getSpeed());

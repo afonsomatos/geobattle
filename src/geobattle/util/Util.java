@@ -19,6 +19,10 @@ public final class Util {
 		return (int) clamp(min, val, max);
 	}
 	
+	public static <T> T random(T[] array) {
+		return array[rand.nextInt(array.length)];
+	}
+	
 	public static <T> boolean contains(T[] array, T item) {
 		for (T i : array)
 			if (i == item)

@@ -16,10 +16,8 @@ public class Projectile extends GameObject {
 
 	private int damage = 10;
 	
-	public Projectile(Game game, int x, int y, int width, int height) {
+	public Projectile(Game game, int x, int y) {
 		super(game, x, y);
-		setWidth(width);
-		setHeight(height);
 		setDamage(damage);
 		setCollider(new Collider(this));
 	}
