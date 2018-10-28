@@ -78,11 +78,9 @@ public class StarBurstSpecial extends Special {
 					break;
 			}
 			
-			Projectile p = projectileFactory.create(game,
-					(int) (pos.x + Math.cos(delta + step * i) * radius),
-					(int) (pos.y + Math.sin(delta + step * i) * radius)
-					);
-
+			Projectile p = projectileFactory.create(game);
+			p.moveTo((int) (pos.x + Math.cos(delta + step * i) * radius),
+					 (int) (pos.y + Math.sin(delta + step * i) * radius));
 			p.setTag(tag);
 			p.setVelX(Math.cos(delta + step * i) * speed);
 			p.setVelY(Math.sin(delta + step * i) * speed);

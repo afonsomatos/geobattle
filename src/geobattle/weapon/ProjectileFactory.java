@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import geobattle.collider.Collider;
 import geobattle.core.Game;
+import geobattle.infection.InfectionFactory;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 
@@ -14,9 +15,15 @@ public class ProjectileFactory {
 	private int width = 8;
 	private int height = 8;
 	private double speed = 1;
+	private InfectionFactory infectionFactory = null;
 	
 	public ProjectileFactory() {
 		
+	}
+	
+	public ProjectileFactory setInfectionFactory(InfectionFactory infectionFactory) {
+		this.infectionFactory = infectionFactory;
+		return this;
 	}
 	
 	public ProjectileFactory setSpeed(double speed) {
@@ -40,15 +47,14 @@ public class ProjectileFactory {
 		return this;
 	}
 	
-	public Projectile create(Game game, int x, int y) {
-		Projectile pro = new Projectile(game, x, y);
+	public Projectile create(Game game) {
+		Projectile pro = new Projectile(game);
 		pro.setDamage(damage);
+		pro.setSpeed(speed);
+		pro.setInfectionFactory(infectionFactory);
 		Sprite sprite = new Square(width, height, color);
 		pro.setSprite(sprite);
-		pro.setSpeed(speed);
-		Collider col = new Collider(pro);
-		pro.setCollider(col);
-		col.surround(sprite);
+		pro.getCollider().surround(sprite);
 		return pro;
 	}
 

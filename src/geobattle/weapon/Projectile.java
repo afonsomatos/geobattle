@@ -16,10 +16,28 @@ public class Projectile extends GameObject {
 
 	private int damage = 10;
 	
+	private InfectionFactory infectionFactory = null;
+	
+	public Projectile(Game game) {
+		this(game,0,0);
+	}
+	
 	public Projectile(Game game, int x, int y) {
 		super(game, x, y);
 		setDamage(damage);
-		setCollider(new Collider(this));
+		setCollider(new Collider(this) {
+			@Override
+			public void enterCollision(Collider other) {
+				if (infectionFactory == null) return;
+				GameObject obj = other.getGameObject();
+				// only the living get infected
+				if (!(obj instanceof Living)) return;
+				Living target = (Living) obj;
+				Infection infection = infectionFactory.create(game, target);
+				infection.surround(other);
+				game.spawnGameObject(infection);	
+			}
+		});
 	}
 	
 	public void setDamage(int damage) {
@@ -30,19 +48,8 @@ public class Projectile extends GameObject {
 		return damage;
 	}
 	
-	public void insertInfection(InfectionFactory infectionFactory, Tag tag) {
-		setCollider(new Collider(this) {
-			@Override
-			public void enterCollision(Collider other) {
-				GameObject obj = other.getGameObject();
-				// only the living get infected
-				if (!(obj instanceof Living)) return;
-				Living target = (Living) obj;
-				Infection infection = infectionFactory.create(game, target);
-				infection.surround(other);
-				game.spawnGameObject(infection);
-			}
-		});
+	public void setInfectionFactory(InfectionFactory infectionFactory) {
+		this.infectionFactory = infectionFactory;
 	}
 	
 	@Override

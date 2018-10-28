@@ -33,17 +33,10 @@ public class Weapon extends GameObject {
 	private Tank loadTank = new Tank();
 	private Tank ammoTank = new Tank();
 	
-	private boolean infect = false;
-	private InfectionFactory infectionFactory = null;
-	
 	private ProjectileFactory projectileFactory = null;
 	
 	private int size				= 10;
 	private int projectiles 		= 1;
-	private int damage 				= 10;
-	private int projectileSize 		= 8;
-	private double projectileSpeed 	= 2.0f;
-	private Color projectileColor 	= Color.CYAN;
 	
 	private GameObject lock = null;
 	private GameObject origin = null;
@@ -118,16 +111,12 @@ public class Weapon extends GameObject {
 		};
 	}
 	
-	public void setSize(int size) {
-		this.size = size;
+	public void setProjectileFactory(ProjectileFactory projectileFactory) {
+		this.projectileFactory = projectileFactory;
 	}
 	
-	public void setInfect(boolean infect) {
-		this.infect = infect;
-	}
-
-	public void setInfectionFactory(InfectionFactory infection) {
-		this.infectionFactory = infection;
+	public void setSize(int size) {
+		this.size = size;
 	}
 	
 	public void setRecoil(double recoil) {
@@ -170,10 +159,6 @@ public class Weapon extends GameObject {
 		ammoTank.set(ammo);
 	}
 	
-	public void setProjectileSize(int projectileSize) {
-		this.projectileSize = projectileSize;
-	}
-
 	public void reload() {
 		if (loadTank.get() != INFINITE_AMMO && ammoTank.get() != 0 && !loadTank.full())
 			reloading = true;
@@ -271,18 +256,6 @@ public class Weapon extends GameObject {
 		this.fireAmplitude = Util.clamp(0, fireAmplitude, Math.PI * 2);
 	}
 
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-
-	public void setProjectileSpeed(double projectileSpeed) {
-		this.projectileSpeed = projectileSpeed;
-	}
-
-	public void setProjectileColor(Color projectileColor) {
-		this.projectileColor = projectileColor;
-	}
-	
 	public boolean canFire() {
 		if (reloading || pausing)
 			return false;
@@ -298,24 +271,18 @@ public class Weapon extends GameObject {
 	}
 	
 	public void fire(int x, int y) {
+		if (projectileFactory == null) return;
+		
 		Game game = this.getGame();
 		
 		final double step = fireAmplitude / (projectiles - 1);
 
 		for (int i = 0; i < projectiles; ++i) {
 			
-			Projectile p = new Projectile(game, (int) this.getX(), (int) this.getY());
+			Projectile p = projectileFactory.create(game);
+			p.moveTo(this);
 			p.setTag(getTag());
-			p.setSpeed(projectileSpeed);
-			p.setColor(projectileColor);
-			p.setDamage(damage);
 			
-			if (infect && infectionFactory != null)
-				p.insertInfection(infectionFactory, getTag());
-			
-			// Change sprite inside blocket
-			p.setSprite(new Circle(projectileSize/2, projectileColor));
-			p.getCollider().surround(p.getSprite());
 			final double fireRecoil = Util.randomDouble(-recoil, recoil);
 			final double delta = fireRecoil + (projectiles == 1 ? 0 : step * i - fireAmplitude / 2);
 			p.setVelX(-Math.cos(fireAngle + delta) * p.getSpeed());

@@ -72,7 +72,6 @@ public class ItemGenerator extends GameObject {
 			// Create random weapon
 			Weapon weapon = WeaponFactory.Unlimited.create(game, game.getPlayer(), Tag.Player);
 			weapon.setAmmoSaved(10);
-			weapon.setProjectileColor(Color.GREEN);
 			weapon.setAmmoCapacity(10);
 			weapon.fill();
 			
