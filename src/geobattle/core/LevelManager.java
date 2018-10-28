@@ -61,8 +61,9 @@ public class LevelManager {
 		
 		List<Bot> newEnemies = new ArrayList<Bot>();
 		
-		newEnemies.add(new Zombie(game, 300, 300));
+		//newEnemies.add(new Zombie(game, 300, 300));
 		
+		Test.run("teamfight", game);
 		boolean debug=true;
 		
 		if (!debug) {

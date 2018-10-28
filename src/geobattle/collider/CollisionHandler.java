@@ -11,7 +11,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 
-public final class CollisionHandler {
+public class CollisionHandler {
 
 	private Game game;
 	private CollisionMatrix collisionMatrix;

@@ -30,7 +30,7 @@ public class Creeper extends Bot {
 		super(game, x, y);
 		
 		starBurst = new StarBurstSpecial(game);
-		starBurst.setColor(getColor());
+		starBurst.setColor(COLOR);
 		starBurst.setProjectiles(20);
 		
 		setColor(COLOR);

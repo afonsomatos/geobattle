@@ -1,5 +1,6 @@
 package geobattle.render.sprite;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -20,12 +21,17 @@ public class Sprite implements Renderable {
 	private int centerX = 0;
 	private int centerY = 0;
 	
+	private AlphaComposite alphaComp;
 	private BufferedImage image;
 	
 	public Sprite(int width, int height, int centerX, int centerY) {
 		image = GFX_CONFIG.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
 		this.centerX = centerX;
 		this.centerY = centerY;
+	}
+
+	public void setAlpha(float alpha) {
+		alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 	}
 	
 	public void setCenterX(int centerX) {
@@ -58,6 +64,10 @@ public class Sprite implements Renderable {
 	
 	@Override
 	public void render(Graphics2D gfx) {
+		
+		if (alphaComp != null)
+			gfx.setComposite(alphaComp);
+		
 		gfx.drawImage(image, -centerX, -centerY, null);
 	}
 	

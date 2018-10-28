@@ -1,15 +1,25 @@
 package geobattle.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import geobattle.living.Player;
+import geobattle.living.bots.Bomber;
 import geobattle.living.bots.Bot;
 import geobattle.living.bots.BotBuildHouse;
+import geobattle.living.bots.BotSpawner;
+import geobattle.living.bots.Bubble;
+import geobattle.living.bots.Creeper;
+import geobattle.living.bots.Fly;
 import geobattle.living.bots.Sentry;
 import geobattle.living.bots.Slicer;
+import geobattle.living.bots.Slime;
 import geobattle.living.bots.Soldier;
+import geobattle.living.bots.Tower;
+import geobattle.living.bots.Zombie;
 
 public class Test {
 	
@@ -24,6 +34,58 @@ public class Test {
 	}
 	
 	static {
+		
+		map.put("spawnx200", game -> {
+			Random rand = new Random();
+			int width = game.getWidth();
+			int height = game.getHeight();
+			
+			List<Bot> creepers = new ArrayList<>(200);
+			for (int i = 0; i < 200; ++i)
+				creepers.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height)));
+			
+			for (Bot b : creepers) {
+				b.setTag(Tag.Enemy);
+				b.setTarget(game.getPlayer());
+				game.spawnGameObject(new BotSpawner(game, b, 3000, () -> game.getLevelManager().setLoadingLevel(false) ));
+			}
+
+		});
+		
+		map.put("showcase", game -> {
+			Random rand = new Random();
+			int x = game.getWidth() / 2;
+			int y = game.getHeight() / 2;
+			int level = game.getLevelManager().getLevel();
+			
+			Bot newBot;
+			
+			int i = level % 10;
+			
+			if (i == 9)
+				newBot = new Zombie(game, x, y);
+			else if (i == 8)
+				newBot =(new Bomber(game, x, y));
+			else if (i == 7)
+				newBot =(new Fly(game, x, y));
+			else if (i == 6)
+				newBot =(new Slicer(game, x, y));
+			else if (i == 5)
+				newBot =(new Tower(game, x, y));
+			else if (i == 4)
+				newBot =(new Soldier(game, x, y));
+			else if (i == 3)
+				newBot =(new Bubble(game, x, y));
+			else if (i == 2)
+				newBot =(new Slime(game, x, y));
+			else
+				newBot =(new Creeper(game, x, y));
+			
+			newBot.setTarget(game.getPlayer());
+			newBot.setTag(Tag.Enemy);
+			game.spawnGameObject(new BotSpawner(game, newBot, 3000, () -> game.getLevelManager().setLoadingLevel(false) ));
+			
+		});
 		
 		map.put("buildhouse", game -> {
 			Player player = game.getPlayer();

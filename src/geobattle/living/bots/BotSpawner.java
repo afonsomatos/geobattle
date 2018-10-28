@@ -13,6 +13,7 @@ import geobattle.util.Log;
 
 public class BotSpawner extends GameObject {
 	
+	private Sprite sprite;
 	private Bot spawn;
 	private Event event;
 	private Runnable runnable;
@@ -23,10 +24,13 @@ public class BotSpawner extends GameObject {
 	}
 	
 	public BotSpawner(Game game, Bot spawn, long delay, Runnable run) {
-		super(game, spawn.getX(), spawn.getY());
-		this.spawn = spawn;
-		this.runnable = run;
-		this.delay = delay;
+		super(game);
+		this.spawn 		= spawn;
+		this.runnable 	= run;
+		this.delay 		= delay;
+		
+		setSprite(new Aura(30, 7, spawn.getColor()));
+		moveTo(spawn);
 		getTriggerMap().add("spawn", this::setup);
 	}
 
@@ -38,18 +42,14 @@ public class BotSpawner extends GameObject {
 			game.spawnGameObject(spawn);
 		});
 		game.getSchedule().add(event);
-		setSprite(new Aura(30, 7, spawn.getColor()));
+		
 	}
 
 	@Override
 	protected void update() {
 		if (!hasSpawned()) return;
-		double quota = event.getPercentage();
-		Color color = spawn.getColor();
-		Color placeColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (quota * 100));
-		// TODO: Too slow, find a way to change transparency of Sprite.getImage()
-		// to make this more efficient.
-		// setSprite(new Aura(30, 7, placeColor));
+		float perc = (float) event.getPercentage();
+		getSprite().setAlpha(perc / 3);
 	}
 	
 }

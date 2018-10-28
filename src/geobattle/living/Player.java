@@ -8,6 +8,7 @@ import java.awt.Point;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.living.bots.Bot;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.Special;
@@ -17,7 +18,7 @@ import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 
-public class Player extends Living implements WeaponHolder {
+public class Player extends Bot implements WeaponHolder {
 	
 	public static Sprite sprite	= new Square(40, 40, Color.CYAN);
 	public static Sprite shieldSprite = new Sprite(40, 40, 20, 20);

@@ -16,6 +16,8 @@ public abstract class Bot extends Living {
 	// Space between tag and lower bound of collider
 	private final static int TAG_COLLIDER_MARGIN = 20;
 	
+	private String name = getClass().getSimpleName();
+	
 	// Current target
 	private Living target = null;
 	
@@ -31,6 +33,14 @@ public abstract class Bot extends Living {
 		addDrawer(this::renderTag);
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
 	private void renderTag(Graphics2D superGfx) {
 		Tag tag = getTag();
 		if (tag == null || tag.getName() == null) return;
@@ -38,7 +48,7 @@ public abstract class Bot extends Living {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 			
 		gfx.setColor(tag.getColor());
-		String txt = tag.getName();
+		String txt = name + " : " + tag.getName();
 		
 		int x = (int) getX();
 		int y = (int) (getY() + getCollider().getHeight() / 2) + TAG_COLLIDER_MARGIN;
@@ -59,9 +69,16 @@ public abstract class Bot extends Living {
 		return focused;
 	}
 	
+	private void dropTarget() {
+		setTarget(null);
+	}
+	
 	public void setTarget(Living target) {
 		this.target = target;
 		getTriggerMap().call("newTarget");
+		
+		if (target != null)
+			target.getTriggerMap().add("die", this::dropTarget);
 	}
 	
 	public Living getTarget() {

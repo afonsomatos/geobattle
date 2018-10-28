@@ -67,6 +67,9 @@ public class Slime extends Bot {
 		setSpeed(type.speed);
 		setSprite(type.sprite);
 		
+		// String newName = String.format("%s<%s>", getName(), type.toString().toLowerCase());
+		// setName(newName);
+		
 		Follower follower = new Follower(null);
 		addExtension(follower);
 
