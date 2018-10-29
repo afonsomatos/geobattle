@@ -57,6 +57,8 @@ public class Window extends JFrame {
 
 		gameCanvas = new GameCanvas(this);
 		container = (JPanel) getContentPane();
+		
+
 		cardLayout = new CardLayout();
 		container.setLayout(cardLayout);
 		

@@ -1,5 +1,6 @@
 package geobattle.weapon;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -10,20 +11,18 @@ import geobattle.core.Tag;
 import geobattle.infection.Infection;
 import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
+import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Square;
 import geobattle.util.Log;
 
 public class Projectile extends GameObject {
-
+	
 	private int damage = 10;
 	
 	private InfectionFactory infectionFactory = null;
 	
-	public Projectile(Game game) {
-		this(game,0,0);
-	}
-	
-	public Projectile(Game game, int x, int y) {
-		super(game, x, y);
+	Projectile(Game game) {
+		super(game);
 		setDamage(damage);
 		setCollider(new Collider(this) {
 			@Override
@@ -54,13 +53,18 @@ public class Projectile extends GameObject {
 	
 	@Override
 	public void update() {
+		
 		if (this.isOutOfBorders(-10))
 			this.kill();
 	}
 
 	@Override
 	protected void spawn() {
-		
+		double velX = getVelX();
+		double velY = getVelY();
+		double theta = Math.atan(velY / velX);
+		if (velX < 0) theta += Math.PI;
+		setRotation(theta);
 	}
 
 	@Override

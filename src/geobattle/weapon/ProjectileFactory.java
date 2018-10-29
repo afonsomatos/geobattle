@@ -11,11 +11,9 @@ import geobattle.render.sprite.shapes.Square;
 public class ProjectileFactory {
 	
 	private int damage = 10;
-	private Color color = Color.WHITE;
-	private int width = 8;
-	private int height = 8;
 	private double speed = 1;
 	private InfectionFactory infectionFactory = null;
+	private Sprite sprite = new Square(8, 8, Color.WHITE);
 	
 	public ProjectileFactory() {
 		
@@ -26,19 +24,13 @@ public class ProjectileFactory {
 		return this;
 	}
 	
+	public ProjectileFactory setSprite(Sprite sprite) {
+		this.sprite = sprite;
+		return this;
+	}
+	
 	public ProjectileFactory setSpeed(double speed) {
 		this.speed = speed;
-		return this;
-	}
-	
-	public ProjectileFactory setColor(Color color) {
-		this.color = color;
-		return this;
-	}
-	
-	public ProjectileFactory setSize(int width, int height) {
-		this.width = width;
-		this.height = height;
 		return this;
 	}
 	
@@ -52,7 +44,6 @@ public class ProjectileFactory {
 		pro.setDamage(damage);
 		pro.setSpeed(speed);
 		pro.setInfectionFactory(infectionFactory);
-		Sprite sprite = new Square(width, height, color);
 		pro.setSprite(sprite);
 		pro.getCollider().surround(sprite);
 		return pro;

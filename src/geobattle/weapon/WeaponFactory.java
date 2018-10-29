@@ -8,6 +8,11 @@ import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Aura;
+import geobattle.render.sprite.shapes.Circle;
+import geobattle.render.sprite.shapes.Diamond;
+import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Triangle;
 import geobattle.util.Log;
 import geobattle.util.Palette;
 
@@ -16,13 +21,13 @@ public class WeaponFactory {
 	public final static WeaponFactory Rifle;
 	public final static WeaponFactory Sniper;
 	public final static WeaponFactory Shotgun;
-	public final static WeaponFactory Unlimited;
+	public final static WeaponFactory MachineGun;
 	public final static WeaponFactory Virus;
 
 	static {
 		
 		ProjectileFactory pRifle = new ProjectileFactory()
-				.setColor(Palette.YELLOW)
+				.setSprite(new Circle(4, Palette.YELLOW))
 				.setSpeed(10.0f)
 				.setDamage(45);
 		
@@ -40,7 +45,7 @@ public class WeaponFactory {
 
 		
 		ProjectileFactory pShotgun = new ProjectileFactory()
-				.setColor(Palette.GREY)
+				.setSprite(new Square(8, 8, Palette.GREY))
 				.setSpeed(15.0f)
 				.setDamage(50);
 		
@@ -57,7 +62,7 @@ public class WeaponFactory {
 				.setAmmoSaved(32);
 
 		ProjectileFactory pSniper = new ProjectileFactory()
-				.setColor(Palette.RED)
+				.setSprite(new Triangle(16, 16, Palette.RED))
 				.setSpeed(20.0f)
 				.setDamage(300);
 		
@@ -71,25 +76,22 @@ public class WeaponFactory {
 				.setColor(Palette.GREEN)
 				.setProjectileFactory(pSniper);
 
-		ProjectileFactory pUnlimited = new ProjectileFactory()
-				.setColor(Palette.ORANGE)
-				.setSpeed(20.0f)
-				.setSize(30, 30)
-				.setDamage(10000);
+		ProjectileFactory pMachineGun = new ProjectileFactory()
+				.setSprite(new Square(30, 5, Palette.TEAL))
+				.setSpeed(15.0f)
+				.setDamage(20);
 		
-		Unlimited = new WeaponFactory()
-				.setRadius(85)
+		MachineGun = new WeaponFactory()
+				.setRadius(70)
 				.setProjectiles(1)
-				.setFireSpeed(Weapon.MAX_SPEED)
-				.setReloadSpeed(Weapon.MAX_SPEED)
-				.setAmmoLoad(Weapon.INFINITE_AMMO)
-				.setAmmoSaved(Weapon.INFINITE_AMMO)
-				.setRecoil(Math.PI / 72)
-				.setColor(Palette.PURPLE)
-				.setSize(30)
-				.setProjectileFactory(pUnlimited)
-				.setPadding(15);
-		
+				.setFireSpeed(0.2)
+				.setReloadSpeed(0.005)
+				.setAmmoLoad(100)
+				.setAmmoSaved(1000)
+				.setRecoil(0)
+				.setColor(Palette.BLUE)
+				.setSize(10)
+				.setProjectileFactory(pMachineGun);
 		
 		InfectionFactory virus = new InfectionFactory()
 				.setColor(Palette.MINT)
@@ -98,7 +100,7 @@ public class WeaponFactory {
 				.setDelay(500);
 		
 		ProjectileFactory pVirus = new ProjectileFactory()
-				.setColor(Palette.MINT)
+				.setSprite(new Aura(12, 3, Palette.MINT))
 				.setSpeed(9.0f)
 				.setDamage(0)
 				.setInfectionFactory(virus);

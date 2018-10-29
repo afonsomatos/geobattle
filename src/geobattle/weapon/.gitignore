@@ -23,3 +23,6 @@
 /WeaponHolder.class
 /ProjectileFactory.class
 /Projectile$2.class
+/Projectile$Type.class
+/ProjectileFactory$Type.class
+/ProjectileFactory$SpriteType.class

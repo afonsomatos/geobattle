@@ -70,7 +70,7 @@ public class ItemGenerator extends GameObject {
 			loc = getRandomItemLocation();
 
 			// Create random weapon
-			Weapon weapon = WeaponFactory.Unlimited.create(game, game.getPlayer(), Tag.Player);
+			Weapon weapon = WeaponFactory.MachineGun.create(game, game.getPlayer(), Tag.Player);
 			weapon.setAmmoSaved(10);
 			weapon.setAmmoCapacity(10);
 			weapon.fill();
