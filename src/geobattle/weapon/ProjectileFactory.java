@@ -7,16 +7,24 @@ import geobattle.core.Game;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.special.WaveFactory;
+import geobattle.special.WaveSpecial;
 
 public class ProjectileFactory {
 	
 	private int damage = 10;
 	private double speed = 1;
+	private WaveFactory waveFactory = null;
 	private InfectionFactory infectionFactory = null;
 	private Sprite sprite = new Square(8, 8, Color.WHITE);
 	
 	public ProjectileFactory() {
 		
+	}
+	
+	public ProjectileFactory setWaveFactory(WaveFactory waveFactory) {
+		this.waveFactory = waveFactory;
+		return this;
 	}
 	
 	public ProjectileFactory setInfectionFactory(InfectionFactory infectionFactory) {
@@ -44,6 +52,7 @@ public class ProjectileFactory {
 		pro.setDamage(damage);
 		pro.setSpeed(speed);
 		pro.setInfectionFactory(infectionFactory);
+		pro.setWaveFactory(waveFactory);
 		pro.setSprite(sprite);
 		pro.getCollider().surround(sprite);
 		return pro;

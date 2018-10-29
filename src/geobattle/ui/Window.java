@@ -2,14 +2,18 @@ package geobattle.ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -27,8 +31,11 @@ import javax.swing.border.EmptyBorder;
 
 import geobattle.core.Game;
 import geobattle.core.Score;
+import geobattle.render.sprite.shapes.CircleCross;
+import geobattle.render.sprite.shapes.Cross;
 import geobattle.core.Game.State;
 import geobattle.util.Log;
+import geobattle.util.Palette;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame {
@@ -58,7 +65,6 @@ public class Window extends JFrame {
 		gameCanvas = new GameCanvas(this);
 		container = (JPanel) getContentPane();
 		
-
 		cardLayout = new CardLayout();
 		container.setLayout(cardLayout);
 		
@@ -125,7 +131,16 @@ public class Window extends JFrame {
 		this.realHeight = realHeight;
 	}
 
-
+	private void hideMouse() {
+		container.setCursor(container.getToolkit().createCustomCursor(
+                new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB ),
+                new Point(),
+                null ) );
+	}
+	
+	private void showMouse() {
+		container.setCursor(Cursor.getDefaultCursor());
+	}
 
 	public Game getGame() {
 		return game;
@@ -147,6 +162,7 @@ public class Window extends JFrame {
 		}
 		
 		cardLayout.show(container, MENU);
+		showMouse();
 	}
 	
 	public GameCanvas getGameCanvas() {
@@ -212,6 +228,7 @@ public class Window extends JFrame {
 					gameCanvas.createBufferStrategy(3);
 					cardLayout.show(container, CANVAS);
 					gameCanvas.requestFocusInWindow();
+					hideMouse();
 					game.start(options);
 				}
 			});

@@ -63,7 +63,7 @@ public class LevelManager {
 		
 		//newEnemies.add(new Zombie(game, 300, 300));
 		
-		Test.run("spawnx200", game);
+		//Test.run("spawnx200", game);
 		
 		boolean debug=false;
 		

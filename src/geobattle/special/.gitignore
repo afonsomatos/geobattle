@@ -15,3 +15,5 @@
 /BombSpecial.class
 /SentrySpecial.class
 /TroopsSpecial.class
+/BombFactory.class
+/WaveFactory.class

@@ -13,6 +13,8 @@ import geobattle.render.sprite.shapes.Circle;
 import geobattle.render.sprite.shapes.Diamond;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.render.sprite.shapes.Triangle;
+import geobattle.special.WaveFactory;
+import geobattle.special.WaveSpecial;
 import geobattle.util.Log;
 import geobattle.util.Palette;
 
@@ -76,9 +78,17 @@ public class WeaponFactory {
 				.setColor(Palette.GREEN)
 				.setProjectileFactory(pSniper);
 
+		WaveFactory wMachineGun = new WaveFactory()
+				.setDamage(100)
+				.setThickness(15)
+				.setRadius(100)
+				.setColor(Palette.TEAL)
+				.setSpeed(0.02);
+		
 		ProjectileFactory pMachineGun = new ProjectileFactory()
 				.setSprite(new Square(30, 5, Palette.TEAL))
 				.setSpeed(15.0f)
+				.setWaveFactory(wMachineGun)
 				.setDamage(20);
 		
 		MachineGun = new WeaponFactory()

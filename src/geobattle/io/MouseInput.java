@@ -81,7 +81,7 @@ public class MouseInput extends MouseAdapter {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (!active) return;
-		Log.i("hey");
+		updateMouseObject(e);
 		if (gameObject != null)
 			gameObject.setHidden(false);
 	}

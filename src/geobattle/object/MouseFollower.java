@@ -12,11 +12,8 @@ import geobattle.util.Log;
 
 public class MouseFollower extends GameObject {
 
-	private final static Sprite SPRITE = new Square(10, 10, Color.WHITE);
-	
 	public MouseFollower(Game game) {
 		super(game);
-		setSprite(SPRITE);
 	}
 	
 }

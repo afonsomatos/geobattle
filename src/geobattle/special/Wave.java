@@ -12,7 +12,7 @@ import geobattle.render.sprite.shapes.Aura;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 
-class Wave extends GameObject {
+public class Wave extends GameObject {
 
 	private int damage = 300;
 	private int thickness = 30;
@@ -26,6 +26,10 @@ class Wave extends GameObject {
 			Wave.this.kill();
 		}
 	};
+	
+	public Wave(Game game) {
+		super(game);
+	}
 	
 	public Wave(Game game, double x, double y, Tag tag) {
 		super(game, x, y);

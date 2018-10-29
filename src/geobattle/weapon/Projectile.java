@@ -1,24 +1,22 @@
 package geobattle.weapon;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
 import geobattle.infection.Infection;
 import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
-import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
-import geobattle.util.Log;
+import geobattle.special.Wave;
+import geobattle.special.WaveFactory;
+import geobattle.special.WaveSpecial;
 
 public class Projectile extends GameObject {
 	
 	private int damage = 10;
 	
+	private WaveFactory waveFactory = null;
 	private InfectionFactory infectionFactory = null;
 	
 	Projectile(Game game) {
@@ -27,14 +25,27 @@ public class Projectile extends GameObject {
 		setCollider(new Collider(this) {
 			@Override
 			public void enterCollision(Collider other) {
-				if (infectionFactory == null) return;
 				GameObject obj = other.getGameObject();
-				// only the living get infected
-				if (!(obj instanceof Living)) return;
-				Living target = (Living) obj;
-				Infection infection = infectionFactory.create(game, target);
-				infection.surround(other);
-				game.spawnGameObject(infection);	
+				
+				// Infect living targets
+				if (obj instanceof Living && infectionFactory != null) {
+					Living target = (Living) obj;
+					Infection infection = infectionFactory.create(game, target);
+					infection.surround(other);
+					game.spawnGameObject(infection);
+				}
+				
+				// Bombwave
+				if (obj instanceof Living && waveFactory != null) {
+					Wave wave = waveFactory.create(game);
+					wave.moveTo(Projectile.this);
+					wave.setTag(getTag());
+					game.spawnGameObject(wave);
+				}
+				
+				// Self destroy if penetrating a living thing
+				if (obj instanceof Living)
+					kill();
 			}
 		});
 	}
@@ -45,6 +56,10 @@ public class Projectile extends GameObject {
 	
 	public int getDamage() {
 		return damage;
+	}
+	
+	public void setWaveFactory(WaveFactory waveFactory) {
+		this.waveFactory = waveFactory;
 	}
 	
 	public void setInfectionFactory(InfectionFactory infectionFactory) {

@@ -22,20 +22,24 @@ public class WaveSpecial extends Special {
 		setTag(tag);
 	}
 	
-	public void setDamage(int damage) {
+	public WaveSpecial setDamage(int damage) {
 		this.damage = damage;
+		return this;
 	}
 	
-	public void setSpeed(double speed) {
+	public WaveSpecial setSpeed(double speed) {
 		this.speed = speed;
+		return this;
 	}
 	
-	public void setRadius(int radius) {
+	public WaveSpecial setRadius(int radius) {
 		this.radius = radius;
+		return this;
 	}
 
-	public void setColor(Color color) {
+	public WaveSpecial setColor(Color color) {
 		this.color = color;
+		return this;
 	}
 	
 	@Override

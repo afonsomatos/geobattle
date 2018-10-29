@@ -23,12 +23,15 @@ import geobattle.object.ArrowKeysFollower;
 import geobattle.object.ArrowKeysFollower.ArrowMap;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
+import geobattle.render.sprite.Sprite;
+import geobattle.render.sprite.shapes.Aura;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.ui.Window;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
+import geobattle.util.Palette;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
@@ -207,6 +210,8 @@ public class Game implements Launchable {
 			window.getGameCanvas().getMouseInput().setGameObject(obj);
 			playerTarget = obj;
 		}
+		Sprite sprite = new Aura(15, 2, Palette.RED);
+		playerTarget.setSprite(sprite);
 		spawnGameObject(playerTarget);
 		
 		levelManager.setLevel(0);

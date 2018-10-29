@@ -8,6 +8,7 @@ import java.awt.Point;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
+import geobattle.extension.Orbit;
 import geobattle.living.bots.Bot;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
@@ -16,6 +17,7 @@ import geobattle.special.TroopsSpecial;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
+import geobattle.weapon.Asteroid;
 import geobattle.weapon.Weapon;
 
 public class Player extends Bot implements WeaponHolder {
@@ -84,48 +86,16 @@ public class Player extends Bot implements WeaponHolder {
 		
 		getCollider().surround(sprite);		
 		
-		//buildAsteroid();
-		//asteroid.setActive(false);
-
-		//asteroid = new GameAdapter(game);
+		Asteroid asteroid = new Asteroid(game);
+		Orbit orbit = new Orbit(asteroid, 100, 0.2);
+		addExtension(orbit);
+		game.spawnGameObject(asteroid);
 		
-		//getTriggerMap().add("spawn", () -> game.spawnGameObject(asteroid));
-		//getTriggerMap().add("die", asteroid::kill);
+		asteroid.setTag(Tag.Player);
+		
+		getTriggerMap().add("kill", asteroid::kill);
 		
 		getTriggerMap().add("die", game::sendPlayerDead);
-	}
-	
-	private void buildAsteroid() {
-		/*
-		asteroid = new GameObject(game) {
-			
-			private int damage = 100;
-			private Map<GameObject, Boolean> canAttack = new HashMap<GameObject, Boolean>();
-			
-			public void make() {
-				setSprite(new Circle(10, Palette.GREY));
-				setCollider(new Collider(this, Tag.PlayerOrbit) {
-					@Override
-						public void handleCollision(Collider other) {
-							GameObject go = other.getGameObject();
-							if (go instanceof Living) {
-								if (canAttack.containsKey(go) && !canAttack.get(go)) {
-									return;
-								} else {
-									((Living) go).suffer(damage);
-									canAttack.put(go, false);
-									game.getSchedule().next(200, () -> canAttack.put(go, true));
-								}
-							}
-						}
-				});
-				getCollider().surround(getSprite());
-			}
-		};
-		asteroid.getTriggerMap().add("spawn", asteroid::make);
-		
-		addExtension(new Orbit(asteroid, 90, 0.15));
-		*/
 	}
 	
 	@Override
