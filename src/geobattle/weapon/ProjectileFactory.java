@@ -2,13 +2,11 @@ package geobattle.weapon;
 
 import java.awt.Color;
 
-import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.infection.InfectionFactory;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.WaveFactory;
-import geobattle.special.WaveSpecial;
 
 public class ProjectileFactory {
 	

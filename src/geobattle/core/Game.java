@@ -140,9 +140,10 @@ public class Game implements Launchable, Renderable {
 
 		state = State.MENU;
 
-
 		rivalTags(Tag.Enemy, Tag.Player);
 		rivalTags(Tag.Item, Tag.Player);
+		rivalTags(Tag.Enemy, Tag.Void);
+		rivalTags(Tag.Player, Tag.Void);
 		
 		gameLoop();
 		

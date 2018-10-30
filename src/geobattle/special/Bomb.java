@@ -17,7 +17,7 @@ import geobattle.util.Util;
 public class Bomb extends GameObject {
 
 	private final static Sprite SPRITE = new Sprite(30, 40, 15, 20);
-	// 30 40 15 20
+
 	static {
 		SPRITE.draw(new Circle(15, Palette.GREY));
 		SPRITE.draw(g -> {
@@ -33,7 +33,7 @@ public class Bomb extends GameObject {
 	
 	private int damage = 500;
 	private long delay = 2000;
-	private WaveSpecial waveSpecial = new WaveSpecial(game);
+	private WaveFactory waveFactory;
 	private Event explode = new Event(delay, false, this::explode);
 	
 	public Bomb(Game game, double x, double y, Tag tag) {
@@ -42,10 +42,11 @@ public class Bomb extends GameObject {
 		setSprite(SPRITE);
 		setColor(FUSE_COLOR);
 		
-		waveSpecial.setDamage(damage);
-		waveSpecial.setRadius(100);
-		waveSpecial.setSpeed(0.03);
-		waveSpecial.setColor(Palette.ORANGE);
+		waveFactory = new WaveFactory()
+				.setDamage(damage)
+				.setRadius(100)
+				.setSpeed(0.03)
+				.setColor(Palette.ORANGE);
 	}
 	
 	void setDelay(int delay) {
@@ -61,9 +62,12 @@ public class Bomb extends GameObject {
 	}
 
 	private void explode() {
-		waveSpecial.setTag(getTag());
-		waveSpecial.setPos(new Point((int)getX(), (int)getY()));
-		waveSpecial.send();
+
+		Wave wave = waveFactory.create(game);
+		wave.moveTo(this);
+		wave.setTag(getTag());
+		game.spawnGameObject(wave);
+		
 		this.kill();
 	}
 	

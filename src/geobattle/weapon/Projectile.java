@@ -10,7 +10,6 @@ import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
 import geobattle.special.Wave;
 import geobattle.special.WaveFactory;
-import geobattle.special.WaveSpecial;
 
 public class Projectile extends GameObject {
 	

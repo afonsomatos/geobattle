@@ -12,8 +12,8 @@ import geobattle.extension.Orbit;
 import geobattle.living.bots.Bot;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.special.BombSpecial;
 import geobattle.special.Special;
-import geobattle.special.TroopsSpecial;
 import geobattle.util.Counter;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
@@ -71,14 +71,14 @@ public class Player extends Bot implements WeaponHolder {
 		WaveSpecial waveSpecial = new WaveSpecial(game, Tag.Player);
 		waveSpecial.setDamage(10000);
 		special = waveSpecial;
+		 */
 		
 		BombSpecial bombSpecial = new BombSpecial(game, Tag.Void);
 		bombSpecial.setDamage(500);
 		bombSpecial.setColor(getColor());
 		special = bombSpecial;
-		 */
 		
-		special = new TroopsSpecial(game, Tag.Player, Tag.Enemy);
+		//special = new TroopsSpecial(game, Tag.Player, Tag.Enemy);
 		
 		setSprite(sprite);
 

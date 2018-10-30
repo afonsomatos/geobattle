@@ -22,20 +22,15 @@ public class Wave extends GameObject {
 	private Counter counter = new Counter(0, speed * radius, radius) {
 		@Override
 		public void fire() {
-			causeDamage();
 			Wave.this.kill();
 		}
 	};
 	
 	public Wave(Game game) {
 		super(game);
+		getTriggerMap().add("spawn", this::causeDamage);
 	}
-	
-	public Wave(Game game, double x, double y, Tag tag) {
-		super(game, x, y);
-		setTag(tag);
-	}
-	
+
 	@Override
 	public void setSpeed(double speed) {
 		counter.setStep(radius * speed);
@@ -74,17 +69,6 @@ public class Wave extends GameObject {
 		Color color = getColor();
 		Color auraColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
 		setSprite(new Aura(currRadius, thickness, auraColor));
-	}
-	
-	@Override
-	public void render(Graphics2D superGfx) {
-		
-	}
-
-	@Override
-	protected void spawn() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

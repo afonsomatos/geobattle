@@ -11,6 +11,7 @@ public class Tag {
 	private static int nextId = 0;
 	
 	// Common tags
+	public final static Tag Void	= new Tag();
 	public final static Tag Enemy	= new Tag("Enemy");
 	public final static Tag Neutral = new Tag();
 	public final static Tag Item	= new Tag();

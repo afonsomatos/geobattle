@@ -6,16 +6,12 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
-import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.render.sprite.shapes.Circle;
-import geobattle.render.sprite.shapes.Diamond;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.render.sprite.shapes.Triangle;
 import geobattle.special.WaveFactory;
-import geobattle.special.WaveSpecial;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 
 public class WeaponFactory {
