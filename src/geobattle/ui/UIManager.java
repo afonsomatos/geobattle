@@ -2,11 +2,9 @@ package geobattle.ui;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;

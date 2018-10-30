@@ -2,9 +2,6 @@ package geobattle.ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-
-import geobattle.util.Log;
 
 public class UIStyle {
 

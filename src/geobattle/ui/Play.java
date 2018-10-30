@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -18,21 +16,14 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
-import geobattle.core.Game;
-import geobattle.core.Game.State;
 import geobattle.io.IOManager;
 import geobattle.io.KeyInput;
 import geobattle.io.MouseInput;
 import geobattle.render.Renderable;
-import geobattle.util.Log;
-import geobattle.util.Palette;
 
 @SuppressWarnings("serial")
-public class Play extends JPanel {
+class Play extends JPanel {
 		
 	private Canvas canvas;
 	

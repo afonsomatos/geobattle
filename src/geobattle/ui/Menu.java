@@ -23,13 +23,15 @@ import geobattle.core.Score;
 
 @SuppressWarnings("serial")
 class Menu extends JPanel {
+
+	private static final int PADDING = 10;
+	private static final int MAX_N_SCORES = 15;
 	
 	private JPanel optionsPanel 	= new JPanel();
 	private JTextArea optionsTxt 	= new JTextArea(10, 20);
 	private JLabel highScoreLabel 	= new JLabel();
 	
 	private String options = "";
-	
 	private UIManager uiManager;
 	
 	Menu(UIManager uiManager) {
@@ -43,7 +45,7 @@ class Menu extends JPanel {
 		setBackground(bg);
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(new EmptyBorder(10, 10, 10, 10));
+		setBorder(new EmptyBorder(PADDING, PADDING, PADDING, PADDING));
 		
 		String text = "<html>Welcome to Geometry Battle!";
 		text += "<br>Please press [ENTER] to start playing!";
@@ -103,16 +105,14 @@ class Menu extends JPanel {
 	
 	void updateHighScore() {
 		List<Score> scores = uiManager.getScores();
-		scores.sort((Score o1, Score o2) -> o2.score - o1.score);
+		scores.sort((s1, s2) -> s2.score - s1.score);
 
 		String highScoreTxt = "<html>Times played: " + scores.size();
 		
-		int n = 1;
-		for (Score s : scores) {
-			if (n > 15) break;
-			String txt = String.format("#%d ~ %d by %s", n, s.score, s.name);
+		for (int i = 0; i < scores.size() && i < MAX_N_SCORES; ++i) {
+			Score s = scores.get(i);
+			String txt = String.format("%dº %s ~ %d", i + 1, s.name, s.score);
 			highScoreTxt += "<br>" + txt;
-			n++;
 		}
 		
 		highScoreLabel.setText(highScoreTxt);
