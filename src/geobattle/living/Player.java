@@ -35,8 +35,6 @@ public class Player extends Bot implements WeaponHolder {
 			gfx.drawRect(thickness / 2, thickness / 2, 40 - thickness, 40 - thickness);
 		});
 	}
-	
-	private GameObject asteroid;
 
 	private Tank shieldTank = new Tank(300);
 	private boolean firing = false;
@@ -44,7 +42,9 @@ public class Player extends Bot implements WeaponHolder {
 	private Arsenal arsenal = new Arsenal(5);
 	private GameObject target = null;
 	
+	
 	private Special special;
+	
 	private boolean specialReady = true;
 	private Counter specialCounter = new Counter(0.1) {
 		@Override

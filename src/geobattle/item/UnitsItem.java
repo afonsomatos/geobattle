@@ -15,6 +15,8 @@ abstract class UnitsItem extends Item {
 	public UnitsItem(Game game, double x, double y, int units) {
 		super(game, x, y);
 		unitsTank.set(units);
+		
+		addDrawer(this::render);
 	}
 	
 	public void setLabelColor(Color labelColor) {
@@ -35,8 +37,7 @@ abstract class UnitsItem extends Item {
 			this.kill();
 	}
 	
-	@Override
-	public void render(Graphics2D superGfx) {
+	private void render(Graphics2D superGfx) {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		String label = Integer.toString(unitsTank.get());
 		int x = (int) (getX() - gfx.getFontMetrics().stringWidth(label) / 2.0);

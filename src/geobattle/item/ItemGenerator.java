@@ -92,9 +92,4 @@ public class ItemGenerator extends GameObject {
 		
 	}
 
-	@Override
-	public void render(Graphics2D gfx) {
-
-	}
-	
 }

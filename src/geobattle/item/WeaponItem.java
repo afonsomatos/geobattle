@@ -63,21 +63,4 @@ class WeaponItem extends Item {
 		}
 	}
 
-	@Override
-	protected void spawn() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void render(Graphics2D gfx) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

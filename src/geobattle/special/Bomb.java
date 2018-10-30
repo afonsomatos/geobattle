@@ -47,6 +47,8 @@ public class Bomb extends GameObject {
 				.setRadius(100)
 				.setSpeed(0.03)
 				.setColor(Palette.ORANGE);
+		
+		addDrawer(this::render);
 	}
 	
 	void setDelay(int delay) {
@@ -81,8 +83,7 @@ public class Bomb extends GameObject {
 
 	}
 
-	@Override
-	protected void render(Graphics2D gfx) {
+	private void render(Graphics2D gfx) {
 		gfx.setColor(getColor());
 		gfx.setStroke(new BasicStroke(FUSE_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		gfx.drawArc((int)getX()+6, (int)getY()-28, 30, 30, 160, - (int) (FUSE_ARC_DEGREE* (1 - explode.getPercentage())));

@@ -81,8 +81,4 @@ public class Projectile extends GameObject {
 		setRotation(theta);
 	}
 
-	@Override
-	protected void render(Graphics2D gfx) {
-		
-	}
 }

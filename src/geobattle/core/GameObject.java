@@ -73,9 +73,6 @@ public class GameObject {
 	protected void update() {
 		
 	}
-	protected  void render(Graphics2D gfx) {
-		
-	}
 	
 	public boolean isOutOfBorders() {
 		return isOutOfBorders(0);
@@ -120,19 +117,16 @@ public class GameObject {
 	public void render_(Graphics2D superGfx) {
 		if (hidden) return;
 
+		Graphics2D gfx;
+
 		// Render sprites
 		if (sprite != null) {
-			Graphics2D gfx = (Graphics2D) superGfx.create();
+			gfx = (Graphics2D) superGfx.create();
 			gfx.translate(x, y);
 			gfx.rotate(rotation, 0, 0);
 			sprite.render(gfx);
 			gfx.dispose();
 		}
-		
-		// Render custom
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		render(gfx);
-		gfx.dispose();
 		
 		// Render all extra drawers
 		for (Renderable drawer : drawers) {
