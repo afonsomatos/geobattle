@@ -1,5 +1,6 @@
 package geobattle.core;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -8,6 +9,7 @@ import java.util.List;
 import geobattle.living.Player;
 import geobattle.object.Compass;
 import geobattle.render.Renderable;
+import geobattle.util.Palette;
 import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
@@ -22,6 +24,8 @@ class HUD implements Renderable {
 
 	private final Color gettingHitBackgroundColor = new Color(255, 0, 0, 100);
 	private final Color playerOutOfMapBackgroundColor = new Color(0, 0, 0, 100);
+	
+	private final int padding = 8;
 	
 	public HUD(Game game) {
 		this.game = game;
@@ -39,18 +43,25 @@ class HUD implements Renderable {
 		else if (!loading)
 			txt = "Enemies left: " + game.getEnemiesLeft();
 	
-		gfx.drawString(txt, game.getWidth() - gfx.getFontMetrics().stringWidth(txt) - 10, 20);
+		int ascent = gfx.getFontMetrics().getMaxAscent();
+		
+		gfx.drawString(txt, game.getWidth() - gfx.getFontMetrics().stringWidth(txt) - padding, padding + ascent);
 	}
 	
 	private void renderTopLeft(Graphics2D gfx) {
 		Player player = game.getPlayer();
 	
-		gfx.drawString("Health: " + player.getHealth(), 10, 20);
-		gfx.drawString("Score: " + game.getScore(), 10, 40);
-		gfx.drawString("Wave: " + game.getLevelManager().getLevel(), 10, 60);
-		gfx.drawString("Shield: " + (int) player.getShield(), 10, 80);
+		int x = padding;
+		int ascent = gfx.getFontMetrics().getMaxAscent();
+		int fontsize = gfx.getFontMetrics().getFont().getSize();
+		int spacing = 2;
 		
-		gfx.drawString("Special: [" + (player.isSpecialReady() ? "***" : "___") + "]", 10, 100);
+		gfx.drawString("Health: " + player.getHealth(), x, padding + ascent);
+		gfx.drawString("Score: " + game.getScore(), x, padding + ascent + fontsize + spacing);
+		gfx.drawString("Wave: " + game.getLevelManager().getLevel(), x, padding + ascent + spacing*2 + 2 * fontsize);
+		gfx.drawString("Shield: " + (int) player.getShield(), x, padding + ascent + 3 * fontsize + spacing*3);
+		
+		gfx.drawString("Special: [" + (player.isSpecialReady() ? "***" : "___") + "]", x, padding + spacing*4 + ascent + 4*fontsize);
 	}
 	
 	public void renderBottomLeft(Graphics2D gfx) {
@@ -156,6 +167,23 @@ class HUD implements Renderable {
 		renderPlayerExitingMap(gfx);
 	}
 
+	public void renderBorder(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		
+		gfx.setColor(Palette.GREEN);
+		gfx.setStroke(new BasicStroke(5));
+		
+		int width = game.getWidth();
+		int height = game.getHeight();
+		
+		gfx.drawLine(0, 0, width, 0);
+		gfx.drawLine(0, height, width, height);
+		gfx.drawLine(0, 0, 0, height);
+		gfx.drawLine(width, 0, width, height);
+		
+		gfx.dispose();
+	}
+	
 	public void renderGameOver(Graphics2D superGfx) {
 		if (!game.isGameOver()) return;
 		
@@ -195,6 +223,8 @@ class HUD implements Renderable {
 		Graphics2D gfx = (Graphics2D) superGfx.create();
 		gfx.setFont(labelsFont);
 		gfx.setColor(labelsColor);
+		
+		renderBorder(gfx);
 		
 		renderGameOver(gfx);
 		renderWarnings(gfx);

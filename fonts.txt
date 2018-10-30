@@ -1,0 +1,149 @@
+fonts:
+
+aakar
+Abyssinica SIL
+Ani
+AnjaliOldLipi
+Bitstream Charter
+Century Schoolbook L
+Chandas
+Chilanka
+Courier 10 Pitch
+DejaVu Sans
+DejaVu Sans Mono
+DejaVu Serif
+Dialog
+DialogInput
+Dingbats
+Droid Sans Fallback
+Dyuthi
+FreeMono
+FreeSans
+FreeSerif
+Gargi
+Garuda
+Gubbi
+Jamrul
+KacstArt
+KacstBook
+KacstDecorative
+KacstDigital
+KacstFarsi
+KacstLetter
+KacstNaskh
+KacstOffice
+KacstOne
+KacstPen
+KacstPoster
+KacstQurn
+KacstScreen
+KacstTitle
+KacstTitleL
+Kalapi
+Kalimati
+Karumbi
+Keraleeyam
+Khmer OS
+Khmer OS System
+Kinnari
+Laksaman
+Liberation Mono
+Liberation Sans
+Liberation Sans Narrow
+Liberation Serif
+Likhan
+LKLUG
+Lohit Assamese
+Lohit Bengali
+Lohit Devanagari
+Lohit Gujarati
+Lohit Gurmukhi
+Lohit Kannada
+Lohit Malayalam
+Lohit Odia
+Lohit Tamil
+Lohit Tamil Classical
+Lohit Telugu
+Loma
+Lucida Bright
+Lucida Sans
+Lucida Sans Typewriter
+Manjari Bold
+Manjari Regular
+Manjari Thin
+Meera
+Mitra Mono
+Monospaced
+mry_KacstQurn
+Mukti Narrow
+Nakula
+Navilu
+Nimbus Mono L
+Nimbus Roman No9 L
+Nimbus Sans L
+Norasi
+Noto Color Emoji
+Noto Mono
+Noto Sans CJK JP Bold
+Noto Sans CJK JP Regular
+Noto Sans CJK KR Bold
+Noto Sans CJK KR Regular
+Noto Sans CJK SC Bold
+Noto Sans CJK SC Regular
+Noto Sans CJK TC Bold
+Noto Sans CJK TC Regular
+Noto Sans Mono CJK JP Bold
+Noto Sans Mono CJK JP Regular
+Noto Sans Mono CJK KR Bold
+Noto Sans Mono CJK KR Regular
+Noto Sans Mono CJK SC Bold
+Noto Sans Mono CJK SC Regular
+Noto Sans Mono CJK TC Bold
+Noto Sans Mono CJK TC Regular
+Noto Serif CJK JP
+Noto Serif CJK KR
+Noto Serif CJK SC
+Noto Serif CJK TC
+OpenSymbol
+Padauk
+Padauk Book
+padmaa
+padmaa-Bold.1.1
+Pagul
+Phetsarath OT
+Pothana2000
+Purisa
+Rachana
+RaghuMalayalam
+Rekha
+Saab
+Sahadeva
+Samanata
+Samyak Devanagari
+Samyak Gujarati
+Samyak Malayalam
+Samyak Tamil
+SansSerif
+Sarai
+Sawasdee
+Serif
+Standard Symbols L
+Suruma
+Tibetan Machine Uni
+Tlwg Typist
+Tlwg Typo
+TlwgMono
+TlwgTypewriter
+Ubuntu
+Ubuntu Condensed
+Ubuntu Light
+Ubuntu Mono
+Umpush
+Uroob
+URW Bookman L
+URW Chancery L
+URW Gothic L
+URW Palladio L
+utkal
+Vemana2000
+Waree

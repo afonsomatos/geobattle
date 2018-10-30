@@ -102,7 +102,7 @@ public class ArrowKeysFollower extends GameObject {
 	
 	private void handleArrowInput() {
 		
-		KeyInput ki = game.getWindow().getGameCanvas().getKeyInput();
+		KeyInput ki = game.getIOManager().getKeyInput();
 		
 		int quarter = totalSlices / 4;
 		

@@ -1,6 +1,7 @@
 package geobattle.core;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 import geobattle.collider.CollisionHandler;
+import geobattle.io.IOManager;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
@@ -27,7 +29,7 @@ import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
-import geobattle.ui.Window;
+import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Dispatcher;
 import geobattle.util.Log;
@@ -36,7 +38,7 @@ import geobattle.weapon.Arsenal;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
 
-public class Game implements Launchable {
+public class Game implements Launchable, Renderable {
 
 	private Properties properties;
 
@@ -47,7 +49,8 @@ public class Game implements Launchable {
 	private Renderable debugRender;
 
 	private Schedule schedule = new Schedule();
-	private Window window;
+	private UIManager uiManager;
+	private IOManager ioManager;
 	private Player player;
 	private HUD hud;
 	
@@ -105,13 +108,14 @@ public class Game implements Launchable {
 	}
 	
 	private void setup() {
+		ioManager			= new IOManager(this);
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
 		collisionHandler 	= new CollisionHandler(this);
 		debugRender 		= new Debug(this);
 
-		outOfBorderEvent = new Event(1000, true, () -> outOfBorderCounter.tick());
-		gettingHitEvent = new Event(500, false, () -> gettingHit = false);
+		outOfBorderEvent 	= new Event(1000, true, outOfBorderCounter::tick);
+		gettingHitEvent 	= new Event(500, false, () -> gettingHit = false);
 	}
 	
 	public boolean areTagsFriends(Tag t1, Tag t2) {
@@ -131,7 +135,8 @@ public class Game implements Launchable {
 	}
 	
 	public void open() {
-		setup();
+		
+		uiManager.sendOpen();
 
 		state = State.MENU;
 
@@ -145,8 +150,11 @@ public class Game implements Launchable {
 	
 	public void end() {
 		state = State.END;
-		window.sendGameOver(score);
+		String name = uiManager.sendScoreEnter();
+		if (name != null)
+			saveScore(name, score);
 		rounds++;
+		uiManager.sendMenu();
 	}
 	
 	private void parseOpts(String opts) {
@@ -180,8 +188,7 @@ public class Game implements Launchable {
 		gameOver		= false;
 		
 		// Enable input
-		window.getGameCanvas().getMouseInput().setActive(true);
-		window.getGameCanvas().getKeyInput().setActive(true);
+		ioManager.enableInput();
 		
 		outOfBorderCounter.reset();
 
@@ -207,7 +214,7 @@ public class Game implements Launchable {
 			
 		} else {
 			MouseFollower obj = new MouseFollower(this);
-			window.getGameCanvas().getMouseInput().setGameObject(obj);
+			ioManager.getMouseInput().setGameObject(obj);
 			playerTarget = obj;
 		}
 		Sprite sprite = new Aura(15, 2, Palette.RED);
@@ -293,7 +300,7 @@ public class Game implements Launchable {
 					delta--;
 				}
 				
-				render();
+				uiManager.renderFrame(this);
 				frames++;
 				
 				if (lastTime - lastPrint >= NANOS_PER_SECOND) {
@@ -322,10 +329,6 @@ public class Game implements Launchable {
 	
 	public List<Score> getScores() {
 		return new ArrayList<Score>(lastScores);
-	}
-	
-	public Window getWindow() {
-		return window;
 	}
 	
 	public int getUps() {
@@ -410,10 +413,9 @@ public class Game implements Launchable {
 		 */
 	}
 	
-	public void render() {
+	@Override
+	public void render(Graphics2D gfx) {
 
-		BufferStrategy bfs = window.getGameCanvas().getBufferStrategy();
-		Graphics2D gfx = (Graphics2D) bfs.getDrawGraphics();
 		gfx.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -436,9 +438,6 @@ public class Game implements Launchable {
 
 		
 		hud.render(gfx);
-
-		gfx.dispose();
-		bfs.show();
 	}
 	
 	public void spawnGameObject(GameObject gameObject) {
@@ -471,8 +470,7 @@ public class Game implements Launchable {
 		player.setY(0);
 		
 		// Disable all input
-		window.getGameCanvas().getMouseInput().setActive(false);
-		window.getGameCanvas().getKeyInput().setActive(false);
+		ioManager.disableInput();
 		
 		// Remove player from sight
 		player.getWeapon().setHidden(true);
@@ -483,6 +481,10 @@ public class Game implements Launchable {
 		schedule.next(3000, this::end);
 	}
 
+	public IOManager getIOManager() {
+		return ioManager;
+	}
+	
 	public int getEnemiesLeft() {
 		return enemiesLeft;
 	}
@@ -545,7 +547,8 @@ public class Game implements Launchable {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				window = new Window(Game.this, opt.getScreen(), opt.isFullScreen(), opt.getWidth(), opt.getHeight());
+				setup();
+				uiManager = new UIManager(Game.this, ioManager, new Dimension(opt.getWidth(), opt.getHeight()), opt.getScreen(), opt.isFullScreen());
 				open();
 				dispatcher.dispatch();
 			}

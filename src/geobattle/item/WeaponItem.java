@@ -36,7 +36,7 @@ class WeaponItem extends Item {
 			Weapon selectedWeapon = ars.getSelectedWeapon();
 			
 			if (selectedWeapon != null) {
-				if (game.getWindow().getGameCanvas().getKeyInput().isPressingKey(KeyEvent.VK_G)) {
+				if (game.getIOManager().getKeyInput().isPressingKey(KeyEvent.VK_G)) {
 					if (used) return;
 				} else {
 					used = false;
