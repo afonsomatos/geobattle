@@ -4,10 +4,14 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -72,8 +76,17 @@ public class Play extends JPanel {
 			}				
 		});
 		
+		// No need to see the OS cursor
+		hideCursor();
 	}
 
+	private void hideCursor() {
+		setCursor(getToolkit().createCustomCursor(
+                new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB),
+                new Point(),
+                null));
+	}
+	
 	void renderFrame(Renderable renderable) {
 		BufferStrategy bs = canvas.getBufferStrategy();
 		Graphics2D gfx = (Graphics2D) canvas.getBufferStrategy().getDrawGraphics();
@@ -84,12 +97,9 @@ public class Play extends JPanel {
 		bs.show();
 	}
 	
-	void focusCanvas() {
-		canvas.requestFocus();
-	}
-	
-	void updateCanvas() {
+	void getReady() {
 		canvas.createBufferStrategy(3);
+		canvas.requestFocus();
 	}
 	
 }

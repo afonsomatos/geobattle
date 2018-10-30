@@ -140,9 +140,8 @@ public class UIManager {
 	
 	void sendPlay(String options) {
 		Log.i("Now playing");
-		play.updateCanvas();
 		cardLayout.show(container, "play");
-		play.focusCanvas();
+		play.getReady();
 		game.start(options);
 	}
 	
