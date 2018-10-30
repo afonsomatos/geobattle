@@ -6,9 +6,13 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.io.KeyInput;
 import geobattle.living.Player;
+import geobattle.util.Log;
 
 public class ArrowKeysFollower extends GameObject {
 
+	private final static int PRECISION_KEY = KeyEvent.VK_SHIFT;
+	private final static double PRECISION_FACTOR = 0.1;
+	
 	private int radius = 100;
 	
 	// Slice mechanism
@@ -139,15 +143,29 @@ public class ArrowKeysFollower extends GameObject {
 		} else
 			// No keys pressed, stop
 			sliceDir = 0;
+		
+	}
+	
+	private double handlePrecisionInput() {
+		boolean precision =
+				game.getIOManager()
+				.getKeyInput()
+				.isPressingKey(PRECISION_KEY);
+		
+		if (!precision)
+			return sliceSpeed;
+		
+		return PRECISION_FACTOR * sliceSpeed;
 	}
 	
 	@Override
 	public void update() {
 		
 		handleArrowInput();
+		double currSpeed = handlePrecisionInput();
 		
 		// Get a rounded slice
-		currentSlice += sliceSpeed * sliceDir;
+		currentSlice += currSpeed * sliceDir;
 		currentSlice %= totalSlices;
 		int slice = getSlice();
 		
