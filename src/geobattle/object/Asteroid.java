@@ -1,4 +1,4 @@
-package geobattle.weapon;
+package geobattle.object;
 
 import java.util.HashSet;
 import java.util.Set;

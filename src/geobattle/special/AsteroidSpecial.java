@@ -3,8 +3,8 @@ package geobattle.special;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.extension.Orbit;
+import geobattle.object.Asteroid;
 import geobattle.schedule.Event;
-import geobattle.weapon.Asteroid;
 
 public class AsteroidSpecial extends Special {
 
