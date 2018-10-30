@@ -1,4 +1,4 @@
-package geobattle.special;
+package geobattle.object;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -59,7 +59,7 @@ public class Bomb extends GameObject {
 		return explode.getDelay();
 	}
 	
-	void setDamage(int damage) {
+	public void setDamage(int damage) {
 		this.damage = damage;
 	}
 

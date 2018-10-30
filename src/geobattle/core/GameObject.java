@@ -272,6 +272,9 @@ public class GameObject {
 		return y;
 	}
 	
+	public Point getPos() {
+		return new Point((int) x, (int) y);
+	}
 	public void setY(double y) {
 		this.y = y;
 	}

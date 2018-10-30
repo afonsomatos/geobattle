@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import geobattle.core.Game;
 import geobattle.core.Tag;
+import geobattle.object.Bomb;
 import geobattle.util.Palette;
 
 public class BombSpecial extends Special {

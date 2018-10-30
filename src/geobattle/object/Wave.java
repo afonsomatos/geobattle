@@ -1,4 +1,4 @@
-package geobattle.special;
+package geobattle.object;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

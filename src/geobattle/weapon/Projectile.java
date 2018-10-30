@@ -8,8 +8,8 @@ import geobattle.core.GameObject;
 import geobattle.infection.Infection;
 import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
-import geobattle.special.Wave;
-import geobattle.special.WaveFactory;
+import geobattle.object.Wave;
+import geobattle.object.WaveFactory;
 
 public class Projectile extends GameObject {
 	

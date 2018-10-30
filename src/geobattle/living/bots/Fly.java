@@ -46,10 +46,10 @@ public class Fly extends Bot {
 	private Infection lastInfection = null;
 	
 	static {
-		// draw wings and shell
+		// Draw wings and shell
 		SPRITE.draw(new Cross(SIZE, SIZE, 1, WING_COLOR));
 		SPRITE.draw(new Square(BODY_SIZE + 4, BODY_SIZE + 4, WING_COLOR));
-		// draw body
+		// Draw body
 		SPRITE.draw(new Square(BODY_SIZE, BODY_SIZE, COLOR));
 	}
 	
@@ -67,14 +67,14 @@ public class Fly extends Bot {
 	private void bite() {
 		if (!canBite) return;
 		Living target = getTarget();
-		// remove last infection
+		// Remove last infection
 		if (lastInfection != null && !lastInfection.isGone())
 			lastInfection.destroy();
-		// spread new infection
+		// Spread new infection
 		Infection infection = BITE.create(game, target);
 		game.spawnGameObject(infection);
 		lastInfection = infection;
-		// cause damage
+		// Cause damage
 		target.suffer(damage);
 		canBite = false;
 		game.getSchedule().next(biteDelay, () -> { canBite = true; });
@@ -85,7 +85,7 @@ public class Fly extends Bot {
 		Collider newCol = new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {
-				// take damage
+				// Take damage
 				superCol.handleCollision(other);
 				GameObject obj = other.getGameObject();
 				Living target = getTarget();
@@ -100,17 +100,19 @@ public class Fly extends Bot {
 	@Override
 	protected void update() {
 
-		// Move him towards the target
-		double angle = pointAngle(getTarget());
-		double vx, vy;
-		vx = Math.cos(angle) * getSpeed();
-		vy = Math.sin(angle) * getSpeed();
-		
-		// Add figure8 movement
+		// Figure8 movement
 		delta += moveSpeed;
 		delta %= Math.PI * 2;
-		vx += -Math.sin(delta) * moveScale;
-		vy += Math.cos(2 * delta) * moveScale;
+		double vx = -Math.sin(delta) * moveScale;
+		double vy = Math.cos(2 * delta) * moveScale;
+		
+		// Move him towards the target
+		Living target = getTarget();
+		if (target != null) {
+			double angle = pointAngle(target);
+			vx += Math.cos(angle) * getSpeed();
+			vy += Math.sin(angle) * getSpeed();	
+		}
 		
 		setVelX(vx);
 		setVelY(vy);

@@ -3,7 +3,10 @@ package geobattle.io;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import geobattle.core.Game;
 import geobattle.core.Game.State;
@@ -17,6 +20,9 @@ public class KeyInput extends KeyAdapter {
 
 	private Game game;
 	private boolean active = true;
+	
+	private final static List<Integer> SPECIAL_KEYS = Arrays.asList(
+			KeyEvent.VK_Z, KeyEvent.VK_X, KeyEvent.VK_C, KeyEvent.VK_V);
 	
 	private final static Integer[] MOVEMENT_KEYS = {
 			KeyEvent.VK_W,
@@ -110,8 +116,11 @@ public class KeyInput extends KeyAdapter {
 			Player player = game.getPlayer();
 			Arsenal ars = player.getArsenal();
 			// Special attack
-			if (keyCode == KeyEvent.VK_Z) {
-				player.sendSpecial();
+			if (SPECIAL_KEYS.contains(keyCode)) {
+				
+				Log.i("special attack");
+				player.getSpecialSet().get(SPECIAL_KEYS.indexOf(keyCode)).invoke();
+				
 				// Prevent concurrent exception
 				// game.getSchedule().next(() -> player.sendSpecial());
 			} else if (keyCode == KeyEvent.VK_R) {

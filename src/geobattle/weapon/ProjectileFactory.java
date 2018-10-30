@@ -4,9 +4,9 @@ import java.awt.Color;
 
 import geobattle.core.Game;
 import geobattle.infection.InfectionFactory;
+import geobattle.object.WaveFactory;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
-import geobattle.special.WaveFactory;
 
 public class ProjectileFactory {
 	

@@ -3,22 +3,26 @@ package geobattle.living;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.extension.Orbit;
 import geobattle.living.bots.Bot;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Square;
+import geobattle.special.AsteroidSpecial;
 import geobattle.special.BombSpecial;
-import geobattle.special.Special;
+import geobattle.special.StarBurstSpecial;
 import geobattle.special.TroopsSpecial;
+import geobattle.special.WaveSpecial;
+import geobattle.special.slot.SpecialSet;
+import geobattle.special.slot.SpecialSlot;
+import geobattle.special.slot.TimedSpecialSlot;
+import geobattle.special.slot.UnitSpecialSlot;
 import geobattle.util.Counter;
+import geobattle.util.Palette;
 import geobattle.util.Tank;
 import geobattle.weapon.Arsenal;
-import geobattle.weapon.Asteroid;
 import geobattle.weapon.Weapon;
 
 public class Player extends Bot implements WeaponHolder {
@@ -42,8 +46,7 @@ public class Player extends Bot implements WeaponHolder {
 	private Arsenal arsenal = new Arsenal(5);
 	private GameObject target = null;
 	
-	
-	private Special special;
+	private SpecialSet specialSet = new SpecialSet(3);
 	
 	private boolean specialReady = true;
 	private Counter specialCounter = new Counter(0.1) {
@@ -67,25 +70,32 @@ public class Player extends Bot implements WeaponHolder {
 		setColor(Color.CYAN);
 		setHealth(200);
 		setShield(100);
-		
-		special = new TroopsSpecial(game, Tag.Player, Tag.Enemy);
-		
 		setSprite(sprite);
 
 		setTag(Tag.Player);
 		
-		getCollider().surround(sprite);		
+		getCollider().surround(sprite);
 		
-		Asteroid asteroid = new Asteroid(game);
-		Orbit orbit = new Orbit(asteroid, 100, 0.2);
-		addExtension(orbit);
-		game.spawnGameObject(asteroid);
+		/* SPECIAL SLOTS */
 		
-		asteroid.setTag(Tag.Player);
+		SpecialSlot slotZ = new UnitSpecialSlot(new TroopsSpecial(game, Tag.Player, Tag.Enemy), 3);
 		
-		getTriggerMap().add("kill", asteroid::kill);
+		BombSpecial bombSpecial = new BombSpecial(game, Tag.Player);
+		bombSpecial.setColor(Palette.CYAN);
+		SpecialSlot slotX = new UnitSpecialSlot(bombSpecial, 10);
+		SpecialSlot slotC = new TimedSpecialSlot(new AsteroidSpecial(game, this, 5000), 6000);
+		
+		specialSet.store(0, slotZ);
+		specialSet.store(1, slotX);
+		specialSet.store(2, slotC);
+		
+		/* .......*/
 		
 		getTriggerMap().add("die", game::sendPlayerDead);
+	}
+	
+	public SpecialSet getSpecialSet() {
+		return specialSet;
 	}
 	
 	@Override
@@ -130,13 +140,6 @@ public class Player extends Bot implements WeaponHolder {
 		int remainder = shieldTank.take(hit);
 		if (remainder > 0)
 			super.suffer(remainder);
-	}
-	
-	public void sendSpecial() {
-		if (!specialReady) return;
-		special.setPos(new Point((int)getX(), (int)getY()));
-		special.send();
-		specialReady = false;
 	}
 	
 	public Arsenal getArsenal() {

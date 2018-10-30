@@ -9,6 +9,8 @@ import java.util.List;
 import geobattle.living.Player;
 import geobattle.object.Compass;
 import geobattle.render.Renderable;
+import geobattle.special.slot.SpecialSet;
+import geobattle.special.slot.SpecialSlot;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 import geobattle.weapon.Arsenal;
@@ -60,8 +62,6 @@ class HUD implements Renderable {
 		gfx.drawString("Score: " + game.getScore(), x, padding + ascent + fontsize + spacing);
 		gfx.drawString("Wave: " + game.getLevelManager().getLevel(), x, padding + ascent + spacing*2 + 2 * fontsize);
 		gfx.drawString("Shield: " + (int) player.getShield(), x, padding + ascent + 3 * fontsize + spacing*3);
-		
-		gfx.drawString("Special: [" + (player.isSpecialReady() ? "***" : "___") + "]", x, padding + spacing*4 + ascent + 4*fontsize);
 	}
 	
 	public void renderBottomLeft(Graphics2D gfx) {
@@ -217,6 +217,30 @@ class HUD implements Renderable {
 		gfx.dispose();
 	}
 	
+	private void renderSpecialSet(Graphics2D superGfx) {
+		Graphics2D gfx = (Graphics2D) superGfx.create();
+		
+		String specialKeys = "ZXCVBNM";
+		SpecialSet specialSet = game.getPlayer().getSpecialSet();
+		
+		int linePadding = 30;
+		int setSize = specialSet.size();
+		int fontSize = gfx.getFontMetrics().getHeight();
+		
+		double y =
+				game.getHeight() / 2.0 -
+				(setSize * fontSize + (setSize - 1) * linePadding) / 2.0;
+		
+		for (int i = 0; i < setSize; ++i) {
+			SpecialSlot s = specialSet.get(i);
+			char c = specialKeys.charAt(i);
+			String txt = c + ": " + s.getIndicator();
+			gfx.drawString(txt, padding, (int) y + linePadding * i);
+		}
+		
+		gfx.dispose();
+	}
+	
 	@Override
 	public void render(Graphics2D superGfx) {
 		
@@ -235,6 +259,8 @@ class HUD implements Renderable {
 		renderBottomLeft(gfx);
 		renderBottomRight(gfx);
 		renderBottomMiddle(gfx);
+		
+		renderSpecialSet(gfx);
 		
 		gfx.dispose();
 	}
