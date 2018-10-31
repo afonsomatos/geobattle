@@ -13,7 +13,7 @@ import geobattle.util.Log;
 
 class Settings {
 	
-	private String file = "config.properties";
+	private String file = "geobattle/config.properties";
 	private Properties properties = new Properties();
 	
 	Settings() {
