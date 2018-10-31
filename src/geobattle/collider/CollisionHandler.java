@@ -41,13 +41,13 @@ public class CollisionHandler {
 			.filter(Objects::nonNull)
 			.collect(Collectors.toCollection(() -> new ArrayList<>(gameObjects.size())));
 		
-		HashMap<Collider, Set<Collider>> collisions = new HashMap<Collider, Set<Collider>>();
+		HashMap<Collider, List<Collider>> collisions = new HashMap<Collider, List<Collider>>();
 		
 		// get all collisions
 		int size = colliders.size();
 		for (int i = 0; i < size; ++i) {
 			Collider c1 = colliders.get(i);
-			collisions.putIfAbsent(c1, new HashSet<Collider>());
+			collisions.putIfAbsent(c1, new ArrayList<Collider>());
 			
 			for (int j = i + 1; j < size; j++) {
 				Collider c2 = colliders.get(j);
@@ -55,7 +55,7 @@ public class CollisionHandler {
 						c1.getBounds().intersects(c2.getBounds())) {
 					
 					collisions.get(c1).add(c2);
-					collisions.putIfAbsent(c2, new HashSet<Collider>());
+					collisions.putIfAbsent(c2, new ArrayList<Collider>());
 					collisions.get(c2).add(c1);
 					
 				}

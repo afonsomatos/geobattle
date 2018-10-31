@@ -61,11 +61,13 @@ public class LevelManager {
 		
 		List<Bot> newEnemies = new ArrayList<Bot>();
 		
-		//newEnemies.add(new Zombie(game, 300, 300));
+//		int x = 20;
+//		while(--x > 0)
+//			newEnemies.add(new Zombie(game, rand.nextInt(width), rand.nextInt(height)));
+//		
+		Test.run("showcase", game);
 		
-		//Test.run("spawnx200", game);
-		
-		boolean debug=false;
+		boolean debug=true;
 		
 		if (!debug) {
 			

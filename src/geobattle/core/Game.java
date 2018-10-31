@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -35,11 +37,9 @@ import geobattle.weapon.WeaponFactory;
 
 public class Game implements Launchable, Renderable {
 
-	private Properties properties;
-
-	private boolean arrows 	= true;
-	private boolean debug 	= false;
-	private boolean godmode = false;
+	private final static String PROPERTIES_FILE = "config.properties";
+	
+	private Settings settings = new Settings();
 	
 	private Renderable debugRender;
 
@@ -153,29 +153,19 @@ public class Game implements Launchable, Renderable {
 		uiManager.sendMenu();
 	}
 	
-	private void parseOpts(String opts) {
-		
-		properties = new Properties();
-		
+	private void loadSettings(String opts) {
 		try {
-			// Load options on top of these
-			properties.load(new StringReader(opts));
+			settings.loadDefault();
+			settings.load(new ByteArrayInputStream(opts.getBytes("UTF-8")));
 		} catch (IOException ioe) {
-			Log.e("Failed parsing options, ignoring");
+			Log.e("Failed loading settings");
+			ioe.printStackTrace();
 		}
-		
-		arrows	= Boolean.parseBoolean(properties.getProperty("arrows", 	"false"));
-		godmode = Boolean.parseBoolean(properties.getProperty("godmode", 	"false"));
-		debug	= Boolean.parseBoolean(properties.getProperty("debug", 		"false"));
-	}
-	
-	public Properties getProperties() {
-		return properties;
 	}
 	
 	public void start(String opts) {
 
-		parseOpts(opts);
+		loadSettings(opts);
 		
 		score 			= 0;
 		enemiesLeft 	= 0;
@@ -193,19 +183,18 @@ public class Game implements Launchable, Renderable {
 		
 		// Trace mouse input
 		GameObject playerTarget;
-		if (arrows) {
+		if (settings.getBoolean("arrows")) {
 			ArrowKeysFollower obj = new ArrowKeysFollower(this);
 			playerTarget = obj;
 			
-			String map = properties.getProperty("arrows.mode", "2");
+			String map = settings.get("arrows.mode");
 			ArrowMap arrowMap = ArrowMap.V1;
 			if (map.equals("2"))
 				arrowMap = ArrowMap.V2;
 			else if (map.equals("3"))
 				arrowMap = ArrowMap.V3;
 			
-			Double speed = Double.valueOf(properties.getProperty("arrows.speed", "1.5"));
-			obj.setSliceSpeed(speed);
+			obj.setSliceSpeed(settings.getDouble("arrows.speed"));
 			obj.setArrowMap(arrowMap);
 			
 		} else {
@@ -225,7 +214,7 @@ public class Game implements Launchable, Renderable {
 
 		player = new Player(this);
 
-		if (godmode)
+		if (settings.getBoolean("godmode"))
 			player.setGodmode(true);
 		
 		player.stop();
@@ -405,8 +394,6 @@ public class Game implements Launchable, Renderable {
 		
 		if (!levelManager.isLoadingLevel() && enemiesLeft == 0)
 			levelManager.sendNextLevel();
-		/*
-		 */
 	}
 	
 	@Override
@@ -428,7 +415,7 @@ public class Game implements Launchable, Renderable {
 				.filter(obj -> !obj.isHidden())
 				.forEach(obj -> obj.render(gfx));
 
-			if (debug)
+			if (settings.getBoolean("debug"))
 				debugRender.render(gfx);
 		}
 		

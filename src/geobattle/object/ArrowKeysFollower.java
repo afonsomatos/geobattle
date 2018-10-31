@@ -11,15 +11,15 @@ import geobattle.util.Log;
 public class ArrowKeysFollower extends GameObject {
 
 	private final static int PRECISION_KEY = KeyEvent.VK_SHIFT;
-	private final static double PRECISION_FACTOR = 0.1;
-	
-	private int radius = 100;
 	
 	// Slice mechanism
-	private int totalSlices 	= 100;
+	private int totalSlices		= 64;
+	private int radius			= 100;
 	private int sliceDir 		= 0;
-	private double sliceSpeed	= 2.5;
 	private double currentSlice	= 0;
+	
+	private double sliceSpeed 	= 1;
+	private double precision 	= 0.1;
 	
 	private final static int A = -1; 	// Rotate anti-clockwise
 	private final static int C = 1;		// Rotate clock-wise
@@ -147,15 +147,15 @@ public class ArrowKeysFollower extends GameObject {
 	}
 	
 	private double handlePrecisionInput() {
-		boolean precision =
+		boolean usingPrecision =
 				game.getIOManager()
 				.getKeyInput()
 				.isPressingKey(PRECISION_KEY);
 		
-		if (!precision)
+		if (!usingPrecision)
 			return sliceSpeed;
 		
-		return PRECISION_FACTOR * sliceSpeed;
+		return precision * sliceSpeed;
 	}
 	
 	@Override

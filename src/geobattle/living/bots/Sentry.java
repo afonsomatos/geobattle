@@ -50,6 +50,7 @@ public class Sentry extends Bot implements WeaponHolder {
 		shooter = new Shooter(null, weapon);
 		
 		addController(shooter);
+		addController(this::update);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);
@@ -65,8 +66,7 @@ public class Sentry extends Bot implements WeaponHolder {
 
 	}
 	
-	@Override
-	public void update() {
+	public void update(GameObject gobj) {
 		// TODO: Very slow
 		
 		if (this.isFocused() && getTarget() != null) return;

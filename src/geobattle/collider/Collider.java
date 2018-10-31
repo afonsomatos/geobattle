@@ -22,13 +22,13 @@ public class Collider {
 	private int offsetX = 0;
 	private int offsetY = 0;
 	
-	private Set<Collider> currentCollisions = new HashSet<Collider>();
+	private List<Collider> currentCollisions = new LinkedList<Collider>();
 	
 	public Collider(GameObject gameObject) {
 		this.gameObject = gameObject;
 	}
 
-	void updateCollisions(Set<Collider> updatedCollisions) {
+	void updateCollisions(List<Collider> updatedCollisions) {
 		
 		// Check gained collisions
 		updatedCollisions
