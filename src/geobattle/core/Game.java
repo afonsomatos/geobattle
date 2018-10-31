@@ -27,7 +27,6 @@ import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.ui.UIManager;
 import geobattle.util.Counter;
-import geobattle.util.Dispatcher;
 import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.weapon.Arsenal;
@@ -532,7 +531,7 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	@Override
-	public void launch(LauncherOption opt, Dispatcher dispatcher) {
+	public void launch(LauncherOption opt, Runnable dispatcher) {
 		// width = opt.getWidth();
 		// height = opt.getHeight();
 		
@@ -547,7 +546,7 @@ public class Game implements Launchable, Renderable {
 				setup();
 				uiManager = new UIManager(Game.this, ioManager, new Dimension(opt.getWidth(), opt.getHeight()), opt.getScreen(), opt.isFullScreen());
 				open();
-				dispatcher.dispatch();
+				dispatcher.run();
 			}
 		}).start();
 	}

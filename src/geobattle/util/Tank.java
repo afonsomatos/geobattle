@@ -39,7 +39,7 @@ public class Tank {
 		if (charge > maxQuantity)
 			maxQuantity = charge;
 		
-		this.quantity = Math.max(charge, 0);	
+		quantity = Math.max(charge, 0);	
 	}
 	
 	public int getMax() {

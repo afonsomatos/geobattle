@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.Arrays;
 import java.util.List;
 
 import geobattle.living.Player;
@@ -18,179 +19,177 @@ import geobattle.weapon.Weapon;
 
 class HUD implements Renderable {
 
+	private final static int 	PADDING 			= 10;
+	private final static int 	BORDER_THICKNESS 	= 5;
+	private final static Color 	BORDER_COLOR 		= Palette.GREEN;
+	private final static Color 	EXITING_MAP_BG 		= Palette.alpha(Palette.BLACK, 100);
+	private final static Color 	TAKING_DAMAGE_BG 	= Palette.alpha(Palette.RED, 100);
+	private final static Color 	LABELS_COLOR 		= Palette.WHITE;
+	private final static Font 	LABELS_FONT 		= new Font("arial", Font.PLAIN, 16);
+	
 	private Game game;
 	private Compass playerCompass;
+	private int width, height;
+	private Player player;
 	
-	private final Font labelsFont = new Font("arial", Font.PLAIN, 16);
-	private final Color labelsColor = Color.WHITE;
-
-	private final Color gettingHitBackgroundColor = new Color(255, 0, 0, 100);
-	private final Color playerOutOfMapBackgroundColor = new Color(0, 0, 0, 100);
+	private List<Renderable> drawers = Arrays.asList(
+			this::border,
+			this::gameOver,
+			this::takingDamage,
+			this::exitingMap,
+			this::stats,
+			this::waveStatus,
+			this::pause,
+			this::info,
+			this::ammo,
+			this::weaponSet,
+			this::specialSet
+			);
 	
-	private final int padding = 8;
-	
-	public HUD(Game game) {
+	HUD(Game game) {
 		this.game = game;
-		playerCompass = new Compass(game, game.getWidth()/2, game.getHeight()/2 + 30, null);
+		playerCompass = new Compass(game);
 	}
 	
-	private void renderTopRight(Graphics2D gfx) {
+	private void waveStatus(Graphics2D gfx) {
 		String txt = "";
 		
-		boolean loading = game.getLevelManager().isLoadingLevel();
-		int countDown = game.getLevelManager().getLevelCountDown();
+		LevelManager levelManager = game.getLevelManager();
+		boolean loading = levelManager.isLoadingLevel();
+		int countDown = levelManager.getLevelCountDown();
 		
 		if (loading && countDown > 0)
-			txt = "Next wave in " + game.getLevelManager().getLevelCountDown();
+			txt = "Next wave in " +levelManager.getLevelCountDown();
 		else if (!loading)
 			txt = "Enemies left: " + game.getEnemiesLeft();
 	
 		int ascent = gfx.getFontMetrics().getMaxAscent();
 		
-		gfx.drawString(txt, game.getWidth() - gfx.getFontMetrics().stringWidth(txt) - padding, padding + ascent);
+		gfx.drawString(txt, game.getWidth() - gfx.getFontMetrics().stringWidth(txt) - PADDING, PADDING + ascent);
 	}
 	
-	private void renderTopLeft(Graphics2D gfx) {
-		Player player = game.getPlayer();
+	private void stats(Graphics2D gfx) {
+		int ascent 		= gfx.getFontMetrics().getMaxAscent();
+		int fontsize 	= gfx.getFontMetrics().getFont().getSize();
+		int spacing 	= 2;
+		
+		gfx.drawString("Health: " 	+ player.getHealth(),
+				PADDING, PADDING + ascent);
+		gfx.drawString("Score: " 	+ game.getScore(),
+				PADDING, PADDING + ascent + fontsize + spacing);
+		gfx.drawString("Wave: " 	+ game.getLevelManager().getLevel(),
+				PADDING, PADDING + ascent + 2 * (spacing + fontsize));
+		gfx.drawString("Shield: " 	+ (int) player.getShield(),
+				PADDING, PADDING + ascent + 3 * (fontsize + spacing));
+	}
 	
-		int x = padding;
-		int ascent = gfx.getFontMetrics().getMaxAscent();
+	private void info(Graphics2D gfx) {
 		int fontsize = gfx.getFontMetrics().getFont().getSize();
 		int spacing = 2;
-		
-		gfx.drawString("Health: " + player.getHealth(), x, padding + ascent);
-		gfx.drawString("Score: " + game.getScore(), x, padding + ascent + fontsize + spacing);
-		gfx.drawString("Wave: " + game.getLevelManager().getLevel(), x, padding + ascent + spacing*2 + 2 * fontsize);
-		gfx.drawString("Shield: " + (int) player.getShield(), x, padding + ascent + 3 * fontsize + spacing*3);
+		gfx.drawString("Ups: " + game.getUps(), PADDING, height - fontsize - PADDING - spacing);
+		gfx.drawString("Fps: " + game.getFps(), PADDING, height - PADDING);
 	}
 	
-	public void renderBottomLeft(Graphics2D gfx) {
-		int height = game.getHeight();
-		gfx.drawString("Ups: " + game.getUps(), 10, height - 30);
-		gfx.drawString("Fps: " + game.getFps(), 10, height - 10);
-	}
-	
-	public void renderBottomRight(Graphics2D gfx) {
-		String txt;
-		int width = game.getWidth();
-		int height = game.getHeight();
+	private void ammo(Graphics2D gfx) {
+		Weapon weapon = player.getWeapon();
 		
-		Weapon weapon = game.getPlayer().getWeapon();
-		
+		// Empty slot
 		if (weapon == null)
 			return;
 		
-		if (weapon.isReloading())
-			txt = "RELOADING";
-		else if (weapon.getAmmoLoad() == 0)
-			txt = "NO AMMO";
-		else
-			txt = "READY";	
-		txt = '[' + txt + ']';
-		gfx.drawString(txt, width - gfx.getFontMetrics().stringWidth(txt) - 10, height - 10);
+		// Render ammo
+		int ammoSaved 	= weapon.getAmmoSaved();
+		int ammoLoad 	= weapon.getAmmoLoad();
 		
-		int ammoSaved = weapon.getAmmoSaved();
-		int ammoLoad = weapon.getAmmoLoad();
-		
-		txt = (ammoLoad == Weapon.INFINITE_AMMO ? "∞" : ammoLoad) + "/" +
+		String txt = (ammoLoad == Weapon.INFINITE_AMMO ? "∞" : ammoLoad) + "/" +
 				(ammoSaved == Weapon.INFINITE_AMMO ? "∞" : ammoSaved);
-		gfx.drawString(txt, width - gfx.getFontMetrics().stringWidth(txt) - 10, height - 30);	
+		
+		int fontsize = gfx.getFontMetrics().getFont().getSize();
+		int spacing = 2;
+		
+		gfx.drawString(txt, width - gfx.getFontMetrics().stringWidth(txt) - PADDING, height - PADDING - fontsize - spacing);	
+	
+		// Render weapon state
+		txt = '[' + (weapon.isReloading()
+					? "RELOADING"
+					: weapon.getAmmoLoad() == 0
+						? "NO AMMO"
+						: "READY"
+							) + ']';
+
+
+		gfx.drawString(txt, width - gfx.getFontMetrics().stringWidth(txt) - PADDING, height - PADDING );
 	}
 	
-	public void renderTopMiddle(Graphics2D gfx) {
-		if (game.isPaused()) {
-			String txt = "[PAUSED]";
-			gfx.drawString(txt,
-					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, 20);
-		}
+	private void pause(Graphics2D gfx) {
+		if (!game.isPaused()) return;
+		String txt = "[PAUSED]";
+		Util.Graphics.drawStringCentered(gfx, width / 2, PADDING + 10, txt);
 	}
 	
-	public void renderBottomMiddle(Graphics2D gfx) {
-		Arsenal ars = game.getPlayer().getArsenal();
+	private void weaponSet(Graphics2D gfx) {
+		Arsenal ars = player.getArsenal();
 		int selected = ars.getSelected();
 		int total = ars.size;
-		String txt;
+		String txt = "";
 		
-		txt = "";
 		for (int i = 0; i < total; ++i) {
 			if (i == selected)
 				txt += "<" + i + ">";
 			else
 				txt += "[" + i + "]";
-			txt += i == total ? "" : "   ";
+			txt += i == total - 1 ? "" : "   ";
 		}
 		
-		gfx.drawString(txt, game.getWidth()/2 - gfx.getFontMetrics().stringWidth(txt) / 2,
-				game.getHeight()-20);
+		Util.Graphics.drawStringCentered(gfx, width / 2, height - PADDING - 10, txt);
 	}
 	
-	public void renderPlayerExitingMap(Graphics2D _gfx) {
-		String txt;
-		Graphics2D gfx = (Graphics2D) _gfx.create();
-		if (game.isOutOfBorders()) {
-			gfx.setColor(playerOutOfMapBackgroundColor);
-			gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
-			
-			gfx.setColor(Color.RED);
-			gfx.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-			
-			int middle = game.getHeight()/2;
-			txt = "You're out of borders!";
-			gfx.drawString(txt,
-					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, middle - 40);
-			
-			txt = String.format("Exiting in %d seconds", (int)game.getOutOfBorderCounter().getValue());
-			gfx.drawString(txt,
-					game.getWidth() / 2 - gfx.getFontMetrics().stringWidth(txt) / 2, game.getHeight()/2 + 50);
+	private void exitingMap(Graphics2D gfx) {
+		if (!game.isOutOfBorders()) return;
 		
-			playerCompass.setY(middle);
-			playerCompass.setTarget(game.getPlayer());
-			playerCompass.update();
-			playerCompass.render_(gfx);
-		}
-
-		gfx.dispose();
+		gfx.setColor(EXITING_MAP_BG);
+		gfx.fillRect(0, 0, width, height);
+		
+		gfx.setColor(Palette.RED);
+		gfx.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+		
+		int middle = height / 2;
+		String txt = "You're out of borders!";
+		Util.Graphics.drawStringCentered(gfx, width / 2, middle - 50, txt);
+		
+		txt = String.format("Exiting in %d seconds", (int) game.getOutOfBorderCounter().getValue());
+		Util.Graphics.drawStringCentered(gfx, width / 2, middle + 50, txt);
+	
+		playerCompass.moveTo(width / 2, height / 2);
+		playerCompass.setTarget(player);
+		playerCompass.update();
+		playerCompass.render_(gfx);
 	}
 	
-	public void renderPlayerGettingHit(Graphics2D _gfx) {
+	private void takingDamage(Graphics2D gfx) {
 		if (!game.isPlayerGettingHit()) return;
-		Graphics2D gfx = (Graphics2D) _gfx.create();
-		
-		gfx.setColor(gettingHitBackgroundColor);
-		gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
-		
-		gfx.dispose();
+		gfx.setColor(TAKING_DAMAGE_BG);
+		gfx.fillRect(0, 0, width, height);
 	}
 	
-	public void renderWarnings(Graphics2D gfx) {
-		renderPlayerGettingHit(gfx);
-		renderPlayerExitingMap(gfx);
-	}
 
-	public void renderBorder(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
+	private void border(Graphics2D gfx) {
+		gfx.setColor(BORDER_COLOR);
+		gfx.setStroke(new BasicStroke(BORDER_THICKNESS));
 		
-		gfx.setColor(Palette.GREEN);
-		gfx.setStroke(new BasicStroke(5));
-		
-		int width = game.getWidth();
-		int height = game.getHeight();
-		
-		gfx.drawLine(0, 0, width, 0);
-		gfx.drawLine(0, height, width, height);
-		gfx.drawLine(0, 0, 0, height);
-		gfx.drawLine(width, 0, width, height);
-		
-		gfx.dispose();
+		gfx.drawRect(
+				BORDER_THICKNESS/2,
+				BORDER_THICKNESS/2,
+				width - BORDER_THICKNESS,
+				height - BORDER_THICKNESS);
 	}
 	
-	public void renderGameOver(Graphics2D superGfx) {
+	private void gameOver(Graphics2D gfx) {
 		if (!game.isGameOver()) return;
 		
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setColor(gettingHitBackgroundColor);
-		gfx.fillRect(0, 0, game.getWidth(), game.getHeight());
-		gfx.setFont(labelsFont.deriveFont(Font.BOLD, 40));
+		gfx.setColor(TAKING_DAMAGE_BG);
+		gfx.fillRect(0, 0, width, height);
+		gfx.setFont(LABELS_FONT.deriveFont(Font.BOLD, 40));
 
 		String str = "Game Over";
 		int h = gfx.getFontMetrics().getHeight();
@@ -198,30 +197,26 @@ class HUD implements Renderable {
 		int x = game.getWidth() / 2 - w/2;
 		int y = game.getHeight() / 2 - h/2;
 		
-		gfx.setColor(Color.BLACK);
+		gfx.setColor(Palette.BLACK);
 		Util.drawStringOutline(gfx, str, x, y);
-		gfx.setColor(Color.WHITE);
+		gfx.setColor(Palette.WHITE);
 		gfx.drawString(str, x, y);
 		
-		gfx.setFont(labelsFont.deriveFont(Font.BOLD, 24));
+		gfx.setFont(LABELS_FONT.deriveFont(Font.BOLD, 24));
 		str = "Your score was " + game.getScore();
 		w = gfx.getFontMetrics().stringWidth(str);
 		x = game.getWidth() / 2 - w/2;
 		y = game.getHeight() / 2 + 30;
 		
-		gfx.setColor(Color.BLACK);
+		gfx.setColor(Palette.BLACK);
 		Util.drawStringOutline(gfx, str, x, y);
-		gfx.setColor(Color.WHITE);
+		gfx.setColor(Palette.WHITE);
 		gfx.drawString(str, x, y);
-		
-		gfx.dispose();
 	}
 	
-	private void renderSpecialSet(Graphics2D superGfx) {
-		Graphics2D gfx = (Graphics2D) superGfx.create();
-		
+	private void specialSet(Graphics2D gfx) {
 		String specialKeys = "ZXCVBNM";
-		SpecialSet specialSet = game.getPlayer().getSpecialSet();
+		SpecialSet specialSet = player.getSpecialSet();
 		
 		int linePadding = 30;
 		int setSize = specialSet.size();
@@ -235,32 +230,25 @@ class HUD implements Renderable {
 			SpecialSlot s = specialSet.get(i);
 			char c = specialKeys.charAt(i);
 			String txt = c + ": " + s.getIndicator();
-			gfx.drawString(txt, padding, (int) y + linePadding * i);
+			gfx.drawString(txt, PADDING, (int) y + linePadding * i);
 		}
-		
-		gfx.dispose();
 	}
 	
 	@Override
 	public void render(Graphics2D superGfx) {
+		width = game.getWidth();
+		height = game.getHeight();
+		player = game.getPlayer();
 		
 		Graphics2D gfx = (Graphics2D) superGfx.create();
-		gfx.setFont(labelsFont);
-		gfx.setColor(labelsColor);
+		gfx.setFont(LABELS_FONT);
+		gfx.setColor(LABELS_COLOR);
 		
-		renderBorder(gfx);
-		
-		renderGameOver(gfx);
-		renderWarnings(gfx);
-		renderPlayerExitingMap(gfx);
-		renderTopLeft(gfx);
-		renderTopRight(gfx);
-		renderTopMiddle(gfx);
-		renderBottomLeft(gfx);
-		renderBottomRight(gfx);
-		renderBottomMiddle(gfx);
-		
-		renderSpecialSet(gfx);
+		drawers.forEach(d -> {
+			Graphics2D g = (Graphics2D) gfx.create();
+			d.render(g);
+			g.dispose();
+		});
 		
 		gfx.dispose();
 	}

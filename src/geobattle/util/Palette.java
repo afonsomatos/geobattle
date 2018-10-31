@@ -49,6 +49,10 @@ public final class Palette {
 		
 	}
 	
+	public static Color alpha(Color color, int alpha) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+	}
+	
 	public static Color[] randomWithout(int x, Color... colors) {
 		List<Color> all = new ArrayList<>(Arrays.asList(palette));
 		all.removeAll(Arrays.asList(colors));

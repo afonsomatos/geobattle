@@ -36,9 +36,8 @@ public class Compass extends GameObject {
 		});
 	}
 	
-	public Compass(Game game, int x, int y, GameObject target) {
-		super(game, x, y);
-		this.target = target;
+	public Compass(Game game) {
+		super(game);
 		setSprite(sprite);
 	}
 	
@@ -53,12 +52,6 @@ public class Compass extends GameObject {
 		if (target == null || Double.isNaN(angle = pointAngle(target)))
 			angle = lastAngle;
 		setRotation(angle);
-	}
-
-	@Override
-	protected void spawn() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
