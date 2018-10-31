@@ -48,6 +48,8 @@ public class Projectile extends GameObject {
 			}
 		});
 		addController(this::killOutOfMap);
+		
+		getTriggerMap().add("spawn", this::alignRotation);
 	}
 	
 	public void setDamage(int damage) {
@@ -72,8 +74,7 @@ public class Projectile extends GameObject {
 			this.kill();
 	}
 
-	@Override
-	protected void spawn() {
+	private void alignRotation() {
 		double velX = getVelX();
 		double velY = getVelY();
 		double theta = Math.atan(velY / velX);

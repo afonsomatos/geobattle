@@ -87,9 +87,4 @@ public class ItemGenerator extends GameObject {
 			game.spawnGameObject(i);
 	}
 
-	@Override
-	public void spawn() {
-		
-	}
-
 }

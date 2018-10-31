@@ -67,7 +67,7 @@ public class GameObject {
 		return spawned;
 	}
 	
-	protected void spawn() {
+	public void spawn() {
 		spawned = true;
 		getTriggerMap().call("spawn");
 	}

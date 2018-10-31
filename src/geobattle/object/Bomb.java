@@ -49,6 +49,7 @@ public class Bomb extends GameObject {
 				.setColor(Palette.ORANGE);
 		
 		addDrawer(this::draw);
+		getTriggerMap().add("spawn", this::spawned);
 	}
 	
 	void setDelay(int delay) {
@@ -73,8 +74,7 @@ public class Bomb extends GameObject {
 		this.kill();
 	}
 	
-	@Override
-	protected void spawn() {
+	private void spawned() {
 		game.getSchedule().add(explode);
 	}
 

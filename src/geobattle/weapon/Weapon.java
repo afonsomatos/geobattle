@@ -297,10 +297,4 @@ public class Weapon extends GameObject {
 			loadTank.take(1);
 	}
 
-	@Override
-	protected void spawn() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

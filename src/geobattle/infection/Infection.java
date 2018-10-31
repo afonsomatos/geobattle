@@ -47,6 +47,7 @@ public class Infection extends GameObject {
 			surround(col);
 		
 		host.getTriggerMap().add("die", this::destroy);
+		getTriggerMap().add("spawn", this::spawned);
 		addDrawer(this::draw);
 	}
 	
@@ -97,8 +98,7 @@ public class Infection extends GameObject {
 		gone = true;
 	}
 	
-	@Override
-	protected void spawn() {
+	private void spawned() {
 		game.getSchedule().add(event);
 	}
 	
