@@ -114,7 +114,7 @@ public class GameObject {
 		return sprite;
 	}
 	
-	public void render_(Graphics2D superGfx) {
+	public void render(Graphics2D superGfx) {
 		if (hidden) return;
 
 		Graphics2D gfx;

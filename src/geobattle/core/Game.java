@@ -426,12 +426,11 @@ public class Game implements Launchable, Renderable {
 			getGameObjects()
 				.stream()
 				.filter(obj -> !obj.isHidden())
-				.forEach(obj -> obj.render_(gfx));
+				.forEach(obj -> obj.render(gfx));
 
 			if (debug)
 				debugRender.render(gfx);
 		}
-
 		
 		hud.render(gfx);
 	}

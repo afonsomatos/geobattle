@@ -26,6 +26,7 @@ public abstract class Living extends GameObject {
 	public Living(Game game, double x, double y) {
 		super(game, x, y);
 		setupCollider();
+		addDrawer(this::draw);
 	}
 	
 	private final void setupCollider() {
@@ -82,12 +83,8 @@ public abstract class Living extends GameObject {
 		return healthTank.get() == 0;
 	}
 	
-	@Override
-	public void render_(Graphics2D superGfx) {
-		super.render_(superGfx);
-		
+	public void draw(Graphics2D gfx) {
 		if (godmode) return;
-		Graphics2D gfx = (Graphics2D) superGfx.create();
 		
 		final int width = 40;
 		final int height = 10;
@@ -103,7 +100,6 @@ public abstract class Living extends GameObject {
 		gfx.setColor(Palette.WHITE);
 		gfx.setStroke(new BasicStroke(1));
 		gfx.drawRect(x, y, width, height);
-		gfx.dispose();
 	}
 	
 }

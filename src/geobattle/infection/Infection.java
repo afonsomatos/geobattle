@@ -46,7 +46,7 @@ public class Infection extends GameObject {
 		if (col != null)
 			surround(col);
 		
-		addDrawer(this::render);
+		addDrawer(this::draw);
 	}
 	
 	public void surround(Collider collider) {
@@ -107,7 +107,7 @@ public class Infection extends GameObject {
 			destroy();
 	}
 	
-	private void render(Graphics2D gfx) {
+	private void draw(Graphics2D gfx) {
 		final int x = (int) host.getX();
 		final int y = (int) host.getY();
 		

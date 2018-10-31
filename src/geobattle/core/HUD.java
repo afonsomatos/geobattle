@@ -163,7 +163,7 @@ class HUD implements Renderable {
 		playerCompass.moveTo(width / 2, height / 2);
 		playerCompass.setTarget(player);
 		playerCompass.update();
-		playerCompass.render_(gfx);
+		playerCompass.render(gfx);
 	}
 	
 	private void takingDamage(Graphics2D gfx) {
