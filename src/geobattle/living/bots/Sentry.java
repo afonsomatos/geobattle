@@ -49,7 +49,7 @@ public class Sentry extends Bot implements WeaponHolder {
 		weapon = WeaponFactory.Rifle.create(game, this, Tag.Neutral);
 		shooter = new Shooter(null, weapon);
 		
-		addExtension(shooter);
+		addController(shooter);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);

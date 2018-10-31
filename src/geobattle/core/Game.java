@@ -396,10 +396,10 @@ public class Game implements Launchable, Renderable {
 
 		handleOutOfBorders();
 		
-		for (GameObject g : getGameObjects()) {
-			if (g.isActive())
-				g.tick();
-		}
+		getGameObjects()
+			.stream()
+			.filter(GameObject::isActive)
+			.forEach(GameObject::update);
 
 		collisionHandler.handleCollisions();
 		

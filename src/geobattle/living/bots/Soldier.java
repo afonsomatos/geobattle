@@ -43,8 +43,8 @@ public class Soldier extends Bot implements WeaponHolder {
 		
 		follower = new Follower(null, 150);
 		
-		addExtension(shooter);
-		addExtension(follower);
+		addController(shooter);
+		addController(follower);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);

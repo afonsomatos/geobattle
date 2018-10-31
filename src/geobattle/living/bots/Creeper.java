@@ -37,7 +37,7 @@ public class Creeper extends Bot {
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 
-		addExtension(follower);
+		addController(follower);
 		
 		setSprite(SPRITE);
 		setupCollider();

@@ -65,6 +65,8 @@ public class Weapon extends GameObject {
 		fill();
 		
 		setupCounters();
+		
+		addController(this::update);
 	}
 	
 	public void paint() {
@@ -221,8 +223,7 @@ public class Weapon extends GameObject {
 		}
 	}
 	
-	@Override
-	public void update() {
+	private void update(GameObject gameObject) {
 		
 		if (pausing)
 			fireCounter.tick();

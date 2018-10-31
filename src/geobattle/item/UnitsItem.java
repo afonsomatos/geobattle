@@ -16,6 +16,7 @@ abstract class UnitsItem extends Item {
 		super(game, x, y);
 		unitsTank.set(units);
 		addDrawer(this::draw);
+		addController(this::killEmpty);
 	}
 	
 	public void setLabelColor(Color labelColor) {
@@ -30,8 +31,7 @@ abstract class UnitsItem extends Item {
 		return unitsTank.get();
 	}
 	
-	@Override
-	public void update() {
+	private void killEmpty(GameObject obj) {
 		if (unitsTank.empty())
 			this.kill();
 	}

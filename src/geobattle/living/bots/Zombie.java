@@ -33,7 +33,7 @@ public class Zombie extends Bot {
 		getTriggerMap().add("die", this::handleDeath);
 		
 		follower = new Follower(null);
-		addExtension(follower);
+		addController(follower);
 		
 		getTriggerMap().add("newTarget", () -> {
 			follower.setTarget(getTarget());

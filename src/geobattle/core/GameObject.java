@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geobattle.collider.Collider;
-import geobattle.extension.Extension;
+import geobattle.extension.Controller;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.triggers.TriggerMap;
+import geobattle.util.Log;
 
 public class GameObject {
 
@@ -39,9 +40,10 @@ public class GameObject {
 	private Collider collider 	= null;
 	private Sprite sprite		= null;
 	
-	private List<Renderable> drawers	= new ArrayList<Renderable>();
-	private List<Extension> extensions 	= new ArrayList<Extension>();
-	private TriggerMap triggerMap		= new TriggerMap();
+	private List<Renderable> drawers		= new ArrayList<Renderable>();
+	private List<Controller> controllers	= new ArrayList<Controller>();
+
+	private TriggerMap triggerMap = new TriggerMap();
 	
 	public GameObject(Game game) {
 		this.game = game;
@@ -70,10 +72,6 @@ public class GameObject {
 		getTriggerMap().call("spawn");
 	}
 	
-	protected void update() {
-		
-	}
-	
 	public boolean isOutOfBorders() {
 		return isOutOfBorders(0);
 	}
@@ -90,12 +88,12 @@ public class GameObject {
 		return triggerMap;
 	}
 	
-	public void removeExtension(Extension extension) {
-		extensions.remove(extension);
+	public void removeController(Controller controller) {
+		controllers.remove(controller);
 	}
 	
-	public void addExtension(Extension extension) {
-		extensions.add(extension);
+	public void addController(Controller controller) {
+		controllers.add(controller);
 	}
 	
 	public void setActive(boolean active) {
@@ -137,6 +135,16 @@ public class GameObject {
 		
 	}
 	
+	public void update() {
+		if (!active) return;
+		
+		// Act on all controllers
+		for (Controller c : controllers)
+			c.update(this);
+		
+		move();
+	}
+	
 	public void stop() {
 		// Stops all movement
 		accX = accY = velX = velY = 0;
@@ -150,17 +158,6 @@ public class GameObject {
 	public void moveTo(GameObject obj) {
 		x = obj.x;
 		y = obj.y;
-	}
-	
-	public void tick() {
-		if (!active) return;
-		
-		update();
-		
-		for (Extension b : extensions)
-			b.update(this);
-
-		move();
 	}
 	
 	public void setCollider(Collider collider) {

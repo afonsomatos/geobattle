@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
 import geobattle.core.Game;
+import geobattle.core.GameObject;
 import geobattle.schedule.Event;
 import geobattle.core.Tag;
 import geobattle.living.Living;
@@ -64,6 +65,8 @@ public class Bomber extends Bot {
 		
 		getTriggerMap().add("die", () -> attackEvent.setOff(true));
 		getTriggerMap().add("spawn", this::resetEvent);
+		
+		addController(this::travel);
 	}
 	
 	public void resetEvent() {
@@ -79,8 +82,7 @@ public class Bomber extends Bot {
 		game.getSchedule().add(attackEvent);
 	}
 
-	@Override
-	protected void update() {
+	private void travel(GameObject obj) {
 		// make him reappear
 		if (!this.isOutOfBorders(-MARGIN)) {
 			if (!onMap) {

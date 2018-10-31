@@ -47,6 +47,7 @@ public class Projectile extends GameObject {
 					kill();
 			}
 		});
+		addController(this::killOutOfMap);
 	}
 	
 	public void setDamage(int damage) {
@@ -65,8 +66,7 @@ public class Projectile extends GameObject {
 		this.infectionFactory = infectionFactory;
 	}
 	
-	@Override
-	public void update() {
+	private void killOutOfMap(GameObject obj) {
 		
 		if (this.isOutOfBorders(-10))
 			this.kill();

@@ -2,7 +2,7 @@ package geobattle.extension;
 
 import geobattle.core.GameObject;
 
-public class Orbit implements Extension {
+public class Orbit implements Controller {
 
 	private GameObject object;
 	

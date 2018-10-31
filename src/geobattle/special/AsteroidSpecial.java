@@ -29,7 +29,7 @@ public class AsteroidSpecial extends Special {
 		game.spawnGameObject(asteroid);
 		// Create an orbit
 		Orbit orbit = new Orbit(asteroid, 100, 0.1);
-		owner.addExtension(orbit);
+		owner.addController(orbit);
 		// When the owner dies the asteroid dies
 		owner.getTriggerMap().add("kill", () -> {
 			asteroid.kill();

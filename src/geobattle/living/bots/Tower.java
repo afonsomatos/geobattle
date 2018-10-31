@@ -40,7 +40,7 @@ public class Tower extends Bot implements WeaponHolder {
 		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);
 		shooter.setRadar(SHOOT_RADAR);
-		addExtension(shooter);
+		addController(shooter);
 		
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);

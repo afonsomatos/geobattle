@@ -74,6 +74,8 @@ public class Slicer extends Bot {
 		getTriggerMap().add("spawn", () -> {
 			game.getSchedule().add(attackEvent);
 		});
+		
+		addController(this::updateState);
 	}
 	
 	private void setState(State state) {
@@ -146,11 +148,10 @@ public class Slicer extends Bot {
 			follower.setActive(false);
 		});
 		
-		addExtension(follower);
+		addController(follower);
 	}
 
-	@Override
-	protected void update() {
+	private void updateState(GameObject obj) {
 		if (follower.isActive() && state != State.SLICING)
 			setState(State.PURSUIT);
 	}

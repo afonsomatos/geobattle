@@ -5,7 +5,7 @@ import geobattle.util.Interval;
 import geobattle.util.Util;
 import geobattle.weapon.Weapon;
 
-public class Shooter implements Extension {
+public class Shooter implements Controller {
 
 	private Weapon weapon = null;
 	private GameObject target = null;

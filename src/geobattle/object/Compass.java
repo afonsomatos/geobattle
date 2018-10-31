@@ -39,14 +39,14 @@ public class Compass extends GameObject {
 	public Compass(Game game) {
 		super(game);
 		setSprite(sprite);
+		addController(this::update);
 	}
 	
 	public void setTarget(GameObject target) {
 		this.target = target;
 	}
 	
-	@Override
-	public void update() {
+	private void update(GameObject obj) {
 		// Change angle before rendering
 		double angle = 0;
 		if (target == null || Double.isNaN(angle = pointAngle(target)))

@@ -92,14 +92,15 @@ public class Player extends Bot implements WeaponHolder {
 		/* .......*/
 		
 		getTriggerMap().add("die", game::sendPlayerDead);
+		
+		addController(this::update);
 	}
 	
 	public SpecialSet getSpecialSet() {
 		return specialSet;
 	}
 	
-	@Override
-	public void update() {
+	private void update(GameObject obj) {
 		setSprite(shieldTank.get() > 0 ? shieldSprite : sprite);
 
 		if (!specialReady)

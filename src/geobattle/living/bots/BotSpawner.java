@@ -32,6 +32,7 @@ public class BotSpawner extends GameObject {
 		setSprite(new Aura(30, 7, spawn.getColor()));
 		moveTo(spawn);
 		getTriggerMap().add("spawn", this::setup);
+		addController(this::updateSprite);
 	}
 
 	private void setup() {
@@ -45,8 +46,7 @@ public class BotSpawner extends GameObject {
 		
 	}
 
-	@Override
-	protected void update() {
+	private void updateSprite(GameObject obj) {
 		if (!hasSpawned()) return;
 		float perc = (float) event.getPercentage();
 		getSprite().setAlpha(perc / 3);

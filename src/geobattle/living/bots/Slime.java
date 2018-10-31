@@ -71,7 +71,7 @@ public class Slime extends Bot {
 		// setName(newName);
 		
 		Follower follower = new Follower(null);
-		addExtension(follower);
+		addController(follower);
 
 		getTriggerMap().add("die", this::divide);
 		getTriggerMap().add("newTarget", () -> {

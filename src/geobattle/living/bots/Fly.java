@@ -62,6 +62,7 @@ public class Fly extends Bot {
 		setWidth(BODY_SIZE);
 		setHeight(BODY_SIZE);
 		setupCollider();
+		addController(this::updateMovement);
 	}
 	
 	private void bite() {
@@ -97,8 +98,7 @@ public class Fly extends Bot {
 		setCollider(newCol);
 	}
 
-	@Override
-	protected void update() {
+	private void updateMovement(GameObject obj) {
 
 		// Figure8 movement
 		delta += moveSpeed;

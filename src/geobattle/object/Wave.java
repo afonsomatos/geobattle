@@ -29,6 +29,7 @@ public class Wave extends GameObject {
 	public Wave(Game game) {
 		super(game);
 		getTriggerMap().add("spawn", this::causeDamage);
+		addController(this::expand);
 	}
 
 	@Override
@@ -61,8 +62,7 @@ public class Wave extends GameObject {
 		}
 	}
 	
-	@Override
-	public void update() {
+	private void expand(GameObject obj) {
 		counter.tick();
 		int currRadius = (int) counter.getValue();
 		int alpha = 255 - (int) (255 * currRadius / radius);

@@ -2,7 +2,7 @@ package geobattle.extension;
 
 import geobattle.core.GameObject;
 
-public interface Extension {
+public interface Controller {
 	
 	public void update(GameObject gameObject);
 

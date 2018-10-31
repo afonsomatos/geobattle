@@ -2,7 +2,7 @@ package geobattle.extension;
 
 import geobattle.core.GameObject;
 
-public class Follower implements Extension {
+public class Follower implements Controller {
 
 	private GameObject target = null;
 	private double maxDistance = 0;

@@ -78,11 +78,6 @@ public class Bomb extends GameObject {
 		game.getSchedule().add(explode);
 	}
 
-	@Override
-	protected void update() {
-
-	}
-
 	private void draw(Graphics2D gfx) {
 		gfx.setColor(getColor());
 		gfx.setStroke(new BasicStroke(FUSE_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));

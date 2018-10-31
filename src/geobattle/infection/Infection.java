@@ -46,6 +46,7 @@ public class Infection extends GameObject {
 		if (col != null)
 			surround(col);
 		
+		host.getTriggerMap().add("die", this::destroy);
 		addDrawer(this::draw);
 	}
 	
@@ -99,12 +100,6 @@ public class Infection extends GameObject {
 	@Override
 	protected void spawn() {
 		game.getSchedule().add(event);
-	}
-
-	@Override
-	protected void update() {
-		if (host.isDead())
-			destroy();
 	}
 	
 	private void draw(Graphics2D gfx) {
