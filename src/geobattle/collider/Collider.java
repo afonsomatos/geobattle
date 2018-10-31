@@ -59,8 +59,8 @@ public class Collider {
 	}
 	
 	public void surround(GameObject gameObject) {
-		width = gameObject.getWidth();
-		height = gameObject.getHeight();
+		width = (int) gameObject.getWidth();
+		height = (int) gameObject.getHeight();
 		offsetX = -width/2;
 		offsetY = -height/2;
 	}

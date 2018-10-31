@@ -11,7 +11,6 @@ import geobattle.extension.Controller;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.triggers.TriggerMap;
-import geobattle.util.Log;
 
 public class GameObject {
 
@@ -55,12 +54,24 @@ public class GameObject {
 		this.y = y;
 	}
 	
-	protected void addDrawer(Renderable drawer) {
+	public void addDrawer(Renderable drawer) {
 		drawers.add(drawer);
 	}
 	
-	protected void removeDrawer(Renderable drawer) {
+	public void removeDrawer(Renderable drawer) {
 		drawers.remove(drawer);
+	}
+	
+	public void removeController(Controller controller) {
+		controllers.remove(controller);
+	}
+	
+	public void addController(Controller controller) {
+		controllers.add(controller);
+	}
+	
+	public TriggerMap getTriggerMap() {
+		return triggerMap;
 	}
 
 	public boolean hasSpawned() {
@@ -77,23 +88,14 @@ public class GameObject {
 	}
 	
 	public boolean isOutOfBorders(int margin) {
-		return getX() > (getGame().getWidth() - margin) || getY() > (getGame().getHeight() - margin) || getX() < margin || getY() < margin;
+		return 	getX() > (getGame().getWidth()  - margin) 	||
+				getY() > (getGame().getHeight() - margin) 	||
+				getX() < margin 							||
+				getY() < margin;
 	}
 	
 	public void setRotation(double rotation) {
 		this.rotation = rotation % (Math.PI * 2);
-	}
-	
-	public TriggerMap getTriggerMap() {
-		return triggerMap;
-	}
-	
-	public void removeController(Controller controller) {
-		controllers.remove(controller);
-	}
-	
-	public void addController(Controller controller) {
-		controllers.add(controller);
 	}
 	
 	public void setActive(boolean active) {
@@ -180,7 +182,7 @@ public class GameObject {
 		this.rotationSpeed = rotationSpeed;
 	}
 
-	public void move() {
+	private void move() {
 		if (freezed) return;
 		rotation += rotationSpeed;
 		rotation %= Math.PI * 2;
@@ -272,12 +274,13 @@ public class GameObject {
 	public Point getPos() {
 		return new Point((int) x, (int) y);
 	}
+	
 	public void setY(double y) {
 		this.y = y;
 	}
 	
-	public int getWidth() {
-		return (int) width;
+	public double getWidth() {
+		return width;
 	}
 	
 	public void setWidth(double width) {
@@ -292,8 +295,8 @@ public class GameObject {
 		this.hidden = hidden;
 	}
 
-	public int getHeight() {
-		return (int) height;
+	public double getHeight() {
+		return height;
 	}
 	
 	public void kill() {
@@ -331,6 +334,7 @@ public class GameObject {
 		velY *= -1;
 	}
 	
+	// TODO: Change this to point vectors
 	public boolean setDirection(double x, double y) {
 		double diffX = x - this.getX();
 		double diffY = y - this.getY();

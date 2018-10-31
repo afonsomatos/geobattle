@@ -1,14 +1,11 @@
 package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
-import geobattle.living.Living;
 import geobattle.render.sprite.shapes.Square;
 import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
@@ -53,7 +50,7 @@ public class Bubble extends Bot {
 	}
 
 	public void updateSprite() {
-		setSprite(new Square(getWidth(), getHeight(), getColor()));
+		setSprite(new Square((int)getWidth(), (int)getHeight(), getColor()));
 		getCollider().surround(getSprite());
 	}
 	
