@@ -20,24 +20,16 @@ public class KeyInput extends KeyAdapter {
 
 	private Game game;
 	private boolean active = true;
-		
-	private final static char[] MOVEMENT_KEYS = {
-			'D',
-			'A',
-			'W',
-			'S'
-	};
-	
 	private int dirmask = 0;
 	
 	private HashMap<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
 	
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
 	public KeyInput(Game game) {
 		this.game = game;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	public void bindAll() {
@@ -75,7 +67,7 @@ public class KeyInput extends KeyAdapter {
 			});
 			
 			bind("pressed " + c, () -> {
-				int negMask = mask < 4 ? 3 : 12;
+				int negMask = mask <= 2 ? 3 : 12;
 				dirmask &= ~negMask;
 				dirmask |= mask;
 				updateMovement();
