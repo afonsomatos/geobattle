@@ -4,9 +4,9 @@ import com.sun.glass.events.KeyEvent;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
+import geobattle.core.Settings;
 import geobattle.io.KeyInput;
 import geobattle.living.Player;
-import geobattle.util.Log;
 
 public class ArrowKeysFollower extends GameObject {
 
@@ -89,6 +89,10 @@ public class ArrowKeysFollower extends GameObject {
 	
 	public ArrowKeysFollower(Game game) {
 		super(game);
+		
+		Settings settings = game.getSettings();
+		setSliceSpeed(settings.getDouble("arrows.speed"));
+		setArrowMap(ArrowMap.values()[settings.getInt("arrows.mode") - 1]);
 	}
 	
 	public void setSliceSpeed(double speed) {

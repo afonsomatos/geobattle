@@ -37,8 +37,10 @@ import geobattle.weapon.WeaponFactory;
 
 public class Game implements Launchable, Renderable {
 
-	private final static String PROPERTIES_FILE = "config.properties";
-	
+	// Cross arrow
+	private final static Sprite CROSS_ARROW_SPRITE = new Aura(15, 2, Palette.RED);
+	private GameObject crossArrow = null;
+
 	private Settings settings = new Settings();
 	
 	private Renderable debugRender;
@@ -54,7 +56,6 @@ public class Game implements Launchable, Renderable {
 	
 	private int ups = 0;
 	private int fps = 0;
-	private final int TARGET_FPS = 120;
 
 	private int width = 1024;
 	private int height = 576;
@@ -64,7 +65,6 @@ public class Game implements Launchable, Renderable {
 	private int score = 0;
 	private int rounds = 0;
 	
-	private Event outOfBorderEvent;
 	private boolean outOfBorders;
 	private Counter outOfBorderCounter = new Counter(5, -1, 0, false) {
 		@Override
@@ -75,14 +75,17 @@ public class Game implements Launchable, Renderable {
 		}
 	};
 	
-	private Event gettingHitEvent;
+	private Event outOfBorderEvent 	= new Event(1000, true, outOfBorderCounter::tick);
+	private Event gettingHitEvent 	= new Event(500, false, () -> gettingHit = false);
+	
 	private boolean gettingHit;
 	private boolean gameOver;
 	
 	private boolean paused = false;
 	private int enemiesLeft;
 	
-	private List<Score> lastScores = new ArrayList<Score>();
+	private List<GameObject> gameObjects 	= new ArrayList<GameObject>(500);
+	private List<Score> lastScores 			= new ArrayList<Score>();
 			
 	public enum State {
 		MENU,
@@ -92,25 +95,41 @@ public class Game implements Launchable, Renderable {
 	
 	public State state = State.MENU;
 	
-	private List<GameObject> gameObjects = new ArrayList<GameObject>(500);
-	
-	public void pause() {
-		paused = true;
-	}
-	
-	public void unpause() {
-		paused = false;
-	}
-	
-	private void setup() {
+	public Game() {
 		ioManager			= new IOManager(this);
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
 		collisionHandler 	= new CollisionHandler(this);
 		debugRender 		= new Debug(this);
-
-		outOfBorderEvent 	= new Event(1000, true, outOfBorderCounter::tick);
-		gettingHitEvent 	= new Event(500, false, () -> gettingHit = false);
+		
+		rivalTags(Tag.Enemy, Tag.Player);
+		rivalTags(Tag.Item, Tag.Player);
+		rivalTags(Tag.Enemy, Tag.Void);
+		rivalTags(Tag.Player, Tag.Void);
+	}
+	
+	public UIManager getUIManager() {
+		return uiManager;
+	}
+	
+	public void togglePause() {
+		paused = !paused;
+		if (paused)
+			schedule.pause();
+		else
+			schedule.unpause();
+	}
+	
+	public void setPause(boolean paused) {
+		// Check for a switch
+		if (this.paused ^ paused)
+			togglePause();
+		else
+			this.paused = paused;
+	}
+	
+	public boolean isPaused() {
+		return paused;
 	}
 	
 	public boolean areTagsFriends(Tag t1, Tag t2) {
@@ -130,18 +149,8 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	public void open() {
-		
 		uiManager.sendOpen();
-
 		state = State.MENU;
-
-		rivalTags(Tag.Enemy, Tag.Player);
-		rivalTags(Tag.Item, Tag.Player);
-		rivalTags(Tag.Enemy, Tag.Void);
-		rivalTags(Tag.Player, Tag.Void);
-		
-		gameLoop();
-		
 	}
 	
 	public void end() {
@@ -151,6 +160,10 @@ public class Game implements Launchable, Renderable {
 			saveScore(name, score);
 		rounds++;
 		uiManager.sendMenu();
+	}
+	
+	public Settings getSettings() {
+		return settings;
 	}
 	
 	private void loadSettings(String opts) {
@@ -163,65 +176,19 @@ public class Game implements Launchable, Renderable {
 		}
 	}
 	
-	public void start(String opts) {
-
-		loadSettings(opts);
-		
-		score 			= 0;
-		enemiesLeft 	= 0;
-		outOfBorders 	= false;
-		gettingHit 		= false;
-		gameOver		= false;
-		
-		// Enable input
-		ioManager.enableInput();
-		
-		outOfBorderCounter.reset();
-
-		schedule.clear();
-		gameObjects.clear();
-		
-		// Trace mouse input
-		GameObject playerTarget;
+	private void loadCrossArrow() {
+		// Trace mouse/arrow input
 		if (settings.getBoolean("arrows")) {
-			ArrowKeysFollower obj = new ArrowKeysFollower(this);
-			playerTarget = obj;
-			
-			String map = settings.get("arrows.mode");
-			ArrowMap arrowMap = ArrowMap.V1;
-			if (map.equals("2"))
-				arrowMap = ArrowMap.V2;
-			else if (map.equals("3"))
-				arrowMap = ArrowMap.V3;
-			
-			obj.setSliceSpeed(settings.getDouble("arrows.speed"));
-			obj.setArrowMap(arrowMap);
-			
+			crossArrow = new ArrowKeysFollower(this);
 		} else {
-			MouseFollower obj = new MouseFollower(this);
-			ioManager.getMouseInput().setGameObject(obj);
-			playerTarget = obj;
+			crossArrow = new MouseFollower(this);
+			ioManager.getMouseInput().setGameObject(crossArrow);
 		}
-		Sprite sprite = new Aura(15, 2, Palette.RED);
-		playerTarget.setSprite(sprite);
-		spawnGameObject(playerTarget);
-		
-		levelManager.setLevel(0);
-		
-		Log.i("Game starting");
-		
-		levelManager.sendNextLevel();
-
-		player = new Player(this);
-
-		if (settings.getBoolean("godmode"))
-			player.setGodmode(true);
-		
-		player.stop();
-		player.restoreHealth();
-		player.setX(width / 2);
-		player.setY(height / 2);
-			
+		crossArrow.setSprite(CROSS_ARROW_SPRITE);
+		spawnGameObject(crossArrow);
+	}
+	
+	private void loadPlayerWeaponSet() {
 		Arsenal ars = player.getArsenal();
 		
 		ars.store(0, WeaponFactory.Shotgun.create(this, player, Tag.Player));
@@ -230,16 +197,58 @@ public class Game implements Launchable, Renderable {
 		ars.store(3, WeaponFactory.MachineGun.create(this, player, Tag.Player));
 		ars.store(4, WeaponFactory.Virus.create(this, player, Tag.Player));
 		
+		// TODO: Construct a dependency mechanism to handle spawning and killing weapons
 		for (Weapon w : ars.getSlots()) {
-			if (w == null) continue;
-			spawnGameObject(w);
+			if (w != null)
+				spawnGameObject(w);
 		}
 		
 		ars.select(0);
+	}
+	
+	private void loadPlayer() {
+		player = new Player(this);
 
-		player.setTarget(playerTarget);
-		spawnGameObject(player);
+		if (settings.getBoolean("godmode"))
+			player.setGodmode(true);
 		
+		player.restoreHealth();
+		player.moveTo(width / 2, height / 2);
+		player.setTarget(crossArrow);
+		spawnGameObject(player);
+
+		loadPlayerWeaponSet();
+	}
+	
+	private void reset() {
+		score 			= 0;
+		enemiesLeft 	= 0;
+		outOfBorders 	= false;
+		gettingHit 		= false;
+		gameOver		= false;
+		
+		outOfBorderCounter.reset();
+		schedule.clear();
+		gameObjects.clear();
+		
+		levelManager.setLevel(0);
+	}
+	
+	public void start(String opts) {
+		// NOTE: If loading settings fails, the behavior is unexpected
+		loadSettings(opts);
+		
+		Log.i("Game starting");
+		reset();
+		
+		// Enable input
+		ioManager.enable();
+		
+		loadCrossArrow();
+		loadPlayer();
+
+		levelManager.sendNextLevel();
+
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
 		gameLoop();
@@ -260,7 +269,7 @@ public class Game implements Launchable, Renderable {
 	public void gameLoop() {
 		final long NANOS_PER_SECOND = (long) Math.pow(10, 9);
 		final long NANOS_PER_MILLIS = (long) Math.pow(10, 6);
-		final long rateLimit = NANOS_PER_SECOND / TARGET_FPS; 
+		final long rateLimit = NANOS_PER_SECOND / settings.getInt("targetFps");
 		
 		new Thread(() -> {
 			double ticksPerSecond = 60.0;
@@ -319,19 +328,9 @@ public class Game implements Launchable, Renderable {
 	public int getUps() {
 		return ups;
 	}
-	
-	public boolean isPaused() {
-		return paused;
-	}
-	
+
 	public void setState(State state) {
 		this.state = state;
-	}
-	
-	public void togglePaused() {
-		paused = !paused;
-		if (paused) schedule.pause();
-		else schedule.unpause();
 	}
 	
 	public boolean isGameOver() {
@@ -356,12 +355,12 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	private void handleOutOfBorders() {
-		// check for switch
+		// Check for switch
 		if (outOfBorders ^ (outOfBorders = player.isOutOfBorders())) {
 			outOfBorderEvent.setOff(false);
+			// If he went from inside to outside throw the counter
 			if (outOfBorders) {
 				outOfBorderCounter.reset();
-				System.out.println(outOfBorderCounter.getValue());
 				schedule.add(outOfBorderEvent);
 			}
 		}
@@ -452,7 +451,7 @@ public class Game implements Launchable, Renderable {
 		player.setY(0);
 		
 		// Disable all input
-		ioManager.disableInput();
+		ioManager.disable();
 		
 		// Remove player from sight
 		player.getWeapon().setHidden(true);
@@ -523,14 +522,12 @@ public class Game implements Launchable, Renderable {
 		
 		scale = opt.getWidth() / (double) width;
 		
-		Log.i("scale: " + scale);
-		
 		// Open game in a new thread
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				setup();
-				uiManager = new UIManager(Game.this, ioManager, new Dimension(opt.getWidth(), opt.getHeight()), opt.getScreen(), opt.isFullScreen());
+				uiManager = new UIManager(Game.this, new Dimension(opt.getWidth(), opt.getHeight()), opt.getScreen(), opt.isFullScreen());
+				ioManager.getKeyInput().bindAll();
 				open();
 				dispatcher.run();
 			}

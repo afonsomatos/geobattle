@@ -12,11 +12,12 @@ public class IOManager {
 		this.mouseInput = new MouseInput(game);
 	}
 	
-	public void disableInput() {
+	public void disable() {
 		keyInput.setActive(false);
 		mouseInput.setActive(false);
 	}
-	public void enableInput() {
+	
+	public void enable() {
 		keyInput.setActive(true);
 		mouseInput.setActive(true);
 	}

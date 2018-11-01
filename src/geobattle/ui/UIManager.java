@@ -7,6 +7,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.List;
 
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,10 +35,10 @@ public class UIManager {
 	private JPanel container;
 	private CardLayout cardLayout;
 	
-	public UIManager(Game game, IOManager ioManager, Dimension size, int loadScreen, boolean fullscreen) {
+	public UIManager(Game game, Dimension size, int loadScreen, boolean fullscreen) {
 		this.game = game;
+		this.ioManager = game.getIOManager();
 		this.size = size;
-		this.ioManager = ioManager;
 		this.uiStyle = new UIStyle();
 		this.menu = new Menu(this);
 		this.play = new Play(this);
@@ -110,6 +113,14 @@ public class UIManager {
 		return size;
 	}
 	
+	public ActionMap getActionMap() {
+		return play.getActionMap();
+	}
+	
+	public InputMap getInputMap() {
+		return play.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+	}
+	
 	IOManager getIOManager() {
 		return ioManager;
 	}
@@ -122,11 +133,23 @@ public class UIManager {
 		return game.getScores();
 	}
 	
+	void sendPauseToggle() {
+		game.togglePause();
+	}
+	
 	void sendPause(boolean pause) {
-		if (pause)
-			game.pause();
-		else
-			game.unpause();
+		game.setPause(pause);
+	}
+	
+	public void askQuit() {
+		sendPause(true);
+		if (JOptionPane.showConfirmDialog(window, "Are you sure?", "Back to Menu", 
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
+		{
+			sendPause(false);
+			sendGameOver();
+		}
+		sendPause(false);
 	}
 	
 	public void sendMenu() {

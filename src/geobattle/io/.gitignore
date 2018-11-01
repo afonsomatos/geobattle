@@ -9,3 +9,7 @@
 /Window_old$ScorePanel.class
 /Window_old.class
 /IOManager.class
+/KeyInput$SimpleAction.class
+/KeyInput$WeaponSwapAction.class
+/KeyInput$SpecialInvokeAction.class
+/KeyInput$1.class

@@ -12,6 +12,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -49,24 +51,6 @@ class Play extends JPanel {
 		
 		setPreferredSize(size);
 
-		// Ctrl-Q to quit
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK, false), "menu");
-		getActionMap().put("menu", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// if (game.getState() != State.PLAYING) return;
-				uiManager.sendPause(true);
-				if (JOptionPane.showConfirmDialog(Play.this, "Are you sure?", "Back to Menu", 
-						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
-				{
-					uiManager.sendPause(false);
-					uiManager.sendGameOver();
-				}
-				uiManager.sendPause(false);
-				
-			}				
-		});
-		
 		// No need to see the OS cursor
 		hideCursor();
 	}

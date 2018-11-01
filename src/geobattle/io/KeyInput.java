@@ -1,34 +1,31 @@
 package geobattle.io;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.stream.IntStream;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.KeyStroke;
 
 import geobattle.core.Game;
-import geobattle.core.Game.State;
 import geobattle.living.Player;
-import geobattle.object.ArrowKeysFollower;
 import geobattle.util.Log;
-import geobattle.util.Util;
-import geobattle.weapon.Arsenal;
 
+@SuppressWarnings("serial")
 public class KeyInput extends KeyAdapter {
 
 	private Game game;
 	private boolean active = true;
-	
-	private final static List<Integer> SPECIAL_KEYS = Arrays.asList(
-			KeyEvent.VK_Z, KeyEvent.VK_X, KeyEvent.VK_C, KeyEvent.VK_V);
-	
-	private final static Integer[] MOVEMENT_KEYS = {
-			KeyEvent.VK_W,
-			KeyEvent.VK_S,
-			KeyEvent.VK_A,
-			KeyEvent.VK_D
+		
+	private final static char[] MOVEMENT_KEYS = {
+			'D',
+			'A',
+			'W',
+			'S'
 	};
 	
 	private int dirmask = 0;
@@ -43,13 +40,83 @@ public class KeyInput extends KeyAdapter {
 		this.game = game;
 	}
 	
+	public void bindAll() {
+		
+		bind("released P", game::togglePause);
+		bind("released R", this::sendReload);
+		bind("released Q", this::sendSwap);
+		
+		IntStream.range(0, 9).forEach(i ->
+			bind("released " + i, () ->
+				game.getPlayer().getArsenal().select(i)
+			)
+		);
+		
+		char specialSlots[] = {'Z','X','C'};
+		for (int i = 0; i < specialSlots.length; ++i) {
+			final int slot = i;
+			char c = specialSlots[i];
+			bind("released " + c, () -> {
+				game.getPlayer().getSpecialSet().get(slot).invoke();
+			});
+		}
+		
+		bind("released SPACE", () ->  game.getPlayer().setFiring(false));
+		bind("pressed SPACE",  () ->  game.getPlayer().setFiring(true));
+		
+		char moveKeys[] = {'D', 'A', 'W', 'S'};
+		for (int i = 0; i < moveKeys.length; ++i) {
+			char c = moveKeys[i];
+			final int mask = (int) Math.pow(2, i);
+			
+			bind("released " + c, () -> {
+				dirmask &= ~mask;
+				updateMovement();
+			});
+			
+			bind("pressed " + c, () -> {
+				int negMask = mask < 4 ? 3 : 12;
+				dirmask &= ~negMask;
+				dirmask |= mask;
+				updateMovement();
+			});
+			
+		}
+		
+		bind("ctrl Q", game.getUIManager()::askQuit);
+	}
+	
+	private void bind(String key, Runnable runnable) {
+
+		game.getUIManager()
+			.getInputMap()
+			.put(KeyStroke.getKeyStroke(key), key);
+		
+		game.getUIManager()
+			.getActionMap()
+			.put(key, new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (active)
+						runnable.run();
+				}
+			});
+		
+	}
+	
+	private void sendSwap() {
+		game.getPlayer().getArsenal().swap();
+	}
+	
+	private void sendReload() {
+		game.getPlayer().sendReload();
+	}
+	
 	public boolean isPressingKey(int keyCode) {
 		return keys.containsKey(keyCode) && keys.get(keyCode);
 	}
 	
-	public void updateMovement() {
-		if (!active) return;
-				
+	private void updateMovement() {
 		Player player = game.getPlayer();
 		double speed = player.getSpeed();
 		double newVelX, newVelY;
@@ -78,74 +145,14 @@ public class KeyInput extends KeyAdapter {
 		player.setVelY(newVelY);
 	}
 	
-	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		keys.put(e.getKeyCode(), true);
-		if (!active) return;
-		
-		int keyCode = e.getKeyCode();
-		State state = game.getState();
-		
-		if (state == State.PLAYING) {
-			if (Util.contains(MOVEMENT_KEYS, keyCode)) {
-				if (keyCode == KeyEvent.VK_D)
-					dirmask = (dirmask & ~2) | 1;
-				else if (keyCode == KeyEvent.VK_A)
-					dirmask = (dirmask & ~1) | 2;
-				else if (keyCode == KeyEvent.VK_W)
-					dirmask = (dirmask & ~8) | 4;
-				else if (keyCode == KeyEvent.VK_S)
-					dirmask = (dirmask & ~4) | 8;
-				
-				updateMovement();
-			} else if (keyCode == KeyEvent.VK_SPACE) {
-				game.getPlayer().setFiring(true);
-			}
-		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		keys.put(e.getKeyCode(), false);
-		
-		int keyCode = e.getKeyCode();
-		State state = game.getState();
-		
-		if (state == State.PLAYING) {
-			Player player = game.getPlayer();
-			Arsenal ars = player.getArsenal();
-			// Special attack
-			if (SPECIAL_KEYS.contains(keyCode)) {
-				
-				Log.i("special attack");
-				player.getSpecialSet().get(SPECIAL_KEYS.indexOf(keyCode)).invoke();
-				
-				// Prevent concurrent exception
-				// game.getSchedule().next(() -> player.sendSpecial());
-			} else if (keyCode == KeyEvent.VK_R) {
-				player.sendReload();
-			} else if (keyCode == KeyEvent.VK_P) {
-				game.togglePaused();
-			} else if (keyCode == KeyEvent.VK_Q) {
-				ars.swap();
-			} else if (keyCode >= '0' && keyCode <= '9') {
-				ars.select(keyCode - '0');
-			} else if (Util.contains(MOVEMENT_KEYS, keyCode)) {
-				if (keyCode == KeyEvent.VK_D)
-					dirmask &= ~1;
-				else if (keyCode == KeyEvent.VK_A)
-					dirmask &= ~2;
-				else if (keyCode == KeyEvent.VK_W)
-					dirmask &= ~4;
-				else if (keyCode == KeyEvent.VK_S)
-					dirmask &= ~8;
-				
-				updateMovement();
-			} else if (keyCode == KeyEvent.VK_SPACE) {
-				game.getPlayer().setFiring(false);
-			}
-		}
 	}
 	
 }
