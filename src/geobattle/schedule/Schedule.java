@@ -67,7 +67,8 @@ public class Schedule {
 	public void add(Event event) {
 		event.setStart(System.currentTimeMillis());
 		event.setOff(false);
-		timers.add(event);
+		if (!timers.contains(event))
+			timers.add(event);
 	}
 
 }

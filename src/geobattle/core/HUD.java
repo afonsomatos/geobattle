@@ -26,6 +26,7 @@ class HUD implements Renderable {
 	private final static Color 	TAKING_DAMAGE_BG 	= Palette.alpha(Palette.RED, 100);
 	private final static Color 	LABELS_COLOR 		= Palette.WHITE;
 	private final static Font 	LABELS_FONT 		= new Font("arial", Font.PLAIN, 16);
+	private final static Font	MESSAGE_FONT		= new Font("arial", Font.BOLD, 25);
 	
 	private Game game;
 	private Compass playerCompass;
@@ -43,12 +44,18 @@ class HUD implements Renderable {
 			this::info,
 			this::ammo,
 			this::weaponSet,
-			this::specialSet
+			this::specialSet,
+			this::message
 			);
 	
 	HUD(Game game) {
 		this.game = game;
 		playerCompass = new Compass(game);
+	}
+	
+	private void message(Graphics2D gfx) {
+		gfx.setFont(MESSAGE_FONT);
+		Util.Graphics.drawStringCentered(gfx, width / 2, PADDING + 60, game.getMessage());
 	}
 	
 	private void waveStatus(Graphics2D gfx) {

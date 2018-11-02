@@ -95,6 +95,9 @@ public class Game implements Launchable, Renderable {
 	
 	public State state = State.MENU;
 	
+	private String message = "";
+	private Event hideMessageEvent = new Event(0, false, () -> message = "");
+	
 	public Game() {
 		ioManager			= new IOManager(this);
 		hud 				= new HUD(this);
@@ -126,6 +129,16 @@ public class Game implements Launchable, Renderable {
 			togglePause();
 		else
 			this.paused = paused;
+	}
+	
+	String getMessage() {
+		return message;
+	}
+	
+	public void sendMessage(long delay, String msg) {
+		message = msg;
+		hideMessageEvent.setDelay(delay);
+		schedule.add(hideMessageEvent);
 	}
 	
 	public boolean isPaused() {
@@ -433,6 +446,7 @@ public class Game implements Launchable, Renderable {
 		gameObjects.remove(gameObject);
 		
 		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy) {
+			sendMessage(2000, "Enemy killed +10");
 			score += 10;
 			enemiesLeft--;
 		}

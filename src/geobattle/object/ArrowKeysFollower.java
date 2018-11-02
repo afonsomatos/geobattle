@@ -93,6 +93,11 @@ public class ArrowKeysFollower extends GameObject {
 		Settings settings = game.getSettings();
 		setSliceSpeed(settings.getDouble("arrows.speed"));
 		setArrowMap(ArrowMap.values()[settings.getInt("arrows.mode") - 1]);
+		setRadius(settings.getInt("arrows.radius"));
+	}
+	
+	public void setRadius(int radius) {
+		this.radius = radius;
 	}
 	
 	public void setSliceSpeed(double speed) {
