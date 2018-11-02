@@ -26,7 +26,7 @@ class HUD implements Renderable {
 	private final static Color 	TAKING_DAMAGE_BG 	= Palette.alpha(Palette.RED, 100);
 	private final static Color 	LABELS_COLOR 		= Palette.WHITE;
 	private final static Font 	LABELS_FONT 		= new Font("arial", Font.PLAIN, 16);
-	private final static Font	MESSAGE_FONT		= new Font("arial", Font.BOLD, 25);
+	private final static Font	MESSAGE_FONT		= new Font("arial", Font.BOLD, 20);
 	
 	private Game game;
 	private Compass playerCompass;

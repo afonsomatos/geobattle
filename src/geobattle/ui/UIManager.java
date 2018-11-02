@@ -100,7 +100,7 @@ public class UIManager {
 		String name;
 		
 		while (true) {
-			name = JOptionPane.showInputDialog(container, "What's your nickname?", "Save Score", JOptionPane.QUESTION_MESSAGE);
+			name = JOptionPane.showInputDialog(container, "What's your nickname?", "Save Score", JOptionPane.PLAIN_MESSAGE);
 			if (name == null || name.length() >= 3)
 				break;
 			JOptionPane.showMessageDialog(container, "Nicknames must be 3 letters minimum", "Invalid Nickname", JOptionPane.ERROR_MESSAGE);

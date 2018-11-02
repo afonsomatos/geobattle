@@ -13,9 +13,11 @@ import geobattle.core.GameObject;
 import geobattle.infection.Infection;
 import geobattle.schedule.Event;
 import geobattle.triggers.TriggerMap;
+import geobattle.util.Interval;
 import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Tank;
+import geobattle.util.Util;
 import geobattle.weapon.Projectile;
 
 public abstract class Living extends GameObject {
@@ -23,10 +25,15 @@ public abstract class Living extends GameObject {
 	private Tank healthTank = new Tank();
 	private boolean godmode = false;
 	
+	private Event sufferEvent = new Event(1500, false, () -> suffered = null);
+
+	private Integer suffered = null;
+	
 	public Living(Game game, double x, double y) {
 		super(game, x, y);
 		setupCollider();
 		addDrawer(this::draw);
+		addDrawer(this::drawHit);
 	}
 	
 	private final void setupCollider() {
@@ -57,6 +64,10 @@ public abstract class Living extends GameObject {
 	
 	public void suffer(int hit) {
 		if (godmode) return;
+		
+		suffered = hit;
+		game.getSchedule().add(sufferEvent);
+		
 		healthTank.take(hit);
 		if (isDead()) {
 			die();
@@ -83,6 +94,16 @@ public abstract class Living extends GameObject {
 		return healthTank.get() == 0;
 	}
 	
+	private void drawHit(Graphics2D gfx) {
+		if (suffered == null || suffered == 0) return;
+		
+		int x = (int) (getX());
+		int y = (int) (getY()) - getCollider().getHeight() / 2 - 40;
+		
+		gfx.setColor(Palette.RED);
+		Util.Graphics.drawStringCentered(gfx, x, y, "-" + suffered);
+	}
+	
 	public void draw(Graphics2D gfx) {
 		if (godmode) return;
 		
@@ -100,6 +121,7 @@ public abstract class Living extends GameObject {
 		gfx.setColor(Palette.WHITE);
 		gfx.setStroke(new BasicStroke(1));
 		gfx.drawRect(x, y, width, height);
+
 	}
 	
 }

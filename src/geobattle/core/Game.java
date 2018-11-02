@@ -57,8 +57,8 @@ public class Game implements Launchable, Renderable {
 	private int ups = 0;
 	private int fps = 0;
 
-	private int width = 1024;
-	private int height = 576;
+	private int width = 1280;
+	private int height = 720;
 	private double ratio = 16.0 / 9.0;
 	private double scale;
 	
@@ -133,6 +133,10 @@ public class Game implements Launchable, Renderable {
 	
 	String getMessage() {
 		return message;
+	}
+	
+	public void sendMessage(String msg) {
+		sendMessage(1500, msg);
 	}
 	
 	public void sendMessage(long delay, String msg) {
@@ -369,13 +373,9 @@ public class Game implements Launchable, Renderable {
 	
 	private void handleOutOfBorders() {
 		// Check for switch
-		if (outOfBorders ^ (outOfBorders = player.isOutOfBorders())) {
-			outOfBorderEvent.setOff(false);
-			// If he went from inside to outside throw the counter
-			if (outOfBorders) {
-				outOfBorderCounter.reset();
-				schedule.add(outOfBorderEvent);
-			}
+		if (outOfBorders ^ (outOfBorders = player.isOutOfBorders()) && outOfBorders) {
+			outOfBorderCounter.reset();
+			schedule.add(outOfBorderEvent);
 		}
 	}
 	
@@ -389,7 +389,7 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	public void tick() {
-		// must always be recording time
+		// Must always be recording time
 		schedule.tick();
 
 		if (paused) return;
@@ -411,11 +411,10 @@ public class Game implements Launchable, Renderable {
 	@Override
 	public void render(Graphics2D gfx) {
 
-		gfx.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		gfx.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		gfx.scale(scale, scale); // this is the key to scaling
+		gfx.scale(scale, scale); // This is the key to scaling
 		
 		gfx.setColor(Color.BLACK);
 		gfx.fillRect(0, 0, width, height);
