@@ -14,7 +14,7 @@ import geobattle.special.slot.SpecialSet;
 import geobattle.special.slot.SpecialSlot;
 import geobattle.util.Palette;
 import geobattle.util.Util;
-import geobattle.weapon.Arsenal;
+import geobattle.weapon.WeaponSet;
 import geobattle.weapon.Weapon;
 
 class HUD implements Renderable {
@@ -128,7 +128,7 @@ class HUD implements Renderable {
 	}
 	
 	private void weaponSet(Graphics2D gfx) {
-		Arsenal ars = player.getArsenal();
+		WeaponSet ars = player.getArsenal();
 		int selected = ars.getSelected();
 		int total = ars.size;
 		String txt = "";

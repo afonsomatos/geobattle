@@ -31,7 +31,7 @@ import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.util.Palette;
-import geobattle.weapon.Arsenal;
+import geobattle.weapon.WeaponSet;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
 
@@ -189,7 +189,7 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	private void loadPlayerWeaponSet() {
-		Arsenal ars = player.getArsenal();
+		WeaponSet ars = player.getArsenal();
 		
 		ars.store(0, WeaponFactory.Shotgun.create(this, player, Tag.Player));
 		ars.store(1, WeaponFactory.Sniper.create(this, player, Tag.Player));

@@ -13,7 +13,7 @@ import geobattle.render.sprite.shapes.CircleCross;
 import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
-import geobattle.weapon.Arsenal;
+import geobattle.weapon.WeaponSet;
 import geobattle.weapon.Weapon;
 
 class WeaponItem extends Item {
@@ -32,7 +32,7 @@ class WeaponItem extends Item {
 	public void collected(GameObject collector) {
 		if (collector instanceof Player) {
 			Player player = (Player) collector;
-			Arsenal ars = player.getArsenal();
+			WeaponSet ars = player.getArsenal();
 			Weapon selectedWeapon = ars.getSelectedWeapon();
 			
 			if (selectedWeapon != null) {

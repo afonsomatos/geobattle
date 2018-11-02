@@ -1,6 +1,6 @@
 package geobattle.weapon;
 
-public class Arsenal {
+public class WeaponSet {
 	
 	private Weapon[] slots;
 	private int selected;
@@ -11,7 +11,7 @@ public class Arsenal {
 
 	public final int size;
 	
-	public Arsenal(int len) {
+	public WeaponSet(int len) {
 		slots = new Weapon[len];
 		size = len;
 	}

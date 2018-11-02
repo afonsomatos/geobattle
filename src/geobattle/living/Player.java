@@ -22,7 +22,7 @@ import geobattle.special.slot.UnitSpecialSlot;
 import geobattle.util.Counter;
 import geobattle.util.Palette;
 import geobattle.util.Tank;
-import geobattle.weapon.Arsenal;
+import geobattle.weapon.WeaponSet;
 import geobattle.weapon.Weapon;
 
 public class Player extends Bot implements WeaponHolder {
@@ -43,7 +43,7 @@ public class Player extends Bot implements WeaponHolder {
 	private Tank shieldTank = new Tank(300);
 	private boolean firing = false;
 	
-	private Arsenal arsenal = new Arsenal(5);
+	private WeaponSet arsenal = new WeaponSet(5);
 	private GameObject target = null;
 	
 	private SpecialSet specialSet = new SpecialSet(3);
@@ -143,7 +143,7 @@ public class Player extends Bot implements WeaponHolder {
 			super.suffer(remainder);
 	}
 	
-	public Arsenal getArsenal() {
+	public WeaponSet getArsenal() {
 		return arsenal;
 	}
 	
