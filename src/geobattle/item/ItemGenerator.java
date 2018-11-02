@@ -66,6 +66,7 @@ public class ItemGenerator extends GameObject {
 			newItems.add(new ShieldItem(game, loc.getX(), loc.getY(), 200));
 		}
 		
+		/*
 		if (wave % 2 == 0) {
 			loc = getRandomItemLocation();
 
@@ -81,6 +82,7 @@ public class ItemGenerator extends GameObject {
 			newItems.add(wi);
 			expiringItems.add(wi);
 		}
+		*/
 		
 		// Spawn new items
 		for (Item i : newItems)
