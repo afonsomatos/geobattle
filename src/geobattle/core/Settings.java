@@ -1,6 +1,5 @@
 package geobattle.core;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,7 +7,7 @@ import java.util.Properties;
 
 public class Settings {
 	
-	private String file = "src/geobattle/config.properties";
+	private String file = "geobattle/config.properties";
 	private Properties properties = new Properties();
 	
 	Settings() {
@@ -16,7 +15,7 @@ public class Settings {
 	}
 	
 	void loadDefault() throws IOException {
-		try(FileInputStream input = new FileInputStream(file)) {
+		try(InputStream input = Settings.class.getClassLoader().getResourceAsStream(file)) {
 			load(input);
 		}
 	}

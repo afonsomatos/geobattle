@@ -44,3 +44,6 @@
 /Test$Runnable.class
 /Test.class
 /Test$GameRunnable.class
+/LevelManager$Level.class
+/Level.class
+/Level$Load.class
