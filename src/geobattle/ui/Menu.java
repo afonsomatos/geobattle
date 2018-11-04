@@ -1,15 +1,20 @@
 package geobattle.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,17 +49,30 @@ class Menu extends JPanel {
 		
 		setBackground(bg);
 
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(new EmptyBorder(PADDING, PADDING, PADDING, PADDING));
-		
 		String text = "<html>Welcome to Geometry Battle!";
-		text += "<br>Please press [ENTER] to start playing!";
-		text += "<br>Press Q to quit.";
 		
 		JLabel welcomeLabel = new JLabel(text);
 		welcomeLabel.setForeground(fg);
 		welcomeLabel.setFont(font);
 
+		Button playBtn = new Button("Play");
+		playBtn.setForeground(bg);
+		playBtn.setBackground(fg);
+		playBtn.setPressedBackground(bg);
+		playBtn.setPressedForeground(fg);
+		
+		Button optsBtn = new Button("Options");
+		optsBtn.setForeground(bg);
+		optsBtn.setBackground(fg);
+		optsBtn.setPressedBackground(bg);
+		optsBtn.setPressedForeground(fg);
+		
+		Button quitBtn = new Button("Quit");
+		quitBtn.setForeground(bg);
+		quitBtn.setBackground(fg);
+		quitBtn.setPressedBackground(bg);
+		quitBtn.setPressedForeground(fg);
+		
 		optionsPanel = new JPanel();
 		optionsPanel.add(new JScrollPane(optionsTxt));
 		
@@ -64,37 +82,36 @@ class Menu extends JPanel {
 		
 		updateHighScore();
 		
-		// Q to quit
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0, false), "quit");
-		getActionMap().put("quit", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(Menu.this, "Are you sure?", "Quit", 
-						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
-					uiManager.sendQuit();
-			}				
+		playBtn.addActionListener(e -> {
+			uiManager.sendPlay(options);
 		});
+		
+		quitBtn.addActionListener(e -> {
+			if (JOptionPane.showConfirmDialog(Menu.this, "Are you sure?", "Quit", 
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
+				uiManager.sendQuit();	
+		});
+		
+		optsBtn.addActionListener(e -> writeOptions());
 
-		// Ctrl-O to set options
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK, false), "option");
-		getActionMap().put("option", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				writeOptions();
-			}
-		});
+		setLayout(new GridBagLayout());
+
+		Box buttons = Box.createHorizontalBox();
+		buttons.add(playBtn);
+		buttons.add(Box.createHorizontalStrut(10));
+		buttons.add(optsBtn);
+		buttons.add(Box.createHorizontalStrut(10));
+		buttons.add(quitBtn);
+		buttons.setAlignmentX(Box.LEFT_ALIGNMENT);
 		
-		// Enter to play
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), "enter");
-		getActionMap().put("enter", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				uiManager.sendPlay(options);
-			}
-		});
+		Box box = Box.createVerticalBox();
+		box.add(welcomeLabel);
+		box.add(Box.createVerticalStrut(10));
+		box.add(buttons);
+		box.add(Box.createVerticalStrut(10));
+		box.add(highScoreLabel);
 		
-		add(welcomeLabel);
-		add(highScoreLabel);
+		add(box, new GridBagConstraints());
 	}
 	
 	private void writeOptions() {
@@ -109,7 +126,11 @@ class Menu extends JPanel {
 
 		String highScoreTxt = "<html>Times played: " + scores.size();
 		
-		for (int i = 0; i < scores.size() && i < MAX_N_SCORES; ++i) {
+		for (int i = 0; i < MAX_N_SCORES; ++i) {
+			if (scores.size() <= i) {
+				highScoreTxt += "<br>";
+				continue;
+			}
 			Score s = scores.get(i);
 			String txt = String.format("%dº %s ~ %d", i + 1, s.name, s.score);
 			highScoreTxt += "<br>" + txt;
