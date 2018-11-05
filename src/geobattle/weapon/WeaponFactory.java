@@ -30,7 +30,7 @@ public class WeaponFactory {
 				.setDamage(45);
 		
 		// Ready to create weapons
-		Rifle = new WeaponFactory()
+		Rifle = new WeaponFactory("Rifle")
 				.setProjectiles(1)
 				.setRadius(70)
 				.setFireSpeed(0.1)
@@ -47,7 +47,7 @@ public class WeaponFactory {
 				.setSpeed(15.0f)
 				.setDamage(50);
 		
-		Shotgun = new WeaponFactory()
+		Shotgun = new WeaponFactory("Shotgun")
 				.setProjectiles(8)
 				.setRadius(70)
 				.setFireSpeed(0.02)
@@ -64,7 +64,7 @@ public class WeaponFactory {
 				.setSpeed(20.0f)
 				.setDamage(300);
 		
-		Sniper = new WeaponFactory()
+		Sniper = new WeaponFactory("Sniper")
 				.setProjectiles(1)
 				.setFireSpeed(0.02)
 				.setRadius(70)
@@ -87,7 +87,7 @@ public class WeaponFactory {
 				.setWaveFactory(wMachineGun)
 				.setDamage(20);
 		
-		MachineGun = new WeaponFactory()
+		MachineGun = new WeaponFactory("Machine gun")
 				.setRadius(70)
 				.setProjectiles(1)
 				.setFireSpeed(0.2)
@@ -111,7 +111,7 @@ public class WeaponFactory {
 				.setDamage(0)
 				.setInfectionFactory(virus);
 		
-		Virus = new WeaponFactory()
+		Virus = new WeaponFactory("Virus")
 				.setColor(Color.WHITE)
 				.setSize(15)
 				.setProjectileFactory(pVirus)
@@ -133,12 +133,14 @@ public class WeaponFactory {
 	private int ammoLoad			= 30;
 	private int size				= 10;
 	
+	private String name;
+	
 	private Sprite sprite						= null;
 	private Color color							= Color.WHITE;
 	private ProjectileFactory projectileFactory	= null;
 	
-	private WeaponFactory() {
-		
+	private WeaponFactory(String name) {
+		this.name = name;
 	}
 	
 	private WeaponFactory setProjectiles(int projectiles) {
@@ -164,6 +166,10 @@ public class WeaponFactory {
 	private WeaponFactory setSize(int size) {
 		this.size = size;
 		return this;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	private WeaponFactory setAmmoLoad(int ammoLoad) {

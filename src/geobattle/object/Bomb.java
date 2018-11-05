@@ -11,6 +11,7 @@ import geobattle.core.Tag;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
+import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 

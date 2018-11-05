@@ -6,6 +6,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -14,11 +15,16 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import geobattle.core.Achievements;
 import geobattle.core.Game;
+import geobattle.core.Options;
 import geobattle.core.Score;
 import geobattle.io.IOManager;
 import geobattle.render.Renderable;
+import geobattle.special.Special;
 import geobattle.util.Log;
+import geobattle.util.Palette;
+import geobattle.weapon.WeaponFactory;
 
 public class UIManager {
 
@@ -28,9 +34,10 @@ public class UIManager {
 	
 	private Menu menu;
 	private Play play;
-	
+	private Load load;
+	private Options options = new Options();
+
 	private Dimension size;
-	
 	private JFrame window;
 	private JPanel container;
 	private CardLayout cardLayout;
@@ -42,10 +49,13 @@ public class UIManager {
 		this.uiStyle = new UIStyle();
 		this.menu = new Menu(this);
 		this.play = new Play(this);
+		this.load = new Load(this);
 		
 		window = new JFrame();
 		window.setTitle("Geometry Battle");
+		window.setBackground(Palette.BLACK);
 		container = (JPanel) window.getContentPane();
+		container.setBackground(Palette.BLACK);
 		setupScreen(loadScreen, fullscreen);
 		setupLayout();
 	}
@@ -75,6 +85,7 @@ public class UIManager {
 		container.setLayout(cardLayout);
 		container.add(menu, "menu");
 		container.add(play, "play");
+		container.add(load, "load");
 
 		// Show menu at first
 		cardLayout.show(container, "menu");
@@ -112,6 +123,10 @@ public class UIManager {
 	Dimension getSize() {
 		return size;
 	}
+
+	public Options getOptions() {
+		return options;
+	}
 	
 	public ActionMap getActionMap() {
 		return play.getActionMap();
@@ -129,8 +144,11 @@ public class UIManager {
 		return uiStyle;
 	}
 	
-	List<Score> getScores() {
-		return game.getScores();
+	List<Score> getScores(int level) {
+		return game.getScores()
+				.stream()
+				.filter(s -> s.level == level)
+				.collect(Collectors.toList());
 	}
 	
 	void sendPauseToggle() {
@@ -152,14 +170,23 @@ public class UIManager {
 		sendPause(false);
 	}
 	
+	Achievements getAchievements() {
+		return game.getAchievements();
+	}
+	
 	public void sendMenu() {
 		Log.i("Now showing menu");
-		menu.updateHighScore();
 		cardLayout.show(container, "menu");
 		menu.requestFocus();
 	}
 	
-	void sendPlay(String options) {
+	public void sendLoad() {
+		Log.i("Now loading");
+		cardLayout.show(container, "load");
+		load.updateLoad();
+	}
+	
+	void sendPlay() {
 		Log.i("Now playing");
 		cardLayout.show(container, "play");
 		play.getReady();

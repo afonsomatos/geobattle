@@ -5,12 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.io.IOManager;
@@ -20,7 +18,6 @@ import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
 import geobattle.living.bots.Bot;
 import geobattle.object.ArrowKeysFollower;
-import geobattle.object.ArrowKeysFollower.ArrowMap;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
@@ -31,9 +28,9 @@ import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Log;
 import geobattle.util.Palette;
-import geobattle.weapon.WeaponSet;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
+import geobattle.weapon.WeaponSet;
 
 public class Game implements Launchable, Renderable {
 
@@ -63,7 +60,6 @@ public class Game implements Launchable, Renderable {
 	private double scale;
 	
 	private int score = 0;
-	private int rounds = 0;
 	
 	private boolean outOfBorders;
 	private Counter outOfBorderCounter = new Counter(5, -1, 0, false) {
@@ -82,10 +78,10 @@ public class Game implements Launchable, Renderable {
 	private boolean gameOver;
 	
 	private boolean paused = false;
-	private int enemiesLeft;
+	private int enemies;
 	
 	private List<GameObject> gameObjects 	= new ArrayList<GameObject>(500);
-	private List<Score> lastScores 			= new ArrayList<Score>();
+	private List<Score> scores  			= new ArrayList<Score>();
 			
 	public enum State {
 		MENU,
@@ -98,6 +94,12 @@ public class Game implements Launchable, Renderable {
 	private String message = "";
 	private Event hideMessageEvent = new Event(0, false, () -> message = "");
 	
+	private Options options;
+	private Achievements achievements = new Achievements();
+	
+	private int level;
+	private boolean levelFinished;
+	
 	public Game() {
 		ioManager			= new IOManager(this);
 		hud 				= new HUD(this);
@@ -109,6 +111,22 @@ public class Game implements Launchable, Renderable {
 		rivalTags(Tag.Item, Tag.Player);
 		rivalTags(Tag.Enemy, Tag.Void);
 		rivalTags(Tag.Player, Tag.Void);
+		
+		giveInitialAchievements();
+	}
+	
+	private void giveInitialAchievements() {
+		// Default weapons
+		List<WeaponFactory> weapons = achievements.getWeapons();
+		weapons.add(WeaponFactory.Shotgun);
+		weapons.add(WeaponFactory.Sniper);
+		weapons.add(WeaponFactory.Rifle);
+		weapons.add(WeaponFactory.MachineGun);
+		weapons.add(WeaponFactory.Virus);
+	}
+	
+	public Achievements getAchievements() {
+		return achievements;
 	}
 	
 	public UIManager getUIManager() {
@@ -174,9 +192,8 @@ public class Game implements Launchable, Renderable {
 		state = State.END;
 		String name = uiManager.sendScoreEnter();
 		if (name != null)
-			saveScore(name, score);
-		rounds++;
-		uiManager.sendMenu();
+			saveScore(name, score, level);
+		uiManager.sendLoad();
 	}
 	
 	public Settings getSettings() {
@@ -206,21 +223,26 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	private void loadPlayerWeaponSet() {
-		WeaponSet ars = player.getArsenal();
+		int[] choices = options.getWeapons();
+		int slots = Math.min(choices.length, achievements.getWeaponSlots());
+		List<WeaponFactory> weapons = achievements.getWeapons();
+		WeaponSet weaponSet = new WeaponSet(slots);
 		
-		ars.store(0, WeaponFactory.Shotgun.create(this, player, Tag.Player));
-		ars.store(1, WeaponFactory.Sniper.create(this, player, Tag.Player));
-		ars.store(2, WeaponFactory.Rifle.create(this, player, Tag.Player));
-		ars.store(3, WeaponFactory.MachineGun.create(this, player, Tag.Player));
-		ars.store(4, WeaponFactory.Virus.create(this, player, Tag.Player));
-		
-		// TODO: Construct a dependency mechanism to handle spawning and killing weapons
-		for (Weapon w : ars.getSlots()) {
-			if (w != null)
-				spawnGameObject(w);
+		for (int i = 0; i < slots; ++i) {
+			Weapon w = weapons.get(choices[i]).create(this, player, Tag.Player);
+			weaponSet.store(i, w);
+			// TODO: Construct a dependency mechanism to handle spawning and killing weapons
+			spawnGameObject(w);
 		}
+
+		if (slots >= 0)
+			weaponSet.select(0);
 		
-		ars.select(0);
+		player.setWeaponSet(weaponSet);
+	}
+	
+	boolean isLevelFinished() {
+		return levelFinished;
 	}
 	
 	private void loadPlayer() {
@@ -239,7 +261,7 @@ public class Game implements Launchable, Renderable {
 	
 	private void reset() {
 		score 			= 0;
-		enemiesLeft 	= 0;
+		enemies 	= 0;
 		outOfBorders 	= false;
 		gettingHit 		= false;
 		gameOver		= false;
@@ -247,15 +269,14 @@ public class Game implements Launchable, Renderable {
 		outOfBorderCounter.reset();
 		schedule.clear();
 		gameObjects.clear();
-		
-		levelManager.setLevel(0);
 	}
 	
-	public void start(String opts) {
+	public void start(Options opts) {
+		this.options = opts;
+
 		// NOTE: If loading settings fails, the behavior is unexpected
-		loadSettings(opts);
+		loadSettings(opts.getSettings());
 		
-		Log.i("Game starting");
 		reset();
 		
 		// Enable input
@@ -263,20 +284,24 @@ public class Game implements Launchable, Renderable {
 		
 		loadCrossArrow();
 		loadPlayer();
-
-		levelManager.sendNextLevel();
+		
+		level = opts.getLevel();
+		levelFinished = false;
+		levelManager.sendLevel(opts.getLevel(), this::sendLevelFinished);
 
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
 		gameLoop();
 	}
 	
-	public int getRounds() {
-		return rounds;
-	}
-	
 	public HUD getHUD() {
 		return hud;
+	}
+	
+	private void sendLevelFinished() {
+		levelFinished = true;
+		Log.i("Level " + level + " finished");
+		sendMessage(3000, "Level finished, well done!");
 	}
 	
 	public double getRatio() {
@@ -339,7 +364,7 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	public List<Score> getScores() {
-		return new ArrayList<Score>(lastScores);
+		return scores;
 	}
 	
 	public int getUps() {
@@ -403,9 +428,6 @@ public class Game implements Launchable, Renderable {
 			.forEach(GameObject::update);
 
 		collisionHandler.handleCollisions();
-		
-		if (!levelManager.isLoadingLevel() && enemiesLeft == 0)
-			levelManager.sendNextLevel();
 	}
 	
 	@Override
@@ -438,7 +460,7 @@ public class Game implements Launchable, Renderable {
 		gameObject.spawn();
 		
 		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy)
-			enemiesLeft++;
+			enemies++;
 	}
 	
 	public void killGameObject(GameObject gameObject) {
@@ -447,7 +469,7 @@ public class Game implements Launchable, Renderable {
 		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy) {
 			sendMessage(2000, "Enemy killed +10");
 			score += 10;
-			enemiesLeft--;
+			enemies--;
 		}
 	}
 	
@@ -467,7 +489,6 @@ public class Game implements Launchable, Renderable {
 		ioManager.disable();
 		
 		// Remove player from sight
-		player.getWeapon().setHidden(true);
 		player.setActive(false);
 		player.kill();
 		
@@ -479,8 +500,8 @@ public class Game implements Launchable, Renderable {
 		return ioManager;
 	}
 	
-	public int getEnemiesLeft() {
-		return enemiesLeft;
+	public int getEnemies() {
+		return enemies;
 	}
 	
 	public int getFps() {
@@ -523,9 +544,9 @@ public class Game implements Launchable, Renderable {
 		return schedule;
 	}
 
-	public void saveScore(String name, int score) {
-		lastScores.add(new Score(name, score, rounds));
-		System.out.printf("%s had %d score in round %d", name, score, rounds);
+	public void saveScore(String name, int score, int level) {
+		scores.add(new Score(name, score, level));
+		Log.i(name + " had score " + score + " in level " + level);
 	}
 	
 	@Override

@@ -1,7 +1,5 @@
 package geobattle.special.slot;
 
-import geobattle.core.Tag;
-import geobattle.living.Player;
 import geobattle.special.Special;
 import geobattle.util.Tank;
 
@@ -25,13 +23,9 @@ public class UnitSpecialSlot extends SpecialSlot {
 			return;
 		
 		units.take(1);
-		
 		Special special = getSpecial();
-		Player player = special.getGame().getPlayer();
-		Tag tag = player.getTag();
-		
-		special.setPos(player.getPos());
-		special.setTag(tag);
+		// TODO: Make this abstract for every gameObject not such player
+		special.setPos(special.getGame().getPlayer().getPos());
 		special.send();
 	}
 	

@@ -21,10 +21,10 @@ public final class Util {
 	}
 	
 	public static int clamp(int min, int val, int max) {
-		return (int) clamp(min, val, max);
+		return (int) clamp((double)min, val, max);
 	}
 	
-	public static <T> T random(T[] array) {
+	public static <T> T random(T... array) {
 		return array[rand.nextInt(array.length)];
 	}
 	

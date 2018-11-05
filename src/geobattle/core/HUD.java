@@ -39,7 +39,6 @@ class HUD implements Renderable {
 			this::takingDamage,
 			this::exitingMap,
 			this::stats,
-			this::waveStatus,
 			this::pause,
 			this::info,
 			this::ammo,
@@ -58,23 +57,6 @@ class HUD implements Renderable {
 		Util.Graphics.drawStringCentered(gfx, width / 2, PADDING + 60, game.getMessage());
 	}
 	
-	private void waveStatus(Graphics2D gfx) {
-		String txt = "";
-		
-		LevelManager levelManager = game.getLevelManager();
-		boolean loading = levelManager.isLoadingLevel();
-		int countDown = levelManager.getLevelCountDown();
-		
-		if (loading && countDown > 0)
-			txt = "Next wave in " +levelManager.getLevelCountDown();
-		else if (!loading)
-			txt = "Enemies left: " + game.getEnemiesLeft();
-	
-		int ascent = gfx.getFontMetrics().getMaxAscent();
-		
-		gfx.drawString(txt, game.getWidth() - gfx.getFontMetrics().stringWidth(txt) - PADDING, PADDING + ascent);
-	}
-	
 	private void stats(Graphics2D gfx) {
 		int ascent 		= gfx.getFontMetrics().getMaxAscent();
 		int fontsize 	= gfx.getFontMetrics().getFont().getSize();
@@ -84,7 +66,7 @@ class HUD implements Renderable {
 				PADDING, PADDING + ascent);
 		gfx.drawString("Score: " 	+ game.getScore(),
 				PADDING, PADDING + ascent + fontsize + spacing);
-		gfx.drawString("Wave: " 	+ game.getLevelManager().getLevel(),
+		gfx.drawString("Wave: " 	+ game.getLevelManager().getWave(),
 				PADDING, PADDING + ascent + 2 * (spacing + fontsize));
 		gfx.drawString("Shield: " 	+ (int) player.getShield(),
 				PADDING, PADDING + ascent + 3 * (fontsize + spacing));

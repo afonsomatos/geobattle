@@ -1,36 +1,23 @@
 package geobattle.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
 import geobattle.core.Score;
 
 @SuppressWarnings("serial")
 class Menu extends JPanel {
-
-	private static final int PADDING = 10;
-	private static final int MAX_N_SCORES = 15;
 	
 	private JPanel optionsPanel 	= new JPanel();
 	private JTextArea optionsTxt 	= new JTextArea(10, 20);
@@ -38,7 +25,7 @@ class Menu extends JPanel {
 	
 	private String options = "";
 	private UIManager uiManager;
-	
+
 	Menu(UIManager uiManager) {
 		this.uiManager = uiManager;
 		
@@ -56,18 +43,21 @@ class Menu extends JPanel {
 		welcomeLabel.setFont(font);
 
 		Button playBtn = new Button("Play");
+		playBtn.setFont(font);
 		playBtn.setForeground(bg);
 		playBtn.setBackground(fg);
 		playBtn.setPressedBackground(bg);
 		playBtn.setPressedForeground(fg);
 		
 		Button optsBtn = new Button("Options");
+		optsBtn.setFont(font);
 		optsBtn.setForeground(bg);
 		optsBtn.setBackground(fg);
 		optsBtn.setPressedBackground(bg);
 		optsBtn.setPressedForeground(fg);
 		
 		Button quitBtn = new Button("Quit");
+		quitBtn.setFont(font);
 		quitBtn.setForeground(bg);
 		quitBtn.setBackground(fg);
 		quitBtn.setPressedBackground(bg);
@@ -79,11 +69,10 @@ class Menu extends JPanel {
 		highScoreLabel = new JLabel();
 		highScoreLabel.setForeground(fg);
 		highScoreLabel.setFont(font);
-		
-		updateHighScore();
-		
+				
 		playBtn.addActionListener(e -> {
-			uiManager.sendPlay(options);
+			uiManager.getOptions().setSettings(options);
+			uiManager.sendLoad();
 		});
 		
 		quitBtn.addActionListener(e -> {
@@ -111,6 +100,8 @@ class Menu extends JPanel {
 		box.add(Box.createVerticalStrut(10));
 		box.add(highScoreLabel);
 		
+		box.setOpaque(true);
+		box.setBorder(new EmptyBorder(10, 10, 10, 10));
 		add(box, new GridBagConstraints());
 	}
 	
@@ -118,25 +109,6 @@ class Menu extends JPanel {
 		if (JOptionPane.showConfirmDialog(Menu.this, optionsPanel, "Options", 
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION)
 			options = optionsTxt.getText();
-	}
-	
-	void updateHighScore() {
-		List<Score> scores = uiManager.getScores();
-		scores.sort((s1, s2) -> s2.score - s1.score);
-
-		String highScoreTxt = "<html>Times played: " + scores.size();
-		
-		for (int i = 0; i < MAX_N_SCORES; ++i) {
-			if (scores.size() <= i) {
-				highScoreTxt += "<br>";
-				continue;
-			}
-			Score s = scores.get(i);
-			String txt = String.format("%dº %s ~ %d", i + 1, s.name, s.score);
-			highScoreTxt += "<br>" + txt;
-		}
-		
-		highScoreLabel.setText(highScoreTxt);
 	}
 
 }

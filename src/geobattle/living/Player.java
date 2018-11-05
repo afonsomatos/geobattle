@@ -43,7 +43,7 @@ public class Player extends Bot implements WeaponHolder {
 	private Tank shieldTank = new Tank(300);
 	private boolean firing = false;
 	
-	private WeaponSet arsenal = new WeaponSet(5);
+	private WeaponSet weaponSet;
 	private GameObject target = null;
 	
 	private SpecialSet specialSet = new SpecialSet(3);
@@ -80,7 +80,7 @@ public class Player extends Bot implements WeaponHolder {
 		
 		SpecialSlot slotZ = new UnitSpecialSlot(new TroopsSpecial(game, Tag.Player, Tag.Enemy), 3);
 		
-		BombSpecial bombSpecial = new BombSpecial(game, Tag.Player);
+		BombSpecial bombSpecial = new BombSpecial(game, Tag.Void);
 		bombSpecial.setColor(Palette.CYAN);
 		SpecialSlot slotX = new UnitSpecialSlot(bombSpecial, 10);
 		SpecialSlot slotC = new TimedSpecialSlot(new AsteroidSpecial(game, this, 5000), 6000);
@@ -143,8 +143,12 @@ public class Player extends Bot implements WeaponHolder {
 			super.suffer(remainder);
 	}
 	
+	public void setWeaponSet(WeaponSet weaponSet) {
+		this.weaponSet = weaponSet;
+	}
+	
 	public WeaponSet getArsenal() {
-		return arsenal;
+		return weaponSet;
 	}
 	
 	public void setFiring(boolean firing) {
@@ -153,7 +157,7 @@ public class Player extends Bot implements WeaponHolder {
 	
 	@Override
 	public Weapon getWeapon() {
-		return arsenal.getSelectedWeapon();
+		return weaponSet.getSelectedWeapon();
 	}
 	
 	public void setTarget(GameObject target) {

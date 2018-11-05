@@ -39,7 +39,7 @@ public class Test {
 			Bot b = new Bubble(game, 200, 200);
 			b.setTag(Tag.Enemy);
 			b.setTarget(game.getPlayer());
-			game.spawnGameObject(new BotSpawner(game, b, 3000, () -> game.getLevelManager().setLoadingLevel(false) ));
+			game.spawnGameObject(new BotSpawner(game, b, 3000));
 		});
 		
 		map.put("spawnx200", game -> {
@@ -54,7 +54,7 @@ public class Test {
 			for (Bot b : creepers) {
 				b.setTag(Tag.Enemy);
 				b.setTarget(game.getPlayer());
-				game.spawnGameObject(new BotSpawner(game, b, 3000, () -> game.getLevelManager().setLoadingLevel(false) ));
+				game.spawnGameObject(new BotSpawner(game, b, 3000));
 			}
 
 		});
@@ -63,7 +63,7 @@ public class Test {
 			Random rand = new Random();
 			int x = game.getWidth() / 2;
 			int y = game.getHeight() / 2;
-			int level = game.getLevelManager().getLevel();
+			int level = game.getLevelManager().getWave();
 			
 			Bot newBot;
 			
@@ -90,7 +90,7 @@ public class Test {
 			
 			newBot.setTarget(game.getPlayer());
 			newBot.setTag(Tag.Enemy);
-			game.spawnGameObject(new BotSpawner(game, newBot, 3000, () -> game.getLevelManager().setLoadingLevel(false) ));
+			game.spawnGameObject(new BotSpawner(game, newBot, 3000));
 			
 		});
 		

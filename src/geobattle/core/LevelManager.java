@@ -1,125 +1,94 @@
 package geobattle.core;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
-import geobattle.living.Living;
 import geobattle.living.Player;
-import geobattle.living.bots.Bomber;
 import geobattle.living.bots.Bot;
-import geobattle.living.bots.BotBuildHouse;
 import geobattle.living.bots.BotSpawner;
-import geobattle.living.bots.Bubble;
-import geobattle.living.bots.Creeper;
-import geobattle.living.bots.Fly;
-import geobattle.living.bots.Sentry;
-import geobattle.living.bots.Slicer;
-import geobattle.living.bots.Slime;
 import geobattle.living.bots.Soldier;
-import geobattle.living.bots.Tower;
-import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
+import geobattle.util.Log;
+import geobattle.util.Util;
 
 public class LevelManager {
 
 	private Game game;
 
-	private int level = 0;
-	private boolean loadingLevel = false;
-	private int levelCountDown;
+	private int waveCountDown;
+	private int wave;
+	private int level;
+	private int dead;
+	
+	private Runnable levelFinisher;
 	
 	public LevelManager(Game game) {
 		this.game = game;
 	}
 	
-	public void sendNextLevel() {
-		loadingLevel = true;
-		levelCountDown = 3;
-
-		Event event = new Event();
-		event.setRunnable(() -> {
-			if (--levelCountDown == 0) {
-				level++;
-				loadLevel();
-				event.setOff(true);
-			}
-		});
-		event.setDelay(1000);
-		event.setRepeat(true);
-
-		game.getSchedule().add(event);
+	public void sendLevel(int level, Runnable levelFinisher) {
+		this.level = level;
+		this.levelFinisher = levelFinisher;
+		sendNextWave();
 	}
 	
-	private void loadLevel() {
+	private void loadWave(Runnable finish) {
+
 		int width = game.getWidth();
 		int height = game.getHeight();
 		Player player = game.getPlayer();
 		
-		Random rand = new Random();
-		
-		List<Bot> newEnemies = new ArrayList<Bot>();
-		
-//		int x = 20;
-//		while(--x > 0)
-//			newEnemies.add(new Zombie(game, rand.nextInt(width), rand.nextInt(height)));
-//		
-		Test.run("showcase", game);
-		
-		boolean debug=true;
-		
-		if (!debug) {
-			
-		for (int i = 1; i < level + 1; ++i) {
-			if (i % 9 == 0)
-				newEnemies.add(new Zombie(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 8 == 0)
-				newEnemies.add(new Bomber(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 7 == 0)
-				newEnemies.add(new Fly(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 6 == 0)
-				newEnemies.add(new Slicer(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 5 == 0)
-				newEnemies.add(new Tower(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 4 == 0)
-				newEnemies.add(new Soldier(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 3 == 0)
-				newEnemies.add(new Bubble(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 2 == 0)
-				newEnemies.add(new Slime(game, rand.nextInt(width), rand.nextInt(height)));
-			else if (i % 1 == 0)
-				newEnemies.add(new Creeper(game, rand.nextInt(width), rand.nextInt(height)));
+		int n = wave * level;
+		dead = 0;
+		Bot[] bots = new Bot[n];
+		for (int i = 0; i < bots.length; ++i) {
+			int x = Util.randomInteger(20, width - 20);
+			int y = Util.randomInteger(20, height - 20);
+			Soldier s = new Soldier(game, x, y);
+			s.setTag(Tag.Enemy);
+			s.setTarget(player);
+			s.getTriggerMap().addLast("die", () -> {
+				if (++dead >= bots.length)
+					finishWave();
+			});
+			game.spawnGameObject(new BotSpawner(game, s, 3000));
 		}
+	}
+	
+	private void finishWave() {
+		Log.i("Wave finished!");
+		if (wave == 10) {
+			levelFinisher.run();
+			return;
+		}
+		
+		game.sendMessage(3000, "Wave cleared!");
+		game.getSchedule().next(3000, this::sendNextWave);
+	}
+	
+	private void sendNextWave() {
+		waveCountDown = 10;
 
-		}
-		
-		for (Bot e : newEnemies) {
-			e.setTarget(player);
-			e.setTag(Tag.Enemy);
-			game.spawnGameObject(new BotSpawner(game, e, 3000, () -> loadingLevel = false ));
-		}
-		
+		Event event = new Event();
+		game.sendMessage(1000, "New wave in " + waveCountDown);
+		event.setRunnable(() -> {
+			if (--waveCountDown == 0) {
+				wave++;
+				loadWave(this::finishWave);
+				event.setOff(true);
+				game.sendMessage(1000, "Go!");
+			} else {
+				game.sendMessage(1000, "New wave in " + waveCountDown);
+			}
+		});
+		event.setDelay(1000);
+		event.setRepeat(true);
+		game.getSchedule().add(event);
 	}
 	
-	public int getLevelCountDown() {
-		return levelCountDown;
+	public int getWaveCountDown() {
+		return waveCountDown;
 	}
 
-	public boolean isLoadingLevel() {
-		return this.loadingLevel;
+	public int getWave() {
+		return this.wave;
 	}
-	
-	public void setLoadingLevel(boolean loadingLevel) {
-		this.loadingLevel = loadingLevel;
-	}
-	
-	public int getLevel() {
-		return this.level;
-	}
-	
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	
+
 }

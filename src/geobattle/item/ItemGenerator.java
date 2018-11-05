@@ -36,7 +36,7 @@ public class ItemGenerator extends GameObject {
 	
 	@Override
 	public void update() {
-		int wave = game.getLevelManager().getLevel();
+		int wave = game.getLevelManager().getWave();
 		
 		// Don't spawn at start or if it's not a new wave
 		if (wave == 0 || wave == lastWave)

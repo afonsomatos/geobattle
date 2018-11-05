@@ -14,6 +14,11 @@ public class TriggerMap {
 			map.get(key).forEach(Runnable::run);
 	}
 	
+	public void addLast(Object key, Runnable runnable) {
+		map.putIfAbsent(key, new LinkedList<Runnable>());
+		map.get(key).add(runnable);
+	}
+	
 	public void add(Object key, Runnable runnable) {
 		map.putIfAbsent(key, new LinkedList<Runnable>());
 		map.get(key).addFirst(runnable);

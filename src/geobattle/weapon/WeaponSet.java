@@ -65,7 +65,7 @@ public class WeaponSet {
 	}
 	
 	public Weapon getSelectedWeapon() {
-		return slots[selected];
+		return slots.length == 0 ? null : slots[selected];
 	}
 	
 }
