@@ -13,7 +13,7 @@ public class Achievements {
 	
 	private int weaponSlots = 3;
 	private int specialSlots = 3;
-	private int level = 0;
+	private int level = 1;
 	
 	void setLevel(int level) {
 		this.level = level;

@@ -301,7 +301,10 @@ public class Game implements Launchable, Renderable {
 	private void sendLevelFinished() {
 		levelFinished = true;
 		Log.i("Level " + level + " finished");
-		sendMessage(3000, "Level finished, well done!");
+		schedule.next(3000, () -> {
+			achievements.setLevel(level + 1);
+			end();
+		});
 	}
 	
 	public double getRatio() {

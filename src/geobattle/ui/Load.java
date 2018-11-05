@@ -57,7 +57,7 @@ class Load extends JPanel {
 		title.setForeground(Color.WHITE);
 		
 		// Level Chooser
-		levelChooser = new Chooser(uiStyle, new Interval<Integer>(0,10), "Level: "); 
+		levelChooser = new Chooser(uiStyle, new Interval<Integer>(1, 10), "Level: "); 
 		levelChooser.addChangedTrigger(this::levelSwitch);
 		
 		levelPicker.add(levelChooser, BorderLayout.CENTER);
@@ -127,7 +127,7 @@ class Load extends JPanel {
 	}
 	
 	void updateLoad() {
-		
+		levelChooser.setInterval(new Interval<Integer>(1, uiManager.getAchievements().getLevel()));
 		levelSwitch();
 	}
 	

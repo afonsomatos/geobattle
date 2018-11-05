@@ -36,6 +36,7 @@ class HUD implements Renderable {
 	private List<Renderable> drawers = Arrays.asList(
 			this::border,
 			this::gameOver,
+			this::levelFinished,
 			this::takingDamage,
 			this::exitingMap,
 			this::stats,
@@ -171,6 +172,34 @@ class HUD implements Renderable {
 				BORDER_THICKNESS/2,
 				width - BORDER_THICKNESS,
 				height - BORDER_THICKNESS);
+	}
+	
+	private void levelFinished(Graphics2D gfx) {
+		if (!game.isLevelFinished()) return;
+		
+		gfx.setFont(LABELS_FONT.deriveFont(Font.BOLD, 40));
+		
+		String str = "Level cleared";
+		int h = gfx.getFontMetrics().getHeight();
+		int w = gfx.getFontMetrics().stringWidth(str);
+		int x = game.getWidth() / 2 - w/2;
+		int y = game.getHeight() / 2 - h/2;
+		
+		gfx.setColor(Palette.BLACK);
+		Util.drawStringOutline(gfx, str, x, y);
+		gfx.setColor(Palette.WHITE);
+		gfx.drawString(str, x, y);
+		
+		gfx.setFont(LABELS_FONT.deriveFont(Font.BOLD, 24));
+		str = "Your score was " + game.getScore();
+		w = gfx.getFontMetrics().stringWidth(str);
+		x = game.getWidth() / 2 - w/2;
+		y = game.getHeight() / 2 + 30;
+		
+		gfx.setColor(Palette.BLACK);
+		Util.drawStringOutline(gfx, str, x, y);
+		gfx.setColor(Palette.WHITE);
+		gfx.drawString(str, x, y);
 	}
 	
 	private void gameOver(Graphics2D gfx) {
