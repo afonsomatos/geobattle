@@ -11,9 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import geobattle.core.Achievements;
 import geobattle.core.Options;
 import geobattle.core.Score;
 import geobattle.util.Interval;
+import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.weapon.WeaponFactory;
 
@@ -26,6 +28,8 @@ class Load extends JPanel {
 	private UIManager uiManager;
 	
 	private JLabel highScoresLabel = new JLabel();
+	
+	private Picker weaponPicker;
 	
 	Load(UIManager uiManager) {
 		
@@ -84,23 +88,13 @@ class Load extends JPanel {
 		nav.add(next);
 		nav.add(cancel);
 		
-		String[] weaponSlots =
-				uiManager
-					.getAchievements()
-					.getWeapons()
-					.stream()
-					.map(WeaponFactory::getName)
-					.toArray(x -> new String[x]);
-		
-		Picker specialPicker	= new Picker(uiStyle, "Special", Palette.MAGENTA, weaponSlots, 5);
-		Picker weaponPicker		= new Picker(uiStyle, "Weapons", Palette.BLUE, weaponSlots, 3);
-		Picker powerupsPicker	= new Picker(uiStyle, "Powerups", Palette.GREEN, weaponSlots, 8);
+		weaponPicker = new Picker(uiStyle, "Weapons", Palette.BLUE);
 		
 		next.addActionListener(e -> {
 			Options opts = uiManager.getOptions();
-			opts.setSpecials(specialPicker.getSelected());
+		//	opts.setSpecials(specialPicker.getSelected());
 			opts.setWeapons(weaponPicker.getSelected());
-			opts.setPowerups(powerupsPicker.getSelected());
+		//	opts.setPowerups(powerupsPicker.getSelected());
 			opts.setLevel(levelChooser.getValue());
 			uiManager.sendPlay();
 		});
@@ -129,8 +123,21 @@ class Load extends JPanel {
 	void updateLoad() {
 		levelChooser.setInterval(new Interval<Integer>(1, uiManager.getAchievements().getLevel()));
 		levelSwitch();
+		updateWeapons();
 	}
 	
+	private void updateWeapons() {
+		Log.i("weapons updated!");
+		Achievements ach = uiManager.getAchievements();
+		weaponPicker.setMax(ach.getWeaponSlots());
+		weaponPicker.setSlots(
+				ach
+					.getWeapons()
+					.stream()
+					.map(WeaponFactory::getName)
+					.toArray(x -> new String[x])
+					);
+	}
 	
 	void levelSwitch() {
 		int level = levelChooser.getValue();

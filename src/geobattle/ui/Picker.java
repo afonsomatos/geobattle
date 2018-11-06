@@ -21,22 +21,67 @@ class Picker extends JPanel {
 	private int max;
 	private boolean[] btns;
 	
+	private JPanel col = new JPanel();
 	private JLabel title = new JLabel();
-
-	Picker(UIStyle uiStyle, String name, Color titleColor, String[] slots, int max) {
-		this.max = max;
+	private UIStyle uiStyle;
+	private Color selectedColor;
+	
+	Picker(UIStyle uiStyle, String name, Color titleColor) {
+		this.uiStyle = uiStyle;
+		this.selectedColor = titleColor;
 		
 		setName(name);
 		
-		Font font = uiStyle.getFont();
-
-		btns = new boolean[slots.length];
-		
-		JPanel col = new JPanel();
 		col.setBackground(null);
 		col.setBorder(null);
-		col.setLayout(new GridLayout(slots.length, 1));
 
+		title.setFont(uiStyle.getFont());
+		title.setPreferredSize(new Dimension(0, TITLE_HEIGHT));
+		title.setOpaque(true);
+		title.setHorizontalAlignment(JLabel.CENTER);
+		title.setForeground(Color.WHITE);
+		title.setBackground(titleColor);
+		
+		setBackground(null);
+		setLayout(new BorderLayout());
+		
+		add(title, BorderLayout.NORTH);
+		add(col, BorderLayout.CENTER);	
+		
+		setSlots(new String[0]);
+		updateTitle();
+	}
+	
+	int[] getSelected() {
+		return selected.stream().mapToInt(i -> i).toArray();
+	}
+	
+	private boolean toggle(int i) {
+		if (selected.contains(i)) {
+			selected.remove((Integer) i);
+			return true;
+		} else if (selected.size() < max) {
+			selected.add(i);
+			return true;
+		}
+		return false;
+	}
+	
+	void setMax(int max) {
+		this.max = max;
+		updateTitle();
+	}
+	
+	void setSlots(String[] slots) {
+		
+		Font font = uiStyle.getFont();
+		
+		// Clear previous slots
+		btns = new boolean[slots.length];
+		selected.clear();
+		col.removeAll();
+
+		col.setLayout(new GridLayout(slots.length, 1));
 		for (int i = 0; i < slots.length; ++i) {
 			
 			JPanel slot = new JPanel();
@@ -56,7 +101,7 @@ class Picker extends JPanel {
 				btns[x] = !btns[x];
 				if (btns[x]) {
 					btn.setText("-");
-					label.setForeground(titleColor);
+					label.setForeground(selectedColor);
 				} else {
 					btn.setText("+");
 					label.setForeground(Color.WHITE);
@@ -69,35 +114,7 @@ class Picker extends JPanel {
 			col.add(slot);
 		}
 		
-		title.setFont(font);
-		title.setPreferredSize(new Dimension(0, TITLE_HEIGHT));
-		title.setOpaque(true);
-		title.setHorizontalAlignment(JLabel.CENTER);
-		title.setForeground(Color.WHITE);
-		title.setBackground(titleColor);
-		
-		setBackground(null);
-		setLayout(new BorderLayout());
-		
-		add(title, BorderLayout.NORTH);
-		add(col, BorderLayout.CENTER);	
-		
 		updateTitle();
-	}
-	
-	int[] getSelected() {
-		return selected.stream().mapToInt(i -> i).toArray();
-	}
-	
-	private boolean toggle(int i) {
-		if (selected.contains(i)) {
-			selected.remove((Integer) i);
-			return true;
-		} else if (selected.size() < max) {
-			selected.add(i);
-			return true;
-		}
-		return false;
 	}
 	
 	private void updateTitle() {

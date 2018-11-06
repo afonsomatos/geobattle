@@ -4,19 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geobattle.special.Special;
+import geobattle.util.Log;
 import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
 
 	private List<WeaponFactory> weapons = new ArrayList<>();
-	private List<Special> specials = new ArrayList<>();
 	
-	private int weaponSlots = 3;
-	private int specialSlots = 3;
-	private int level = 1;
+	private int weaponSlots;
+	private int level = 0;
+	
+	private final WeaponFactory[] allWeapons = new WeaponFactory[] {
+				WeaponFactory.Rifle,
+				WeaponFactory.Shotgun,
+				WeaponFactory.Sniper,
+				WeaponFactory.MachineGun,
+				WeaponFactory.Virus
+	};
+	
+	Achievements() {
+		// Go straight to level 1
+		unlockLevel();
+	}
 	
 	void setLevel(int level) {
 		this.level = level;
+	}
+	
+	void unlockLevel() {
+		level += 1;
+		Log.i("Level unlocked: " + level);
+		
+		// Unlock a new weapon
+		if (allWeapons.length <= level)
+			weapons.add(allWeapons[level - 1]);
+		
+		// Unlock a new slot every 3 levels
+		weaponSlots = 1 + level / 3;
 	}
 	
 	public int getWeaponSlots() {
@@ -27,28 +51,12 @@ public class Achievements {
 		this.weaponSlots = weaponSlots;
 	}
 
-	public int getSpecialSlots() {
-		return specialSlots;
-	}
-
-	public void setSpecialSlots(int specialSlots) {
-		this.specialSlots = specialSlots;
-	}
-
 	void addWeapon(WeaponFactory weapon) {
 		weapons.add(weapon);
 	}
 	
-	void addSpecial(Special special) {
-		specials.add(special);
-	}
-	
 	public int getLevel() {
 		return level;
-	}
-	
-	public List<Special> getSpecials() {
-		return specials;
 	}
 	
 	public List<WeaponFactory> getWeapons() {

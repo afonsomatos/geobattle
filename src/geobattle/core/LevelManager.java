@@ -1,7 +1,10 @@
 package geobattle.core;
 
+import java.util.List;
+
 import geobattle.living.Player;
 import geobattle.living.bots.Bot;
+import geobattle.living.bots.BotFactory;
 import geobattle.living.bots.BotSpawner;
 import geobattle.living.bots.Bubble;
 import geobattle.living.bots.Creeper;
@@ -16,12 +19,34 @@ public class LevelManager {
 
 	private Game game;
 
+	private final static int WAVE_COUNT_DOWN = 3;
+	private final static int WAVES_PER_LEVEL = 3;
+	
 	private int waveCountDown;
 	private int wave;
 	private int level;
 	private int dead;
 	
 	private Runnable levelFinisher;
+	
+	private static class Spawn {
+		final int weight;
+		final int minLevel;
+		final Class<? extends Bot> botClass;
+		
+		Spawn(int weight, int minLevel, Class<? extends Bot> botClass) {
+			this.botClass = botClass;
+			this.minLevel = minLevel;
+			this.weight = weight;
+		}
+	}
+	
+	private static Spawn[] spawns = new Spawn[] {
+		new Spawn(10, 1, Soldier.class),
+		new Spawn(4, 2, Creeper.class),
+		new Spawn(5, 3, Slicer.class),
+		new Spawn(3, 4, Bubble.class),
+	};
 	
 	public LevelManager(Game game) {
 		this.game = game;
@@ -30,6 +55,7 @@ public class LevelManager {
 	public void sendLevel(int level, Runnable levelFinisher) {
 		this.level = level;
 		this.levelFinisher = levelFinisher;
+		wave = 0;
 		sendNextWave();
 	}
 	
@@ -38,45 +64,25 @@ public class LevelManager {
 		int width = game.getWidth();
 		int height = game.getHeight();
 		Player player = game.getPlayer();
-		
-		int n = wave * level;
-		
-		Integer[][] table = new Integer[][] {
-			{05, 03}, // 0 SLICER
-			{10, 01}, // 1 SOLDIER
-			{03, 04}, // 2 BUBBLE
-			{04, 02}, // 3 CREEPER
-		};
-		
-		WeightedRandomBag<Integer> bag = new WeightedRandomBag<Integer>();
-		for (int i = 0; i < table.length; ++i) {
-			if (level >= table[i][1]) {
-				bag.addEntry(i, table[i][0]);
-			}
-		}
+
+		// Construct probability bag
+		WeightedRandomBag<Spawn> bag = new WeightedRandomBag<Spawn>();
+		for (Spawn s : spawns)
+			if (level >= s.minLevel)
+				bag.addEntry(s, s.weight);
 		
 		dead = 0;
+		int n = wave + (level - 1);
 		Bot[] bots = new Bot[n];
 		for (int i = 0; i < bots.length; ++i) {
+			Spawn s = bag.getRandom();
+			Bot b = BotFactory.create(game, s.botClass);
 			
 			// Random location
 			int x = Util.randomInteger(20, width - 20);
 			int y = Util.randomInteger(20, height - 20);
 			
-			// Get random enemy index
-			int v = bag.getRandom();
-			
-			Bot b = null;
-			if (v == 0) {
-				b = new Slicer(game, x, y);
-			} else if (v == 1) {
-				b = new Soldier(game, x, y);
-			} else if (v == 2) {
-				b = new Bubble(game, x, y);
-			} else if (v == 3) {
-				b = new Creeper(game, x, y);
-			}
-			
+			b.moveTo(x, y);
 			b.setTag(Tag.Enemy);
 			b.setTarget(player);
 			b.getTriggerMap().addLast("die", () -> {
@@ -89,7 +95,7 @@ public class LevelManager {
 	
 	private void finishWave() {
 		Log.i("Wave finished!");
-		if (wave == 1) {
+		if (wave == WAVES_PER_LEVEL) {
 			levelFinisher.run();
 			return;
 		}
@@ -98,8 +104,8 @@ public class LevelManager {
 	}
 	
 	private void sendNextWave() {
-		waveCountDown = 10;
-
+		waveCountDown = WAVE_COUNT_DOWN;
+		
 		Event event = new Event();
 		game.sendMessage(1000, "New wave in " + waveCountDown);
 		event.setRunnable(() -> {

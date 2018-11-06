@@ -182,8 +182,8 @@ public class UIManager {
 	
 	public void sendLoad() {
 		Log.i("Now loading");
-		cardLayout.show(container, "load");
 		load.updateLoad();
+		cardLayout.show(container, "load");
 	}
 	
 	void sendPlay() {

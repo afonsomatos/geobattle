@@ -111,18 +111,6 @@ public class Game implements Launchable, Renderable {
 		rivalTags(Tag.Item, Tag.Player);
 		rivalTags(Tag.Enemy, Tag.Void);
 		rivalTags(Tag.Player, Tag.Void);
-		
-		giveInitialAchievements();
-	}
-	
-	private void giveInitialAchievements() {
-		// Default weapons
-		List<WeaponFactory> weapons = achievements.getWeapons();
-		weapons.add(WeaponFactory.Shotgun);
-		weapons.add(WeaponFactory.Sniper);
-		weapons.add(WeaponFactory.Rifle);
-		weapons.add(WeaponFactory.MachineGun);
-		weapons.add(WeaponFactory.Virus);
 	}
 	
 	public Achievements getAchievements() {
@@ -302,7 +290,7 @@ public class Game implements Launchable, Renderable {
 		levelFinished = true;
 		Log.i("Level " + level + " finished");
 		schedule.next(3000, () -> {
-			achievements.setLevel(level + 1);
+			achievements.unlockLevel();
 			end();
 		});
 	}

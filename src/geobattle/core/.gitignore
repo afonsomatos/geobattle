@@ -51,3 +51,5 @@
 /Options.class
 /StartOptions.class
 /Achievements.class
+/LevelManager$Spawn.class
+/Achievements$PrizeBox.class
