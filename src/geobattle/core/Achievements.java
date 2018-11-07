@@ -3,7 +3,6 @@ package geobattle.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import geobattle.special.Special;
 import geobattle.util.Log;
 import geobattle.weapon.WeaponFactory;
 
@@ -14,7 +13,7 @@ public class Achievements {
 	private int weaponSlots;
 	private int level = 0;
 	
-	private final WeaponFactory[] allWeapons = new WeaponFactory[] {
+	private static final WeaponFactory[] ALL_WEAPONS = new WeaponFactory[] {
 				WeaponFactory.Rifle,
 				WeaponFactory.Shotgun,
 				WeaponFactory.Sniper,
@@ -36,8 +35,8 @@ public class Achievements {
 		Log.i("Level unlocked: " + level);
 		
 		// Unlock a new weapon
-		if (allWeapons.length <= level)
-			weapons.add(allWeapons[level - 1]);
+		if (level <= ALL_WEAPONS.length)
+			weapons.add(ALL_WEAPONS[level - 1]);
 		
 		// Unlock a new slot every 3 levels
 		weaponSlots = 1 + level / 3;

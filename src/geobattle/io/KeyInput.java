@@ -38,9 +38,9 @@ public class KeyInput extends KeyAdapter {
 		bind("released R", this::sendReload);
 		bind("released Q", this::sendSwap);
 		
-		IntStream.range(0, 9).forEach(i ->
+		IntStream.range(1, 9).forEach(i ->
 			bind("released " + i, () ->
-				game.getPlayer().getArsenal().select(i)
+				game.getPlayer().getArsenal().select(i - 1)
 			)
 		);
 		

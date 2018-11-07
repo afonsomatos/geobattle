@@ -119,16 +119,16 @@ class HUD implements Renderable {
 	
 	private void weaponSet(Graphics2D gfx) {
 		WeaponSet ars = player.getArsenal();
-		int selected = ars.getSelected();
+		int selected = ars.getSelected() + 1;
 		int total = ars.size;
 		String txt = "";
 		
-		for (int i = 0; i < total; ++i) {
+		for (int i = 1; i <= total; ++i) {
 			if (i == selected)
 				txt += "<" + i + ">";
 			else
 				txt += "[" + i + "]";
-			txt += i == total - 1 ? "" : "   ";
+			txt += i == total ? "" : "   ";
 		}
 		
 		Util.Graphics.drawStringCentered(gfx, width / 2, height - PADDING - 10, txt);
