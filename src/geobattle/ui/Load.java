@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import geobattle.core.Achievements;
+import geobattle.core.Achievements.SpecialSlotFactory;
 import geobattle.core.Options;
 import geobattle.core.Score;
 import geobattle.util.Interval;
@@ -30,6 +31,7 @@ class Load extends JPanel {
 	private JLabel highScoresLabel = new JLabel();
 	
 	private Picker weaponPicker;
+	private Picker specialPicker;
 	
 	Load(UIManager uiManager) {
 		
@@ -89,10 +91,11 @@ class Load extends JPanel {
 		nav.add(cancel);
 		
 		weaponPicker = new Picker(uiStyle, "Weapons", Palette.BLUE);
+		specialPicker = new Picker(uiStyle, "Specials", Palette.MAGENTA);
 		
 		next.addActionListener(e -> {
 			Options opts = uiManager.getOptions();
-		//	opts.setSpecials(specialPicker.getSelected());
+			opts.setSpecials(specialPicker.getSelected());
 			opts.setWeapons(weaponPicker.getSelected());
 		//	opts.setPowerups(powerupsPicker.getSelected());
 			opts.setLevel(levelChooser.getValue());
@@ -110,7 +113,7 @@ class Load extends JPanel {
 		grid.setHgap(10);
 		
 		gridPanel.add(left);
-		//gridPanel.add(specialPicker);
+		gridPanel.add(specialPicker);
 		gridPanel.add(weaponPicker);
 		//gridPanel.add(powerupsPicker);
 		
@@ -124,10 +127,23 @@ class Load extends JPanel {
 		levelChooser.setInterval(new Interval<Integer>(1, uiManager.getAchievements().getLevel()));
 		levelSwitch();
 		updateWeapons();
+		updateSpecials();
+	}
+
+	private void updateSpecials() {
+		Log.i("Specials updated");
+		Achievements ach = uiManager.getAchievements();
+		specialPicker.setMax(ach.getSpecialSlots());
+		specialPicker.setSlots(
+				ach
+					.getSpecials()
+					.stream()
+					.map(SpecialSlotFactory::getName)
+					.toArray(x -> new String[x])
+					);
 	}
 	
 	private void updateWeapons() {
-		Log.i("weapons updated!");
 		Achievements ach = uiManager.getAchievements();
 		weaponPicker.setMax(ach.getWeaponSlots());
 		weaponPicker.setSlots(

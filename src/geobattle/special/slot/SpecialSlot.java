@@ -13,7 +13,7 @@ public abstract class SpecialSlot {
 	public abstract String getIndicator();
 	public abstract void invoke();
 	
-	Special getSpecial() {
+	public Special getSpecial() {
 		return special;
 	}
 	

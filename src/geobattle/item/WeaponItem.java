@@ -32,7 +32,7 @@ class WeaponItem extends Item {
 	public void collected(GameObject collector) {
 		if (collector instanceof Player) {
 			Player player = (Player) collector;
-			WeaponSet ars = player.getArsenal();
+			WeaponSet ars = player.getWeaponSet();
 			Weapon selectedWeapon = ars.getSelectedWeapon();
 			
 			if (selectedWeapon != null) {

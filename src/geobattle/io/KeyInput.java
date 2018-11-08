@@ -3,17 +3,15 @@ package geobattle.io;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 
 import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
 import javax.swing.KeyStroke;
 
 import geobattle.core.Game;
 import geobattle.living.Player;
-import geobattle.util.Log;
+import geobattle.special.slot.SpecialSlot;
 
 @SuppressWarnings("serial")
 public class KeyInput extends KeyAdapter {
@@ -40,16 +38,18 @@ public class KeyInput extends KeyAdapter {
 		
 		IntStream.range(1, 9).forEach(i ->
 			bind("released " + i, () ->
-				game.getPlayer().getArsenal().select(i - 1)
+				game.getPlayer().getWeaponSet().select(i - 1)
 			)
 		);
 		
-		char specialSlots[] = {'Z','X','C'};
+		char specialSlots[] = {'Z','X','C', 'V', 'B'};
 		for (int i = 0; i < specialSlots.length; ++i) {
 			final int slot = i;
 			char c = specialSlots[i];
 			bind("released " + c, () -> {
-				game.getPlayer().getSpecialSet().get(slot).invoke();
+				SpecialSlot s = game.getPlayer().getSpecialSet().get(slot);
+				if (s != null)
+					s.invoke();
 			});
 		}
 		
@@ -97,7 +97,7 @@ public class KeyInput extends KeyAdapter {
 	}
 	
 	private void sendSwap() {
-		game.getPlayer().getArsenal().swap();
+		game.getPlayer().getWeaponSet().swap();
 	}
 	
 	private void sendReload() {

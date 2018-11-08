@@ -118,7 +118,7 @@ class HUD implements Renderable {
 	}
 	
 	private void weaponSet(Graphics2D gfx) {
-		WeaponSet ars = player.getArsenal();
+		WeaponSet ars = player.getWeaponSet();
 		int selected = ars.getSelected() + 1;
 		int total = ars.size;
 		String txt = "";

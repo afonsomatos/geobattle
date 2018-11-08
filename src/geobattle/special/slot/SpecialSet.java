@@ -22,6 +22,8 @@ public class SpecialSet {
 	}
 	
 	public SpecialSlot get(int index) {
+		if (index >= specialSlots.length)
+			return null;
 		return specialSlots[index];
 	}
 	

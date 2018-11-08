@@ -7,10 +7,10 @@ import java.awt.RenderingHints;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
+import geobattle.core.Achievements.SpecialSlotFactory;
 import geobattle.io.IOManager;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
@@ -24,6 +24,8 @@ import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
+import geobattle.special.slot.SpecialSet;
+import geobattle.special.slot.SpecialSlot;
 import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Log;
@@ -210,6 +212,20 @@ public class Game implements Launchable, Renderable {
 		spawnGameObject(crossArrow);
 	}
 	
+	private void loadPlayerSpecialSet() {
+		int[] choices = options.getSpecials();
+		int slots = Math.min(choices.length, achievements.getSpecialSlots());
+		List<SpecialSlotFactory> specials = achievements.getSpecials();
+		SpecialSet specialSet = new SpecialSet(slots);
+		
+		for (int i = 0; i < slots; ++i) {
+			SpecialSlot s = specials.get(choices[i]).create(this);
+			specialSet.store(i, s);
+		}
+		
+		player.setSpecialSet(specialSet);
+	}
+	
 	private void loadPlayerWeaponSet() {
 		int[] choices = options.getWeapons();
 		int slots = Math.min(choices.length, achievements.getWeaponSlots());
@@ -245,11 +261,12 @@ public class Game implements Launchable, Renderable {
 		spawnGameObject(player);
 
 		loadPlayerWeaponSet();
+		loadPlayerSpecialSet();
 	}
 	
 	private void reset() {
 		score 			= 0;
-		enemies 	= 0;
+		enemies 		= 0;
 		outOfBorders 	= false;
 		gettingHit 		= false;
 		gameOver		= false;

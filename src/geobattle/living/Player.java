@@ -46,7 +46,7 @@ public class Player extends Bot implements WeaponHolder {
 	private WeaponSet weaponSet;
 	private GameObject target = null;
 	
-	private SpecialSet specialSet = new SpecialSet(3);
+	private SpecialSet specialSet;
 	
 	private boolean specialReady = true;
 	private Counter specialCounter = new Counter(0.1) {
@@ -63,7 +63,6 @@ public class Player extends Bot implements WeaponHolder {
 	
 	public Player(Game game, int x, int y) {
 		super(game, x, y);
-		
 		setWidth(40);
 		setHeight(40);
 		setSpeed(4.0f);
@@ -71,28 +70,9 @@ public class Player extends Bot implements WeaponHolder {
 		setHealth(200);
 		setShield(100);
 		setSprite(sprite);
-
 		setTag(Tag.Player);
-		
 		getCollider().surround(sprite);
-		
-		/* SPECIAL SLOTS */
-		
-		SpecialSlot slotZ = new UnitSpecialSlot(new TroopsSpecial(game, Tag.Player, Tag.Enemy), 3);
-		
-		BombSpecial bombSpecial = new BombSpecial(game, Tag.Void);
-		bombSpecial.setColor(Palette.CYAN);
-		SpecialSlot slotX = new UnitSpecialSlot(bombSpecial, 10);
-		SpecialSlot slotC = new TimedSpecialSlot(new AsteroidSpecial(game, this, 5000), 6000);
-		
-		specialSet.store(0, slotZ);
-		specialSet.store(1, slotX);
-		specialSet.store(2, slotC);
-		
-		/* .......*/
-		
 		getTriggerMap().add("die", game::sendPlayerDead);
-		
 		addController(this::update);
 	}
 	
@@ -143,11 +123,15 @@ public class Player extends Bot implements WeaponHolder {
 			super.suffer(remainder);
 	}
 	
+	public void setSpecialSet(SpecialSet specialSet) {
+		this.specialSet = specialSet;
+	}
+	
 	public void setWeaponSet(WeaponSet weaponSet) {
 		this.weaponSet = weaponSet;
 	}
 	
-	public WeaponSet getArsenal() {
+	public WeaponSet getWeaponSet() {
 		return weaponSet;
 	}
 	

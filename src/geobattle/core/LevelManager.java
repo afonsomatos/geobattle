@@ -1,15 +1,19 @@
 package geobattle.core;
 
-import java.util.List;
-
 import geobattle.living.Player;
+import geobattle.living.bots.Bomber;
 import geobattle.living.bots.Bot;
 import geobattle.living.bots.BotFactory;
 import geobattle.living.bots.BotSpawner;
 import geobattle.living.bots.Bubble;
 import geobattle.living.bots.Creeper;
+import geobattle.living.bots.Fly;
+import geobattle.living.bots.Sentry;
 import geobattle.living.bots.Slicer;
+import geobattle.living.bots.Slime;
 import geobattle.living.bots.Soldier;
+import geobattle.living.bots.Tower;
+import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
 import geobattle.util.Log;
 import geobattle.util.Util;
@@ -42,10 +46,16 @@ public class LevelManager {
 	}
 	
 	private static Spawn[] spawns = new Spawn[] {
-		new Spawn(10, 1, Soldier.class),
-		new Spawn(4, 2, Creeper.class),
-		new Spawn(5, 3, Slicer.class),
-		new Spawn(3, 4, Bubble.class),
+		new Spawn(50,	1, 		Soldier.class),
+		new Spawn(50, 	2, 		Creeper.class),
+		new Spawn(50,	3,		Tower.class),
+		new Spawn(50,	4,		Bubble.class),
+		new Spawn(50, 	5, 		Slime.class),
+		new Spawn(50,	6,		Sentry.class),
+		new Spawn(50, 	7, 		Slicer.class),
+		new Spawn(50, 	8, 		Fly.class),
+		new Spawn(50, 	9, 		Bomber.class),
+		new Spawn(50, 	10, 	Zombie.class)
 	};
 	
 	public LevelManager(Game game) {
@@ -85,7 +95,9 @@ public class LevelManager {
 			b.moveTo(x, y);
 			b.setTag(Tag.Enemy);
 			b.setTarget(player);
+			
 			b.getTriggerMap().addLast("die", () -> {
+				// End wave when the last bot dies
 				if (++dead >= bots.length)
 					finishWave();
 			});
@@ -109,14 +121,16 @@ public class LevelManager {
 		Event event = new Event();
 		game.sendMessage(1000, "New wave in " + waveCountDown);
 		event.setRunnable(() -> {
+			String msg;
 			if (--waveCountDown == 0) {
 				wave++;
 				loadWave(this::finishWave);
 				event.setOff(true);
-				game.sendMessage(1000, "Go!");
+				msg = "Go";
 			} else {
-				game.sendMessage(1000, "New wave in " + waveCountDown);
+				msg = "New wave in " + waveCountDown;
 			}
+			game.sendMessage(1000, msg);
 		});
 		event.setDelay(1000);
 		event.setRepeat(true);

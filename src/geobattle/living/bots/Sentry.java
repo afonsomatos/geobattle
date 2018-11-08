@@ -17,10 +17,14 @@ import geobattle.weapon.WeaponFactory;
 
 public class Sentry extends Bot implements WeaponHolder {
 
-	private final static Color COLOR = Palette.BEIGE;
-	private final static Color AURA_COLOR = Palette.MINT;
-	private final static int AURA_RADIUS = 30;
-	private final static Sprite SPRITE = new Aura(AURA_RADIUS, AURA_RADIUS / 5, AURA_COLOR);
+	private final static Color COLOR 		= Palette.BEIGE;
+	private final static Color AURA_COLOR 	= Palette.MINT;
+	private final static int AURA_RADIUS 	= 30;
+	private final static Sprite SPRITE 		= new Aura(AURA_RADIUS, AURA_RADIUS / 5, AURA_COLOR);
+	
+	private final static Interval<Integer> SHOOT_DELAY = 
+			new Interval<Integer>(1000, 2000);
+	
 	
 	static {
 		SPRITE.draw(gfx -> {
@@ -48,7 +52,8 @@ public class Sentry extends Bot implements WeaponHolder {
 		
 		weapon = WeaponFactory.Rifle.create(game, this, Tag.Neutral);
 		shooter = new Shooter(null, weapon);
-		
+		shooter.setDelay(SHOOT_DELAY);
+
 		addController(shooter);
 		addController(this::update);
 		
