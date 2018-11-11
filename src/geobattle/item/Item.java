@@ -7,8 +7,8 @@ import geobattle.core.Tag;
 
 abstract class Item extends GameObject {
 	
-	public Item(Game game, double x, double y) {
-		super(game, x, y);
+	public Item(Game game) {
+		super(game);
 		setCollider(new Collider(this) {
 			@Override
 			public void handleCollision(Collider other) {

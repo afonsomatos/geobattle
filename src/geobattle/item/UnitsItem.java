@@ -12,8 +12,8 @@ abstract class UnitsItem extends Item {
 	private Tank unitsTank = new Tank();
 	private Color labelColor = Color.WHITE;
 	
-	public UnitsItem(Game game, double x, double y, int units) {
-		super(game, x, y);
+	public UnitsItem(Game game, int units) {
+		super(game);
 		unitsTank.set(units);
 		addDrawer(this::draw);
 		addController(this::killEmpty);

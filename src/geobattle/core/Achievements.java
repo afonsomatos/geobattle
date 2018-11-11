@@ -11,13 +11,15 @@ import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
 
+	private final static int START_LEVEL = 5;
+	
 	private final static int MAX_WEAPON_SLOTS  = 5;
 	private final static int MAX_SPECIAL_SLOTS = 5;
 	private final static int MAX_POWERUP_SLOTS = 5;
 	
-	private List<Powerup> powerups = new ArrayList<>();
-	private List<WeaponFactory> weapons = new ArrayList<>();
-	private List<SpecialSlotFactory> specials = new ArrayList<>();
+	private List<Powerup> powerups 				= new ArrayList<>();
+	private List<WeaponFactory> weapons 		= new ArrayList<>();
+	private List<SpecialSlotFactory> specials 	= new ArrayList<>();
 	
 	private int powerupSlots = 0;
 	private int specialSlots = 0;
@@ -37,17 +39,17 @@ public class Achievements {
 			WeaponFactory.SHOTGUN,
 			WeaponFactory.SNIPER,
 			WeaponFactory.MACHINEGUN,
-			WeaponFactory.VIRUS
+			WeaponFactory.VIRUS,
 	};
 	
 	private static final Powerup[] ALL_POWERUPS = new Powerup[] {
-			new HealthPowerup(100),
-			new SpeedPowerup(1.5),
+			new HealthPowerup(50),
+			new SpeedPowerup(1.0),
 	};
 	
 	Achievements() {
-		// Go straight to level 1
-		unlockLevel();
+		for (int i = 0; i < START_LEVEL; ++i)
+			unlockLevel();
 	}
 	
 	void unlockLevel() {
@@ -58,8 +60,13 @@ public class Achievements {
 	}
 	
 	private void unlockPowerups() {
-		powerups.add(ALL_POWERUPS[(level - 1) % ALL_POWERUPS.length]);
-		powerupSlots++;
+		// Unlock a new powerup slot every 5 levels
+		if (level % 4 == 0 && level < MAX_POWERUP_SLOTS)
+			powerupSlots++;
+		
+		// Unlock a new powerup every 3 levels
+		if (level % 3 == 0)
+			powerups.add(ALL_POWERUPS[(level - 1) % ALL_POWERUPS.length]);
 	}
 
 	private void unlockSpecials() {

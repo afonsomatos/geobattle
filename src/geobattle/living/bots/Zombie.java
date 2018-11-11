@@ -7,6 +7,7 @@ import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Rect;
+import geobattle.util.Interval;
 import geobattle.util.Palette;
 
 public class Zombie extends Bot {
@@ -22,13 +23,16 @@ public class Zombie extends Bot {
 	private final static double SPEED_ALIVE = 1.0;
 	private final static double SPEED_DEAD	= 6.0;
 	
+	private final static Interval<Integer> RADAR_ALIVE = new Interval<>(100, null);
+	private final static Interval<Integer> RADAR_DEAD = new Interval<>(null, null);
+	
 	private int damage = 200;
 	
 	private boolean zombie = false;
 	private Follower follower;
 	
-	public Zombie(Game game, int x, int y) {
-		super(game, x, y);
+	public Zombie(Game game) {
+		super(game);
 		getTriggerMap().clear("die");
 		getTriggerMap().add("die", this::handleDeath);
 		
@@ -81,7 +85,7 @@ public class Zombie extends Bot {
 	
 	private void humanoid() {
 		zombie = false;
-		follower.setMinDistance(100);
+		follower.setRadar(RADAR_ALIVE);
 		setSpeed(SPEED_ALIVE);
 		setSprite(SPRITE_ALIVE);
 		setHealth(HEALTH_ALIVE);
@@ -90,7 +94,7 @@ public class Zombie extends Bot {
 	
 	private void zombify() {
 		zombie = true;
-		follower.setMinDistance(0);
+		follower.setRadar(RADAR_DEAD);
 		setSprite(SPRITE_DEAD);
 		setHealth(HEALTH_DEAD);
 		setSpeed(SPEED_DEAD);

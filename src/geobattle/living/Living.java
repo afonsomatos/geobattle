@@ -29,8 +29,8 @@ public abstract class Living extends GameObject {
 
 	private Integer suffered = null;
 	
-	public Living(Game game, double x, double y) {
-		super(game, x, y);
+	public Living(Game game) {
+		super(game);
 		setupCollider();
 		addDrawer(this::draw);
 		addDrawer(this::drawHit);

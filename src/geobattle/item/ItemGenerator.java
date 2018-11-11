@@ -48,22 +48,22 @@ public class ItemGenerator extends GameObject {
 		for (Item i : expiringItems)
 			i.kill();
 		
-		Point loc;
 		List<Item> newItems = new ArrayList<Item>();
 		
 		if (wave % 5 == 0) {
-			loc = getRandomItemLocation();
-			newItems.add(new HealthItem(game, loc.getX(), loc.getY(), 300));
+			newItems.add(new HealthItem(game, 300));
 		}
 		
 		if (wave % 5 == 0) {
-			loc = getRandomItemLocation();
-			newItems.add(new AmmoItem(game, loc.getX(), loc.getY(), 100));
+			newItems.add(new AmmoItem(game, 100));
 		}
 		
 		if (wave % 3 == 0) {
-			loc = getRandomItemLocation();
-			newItems.add(new ShieldItem(game, loc.getX(), loc.getY(), 200));
+			newItems.add(new ShieldItem(game, 200));
+		}
+		
+		for (Item i : newItems) {
+			i.moveTo(getRandomItemLocation());
 		}
 		
 		/*

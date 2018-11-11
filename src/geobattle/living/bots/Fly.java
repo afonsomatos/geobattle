@@ -53,8 +53,8 @@ public class Fly extends Bot {
 		SPRITE.draw(new Rect(BODY_SIZE, BODY_SIZE, COLOR));
 	}
 	
-	public Fly(Game game, int x, int y) {
-		super(game, x, y);
+	public Fly(Game game) {
+		super(game);
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		setColor(COLOR);

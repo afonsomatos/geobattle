@@ -26,8 +26,8 @@ public class Creeper extends Bot {
 	private StarBurstSpecial starBurst;
 	private Follower follower = new Follower(null);
 	
-	public Creeper(Game game, int x, int y) {
-		super(game, x, y);
+	public Creeper(Game game) {
+		super(game);
 		
 		starBurst = new StarBurstSpecial(game);
 		starBurst.setColor(COLOR);
@@ -44,7 +44,6 @@ public class Creeper extends Bot {
 		
 		getTriggerMap().add("newTarget", () -> {
 			follower.setTarget(getTarget());
-			
 		});
 		
 	}

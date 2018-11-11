@@ -18,7 +18,8 @@ public class TroopsSpecial extends Special {
 	@Override
 	public void send() {
 		Game game = getGame();
-		Sentry sentry = new Sentry(game, getPos().x, getPos().y);
+		Sentry sentry = new Sentry(game);
+		sentry.moveTo(getPos().x, getPos().y);
 		sentry.addTargetTag(targetTag);
 		sentry.setTag(getTag());
 		sentry.getWeapon().setAmmoSaved(Weapon.INFINITE_AMMO);

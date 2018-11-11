@@ -1,26 +1,29 @@
 package geobattle.extension;
 
 import geobattle.core.GameObject;
+import geobattle.util.Interval;
 
 public class Follower implements Controller {
 
 	private GameObject target = null;
-	private double maxDistance = 0;
-	private double minDistance = 0;
+	
+	private Interval<Integer> radar = new Interval<Integer>(null, null);
 	
 	private boolean following = false;
 	private Runnable reached = null;
 	
 	private boolean active = true;
 	
-	public Follower(GameObject target, double minDistance, double maxDistance) {
-		this.target = target;
-		this.minDistance = minDistance;
-		this.maxDistance = maxDistance;
+	public Follower() {
+		
 	}
 	
-	public Follower(GameObject target, double minDistance) {
-		this(target, minDistance, 0);
+	public Follower(GameObject target) {
+		this.target = target;
+	}
+	
+	public void setRadar(Interval<Integer> radar) {
+		this.radar = radar;
 	}
 	
 	public boolean isActive() {
@@ -37,18 +40,6 @@ public class Follower implements Controller {
 	
 	public boolean isFollowing() {
 		return following;
-	}
-	
-	public void setMinDistance(double minDistance) {
-		this.minDistance = minDistance;
-	}
-	
-	public void setMaxDistance(double maxDistance) {
-		this.maxDistance = maxDistance;
-	}
-	
-	public Follower(GameObject target) {
-		this(target, 0, 0);
 	}
 	
 	public void setReached(Runnable reached) {
@@ -71,6 +62,9 @@ public class Follower implements Controller {
 		// Point velocity vector to target
 		boolean moving = gameObject.setDirection(target);
 		stopped = !moving;
+		
+		int maxDistance = radar.end == null ? 0 : radar.end;
+		int minDistance = radar.start == null ? 0: radar.start;
 		
 		// If target is too far away or too close
 		if (maxDistance != 0 && dist > maxDistance

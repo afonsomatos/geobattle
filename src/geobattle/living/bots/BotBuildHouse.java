@@ -22,10 +22,11 @@ public class BotBuildHouse extends Living {
 	private Event event;
 	private long delay = 7000;
 	
-	public <T extends Bot> BotBuildHouse(Game game, double x, double y, Class<T> botClass, Living target) {
-		super(game, x, y);
+	public <T extends Bot> BotBuildHouse(Game game, int x, int y, Class<T> botClass, Living target) {
+		super(game);
 		this.botClass = botClass;
 		this.target = target;
+		moveTo(x, y);
 		setHealth(HEALTH);
 		
 		customizeHouse();
@@ -61,9 +62,9 @@ public class BotBuildHouse extends Living {
 	
 	private Bot buildBot() {
 		if (botClass == Soldier.class) {
-			return new Soldier(game, 0, 0);
+			return new Soldier(game);
 		} else if (botClass == Slicer.class) {
-			return new Slicer(game, 0, 0);
+			return new Slicer(game);
 		} else 
 			throw new RuntimeException("Can't build bots of type " + botClass);
 	}

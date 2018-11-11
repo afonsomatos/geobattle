@@ -23,13 +23,12 @@ public class Tower extends Bot implements WeaponHolder {
 	private final static int HEALTH = 400;
 	
 	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
-	private final static Interval<Integer> SHOOT_RADAR = new Interval<Integer>(0, 300);
 	
 	private Shooter shooter;
 	private Weapon weapon;
 	
-	public Tower(Game game, int x, int y) {
-		super(game, x, y);
+	public Tower(Game game) {
+		super(game);
 	
 		setColor(COLOR);
 		setHealth(HEALTH);
@@ -39,7 +38,6 @@ public class Tower extends Bot implements WeaponHolder {
 		
 		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);
-		shooter.setRadar(SHOOT_RADAR);
 		addController(shooter);
 		
 		setSprite(SPRITE);
@@ -55,7 +53,6 @@ public class Tower extends Bot implements WeaponHolder {
 		shooter.setTarget(target);
 		weapon.setLock(target);
 	}
-	
 
 	private void spawnWeapon() {
 		game.spawnGameObject(weapon);

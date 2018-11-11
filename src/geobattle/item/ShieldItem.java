@@ -12,8 +12,8 @@ class ShieldItem extends UnitsItem {
 
 	private static Sprite sprite = new Cross(30, 30, Color.CYAN);
 	
-	public ShieldItem(Game game, double x, double y, int units) {
-		super(game, x, y, units);
+	public ShieldItem(Game game, int units) {
+		super(game, units);
 		setSprite(sprite);
 		getCollider().surround(sprite);
 	}

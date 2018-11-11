@@ -14,8 +14,11 @@ import geobattle.triggers.TriggerMap;
 
 public class GameObject {
 
+	private static int nextId = 0;
+	private int id;
+	
 	protected Game game;
-
+	
 	private double width 	= 0;
 	private double height 	= 0;
 	private double x 		= 0;
@@ -47,13 +50,7 @@ public class GameObject {
 	public GameObject(Game game) {
 		this.game = game;
 	}
-	
-	public GameObject(Game game, double x, double y) {
-		this.game = game;
-		this.x = x;
-		this.y = y;
-	}
-	
+
 	public void addDrawer(Renderable drawer) {
 		drawers.add(drawer);
 	}
@@ -150,6 +147,10 @@ public class GameObject {
 	public void stop() {
 		// Stops all movement
 		accX = accY = velX = velY = 0;
+	}
+	
+	public void moveTo(Point point) {
+		moveTo(point.x, point.y);
 	}
 	
 	public void moveTo(int x, int y) {

@@ -54,8 +54,8 @@ public class Bomber extends Bot {
 	private Event attackEvent;
 	private Interval<Integer> attackInterval = new Interval<Integer>(750, 1500);
 
-	public Bomber(Game game, int x, int y) {
-		super(game, x, y);
+	public Bomber(Game game) {
+		super(game);
 		bombSpecial = new BombSpecial(game, Tag.Enemy);
 		setSprite(SPRITE);
 		setHealth(HEALTH);

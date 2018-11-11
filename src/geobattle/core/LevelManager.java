@@ -25,13 +25,15 @@ public class LevelManager {
 
 	private final static int WAVE_COUNT_DOWN = 3;
 	private final static int WAVES_PER_LEVEL = 3;
+	private final static int WAIT_PER_SPAWN = 3000;
+	private final static int WAVE_CLEARED_PAUSE = 3000;
 	
 	private int waveCountDown;
 	private int wave;
 	private int level;
-	private int dead;
 	
-	private Runnable levelFinisher;
+	private int dead;
+	private int spawned;
 	
 	private static class Spawn {
 		final int weight;
@@ -62,9 +64,8 @@ public class LevelManager {
 		this.game = game;
 	}
 	
-	public void sendLevel(int level, Runnable levelFinisher) {
+	public void sendLevel(int level) {
 		this.level = level;
-		this.levelFinisher = levelFinisher;
 		wave = 0;
 		sendNextWave();
 	}
@@ -81,12 +82,16 @@ public class LevelManager {
 			if (level >= s.minLevel)
 				bag.addEntry(s, s.weight);
 		
-		dead = 0;
+		dead = spawned = 0;
+		
 		int n = wave + (level - 1);
-		Bot[] bots = new Bot[n];
+		final Bot[] bots = new Bot[n];
+
+		// Create all upcoming bots
 		for (int i = 0; i < bots.length; ++i) {
 			Spawn s = bag.getRandom();
 			Bot b = BotFactory.create(game, s.botClass);
+			bots[i] = b;
 			
 			// Random location
 			int x = Util.randomInteger(20, width - 20);
@@ -101,28 +106,40 @@ public class LevelManager {
 				if (++dead >= bots.length)
 					finishWave();
 			});
-			game.spawnGameObject(new BotSpawner(game, b, 3000));
 		}
+		
+		// Spawn them in order
+		Event spawnEvent = new Event(WAIT_PER_SPAWN, true);
+		spawnEvent.setRunnable(() -> {
+			if (spawned == n) {
+				spawnEvent.setOff(true);
+				return;
+			}
+			game.spawnGameObject(new BotSpawner(game, bots[spawned], 3000));
+			spawned++;
+		});
+
+		// Spawn first without delay
+		spawnEvent.getRunnable().run();
+		game.getSchedule().add(spawnEvent);
 	}
 	
 	private void finishWave() {
-		Log.i("Wave finished!");
 		if (wave == WAVES_PER_LEVEL) {
-			levelFinisher.run();
+			game.sendLevelFinished();
 			return;
 		}
-		game.sendMessage(3000, "Wave cleared!");
-		game.getSchedule().next(3000, this::sendNextWave);
+		game.sendMessage(WAVE_CLEARED_PAUSE, "Wave cleared!");
+		game.getSchedule().next(WAVE_CLEARED_PAUSE, this::sendNextWave);
 	}
 	
 	private void sendNextWave() {
 		waveCountDown = WAVE_COUNT_DOWN;
 		
-		Event event = new Event();
-		game.sendMessage(1000, "New wave in " + waveCountDown);
+		Event event = new Event(1000, true);
 		event.setRunnable(() -> {
 			String msg;
-			if (--waveCountDown == 0) {
+			if (waveCountDown == 0) {
 				wave++;
 				loadWave(this::finishWave);
 				event.setOff(true);
@@ -130,10 +147,11 @@ public class LevelManager {
 			} else {
 				msg = "New wave in " + waveCountDown;
 			}
+			waveCountDown--;
 			game.sendMessage(1000, msg);
 		});
-		event.setDelay(1000);
-		event.setRepeat(true);
+		
+		event.getRunnable().run();
 		game.getSchedule().add(event);
 	}
 	

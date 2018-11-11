@@ -29,8 +29,8 @@ public class Bubble extends Bot {
 
 	private boolean exploded = false;
 	
-	public Bubble(Game game, int x, int y) {
-		super(game, x, y);
+	public Bubble(Game game) {
+		super(game);
 		
 		setColor(COLOR);
 		setHealth(HEALTH);

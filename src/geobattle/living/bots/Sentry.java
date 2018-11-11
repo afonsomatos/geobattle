@@ -44,8 +44,8 @@ public class Sentry extends Bot implements WeaponHolder {
 	private Shooter shooter;
 	private Weapon weapon;
 
-	public Sentry(Game game, int x, int y) {
-		super(game, x, y);
+	public Sentry(Game game) {
+		super(game);
 		setColor(COLOR);
 		setSpeed(SPEED);
 		setHealth(HEALTH);

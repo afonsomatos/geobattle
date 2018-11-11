@@ -21,8 +21,8 @@ class WeaponItem extends Item {
 	private Weapon weapon;
 	private boolean used = false;
 	
-	public WeaponItem(Game game, double x, double y, Sprite sprite, Weapon weapon) {
-		super(game, x, y);
+	public WeaponItem(Game game, Sprite sprite, Weapon weapon) {
+		super(game);
 		this.weapon = weapon;
 		setSprite(sprite);
 		getCollider().surround(sprite);

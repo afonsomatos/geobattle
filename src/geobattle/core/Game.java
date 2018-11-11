@@ -303,7 +303,7 @@ public class Game implements Launchable, Renderable {
 		
 		level = opts.getLevel();
 		levelFinished = false;
-		levelManager.sendLevel(opts.getLevel(), this::sendLevelFinished);
+		levelManager.sendLevel(opts.getLevel());
 
 		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
@@ -314,11 +314,12 @@ public class Game implements Launchable, Renderable {
 		return hud;
 	}
 	
-	private void sendLevelFinished() {
+	void sendLevelFinished() {
 		levelFinished = true;
 		Log.i("Level " + level + " finished");
 		schedule.next(3000, () -> {
-			achievements.unlockLevel();
+			if (achievements.getLevel() == level)
+				achievements.unlockLevel();
 			end();
 		});
 	}

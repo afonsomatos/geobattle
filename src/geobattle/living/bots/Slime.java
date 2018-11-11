@@ -55,12 +55,12 @@ public class Slime extends Bot {
 	
 	private final Type type;
 	
-	public Slime(Game game, int x, int y) {
-		this(game, x, y, Type.LARGE);
+	public Slime(Game game) {
+		this(game, Type.LARGE);
 	}
 	
-	Slime(Game game, int x, int y, Type type) {
-		super(game, x, y);
+	Slime(Game game, Type type) {
+		super(game);
 		this.type = type;
 		setColor(COLOR);
 		setHealth(type.health);
@@ -110,9 +110,10 @@ public class Slime extends Bot {
 		Point pos = Util.randomVec(spawnRadius);
 		int x = (int) (pos.x + getX());
 		int y = (int) (pos.y + getY());
-		Slime slime = new Slime(game, x, y, child);
+		Slime slime = new Slime(game, child);
 		slime.setTarget(getTarget());
 		slime.setTag(getTag());
+		slime.moveTo(x, y);
 		game.spawnGameObject(slime);
 	}
 	

@@ -28,7 +28,8 @@ public class BombSpecial extends Special {
 	@Override
 	public void send() {
 		Game game = getGame();
-		Bomb bomb = new Bomb(game, getPos().getX(), getPos().getY(), getTag());
+		Bomb bomb = new Bomb(game, getTag());
+		bomb.moveTo((int)getPos().getX(), (int)getPos().getY());
 		bomb.setColor(color);
 		bomb.setDamage(damage);
 		game.spawnGameObject(bomb);

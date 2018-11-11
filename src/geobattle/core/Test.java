@@ -35,6 +35,7 @@ public class Test {
 	
 	static {
 		
+		/*
 		map.put("levelmanager", game -> {
 			Bot b = new Bubble(game, 200, 200);
 			b.setTag(Tag.Enemy);
@@ -172,6 +173,7 @@ public class Test {
 				game.spawnGameObject(sentries[i]);
 			}
 		});
+		*/
 		
 	}
 	

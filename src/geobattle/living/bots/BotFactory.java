@@ -8,25 +8,25 @@ public class BotFactory {
 		
 		Bot bot;
 		if (botClass == Soldier.class)
-			bot = new Soldier(game, 0, 0);
+			bot = new Soldier(game);
 		else if (botClass == Slicer.class)
-			bot = new Slicer(game, 0, 0);
+			bot = new Slicer(game);
 		else if (botClass == Tower.class)
-			bot = new Tower(game, 0, 0);
+			bot = new Tower(game);
 		else if (botClass == Slime.class)
-			bot = new Slime(game, 0, 0);
+			bot = new Slime(game);
 		else if (botClass == Sentry.class)
-			bot = new Sentry(game, 0, 0);
+			bot = new Sentry(game);
 		else if (botClass == Fly.class)
-			bot = new Fly(game, 0, 0);
+			bot = new Fly(game);
 		else if (botClass == Creeper.class)
-			bot = new Creeper(game, 0, 0);
+			bot = new Creeper(game);
 		else if (botClass == Bubble.class)
-			bot = new Bubble(game, 0, 0);
+			bot = new Bubble(game);
 		else if (botClass == Bomber.class)
-			bot = new Bomber(game, 0, 0);
+			bot = new Bomber(game);
 		else if (botClass == Zombie.class)
-			bot = new Zombie(game, 0, 0);
+			bot = new Zombie(game);
 		else
 			throw new IllegalArgumentException("Botclass not suported");
 		

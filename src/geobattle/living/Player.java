@@ -57,12 +57,7 @@ public class Player extends Bot implements WeaponHolder {
 	};
 	
 	public Player(Game game) {
-		this(game, 0, 0);
-	}
-
-	
-	public Player(Game game, int x, int y) {
-		super(game, x, y);
+		super(game);
 		setWidth(40);
 		setHeight(40);
 		setSpeed(4.0f);

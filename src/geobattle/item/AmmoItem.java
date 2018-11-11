@@ -17,8 +17,8 @@ class AmmoItem extends UnitsItem {
 	private final static Sprite SPRITE = new Diamond(30, 30, Palette.WHITE);
 	private final static Color LABEL_COLOR = Palette.RED;
 	
-	public AmmoItem(Game game, double x, double y, int units) {
-		super(game, x, y, units);
+	public AmmoItem(Game game, int units) {
+		super(game, units);
 		setLabelColor(LABEL_COLOR);
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);

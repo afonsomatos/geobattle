@@ -77,7 +77,7 @@ public class WeaponFactory {
 		ProjectileFactory pSniper = new ProjectileFactory()
 				.setSprite(new Triangle(16, 16, Palette.RED))
 				.setSpeed(20.0f)
-				.setDamage(300);
+				.setDamage(150);
 		
 		SNIPER = new WeaponFactory("Sniper")
 				.setProjectiles(1)
@@ -88,18 +88,10 @@ public class WeaponFactory {
 				.setAmmoLoad(7)
 				.setColor(Palette.GREEN)
 				.setProjectileFactory(pSniper);
-
-		WaveFactory wMachineGun = new WaveFactory()
-				.setDamage(100)
-				.setThickness(15)
-				.setRadius(100)
-				.setColor(Palette.TEAL)
-				.setSpeed(0.02);
 		
 		ProjectileFactory pMachineGun = new ProjectileFactory()
 				.setSprite(new Rect(30, 5, Palette.TEAL))
 				.setSpeed(15.0f)
-				.setWaveFactory(wMachineGun)
 				.setDamage(20);
 		
 		MACHINEGUN = new WeaponFactory("Machine gun")
@@ -107,8 +99,8 @@ public class WeaponFactory {
 				.setProjectiles(1)
 				.setFireSpeed(0.2)
 				.setReloadSpeed(0.005)
-				.setAmmoLoad(100)
-				.setAmmoSaved(1000)
+				.setAmmoLoad(30)
+				.setAmmoSaved(300)
 				.setRecoil(0)
 				.setColor(Palette.BLUE)
 				.setSize(10)

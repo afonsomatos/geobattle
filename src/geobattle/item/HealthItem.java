@@ -14,8 +14,8 @@ class HealthItem extends UnitsItem {
 	private final static Sprite SPRITE = new Cross(30, 30, Palette.GREEN);
 	private final static Color LABEL_COLOR = Palette.GREEN;
 	
-	public HealthItem(Game game, double x, double y, int units) {
-		super(game, x, y, units);
+	public HealthItem(Game game, int units) {
+		super(game, units);
 		setLabelColor(LABEL_COLOR);
 		setSprite(SPRITE);
 		getCollider().surround(SPRITE);

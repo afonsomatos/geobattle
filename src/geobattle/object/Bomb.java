@@ -37,8 +37,8 @@ public class Bomb extends GameObject {
 	private WaveFactory waveFactory;
 	private Event explode = new Event(delay, false, this::explode);
 	
-	public Bomb(Game game, double x, double y, Tag tag) {
-		super(game, x, y);
+	public Bomb(Game game, Tag tag) {
+		super(game);
 		setTag(tag);
 		setSprite(SPRITE);
 		setColor(FUSE_COLOR);

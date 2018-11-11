@@ -27,8 +27,8 @@ public abstract class Bot extends Living {
 	// Objects to target
 	private List<Tag> targetTags = new ArrayList<Tag>();
 	
-	public Bot(Game game, int x, int y) {
-		super(game, x, y);
+	public Bot(Game game) {
+		super(game);
 		getTriggerMap().add("die", this::kill);
 		addDrawer(this::renderTag);
 	}
@@ -84,6 +84,6 @@ public abstract class Bot extends Living {
 	public Living getTarget() {
 		return this.target;
 	}
-
+	
 }
 

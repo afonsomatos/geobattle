@@ -20,6 +20,11 @@ public class Event {
 		
 	}
 	
+	public Event(long delay, boolean repeat) {
+		this.delay = delay;
+		this.repeat = repeat;
+	}
+	
 	public Event(long delay, boolean repeat, Runnable runnable) {
 		this.delay = delay;
 		this.repeat = repeat;

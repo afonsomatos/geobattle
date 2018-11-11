@@ -38,9 +38,6 @@ public class Slicer extends Bot {
 	private static final int HEALTH = 600;
 	private static final double SPEED = 3.0;
 		
-	// Ignore targets over this distance
-	private double radarDistance = 400;
-		
 	// Max distance from the target after an attack
 	private int aimMaxError = 30;
 	
@@ -61,8 +58,8 @@ public class Slicer extends Bot {
 	private State state;
 	private Follower follower;
 	
-	public Slicer(Game game, int x, int y) {
-		super(game, x, y);
+	public Slicer(Game game) {
+		super(game);
 		setSprite(SPRITE);
 		setHealth(HEALTH);
 		setSpeed(SPEED);
@@ -140,7 +137,7 @@ public class Slicer extends Bot {
 			follower.setActive(true);
 		});
 		
-		follower = new Follower(aim, 0, radarDistance);
+		follower = new Follower(aim);
 		follower.setActive(false);
 		follower.setReached(() -> {
 			if (state != State.SLICING)

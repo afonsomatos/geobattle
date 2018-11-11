@@ -24,13 +24,15 @@ public class Soldier extends Bot implements WeaponHolder {
 	private final static double SPEED = 1.0;
 	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 
 	
+	private final static Interval<Integer> RADAR = new Interval<Integer>(150, null);
+	
 	private Shooter shooter;
 	private Follower follower;
 
 	private Weapon weapon;
 
-	public Soldier(Game game, int x, int y) {
-		super(game, x, y);
+	public Soldier(Game game) {
+		super(game);
 		
 		setColor(COLOR);
 		setSpeed(SPEED);
@@ -41,8 +43,8 @@ public class Soldier extends Bot implements WeaponHolder {
 		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);
 		
-		follower = new Follower(null, 150);
-		
+		follower = new Follower();
+		follower.setRadar(RADAR);
 		addController(shooter);
 		addController(follower);
 		
