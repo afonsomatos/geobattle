@@ -12,7 +12,7 @@ import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
@@ -48,9 +48,9 @@ public class Fly extends Bot {
 	static {
 		// Draw wings and shell
 		SPRITE.draw(new Cross(SIZE, SIZE, 1, WING_COLOR));
-		SPRITE.draw(new Square(BODY_SIZE + 4, BODY_SIZE + 4, WING_COLOR));
+		SPRITE.draw(new Rect(BODY_SIZE + 4, BODY_SIZE + 4, WING_COLOR));
 		// Draw body
-		SPRITE.draw(new Square(BODY_SIZE, BODY_SIZE, COLOR));
+		SPRITE.draw(new Rect(BODY_SIZE, BODY_SIZE, COLOR));
 	}
 	
 	public Fly(Game game, int x, int y) {

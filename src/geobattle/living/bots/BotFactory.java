@@ -25,6 +25,8 @@ public class BotFactory {
 			bot = new Bubble(game, 0, 0);
 		else if (botClass == Bomber.class)
 			bot = new Bomber(game, 0, 0);
+		else if (botClass == Zombie.class)
+			bot = new Zombie(game, 0, 0);
 		else
 			throw new IllegalArgumentException("Botclass not suported");
 		

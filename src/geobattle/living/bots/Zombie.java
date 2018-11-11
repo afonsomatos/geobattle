@@ -6,13 +6,13 @@ import geobattle.core.GameObject;
 import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.util.Palette;
 
 public class Zombie extends Bot {
 
-	private final static Sprite SPRITE_ALIVE 	= new Square(25, 25, Palette.PINK);
-	private final static Sprite SPRITE_DEAD		= new Square(35, 35, Palette.OLIVE);
+	private final static Sprite SPRITE_ALIVE 	= new Rect(25, 25, Palette.PINK);
+	private final static Sprite SPRITE_DEAD		= new Rect(35, 35, Palette.OLIVE);
 	
 	private final static long ZOMBIFY_DELAY = 2000;
 	

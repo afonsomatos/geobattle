@@ -8,6 +8,9 @@ import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
 
+	private final static int MAX_WEAPON_SLOTS  = 5;
+	private final static int MAX_SPECIAL_SLOTS = 5;
+	
 	private List<WeaponFactory> weapons = new ArrayList<>();
 	private List<SpecialSlotFactory> specials = new ArrayList<>();
 	
@@ -23,6 +26,7 @@ public class Achievements {
 	};
 	
 	private static final WeaponFactory[] ALL_WEAPONS = new WeaponFactory[] {
+			WeaponFactory.PISTOL,
 			WeaponFactory.RIFLE,
 			WeaponFactory.SHOTGUN,
 			WeaponFactory.SNIPER,
@@ -42,10 +46,11 @@ public class Achievements {
 		weapons.add(ALL_WEAPONS[(level - 1) % ALL_WEAPONS.length]);
 		
 		// Unlock a new weapon slot every 3 levels
-		weaponSlots = 1 + level / 3;
+		if (weaponSlots < MAX_WEAPON_SLOTS)
+			weaponSlots = 1 + level / 3;
 		
 		// Unlock a new special slot every 4 levels
-		if (level >= 4 && level % 4 == 0)
+		if (level >= 4 && level % 4 == 0 && specialSlots < MAX_SPECIAL_SLOTS)
 			specialSlots++;
 		
 		// Unlock a new special every 3 levels

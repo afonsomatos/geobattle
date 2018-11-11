@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 
 import geobattle.render.sprite.Sprite;
 
-public class Square extends Sprite {
+public class Rect extends Sprite {
 
-	public Square(int width, int height, Color color) {
+	public Rect(int width, int height, Color color) {
 		super(width, height, width/2, height/2);
 		
 		draw(0, 0, (Graphics2D gfx) -> {

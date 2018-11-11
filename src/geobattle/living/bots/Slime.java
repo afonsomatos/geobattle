@@ -11,7 +11,7 @@ import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.util.Interval;
 import geobattle.util.Palette;
 import geobattle.util.Util;
@@ -21,9 +21,9 @@ public class Slime extends Bot {
 	private static final Color COLOR = Palette.ORANGE;
 	
 	private enum Type {
-		SMALL	(new Square(16, 16, COLOR), 050, 015, 2, 500, null),
-		MEDIUM	(new Square(32, 32, COLOR), 100, 050, 1.5, 1000, SMALL),
-		LARGE	(new Square(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM);
+		SMALL	(new Rect(16, 16, COLOR), 050, 015, 2, 500, null),
+		MEDIUM	(new Rect(32, 32, COLOR), 100, 050, 1.5, 1000, SMALL),
+		LARGE	(new Rect(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM);
 		
 		final Sprite sprite;
 		final int health;

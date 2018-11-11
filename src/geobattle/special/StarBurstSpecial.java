@@ -7,7 +7,7 @@ import java.util.Random;
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 import geobattle.weapon.Projectile;
@@ -27,7 +27,7 @@ public class StarBurstSpecial extends Special {
 	
 	private Style style = Style.SOLID;
 	
-	private Sprite defaultSprite = new Square(8, 8, Color.WHITE);
+	private Sprite defaultSprite = new Rect(8, 8, Color.WHITE);
 	
 	private static Sprite[] rainbowSprites;
 	
@@ -35,7 +35,7 @@ public class StarBurstSpecial extends Special {
 		Color[] rainbow = Palette.randomWithout(8, Color.BLACK);
 		rainbowSprites = new Sprite[rainbow.length];
 		for (int i = 0; i < rainbow.length; ++i)
-			rainbowSprites[i] = new Square(8, 8, rainbow[i]);
+			rainbowSprites[i] = new Rect(8, 8, rainbow[i]);
 	}
 	
 	private ProjectileFactory projectileFactory = new ProjectileFactory();
@@ -45,7 +45,7 @@ public class StarBurstSpecial extends Special {
 	}
 	
 	public void setColor(Color color) {
-		defaultSprite = new Square(8, 8, color);
+		defaultSprite = new Rect(8, 8, color);
 		this.style = Style.SOLID;
 	}
 	

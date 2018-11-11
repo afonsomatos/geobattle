@@ -10,7 +10,7 @@ import geobattle.infection.InfectionFactory;
 import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Circle;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.render.sprite.shapes.Triangle;
 import geobattle.util.Counter;
 import geobattle.util.Log;

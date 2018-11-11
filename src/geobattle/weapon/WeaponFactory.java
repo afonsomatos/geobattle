@@ -10,7 +10,7 @@ import geobattle.object.WaveFactory;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.render.sprite.shapes.Circle;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.render.sprite.shapes.Triangle;
 import geobattle.util.Palette;
 
@@ -21,6 +21,7 @@ public class WeaponFactory {
 	public final static WeaponFactory SHOTGUN;
 	public final static WeaponFactory MACHINEGUN;
 	public final static WeaponFactory VIRUS;
+	public final static WeaponFactory PISTOL;
 
 	static {
 		
@@ -29,7 +30,6 @@ public class WeaponFactory {
 				.setSpeed(10.0f)
 				.setDamage(45);
 		
-		// Ready to create weapons
 		RIFLE = new WeaponFactory("Rifle")
 				.setProjectiles(1)
 				.setRadius(70)
@@ -41,9 +41,24 @@ public class WeaponFactory {
 				.setAmmoLoad(30)
 				.setAmmoSaved(90);
 
+		ProjectileFactory pPistol = new ProjectileFactory()
+				.setSprite(new Rect(7, 7, Palette.TEAL))
+				.setSpeed(10.0f)
+				.setDamage(15);
+		
+		PISTOL = new WeaponFactory("Pistol")
+				.setProjectiles(1)
+				.setRadius(70)
+				.setFireSpeed(0.06)
+				.setSize(10)
+				.setReloadSpeed(0.01)
+				.setProjectileFactory(pPistol)
+				.setColor(Palette.PINK)
+				.setAmmoLoad(13)
+				.setAmmoSaved(52);
 		
 		ProjectileFactory pShotgun = new ProjectileFactory()
-				.setSprite(new Square(8, 8, Palette.GREY))
+				.setSprite(new Rect(8, 8, Palette.GREY))
 				.setSpeed(15.0f)
 				.setDamage(50);
 		
@@ -82,7 +97,7 @@ public class WeaponFactory {
 				.setSpeed(0.02);
 		
 		ProjectileFactory pMachineGun = new ProjectileFactory()
-				.setSprite(new Square(30, 5, Palette.TEAL))
+				.setSprite(new Rect(30, 5, Palette.TEAL))
 				.setSpeed(15.0f)
 				.setWaveFactory(wMachineGun)
 				.setDamage(20);

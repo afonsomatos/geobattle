@@ -6,7 +6,7 @@ import geobattle.core.Game;
 import geobattle.infection.InfectionFactory;
 import geobattle.object.WaveFactory;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 
 public class ProjectileFactory {
 	
@@ -14,7 +14,7 @@ public class ProjectileFactory {
 	private double speed = 1;
 	private WaveFactory waveFactory = null;
 	private InfectionFactory infectionFactory = null;
-	private Sprite sprite = new Square(8, 8, Color.WHITE);
+	private Sprite sprite = new Rect(8, 8, Color.WHITE);
 	
 	public ProjectileFactory() {
 		

@@ -12,14 +12,14 @@ import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.special.StarBurstSpecial;
 import geobattle.util.Palette;
 
 public class Creeper extends Bot {
 
 	private static final Color COLOR = Palette.GREEN;
-	private static final Sprite SPRITE = new Square(16, 16, COLOR);
+	private static final Sprite SPRITE = new Rect(16, 16, COLOR);
 	private static final double SPEED = 1.0;
 	private static final int HEALTH = 400;
 	

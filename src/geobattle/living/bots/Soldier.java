@@ -10,7 +10,7 @@ import geobattle.extension.Shooter;
 import geobattle.living.Living;
 import geobattle.living.WeaponHolder;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.util.Interval;
 import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
@@ -19,7 +19,7 @@ import geobattle.weapon.WeaponFactory;
 public class Soldier extends Bot implements WeaponHolder {
 
 	private final static Color COLOR = Palette.RED;
-	private final static Sprite SPRITE = new Square(24, 24, COLOR);
+	private final static Sprite SPRITE = new Rect(24, 24, COLOR);
 	private final static int HEALTH = 100;
 	private final static double SPEED = 1.0;
 	private final static Interval<Integer> SHOOT_DELAY = new Interval<Integer>(1000, 2000); 

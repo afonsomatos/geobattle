@@ -6,7 +6,7 @@ import java.awt.Point;
 import geobattle.collider.Collider;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.render.sprite.shapes.Square;
+import geobattle.render.sprite.shapes.Rect;
 import geobattle.special.StarBurstSpecial;
 import geobattle.special.StarBurstSpecial.Style;
 import geobattle.util.Counter;
@@ -50,7 +50,7 @@ public class Bubble extends Bot {
 	}
 
 	public void updateSprite() {
-		setSprite(new Square((int)getWidth(), (int)getHeight(), getColor()));
+		setSprite(new Rect((int)getWidth(), (int)getHeight(), getColor()));
 		getCollider().surround(getSprite());
 	}
 	
