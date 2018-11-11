@@ -3,6 +3,9 @@ package geobattle.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import geobattle.living.bots.powerups.HealthPowerup;
+import geobattle.living.bots.powerups.Powerup;
+import geobattle.living.bots.powerups.SpeedPowerup;
 import geobattle.special.slot.SpecialSlotFactory;
 import geobattle.weapon.WeaponFactory;
 
@@ -10,10 +13,13 @@ public class Achievements {
 
 	private final static int MAX_WEAPON_SLOTS  = 5;
 	private final static int MAX_SPECIAL_SLOTS = 5;
+	private final static int MAX_POWERUP_SLOTS = 5;
 	
+	private List<Powerup> powerups = new ArrayList<>();
 	private List<WeaponFactory> weapons = new ArrayList<>();
 	private List<SpecialSlotFactory> specials = new ArrayList<>();
 	
+	private int powerupSlots = 0;
 	private int specialSlots = 0;
 	private int weaponSlots = 0;
 	private int level = 0;
@@ -34,6 +40,11 @@ public class Achievements {
 			WeaponFactory.VIRUS
 	};
 	
+	private static final Powerup[] ALL_POWERUPS = new Powerup[] {
+			new HealthPowerup(100),
+			new SpeedPowerup(1.5),
+	};
+	
 	Achievements() {
 		// Go straight to level 1
 		unlockLevel();
@@ -41,14 +52,17 @@ public class Achievements {
 	
 	void unlockLevel() {
 		level += 1;
-		
-		// Unlock a new weapon each level
-		weapons.add(ALL_WEAPONS[(level - 1) % ALL_WEAPONS.length]);
-		
-		// Unlock a new weapon slot every 3 levels
-		if (weaponSlots < MAX_WEAPON_SLOTS)
-			weaponSlots = 1 + level / 3;
-		
+		unlockWeapons();
+		unlockSpecials();
+		unlockPowerups();
+	}
+	
+	private void unlockPowerups() {
+		powerups.add(ALL_POWERUPS[(level - 1) % ALL_POWERUPS.length]);
+		powerupSlots++;
+	}
+
+	private void unlockSpecials() {
 		// Unlock a new special slot every 4 levels
 		if (level >= 4 && level % 4 == 0 && specialSlots < MAX_SPECIAL_SLOTS)
 			specialSlots++;
@@ -57,9 +71,22 @@ public class Achievements {
 		if (level % 3 == 0)
 			specials.add(ALL_SPECIALS[(level / 3) % ALL_SPECIALS.length]);
 	}
+
+	private void unlockWeapons() {
+		// Unlock a new weapon each level
+		weapons.add(ALL_WEAPONS[(level - 1) % ALL_WEAPONS.length]);
+		
+		// Unlock a new weapon slot every 3 levels
+		if (weaponSlots < MAX_WEAPON_SLOTS)
+			weaponSlots = 1 + level / 3;
+	}
 	
 	public int getSpecialSlots() {
 		return specialSlots;
+	}
+	
+	public int getPowerupSlots() {
+		return powerupSlots;
 	}
 	
 	public int getWeaponSlots() {
@@ -68,6 +95,10 @@ public class Achievements {
 
 	public int getLevel() {
 		return level;
+	}
+	
+	public List<Powerup> getPowerups() {
+		return powerups;
 	}
 	
 	public List<SpecialSlotFactory> getSpecials() {

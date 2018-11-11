@@ -16,6 +16,9 @@ import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
 import geobattle.living.bots.Bot;
+import geobattle.living.bots.powerups.HealthPowerup;
+import geobattle.living.bots.powerups.Powerup;
+import geobattle.living.bots.powerups.SpeedPowerup;
 import geobattle.object.ArrowKeysFollower;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
@@ -212,6 +215,13 @@ public class Game implements Launchable, Renderable {
 		spawnGameObject(crossArrow);
 	}
 	
+	private void loadPlayerPowerups() {
+		int[] choices = options.getPowerups();
+		List<Powerup> powerups = achievements.getPowerups();
+		for (int i : choices)
+			powerups.get(i).apply(player);
+	}
+	
 	private void loadPlayerSpecialSet() {
 		int[] choices = options.getSpecials();
 		int slots = Math.min(choices.length, achievements.getSpecialSlots());
@@ -262,6 +272,7 @@ public class Game implements Launchable, Renderable {
 
 		loadPlayerWeaponSet();
 		loadPlayerSpecialSet();
+		loadPlayerPowerups();
 	}
 	
 	private void reset() {

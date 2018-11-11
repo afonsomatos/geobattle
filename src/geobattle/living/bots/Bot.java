@@ -2,12 +2,12 @@ package geobattle.living.bots;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.living.Living;
+import geobattle.living.bots.powerups.Powerup;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 

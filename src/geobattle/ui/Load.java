@@ -32,6 +32,7 @@ class Load extends JPanel {
 	
 	private Picker weaponPicker;
 	private Picker specialPicker;
+	private Picker powerupPicker;
 	
 	Load(UIManager uiManager) {
 		
@@ -92,12 +93,13 @@ class Load extends JPanel {
 		
 		weaponPicker = new Picker(uiStyle, "Weapons", Palette.BLUE);
 		specialPicker = new Picker(uiStyle, "Specials", Palette.MAGENTA);
+		powerupPicker = new Picker(uiStyle, "Powerups", Palette.ORANGE);
 		
 		next.addActionListener(e -> {
 			Options opts = uiManager.getOptions();
 			opts.setSpecials(specialPicker.getSelected());
 			opts.setWeapons(weaponPicker.getSelected());
-		//	opts.setPowerups(powerupsPicker.getSelected());
+			opts.setPowerups(powerupPicker.getSelected());
 			opts.setLevel(levelChooser.getValue());
 			uiManager.sendPlay();
 		});
@@ -115,7 +117,7 @@ class Load extends JPanel {
 		gridPanel.add(left);
 		gridPanel.add(specialPicker);
 		gridPanel.add(weaponPicker);
-		//gridPanel.add(powerupsPicker);
+		gridPanel.add(powerupPicker);
 		
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BorderLayout());
@@ -128,10 +130,22 @@ class Load extends JPanel {
 		levelSwitch();
 		updateWeapons();
 		updateSpecials();
+		updatePowerups();
 	}
 
+	private void updatePowerups() {
+		Achievements ach = uiManager.getAchievements();
+		powerupPicker.setMax(ach.getPowerupSlots());
+		powerupPicker.setSlots(
+				ach
+					.getPowerups()
+					.stream()
+					.map(Object::toString)
+					.toArray(x -> new String[x])
+					);
+	}
+	
 	private void updateSpecials() {
-		Log.i("Specials updated");
 		Achievements ach = uiManager.getAchievements();
 		specialPicker.setMax(ach.getSpecialSlots());
 		specialPicker.setSlots(
