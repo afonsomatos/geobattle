@@ -36,7 +36,7 @@ public class Soldier extends Bot implements WeaponHolder {
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 		
-		weapon = WeaponFactory.Rifle.create(game, this, Tag.Enemy);
+		weapon = WeaponFactory.RIFLE.create(game, this, Tag.Enemy);
 		
 		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);

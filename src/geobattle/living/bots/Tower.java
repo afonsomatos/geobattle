@@ -35,7 +35,7 @@ public class Tower extends Bot implements WeaponHolder {
 		setHealth(HEALTH);
 		setSpeed(0);
 
-		weapon = WeaponFactory.Sniper.create(game, this, Tag.Enemy);
+		weapon = WeaponFactory.SNIPER.create(game, this, Tag.Enemy);
 		
 		shooter = new Shooter(weapon);
 		shooter.setDelay(SHOOT_DELAY);

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
-import geobattle.core.Achievements.SpecialSlotFactory;
 import geobattle.io.IOManager;
 import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
@@ -26,6 +25,7 @@ import geobattle.schedule.Event;
 import geobattle.schedule.Schedule;
 import geobattle.special.slot.SpecialSet;
 import geobattle.special.slot.SpecialSlot;
+import geobattle.special.slot.SpecialSlotFactory;
 import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Log;

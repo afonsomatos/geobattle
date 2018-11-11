@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import geobattle.core.Achievements;
-import geobattle.core.Achievements.SpecialSlotFactory;
 import geobattle.core.Options;
 import geobattle.core.Score;
+import geobattle.special.slot.SpecialSlotFactory;
 import geobattle.util.Interval;
 import geobattle.util.Log;
 import geobattle.util.Palette;

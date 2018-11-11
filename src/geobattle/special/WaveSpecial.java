@@ -4,6 +4,7 @@ import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.object.Wave;
 import geobattle.object.WaveFactory;
+import geobattle.util.Log;
 
 public class WaveSpecial extends Special {
 
@@ -16,6 +17,7 @@ public class WaveSpecial extends Special {
 	public void send() {
 		Wave wave = new WaveFactory().create(getGame());
 		wave.moveTo(getPos().x, getPos().y);
+		wave.setTag(getTag());
 		getGame().spawnGameObject(wave);
 	}
 

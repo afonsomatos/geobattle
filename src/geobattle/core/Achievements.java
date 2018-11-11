@@ -2,16 +2,8 @@ package geobattle.core;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
-import geobattle.special.AsteroidSpecial;
-import geobattle.special.BombSpecial;
-import geobattle.special.Special;
-import geobattle.special.TroopsSpecial;
-import geobattle.special.slot.SpecialSlot;
-import geobattle.special.slot.TimedSpecialSlot;
-import geobattle.special.slot.UnitSpecialSlot;
-import geobattle.util.Log;
+import geobattle.special.slot.SpecialSlotFactory;
 import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
@@ -23,51 +15,19 @@ public class Achievements {
 	private int weaponSlots = 0;
 	private int level = 0;
 	
-	public static class SpecialSlotFactory {
-		
-		private final String name;
-		private final Function<Game, SpecialSlot> func;
-		
-		SpecialSlotFactory(String name, Function<Game, SpecialSlot> func) {
-			this.name = name;
-			this.func = func;
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		public SpecialSlot create(Game game) {
-			return func.apply(game);
-		}
-	}
-	
 	private static final SpecialSlotFactory[] ALL_SPECIALS = new SpecialSlotFactory[] {
-			
-			new SpecialSlotFactory("Sentry x5", game -> {
-				Special special = new TroopsSpecial(game, Tag.Player, Tag.Enemy);
-				return new UnitSpecialSlot(special, 5);		
-			}),
-			
-			new SpecialSlotFactory("Asteroid 15s", game -> {
-				Special special = new AsteroidSpecial(game , game.getPlayer(), 5000);
-				return new TimedSpecialSlot(special, 15_000);		
-			}),
-			
-			new SpecialSlotFactory("Bombs x5", game -> {
-				Special special = new BombSpecial(game, Tag.Void);
-				return new UnitSpecialSlot(special, 5);
-			})
-			
+			SpecialSlotFactory.WAVE,
+			SpecialSlotFactory.SENTRY_5S,
+			SpecialSlotFactory.ASTEROID_15S,
+			SpecialSlotFactory.BOMBS_X5,
 	};
 	
-
 	private static final WeaponFactory[] ALL_WEAPONS = new WeaponFactory[] {
-				WeaponFactory.Rifle,
-				WeaponFactory.Shotgun,
-				WeaponFactory.Sniper,
-				WeaponFactory.MachineGun,
-				WeaponFactory.Virus
+			WeaponFactory.RIFLE,
+			WeaponFactory.SHOTGUN,
+			WeaponFactory.SNIPER,
+			WeaponFactory.MACHINEGUN,
+			WeaponFactory.VIRUS
 	};
 	
 	Achievements() {
@@ -77,7 +37,6 @@ public class Achievements {
 	
 	void unlockLevel() {
 		level += 1;
-		Log.i("Level unlocked: " + level);
 		
 		// Unlock a new weapon each level
 		weapons.add(ALL_WEAPONS[(level - 1) % ALL_WEAPONS.length]);

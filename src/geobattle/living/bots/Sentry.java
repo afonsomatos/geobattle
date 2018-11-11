@@ -50,7 +50,7 @@ public class Sentry extends Bot implements WeaponHolder {
 		setSpeed(SPEED);
 		setHealth(HEALTH);
 		
-		weapon = WeaponFactory.Rifle.create(game, this, Tag.Neutral);
+		weapon = WeaponFactory.RIFLE.create(game, this, Tag.Neutral);
 		shooter = new Shooter(null, weapon);
 		shooter.setDelay(SHOOT_DELAY);
 

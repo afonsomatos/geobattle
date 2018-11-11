@@ -16,11 +16,11 @@ import geobattle.util.Palette;
 
 public class WeaponFactory {
 
-	public final static WeaponFactory Rifle;
-	public final static WeaponFactory Sniper;
-	public final static WeaponFactory Shotgun;
-	public final static WeaponFactory MachineGun;
-	public final static WeaponFactory Virus;
+	public final static WeaponFactory RIFLE;
+	public final static WeaponFactory SNIPER;
+	public final static WeaponFactory SHOTGUN;
+	public final static WeaponFactory MACHINEGUN;
+	public final static WeaponFactory VIRUS;
 
 	static {
 		
@@ -30,7 +30,7 @@ public class WeaponFactory {
 				.setDamage(45);
 		
 		// Ready to create weapons
-		Rifle = new WeaponFactory("Rifle")
+		RIFLE = new WeaponFactory("Rifle")
 				.setProjectiles(1)
 				.setRadius(70)
 				.setFireSpeed(0.1)
@@ -47,7 +47,7 @@ public class WeaponFactory {
 				.setSpeed(15.0f)
 				.setDamage(50);
 		
-		Shotgun = new WeaponFactory("Shotgun")
+		SHOTGUN = new WeaponFactory("Shotgun")
 				.setProjectiles(8)
 				.setRadius(70)
 				.setFireSpeed(0.02)
@@ -64,7 +64,7 @@ public class WeaponFactory {
 				.setSpeed(20.0f)
 				.setDamage(300);
 		
-		Sniper = new WeaponFactory("Sniper")
+		SNIPER = new WeaponFactory("Sniper")
 				.setProjectiles(1)
 				.setFireSpeed(0.02)
 				.setRadius(70)
@@ -87,7 +87,7 @@ public class WeaponFactory {
 				.setWaveFactory(wMachineGun)
 				.setDamage(20);
 		
-		MachineGun = new WeaponFactory("Machine gun")
+		MACHINEGUN = new WeaponFactory("Machine gun")
 				.setRadius(70)
 				.setProjectiles(1)
 				.setFireSpeed(0.2)
@@ -111,7 +111,7 @@ public class WeaponFactory {
 				.setDamage(0)
 				.setInfectionFactory(virus);
 		
-		Virus = new WeaponFactory("Virus")
+		VIRUS = new WeaponFactory("Virus")
 				.setColor(Color.WHITE)
 				.setSize(15)
 				.setProjectileFactory(pVirus)

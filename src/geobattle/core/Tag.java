@@ -48,4 +48,9 @@ public class Tag {
 		return name;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("[Tag #%d ~ %s]", id, name);
+	}
+	
 }

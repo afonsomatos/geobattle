@@ -57,10 +57,12 @@ public class Follower implements Controller {
 	
 	@Override
 	public void update(GameObject gameObject) {
+		
 		if (target == null) {
 			gameObject.stop();
 			return;
 		}
+		
 		if (!active) return;
 
 		boolean stopped = false;
