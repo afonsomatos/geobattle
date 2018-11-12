@@ -61,8 +61,6 @@ public class Game implements Launchable, Renderable {
 	private double ratio = 16.0 / 9.0;
 	private double scale;
 	
-	private int score = 0;
-	
 	private boolean outOfBorders;
 	private Counter outOfBorderCounter = new Counter(5, -1, 0, false) {
 		@Override
@@ -80,7 +78,6 @@ public class Game implements Launchable, Renderable {
 	private boolean gameOver;
 	
 	private boolean paused = false;
-	private int enemies;
 	
 	private List<GameObject> gameObjects 	= new ArrayList<GameObject>(500);
 	private List<Score> scores  			= new ArrayList<Score>();
@@ -182,7 +179,7 @@ public class Game implements Launchable, Renderable {
 		state = State.END;
 		String name = uiManager.sendScoreEnter();
 		if (name != null)
-			saveScore(name, score, level);
+			saveScore(name, levelManager.getScore(), level);
 		uiManager.sendLoad();
 	}
 	
@@ -273,8 +270,6 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	private void reset() {
-		score 			= 0;
-		enemies 		= 0;
 		outOfBorders 	= false;
 		gettingHit 		= false;
 		gameOver		= false;
@@ -474,19 +469,10 @@ public class Game implements Launchable, Renderable {
 	public void spawnGameObject(GameObject gameObject) {
 		gameObjects.add(gameObject);
 		gameObject.spawn();
-		
-		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy)
-			enemies++;
 	}
 	
 	public void killGameObject(GameObject gameObject) {
 		gameObjects.remove(gameObject);
-		
-		if (gameObject instanceof Bot && gameObject.getTag() == Tag.Enemy) {
-			sendMessage(2000, "Enemy killed +10");
-			score += 10;
-			enemies--;
-		}
 	}
 	
 	public List<GameObject> getGameObjects() {
@@ -516,10 +502,6 @@ public class Game implements Launchable, Renderable {
 		return ioManager;
 	}
 	
-	public int getEnemies() {
-		return enemies;
-	}
-	
 	public int getFps() {
 		return fps;
 	}
@@ -542,10 +524,6 @@ public class Game implements Launchable, Renderable {
 
 	public HUD getHud() {
 		return hud;
-	}
-
-	public int getScore() {
-		return score;
 	}
 
 	public double getScale() {

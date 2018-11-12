@@ -11,7 +11,7 @@ import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
 
-	private final static int START_LEVEL = 5;
+	private final static int START_LEVEL = 10;
 	
 	private final static int MAX_WEAPON_SLOTS  = 5;
 	private final static int MAX_SPECIAL_SLOTS = 5;
@@ -80,8 +80,9 @@ public class Achievements {
 	}
 
 	private void unlockWeapons() {
-		// Unlock a new weapon each level
-		weapons.add(ALL_WEAPONS[(level - 1) % ALL_WEAPONS.length]);
+		// Unlock a new weapon each even level
+		if (level % 2 == 1)
+			weapons.add(ALL_WEAPONS[(level / 2) % ALL_WEAPONS.length]);
 		
 		// Unlock a new weapon slot every 3 levels
 		if (weaponSlots < MAX_WEAPON_SLOTS)

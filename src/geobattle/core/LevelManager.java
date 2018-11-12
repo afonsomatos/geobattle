@@ -53,10 +53,11 @@ public class LevelManager {
 	private int waveCountDown;
 	private int wave;
 	private int level;
-	
 	private int dead;
 	private int spawned;
-
+	private int score;
+	private long start;
+	
 	private Supplier<Integer> itemQuantitySupplier = () -> 1;
 	private Supplier<Integer> botQuantitySupplier = () -> wave + (level - 1);
 	
@@ -86,6 +87,8 @@ public class LevelManager {
 	public void sendLevel(int level) {
 		this.level = level;
 		wave = 0;
+		score = 0;
+		start = System.currentTimeMillis();
 		sendNextWave();
 	}
 	
@@ -134,6 +137,8 @@ public class LevelManager {
 			b.setTarget(player);
 			
 			b.getTriggerMap().addLast("die", () -> {
+				game.sendMessage(2000, "Enemy killed +10");
+				score += 10;
 				// End wave when the last bot dies
 				if (++dead >= bots.length)
 					finishWave();
@@ -167,7 +172,17 @@ public class LevelManager {
 			game.sendLevelFinished();
 			return;
 		}
-		game.sendMessage(WAVE_CLEARED_PAUSE, "Wave cleared!");
+		
+		double elapsed = getLevelTimeEllapsed() / 1000.0;
+		
+		int maxExtraScore = (level + wave) * 50;
+		double discountScorePerSecond = 0.01 * maxExtraScore; 
+		int discount = (int) (discountScorePerSecond * elapsed);
+		int scoreGained = Math.max(0, maxExtraScore - discount);
+		String msg = String.format("Wave cleared! +%d (%.2fs)", scoreGained, elapsed);
+		
+		score += scoreGained;
+		game.sendMessage(WAVE_CLEARED_PAUSE, msg);
 		game.getSchedule().next(WAVE_CLEARED_PAUSE, this::sendNextWave);
 	}
 	
@@ -177,6 +192,9 @@ public class LevelManager {
 		Event event = new Event(1000, true);
 		event.setRunnable(() -> {
 			String msg;
+			
+			assert waveCountDown >= 0;
+			
 			if (waveCountDown == 0) {
 				wave++;
 				loadWave(this::finishWave);
@@ -196,9 +214,17 @@ public class LevelManager {
 	public int getWaveCountDown() {
 		return waveCountDown;
 	}
+	
+	public int getScore() {
+		return score;
+	}
 
 	public int getWave() {
 		return this.wave;
+	}
+	
+	public long getLevelTimeEllapsed() {
+		return System.currentTimeMillis() - start;
 	}
 
 }

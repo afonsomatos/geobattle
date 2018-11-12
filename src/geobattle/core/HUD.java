@@ -65,7 +65,7 @@ class HUD implements Renderable {
 		
 		gfx.drawString("Health: " 	+ player.getHealth(),
 				PADDING, PADDING + ascent);
-		gfx.drawString("Score: " 	+ game.getScore(),
+		gfx.drawString("Score: " 	+ game.getLevelManager().getScore(),
 				PADDING, PADDING + ascent + fontsize + spacing);
 		gfx.drawString("Wave: " 	+ game.getLevelManager().getWave(),
 				PADDING, PADDING + ascent + 2 * (spacing + fontsize));
@@ -191,7 +191,7 @@ class HUD implements Renderable {
 		gfx.drawString(str, x, y);
 		
 		gfx.setFont(LABELS_FONT.deriveFont(Font.BOLD, 24));
-		str = "Your score was " + game.getScore();
+		str = "Your score was " + game.getLevelManager().getScore();
 		w = gfx.getFontMetrics().stringWidth(str);
 		x = game.getWidth() / 2 - w/2;
 		y = game.getHeight() / 2 + 30;
@@ -221,7 +221,7 @@ class HUD implements Renderable {
 		gfx.drawString(str, x, y);
 		
 		gfx.setFont(LABELS_FONT.deriveFont(Font.BOLD, 24));
-		str = "Your score was " + game.getScore();
+		str = "Your score was " + game.getLevelManager().getScore();
 		w = gfx.getFontMetrics().stringWidth(str);
 		x = game.getWidth() / 2 - w/2;
 		y = game.getHeight() / 2 + 30;
