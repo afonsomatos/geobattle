@@ -14,11 +14,8 @@ import geobattle.triggers.TriggerMap;
 
 public class GameObject {
 
-	private static int nextId = 0;
-	private int id;
-	
 	protected Game game;
-	
+
 	private double width 	= 0;
 	private double height 	= 0;
 	private double x 		= 0;
@@ -356,5 +353,5 @@ public class GameObject {
 	public boolean setDirection(GameObject obj) {
 		return setDirection(obj.getX(), obj.getY());
 	}
-
+	
 }

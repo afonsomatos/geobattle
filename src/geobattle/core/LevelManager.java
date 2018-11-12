@@ -23,6 +23,7 @@ import geobattle.living.bots.Soldier;
 import geobattle.living.bots.Tower;
 import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
+import geobattle.util.Log;
 import geobattle.util.Util;
 import geobattle.util.WeightedRandomBag;
 
@@ -157,7 +158,7 @@ public class LevelManager {
 		});
 
 		// Spawn first without delay
-		spawnEvent.getRunnable().run();
+		spawnEvent.run();
 		game.getSchedule().add(spawnEvent);
 	}
 	
@@ -193,7 +194,7 @@ public class LevelManager {
 		event.setRunnable(() -> {
 			String msg;
 			
-			assert waveCountDown >= 0;
+			assert waveCountDown >= 0; // ?
 			
 			if (waveCountDown == 0) {
 				wave++;
@@ -207,7 +208,7 @@ public class LevelManager {
 			game.sendMessage(1000, msg);
 		});
 		
-		event.getRunnable().run();
+		event.run();
 		game.getSchedule().add(event);
 	}
 	

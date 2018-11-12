@@ -6,30 +6,34 @@ import java.util.List;
 
 public class Schedule {
 
-	private List<Event> timers = new ArrayList<Event>();
+	private List<Event> timers = new LinkedList<Event>();
 	private long startPause;
 	private boolean paused = false;
 	
-	public synchronized void tick() {
+	public void tick() {
 		if (paused) return;
-		
-		long now = System.currentTimeMillis();
-		
+	
+			
 		List<Event> toRemove = new ArrayList<Event>();
-		for (Event t : new ArrayList<Event>(timers)) {
+		for (Event t : new ArrayList<>(timers)) {
 			if (t.isOff()) {
 				toRemove.add(t);
 				continue;
 			}
+			
+			long now = System.currentTimeMillis();
 			long elapsed = (now - t.getExtraDelay() - t.getStart());
 			t.setElapsed(elapsed);
-			if (elapsed >= t.getDelay()) {
+			
+			if (t.getDelay() <= elapsed) {
 				t.removeExtraDelay();
-				t.getRunnable().run();
+				t.run();
+				
 				if (!t.isRepeat()) {
 					toRemove.add(t);
 					continue;
 				}
+				
 				t.setStart(now);
 			}
 		}
@@ -43,6 +47,9 @@ public class Schedule {
 	}
 	
 	public void unpause() {
+		if (!paused) {
+			throw new IllegalStateException("Can't unpaused what's not paused");
+		}
 		for (Event t : timers)
 			t.addExtraDelay(System.currentTimeMillis() - startPause);
 		paused = false;

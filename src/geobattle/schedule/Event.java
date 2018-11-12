@@ -3,7 +3,7 @@ package geobattle.schedule;
 import geobattle.util.Log;
 import geobattle.util.Util;
 
-public class Event {
+public class Event implements Runnable {
 	
 	private boolean repeat = false;
 	private boolean off = false;
@@ -29,6 +29,11 @@ public class Event {
 		this.delay = delay;
 		this.repeat = repeat;
 		this.runnable = runnable;
+	}
+	
+	@Override
+	public void run() {
+		runnable.run();
 	}
 	
 	void setElapsed(long elapsed) {
@@ -85,10 +90,6 @@ public class Event {
 
 	public void setDelay(long delay) {
 		this.delay = delay;
-	}
-
-	public Runnable getRunnable() {
-		return runnable;
 	}
 
 	public void setRunnable(Runnable runnable) {
