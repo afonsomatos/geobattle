@@ -11,14 +11,11 @@ import java.util.List;
 
 import geobattle.collider.CollisionHandler;
 import geobattle.io.IOManager;
-import geobattle.item.ItemGenerator;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
 import geobattle.living.bots.Bot;
-import geobattle.living.bots.powerups.HealthPowerup;
 import geobattle.living.bots.powerups.Powerup;
-import geobattle.living.bots.powerups.SpeedPowerup;
 import geobattle.object.ArrowKeysFollower;
 import geobattle.object.MouseFollower;
 import geobattle.render.Renderable;
@@ -305,7 +302,6 @@ public class Game implements Launchable, Renderable {
 		levelFinished = false;
 		levelManager.sendLevel(opts.getLevel());
 
-		spawnGameObject(new ItemGenerator(this));
 		state = State.PLAYING;
 		gameLoop();
 	}

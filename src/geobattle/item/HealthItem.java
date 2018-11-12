@@ -9,7 +9,7 @@ import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
 import geobattle.util.Palette;
 
-class HealthItem extends UnitsItem {
+public class HealthItem extends UnitsItem {
 
 	private final static Sprite SPRITE = new Cross(30, 30, Palette.GREEN);
 	private final static Color LABEL_COLOR = Palette.GREEN;

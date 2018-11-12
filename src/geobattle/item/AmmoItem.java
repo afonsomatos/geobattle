@@ -12,7 +12,7 @@ import geobattle.render.sprite.shapes.Diamond;
 import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
 
-class AmmoItem extends UnitsItem {
+public class AmmoItem extends UnitsItem {
 
 	private final static Sprite SPRITE = new Diamond(30, 30, Palette.WHITE);
 	private final static Color LABEL_COLOR = Palette.RED;

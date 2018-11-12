@@ -5,7 +5,7 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 
-abstract class Item extends GameObject {
+public abstract class Item extends GameObject {
 	
 	public Item(Game game) {
 		super(game);

@@ -10,4 +10,13 @@ public class Interval<T extends Number> {
 		this.end = end;
 	}
 	
+	public boolean contains(T val) {
+		double dval 	= val.doubleValue();
+		
+		double dstart 	= start == null ? Double.MIN_VALUE : start.doubleValue();
+		double dend		= end == null ? Double.MAX_VALUE : end.doubleValue();
+		
+		return dstart <= dval && dval <= dend;
+	}
+	
 }
