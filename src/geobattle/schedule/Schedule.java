@@ -13,7 +13,7 @@ public class Schedule {
 	public void tick() {
 		if (paused) return;
 	
-			
+		// TODO: Find better way
 		List<Event> toRemove = new ArrayList<Event>();
 		for (Event t : new ArrayList<>(timers)) {
 			if (t.isOff()) {
