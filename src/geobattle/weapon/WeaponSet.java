@@ -4,11 +4,8 @@ public class WeaponSet {
 	
 	private Weapon[] slots;
 	private int selected;
-	
 	private Integer lastSelected = null;
-	
 	private double fireAngle = 0;
-
 	public final int size;
 	
 	public WeaponSet(int len) {
@@ -25,21 +22,13 @@ public class WeaponSet {
 			select(lastSelected);
 	}
 	
-	public boolean store(int num, Weapon weapon) {
-		if (num < 0 || num >= slots.length)
-			return false;
-		
+	public void store(int num, Weapon weapon) {
 		slots[num] = weapon;
 		if (num != selected)
 			weapon.setHidden(true);
-		
-		return true;
 	}
 	
-	public boolean select(int num) {
-		if (num < 0 || num >= slots.length)
-			return false;
-		
+	public void select(int num) {
 		lastSelected = selected;
 		Weapon weapon = getSelectedWeapon();
 
@@ -56,8 +45,6 @@ public class WeaponSet {
 			weapon.setFireAngle(fireAngle);
 			weapon.setHidden(false);
 		}
-
-		return true;
 	}
 	
 	public int getSelected() {

@@ -12,6 +12,7 @@ import javax.swing.KeyStroke;
 import geobattle.core.Game;
 import geobattle.living.Player;
 import geobattle.special.slot.SpecialSlot;
+import geobattle.weapon.WeaponSet;
 
 @SuppressWarnings("serial")
 public class KeyInput extends KeyAdapter {
@@ -37,12 +38,14 @@ public class KeyInput extends KeyAdapter {
 		bind("released Q", this::sendSwap);
 		
 		IntStream.range(1, 9).forEach(i ->
-			bind("released " + i, () ->
-				game.getPlayer().getWeaponSet().select(i - 1)
-			)
+			bind("released " + i, () -> {
+				WeaponSet wset = game.getPlayer().getWeaponSet();
+				if (i - 1 >= wset.size) return;
+				wset.select(i - 1);
+			})
 		);
 		
-		char specialSlots[] = {'Z','X','C', 'V', 'B'};
+		char specialSlots[] = {'Z', 'X', 'C', 'V', 'B'};
 		for (int i = 0; i < specialSlots.length; ++i) {
 			final int slot = i;
 			char c = specialSlots[i];

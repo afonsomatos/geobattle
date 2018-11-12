@@ -29,7 +29,9 @@ public class AmmoItem extends UnitsItem {
 		if (collector instanceof WeaponHolder) {
 			WeaponHolder weaponHolder = (WeaponHolder) collector;
 			// set remaining units
-			setUnits(weaponHolder.getWeapon().fillAmmo(getUnits()));
+			Weapon weapon = weaponHolder.getWeapon();
+			if (weapon != null)
+				setUnits(weapon.fillAmmo(getUnits()));
 		}
 	}
 
