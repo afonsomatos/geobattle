@@ -204,6 +204,7 @@ public class Game implements Launchable, Renderable {
 			ioManager.getMouseInput().setGameObject(crossArrow);
 		}
 		crossArrow.setSprite(CROSS_ARROW_SPRITE);
+		crossArrow.setZindex(100); // Be on top of all objects
 		spawnGameObject(crossArrow);
 	}
 	
