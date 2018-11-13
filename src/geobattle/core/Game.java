@@ -142,10 +142,6 @@ public class Game implements Launchable, Renderable {
 		return message;
 	}
 	
-	public void sendMessage(String msg) {
-		sendMessage(1500, msg);
-	}
-	
 	public void sendMessage(long delay, String msg) {
 		message = msg;
 		hideMessageEvent.setDelay(delay);

@@ -137,7 +137,7 @@ public class LevelManager {
 			b.setTag(Tag.Enemy);
 			b.setTarget(player);
 			
-			b.getTriggerMap().addLast("kill", () -> {
+			b.getTriggerMap().add("kill", () -> {
 				game.sendMessage(2000, "Enemy killed +10");
 				score += 10;
 				// End wave when the last bot dies
@@ -169,22 +169,21 @@ public class LevelManager {
 	}
 	
 	private void finishWave() {
-		if (wave == WAVES_PER_LEVEL) {
-			game.sendLevelFinished();
-			return;
-		}
-		
+		// In seconds
 		double elapsed = getLevelTimeEllapsed() / 1000.0;
 		
-		int maxExtraScore = (level + wave) * 50;
-		double discountScorePerSecond = 0.01 * maxExtraScore; 
-		int discount = (int) (discountScorePerSecond * elapsed);
-		int scoreGained = Math.max(0, maxExtraScore - discount);
+		// Time for which extra score is max
+		double bestTime = (level + wave) * 5; 
+		int bestScore	= (level + wave) * 50;
+		int scoreGained = (int) Util.clamp(0, bestScore * elapsed / bestTime, bestScore);
 		String msg = String.format("Wave cleared! +%d (%.2fs)", scoreGained, elapsed);
 		
 		score += scoreGained;
 		game.sendMessage(WAVE_CLEARED_PAUSE, msg);
 		game.getSchedule().next(WAVE_CLEARED_PAUSE, this::sendNextWave);
+
+		if (wave == WAVES_PER_LEVEL)
+			game.sendLevelFinished();
 	}
 	
 	private void sendNextWave() {
@@ -194,9 +193,7 @@ public class LevelManager {
 		Event event = new Event(1000, true);
 		event.setRunnable(() -> {
 			String msg;
-			
-			assert waveCountDown >= 0; // ?
-			
+			assert waveCountDown >= 0;
 			if (waveCountDown == 0) {
 				wave++;
 				loadWave(this::finishWave);
