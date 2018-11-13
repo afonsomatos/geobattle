@@ -13,6 +13,8 @@ import geobattle.util.Util;
 
 public abstract class Bot extends Living {
 	
+	private final static int Z_INDEX = 3;
+	
 	// Space between tag and lower bound of collider
 	private final static int TAG_COLLIDER_MARGIN = 20;
 	
@@ -29,6 +31,7 @@ public abstract class Bot extends Living {
 	
 	public Bot(Game game) {
 		super(game);
+		setZindex(Z_INDEX);
 		getTriggerMap().add("die", this::kill);
 		addDrawer(this::renderTag);
 	}

@@ -3,7 +3,7 @@ package geobattle.core;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import geobattle.collider.Collider;
@@ -15,7 +15,8 @@ import geobattle.triggers.TriggerMap;
 public class GameObject {
 
 	protected Game game;
-
+	
+	private int zindex 		= 0;
 	private double width 	= 0;
 	private double height 	= 0;
 	private double x 		= 0;
@@ -39,15 +40,30 @@ public class GameObject {
 	private Collider collider 	= null;
 	private Sprite sprite		= null;
 	
-	private List<Renderable> drawers		= new ArrayList<Renderable>();
-	private List<Controller> controllers	= new ArrayList<Controller>();
+	private List<Renderable> drawers		= new LinkedList<Renderable>();
+	private List<Controller> controllers	= new LinkedList<Controller>();
 
 	private TriggerMap triggerMap = new TriggerMap();
 	
 	public GameObject(Game game) {
 		this.game = game;
+		
+		addDrawer(gfx -> {
+			// Render sprite
+			if (sprite != null) {
+				gfx.translate(x, y);
+				gfx.rotate(rotation, 0, 0);
+				sprite.render(gfx);
+				gfx.dispose();
+			}
+		});
+		
 	}
 
+	public void addDrawerFirst(Renderable drawer) {
+		drawers.add(0, drawer);
+	}
+	
 	public void addDrawer(Renderable drawer) {
 		drawers.add(drawer);
 	}
@@ -70,6 +86,14 @@ public class GameObject {
 
 	public boolean hasSpawned() {
 		return spawned;
+	}
+	
+	public void setZindex(int zindex) {
+		this.zindex = zindex;
+	}
+	
+	public int getZindex() {
+		return zindex;
 	}
 	
 	public void spawn() {
@@ -110,25 +134,12 @@ public class GameObject {
 	
 	public void render(Graphics2D superGfx) {
 		if (hidden) return;
-
 		Graphics2D gfx;
-
-		// Render sprites
-		if (sprite != null) {
-			gfx = (Graphics2D) superGfx.create();
-			gfx.translate(x, y);
-			gfx.rotate(rotation, 0, 0);
-			sprite.render(gfx);
-			gfx.dispose();
-		}
-		
-		// Render all extra drawers
 		for (Renderable drawer : drawers) {
 			gfx = (Graphics2D) superGfx.create();
 			drawer.render(gfx);
 			gfx.dispose();
 		}
-		
 	}
 	
 	public void update() {

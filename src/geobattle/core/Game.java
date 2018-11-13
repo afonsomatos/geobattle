@@ -7,6 +7,8 @@ import java.awt.RenderingHints;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import geobattle.collider.CollisionHandler;
@@ -468,6 +470,15 @@ public class Game implements Launchable, Renderable {
 	
 	public void spawnGameObject(GameObject gameObject) {
 		gameObjects.add(gameObject);
+		
+		// Sort by layer
+		Collections.sort(gameObjects, new Comparator<GameObject>() {
+			@Override
+			public int compare(GameObject o1, GameObject o2) {
+				return o1.getZindex() - o2.getZindex();
+			}
+		});
+		
 		gameObject.spawn();
 	}
 	
@@ -484,8 +495,7 @@ public class Game implements Launchable, Renderable {
 		gameOver = true;
 		
 		// Player is not out of borders
-		player.setX(0);
-		player.setY(0);
+		player.moveTo(0, 0);
 		
 		// Disable all input
 		ioManager.disable();

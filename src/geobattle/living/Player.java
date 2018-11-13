@@ -27,6 +27,8 @@ import geobattle.weapon.Weapon;
 
 public class Player extends Bot implements WeaponHolder {
 	
+	private final static int Z_INDEX = 4;
+	
 	public static Sprite sprite	= new Rect(40, 40, Color.CYAN);
 	public static Sprite shieldSprite = new Sprite(40, 40, 20, 20);
 	
@@ -60,6 +62,7 @@ public class Player extends Bot implements WeaponHolder {
 		super(game);
 		setWidth(40);
 		setHeight(40);
+		setZindex(Z_INDEX);
 		setSpeed(4.0f);
 		setColor(Color.CYAN);
 		setHealth(200);
