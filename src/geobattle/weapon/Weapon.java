@@ -66,6 +66,7 @@ public class Weapon extends GameObject {
 		
 		setupCounters();
 		
+		setZindex(5);
 		addController(this::update);
 	}
 	

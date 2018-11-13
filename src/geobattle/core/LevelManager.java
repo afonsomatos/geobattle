@@ -137,7 +137,7 @@ public class LevelManager {
 			b.setTag(Tag.Enemy);
 			b.setTarget(player);
 			
-			b.getTriggerMap().addLast("die", () -> {
+			b.getTriggerMap().addLast("kill", () -> {
 				game.sendMessage(2000, "Enemy killed +10");
 				score += 10;
 				// End wave when the last bot dies
@@ -190,6 +190,7 @@ public class LevelManager {
 	private void sendNextWave() {
 		waveCountDown = WAVE_COUNT_DOWN;
 		
+		Log.i("Next wave!");
 		Event event = new Event(1000, true);
 		event.setRunnable(() -> {
 			String msg;

@@ -10,9 +10,9 @@ public class WaveFactory {
 
 	private Color color = Color.RED;
 	private int damage = 300;
-	private int radius = 300;
-	private int thickness = 10;
-	private double speed = 0.08;
+	private int radius = 150;
+	private int thickness = 30;
+	private double speed = 0.04;
 	
 	public WaveFactory setThickness(int thickness) {
 		this.thickness = thickness;
