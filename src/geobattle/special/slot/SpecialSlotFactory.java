@@ -9,6 +9,7 @@ import geobattle.special.BombSpecial;
 import geobattle.special.Special;
 import geobattle.special.TroopsSpecial;
 import geobattle.special.WaveSpecial;
+import geobattle.util.Palette;
 
 public class SpecialSlotFactory {
 	
@@ -52,7 +53,8 @@ public class SpecialSlotFactory {
 		});
 		
 		BOMBS_X5 = new SpecialSlotFactory("Bombs x5", game -> {
-			Special special = new BombSpecial(game, Tag.Void);
+			BombSpecial special = new BombSpecial(game, Tag.Void);
+			special.setColor(Palette.CYAN);
 			return new UnitSpecialSlot(special, 5);
 		});
 	}

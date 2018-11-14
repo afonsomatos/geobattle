@@ -33,22 +33,23 @@ public class Collider {
 	void updateCollisions(List<Collider> updatedCollisions) {
 		
 		// Check gained collisions
-		Stream<Collider> entered = 
-			updatedCollisions
+		updatedCollisions
 			.stream()
-			.filter(b -> !currentCollisions.contains(b));
-		
+			.filter(b -> !currentCollisions.contains(b))
+			.forEach(col -> {
+				handlers.forEach(h -> h.enter(col));
+			});
+			
 		// Check lost collisions
-		Stream<Collider> left = 
-			currentCollisions
-				.stream()
-				.filter(a -> !updatedCollisions.contains(a));
+		currentCollisions
+			.stream()
+			.filter(a -> !updatedCollisions.contains(a))
+			.forEach(col -> {
+				handlers.forEach(h -> h.leave(col));
+			});
 		
-		for (CollisionHandler h : handlers) {
-			entered.forEach(h::enter);
-			left.forEach(h::leave);
+		for (CollisionHandler h : handlers)
 			updatedCollisions.forEach(h::handle);
-		}
 	
 		currentCollisions = updatedCollisions;
 	}
