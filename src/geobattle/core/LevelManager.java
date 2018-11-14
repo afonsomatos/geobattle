@@ -35,6 +35,7 @@ public class LevelManager {
 	private final static int WAVES_PER_LEVEL = 3;
 	private final static int WAIT_PER_SPAWN = 3000;
 	private final static int WAVE_CLEARED_PAUSE = 3000;
+	private final static int SPAWN_DELAY = 3000;
 	
 	private final static int ITEM_SPAWN_MARGIN = 10;
 	private final static int BOT_SPAWN_MARGIN = 20;
@@ -60,7 +61,7 @@ public class LevelManager {
 	private long start;
 	
 	private Supplier<Integer> itemQuantitySupplier = () -> 1;
-	private Supplier<Integer> botQuantitySupplier = () -> wave + (level - 1);
+	private Supplier<Integer> botQuantitySupplier  = () -> wave + (level - 1);
 	
 	private List< Spawn<Item> > items = Arrays.asList(
 		new Spawn<Item>(50, 1, () -> new AmmoItem(game, 50 * level)),
@@ -73,7 +74,7 @@ public class LevelManager {
 		new Spawn<Bot>(50, 	2, 	() -> new Creeper(game)),
 		new Spawn<Bot>(50,	3,  () -> new Tower(game)),
 		new Spawn<Bot>(50,	4,  () -> new Bubble(game)),
-		new Spawn<Bot>(500000, 	5,  () -> new Slime(game)),
+		new Spawn<Bot>(50, 	5,  () -> new Slime(game)),
 		new Spawn<Bot>(50,	6,  () -> new Sentry(game)),
 		new Spawn<Bot>(50, 	7,  () -> new Slicer(game)),
 		new Spawn<Bot>(50, 	8,  () -> new Fly(game)),
@@ -89,6 +90,7 @@ public class LevelManager {
 		this.level = level;
 		wave = 0;
 		score = 0;
+		// FIXME: Pause ruins this
 		start = System.currentTimeMillis();
 		sendNextWave();
 	}
@@ -153,7 +155,7 @@ public class LevelManager {
 				spawnEvent.setOff(true);
 				return;
 			}
-			game.spawnGameObject(new BotSpawner(game, bots[spawned], 3000));
+			game.spawnGameObject(new BotSpawner(game, bots[spawned], SPAWN_DELAY));
 			spawned++;
 		});
 

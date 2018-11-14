@@ -238,6 +238,7 @@ public class Game implements Launchable, Renderable {
 		for (int i = 0; i < slots; ++i) {
 			Weapon w = weapons.get(choices[i]).create(this, player, Tag.Player);
 			weaponSet.store(i, w);
+			player.getTriggerMap().add("die", w::kill);
 			// TODO: Construct a dependency mechanism to handle spawning and killing weapons
 			spawnGameObject(w);
 		}
@@ -272,6 +273,7 @@ public class Game implements Launchable, Renderable {
 		outOfBorders 	= false;
 		gettingHit 		= false;
 		gameOver		= false;
+		paused			= false;
 		
 		outOfBorderCounter.reset();
 		schedule.clear();

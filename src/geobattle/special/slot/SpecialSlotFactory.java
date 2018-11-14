@@ -38,7 +38,7 @@ public class SpecialSlotFactory {
 		
 		WAVE = new SpecialSlotFactory("Wave", game -> {
 			Special special = new WaveSpecial(game, Tag.Player);
-			return new TimedSpecialSlot(special, 1_000);		
+			return new TimedSpecialSlot(special, 15_000);		
 		});
 		
 		SENTRY_5S = new SpecialSlotFactory("Sentry x5", game -> {
