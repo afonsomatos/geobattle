@@ -73,7 +73,7 @@ public class LevelManager {
 		new Spawn<Bot>(50, 	2, 	() -> new Creeper(game)),
 		new Spawn<Bot>(50,	3,  () -> new Tower(game)),
 		new Spawn<Bot>(50,	4,  () -> new Bubble(game)),
-		new Spawn<Bot>(50, 	5,  () -> new Slime(game)),
+		new Spawn<Bot>(500000, 	5,  () -> new Slime(game)),
 		new Spawn<Bot>(50,	6,  () -> new Sentry(game)),
 		new Spawn<Bot>(50, 	7,  () -> new Slicer(game)),
 		new Spawn<Bot>(50, 	8,  () -> new Fly(game)),
@@ -127,23 +127,23 @@ public class LevelManager {
 		int n = botQuantitySupplier.get();
 		final Bot[] bots = new Bot[n];
 
+		Runnable killed = () -> {
+			game.sendMessage(2000, "Enemy killed +10");
+			score += 10;
+			// End wave when the last bot dies
+			if (++dead >= bots.length)
+				finishWave();
+		};
+		
 		// Create all upcoming bots
 		for (int i = 0; i < bots.length; ++i) {
 			Spawn<Bot> s = bag.getRandom();
 			Bot b = bots[i] = s.supplier.get();
-			
-			// Random location
 			b.moveTo(getRandomLocation(BOT_SPAWN_MARGIN));
 			b.setTag(Tag.Enemy);
 			b.setTarget(player);
-			
-			b.getTriggerMap().add("kill", () -> {
-				game.sendMessage(2000, "Enemy killed +10");
-				score += 10;
-				// End wave when the last bot dies
-				if (++dead >= bots.length)
-					finishWave();
-			});
+			// FIXME: This fails when new enemies are spawned (ex. slime)
+			b.getTriggerMap().add("kill", killed);
 		}
 		
 		// Spawn them in order

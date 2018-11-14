@@ -20,10 +20,10 @@ public class Slime extends Bot {
 	
 	private static final Color COLOR = Palette.ORANGE;
 	
-	private enum Type {
+	public static enum Type {
 		SMALL	(new Rect(16, 16, COLOR), 050, 015, 2, 500, null, 0),
 		MEDIUM	(new Rect(32, 32, COLOR), 100, 050, 1.5, 1000, SMALL, 2),
-		LARGE	(new Rect(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM, 10);
+		LARGE	(new Rect(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM, 2);
 		
 		final Sprite sprite;
 		final int health;
@@ -46,7 +46,13 @@ public class Slime extends Bot {
 			this.attackDelay = attackDelay;
 			this.childs = childs;
 		}
-	
+		
+		public int countAll() {
+			if (child == null)
+				return 1;
+			return 1 + child.countAll() * childs;
+		}
+		
 	}
 	
 	// Spawning distance from entity
