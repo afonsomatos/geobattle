@@ -21,14 +21,15 @@ public class Slime extends Bot {
 	private static final Color COLOR = Palette.ORANGE;
 	
 	private enum Type {
-		SMALL	(new Rect(16, 16, COLOR), 050, 015, 2, 500, null),
-		MEDIUM	(new Rect(32, 32, COLOR), 100, 050, 1.5, 1000, SMALL),
-		LARGE	(new Rect(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM);
+		SMALL	(new Rect(16, 16, COLOR), 050, 015, 2, 500, null, 0),
+		MEDIUM	(new Rect(32, 32, COLOR), 100, 050, 1.5, 1000, SMALL, 2),
+		LARGE	(new Rect(64, 64, COLOR), 250, 150, 1, 1500, MEDIUM, 10);
 		
 		final Sprite sprite;
 		final int health;
 		final int damage;
 		final double speed;
+		final int childs;
 		
 		// Interval between strikes (ms)
 		final int attackDelay;
@@ -36,13 +37,14 @@ public class Slime extends Bot {
 		// Type of children
 		final Type child;
 		
-		Type(Sprite sprite, int health, int damage, double speed, int attackDelay, Type child) {
+		Type(Sprite sprite, int health, int damage, double speed, int attackDelay, Type child, int childs) {
 			this.sprite = sprite;
 			this.speed 	= speed;
 			this.health = health;
 			this.child 	= child;
 			this.damage = damage;
 			this.attackDelay = attackDelay;
+			this.childs = childs;
 		}
 	
 	}
@@ -83,8 +85,10 @@ public class Slime extends Bot {
 	
 	private void divide() {
 		if (type.child != null) {
-			spawn(type.child);
-			spawn(type.child);
+			for (int i = 0; i < type.childs; ++i) {
+				Slime s = getChild(type.child);
+				game.spawnGameObject(s);
+			}
 		}
 	}
 
@@ -106,7 +110,7 @@ public class Slime extends Bot {
 		setCollider(newCol);
 	}
 	
-	private void spawn(Type child) {
+	private Slime getChild(Type child) {
 		Point pos = Util.randomVec(spawnRadius);
 		int x = (int) (pos.x + getX());
 		int y = (int) (pos.y + getY());
@@ -114,7 +118,7 @@ public class Slime extends Bot {
 		slime.setTarget(getTarget());
 		slime.setTag(getTag());
 		slime.moveTo(x, y);
-		game.spawnGameObject(slime);
+		return slime;
 	}
 	
 }
