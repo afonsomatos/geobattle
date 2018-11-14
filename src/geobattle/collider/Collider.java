@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -23,33 +24,42 @@ public class Collider {
 	private int offsetY = 0;
 	
 	private List<Collider> currentCollisions = new LinkedList<Collider>();
+	private List<CollisionHandler> handlers = new LinkedList<CollisionHandler>();
 	
 	public Collider(GameObject gameObject) {
 		this.gameObject = gameObject;
 	}
-
+	
 	void updateCollisions(List<Collider> updatedCollisions) {
 		
 		// Check gained collisions
-		updatedCollisions
+		Stream<Collider> entered = 
+			updatedCollisions
 			.stream()
-			.filter(b -> !currentCollisions.contains(b))
-			.forEach(this::enterCollision);
+			.filter(b -> !currentCollisions.contains(b));
 		
-		// Check lost collisionaas
-		currentCollisions
-			.stream()
-			.filter(a -> !updatedCollisions.contains(a))
-			.forEach(this::leaveCollision);
+		// Check lost collisions
+		Stream<Collider> left = 
+			currentCollisions
+				.stream()
+				.filter(a -> !updatedCollisions.contains(a));
 		
-		currentCollisions = updatedCollisions;		
-		updatedCollisions.forEach(this::handleCollision);
+		for (CollisionHandler h : handlers) {
+			entered.forEach(h::enter);
+			left.forEach(h::leave);
+			updatedCollisions.forEach(h::handle);
+		}
+	
+		currentCollisions = updatedCollisions;
 	}
 	
-	// TODO: Change this to sets
-	public void enterCollision(Collider other) 		{}
-	public void leaveCollision(Collider other) 		{}
-	public void handleCollision(Collider other) 	{}
+	public void addHandler(CollisionHandler handler) {
+		handlers.add(handler);
+	}
+	
+	public void removeHandler(CollisionHandler handler) {
+		handlers.remove(handler);
+	}
 	
 	public void surround(Sprite sprite) {
 		width = sprite.getWidth();

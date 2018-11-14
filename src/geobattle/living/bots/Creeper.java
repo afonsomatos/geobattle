@@ -1,16 +1,13 @@
 package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
 import geobattle.extension.Follower;
-import geobattle.living.Living;
-import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Rect;
 import geobattle.special.StarBurstSpecial;
@@ -49,17 +46,16 @@ public class Creeper extends Bot {
 	}
 	
 	private void setupCollider() {
-		Collider superCol = getCollider();
-		setCollider(new Collider(this) {
+		Collider col = getCollider();
+		col.addHandler(new CollisionHandler() {
 			@Override
-			public void handleCollision(Collider other) {
-				superCol.handleCollision(other);
+			public void handle(Collider other) {
 				GameObject obj = other.getGameObject();
 				if (getTarget() == obj)
 					Creeper.this.explode();		
 			}
 		});
-		getCollider().surround(SPRITE);
+		col.surround(SPRITE);
 	}
 	
 	public void explode() {

@@ -10,3 +10,6 @@
 /Tag.class
 /Pair.class
 /Collision.class
+/Collidable.class
+/CollisionManager.class
+/ColliderHandler.class

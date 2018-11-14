@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import geobattle.collider.CollisionHandler;
+import geobattle.collider.CollisionManager;
 import geobattle.io.IOManager;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
@@ -53,7 +53,7 @@ public class Game implements Launchable, Renderable {
 	private HUD hud;
 	
 	private LevelManager levelManager;
-	private CollisionHandler collisionHandler;
+	private CollisionManager collisionHandler;
 	
 	private int ups = 0;
 	private int fps = 0;
@@ -105,7 +105,7 @@ public class Game implements Launchable, Renderable {
 		ioManager			= new IOManager(this);
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
-		collisionHandler 	= new CollisionHandler(this);
+		collisionHandler 	= new CollisionManager(this);
 		debugRender 		= new Debug(this);
 		
 		rivalTags(Tag.Enemy, Tag.Player);
@@ -519,7 +519,7 @@ public class Game implements Launchable, Renderable {
 		return player;
 	}
 
-	public CollisionHandler getCollisionHandler() {
+	public CollisionManager getCollisionHandler() {
 		return collisionHandler;
 	}
 

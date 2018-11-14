@@ -3,6 +3,7 @@ package geobattle.weapon;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.infection.Infection;
@@ -10,6 +11,7 @@ import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
 import geobattle.object.Wave;
 import geobattle.object.WaveFactory;
+import geobattle.util.Log;
 
 public class Projectile extends GameObject {
 	
@@ -21,9 +23,10 @@ public class Projectile extends GameObject {
 	Projectile(Game game) {
 		super(game);
 		setDamage(damage);
-		setCollider(new Collider(this) {
+		Collider col = new Collider(this);
+		col.addHandler(new CollisionHandler() {
 			@Override
-			public void enterCollision(Collider other) {
+			public void enter(Collider other) {
 				GameObject obj = other.getGameObject();
 				
 				// Infect living targets
@@ -47,6 +50,8 @@ public class Projectile extends GameObject {
 					kill();
 			}
 		});
+		setCollider(col);
+		
 		addController(this::killOutOfMap);
 		
 		getTriggerMap().add("spawn", this::alignRotation);

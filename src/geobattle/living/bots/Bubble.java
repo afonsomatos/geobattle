@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.render.sprite.shapes.Rect;
@@ -64,18 +65,15 @@ public class Bubble extends Bot {
 	private void setupCollider() {
 		Collider superCol = this.getCollider();
 		Bubble bubble = this;
-		setCollider(new Collider(this) {
+		getCollider().addHandler(new CollisionHandler() {
 			@Override
-			public void handleCollision(Collider other) {
+			public void handle(Collider other) {
 				if (exploded) return;
 				
 				GameObject obj = other.getGameObject();
 				if (obj instanceof Projectile) {
 					Projectile p = (Projectile) obj;
 					int damage = p.getDamage();
-
-					// Suffer damage
-					superCol.handleCollision(other);
 
 					if (bubble.isDead()) {
 						starBurst.setPos(new Point((int)getX(), (int)getY()));

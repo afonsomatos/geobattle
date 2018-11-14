@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
@@ -82,20 +83,17 @@ public class Fly extends Bot {
 	}
 	
 	private void setupCollider() {
-		Collider superCol = getCollider();
-		Collider newCol = new Collider(this) {
+		Collider col = getCollider();
+		col.addHandler(new CollisionHandler() {
 			@Override
-			public void handleCollision(Collider other) {
-				// Take damage
-				superCol.handleCollision(other);
+			public void handle(Collider other) {
 				GameObject obj = other.getGameObject();
 				Living target = getTarget();
 				if (obj != target) return;
 				bite();
 			}
-		};
-		newCol.surround(this);
-		setCollider(newCol);
+		});
+		col.surround(this);
 	}
 
 	private void updateMovement(GameObject obj) {

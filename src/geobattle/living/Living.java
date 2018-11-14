@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.infection.Infection;
@@ -37,9 +38,10 @@ public abstract class Living extends GameObject {
 	}
 	
 	private final void setupCollider() {
-		setCollider(new Collider(this) {
+		setCollider(new Collider(this));
+		getCollider().addHandler(new CollisionHandler() {
 			@Override
-			public void handleCollision(Collider other) {
+			public void handle(Collider other) {
 				GameObject otherObj = other.getGameObject();
 				if (otherObj instanceof Projectile) {
 					Projectile projectile = (Projectile) otherObj;
@@ -47,7 +49,7 @@ public abstract class Living extends GameObject {
 						Living.this.suffer(projectile.getDamage());
 				}
 			}
-		});	
+		});
 	}
 	
 	public void setGodmode(boolean godmode) {

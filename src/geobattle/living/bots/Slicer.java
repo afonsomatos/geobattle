@@ -1,18 +1,16 @@
 package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Cross;
 import geobattle.schedule.Event;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 
@@ -81,11 +79,11 @@ public class Slicer extends Bot {
 	}
 	
 	public void setupCollider() {
-		Collider superCol = getCollider();
-		Collider newCol = new Collider(this) {
+		Collider col = getCollider();
+		col.addHandler(new CollisionHandler() {
 
 			@Override
-			public void enterCollision(Collider other) {
+			public void enter(Collider other) {
 				GameObject obj = other.getGameObject();
 				Living target = Slicer.this.getTarget();
 				if (obj != target) return;
@@ -93,7 +91,7 @@ public class Slicer extends Bot {
 			}
 			
 			@Override
-			public void leaveCollision(Collider other) {
+			public void leave(Collider other) {
 				GameObject obj = other.getGameObject();
 				Living target = Slicer.this.getTarget();
 				if (obj != target) return;
@@ -101,8 +99,7 @@ public class Slicer extends Bot {
 			}
 			
 			@Override
-			public void handleCollision(Collider other) {
-				superCol.handleCollision(other);
+			public void handle(Collider other) {
 				if (!canSlice) return;
 				
 				GameObject obj = other.getGameObject();
@@ -113,9 +110,8 @@ public class Slicer extends Bot {
 				canSlice = false;
 				game.getSchedule().next(sliceDelay, () -> canSlice = true);
 			}
-		};
-		newCol.surround(SPRITE);
-		setCollider(newCol);
+		});
+		col.surround(SPRITE);
 	}
 	
 	public void setupAttackBehavior() {

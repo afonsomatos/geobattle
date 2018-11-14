@@ -1,13 +1,12 @@
 package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
 import geobattle.extension.Follower;
 import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
@@ -99,11 +98,10 @@ public class Slime extends Bot {
 	}
 
 	private void setupCollider() {
-		Collider superCol = getCollider();
-		Collider newCol = new Collider(this) {
+		Collider col = getCollider();
+		col.addHandler(new CollisionHandler() {
 			@Override
-			public void handleCollision(Collider other) {
-				superCol.handleCollision(other);
+			public void handle(Collider other) {
 				GameObject obj = other.getGameObject();
 				Living target = getTarget();
 				if (obj != target || !canAttack) return;
@@ -111,9 +109,8 @@ public class Slime extends Bot {
 				target.suffer(type.damage);
 				game.getSchedule().next(type.attackDelay, () -> { canAttack = true; });
 			}
-		};
-		newCol.surround(type.sprite);
-		setCollider(newCol);
+		});
+		col.surround(type.sprite);
 	}
 	
 	private Slime getChild(Type child) {

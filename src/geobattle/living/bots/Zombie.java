@@ -1,6 +1,7 @@
 package geobattle.living.bots;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.extension.Follower;
@@ -49,11 +50,9 @@ public class Zombie extends Bot {
 
 	
 	public void setupCollider() {
-		Collider superCol = getCollider();
-		Collider newCol = new Collider(this) {
-
+		getCollider().addHandler(new CollisionHandler() {
 			@Override
-			public void enterCollision(Collider other) {
+			public void enter(Collider other) {
 				GameObject obj = other.getGameObject();
 				Living target = Zombie.this.getTarget();
 				if (obj != target) return;
@@ -61,14 +60,7 @@ public class Zombie extends Bot {
 				target.suffer(damage);
 				humanoid();
 			}
-			
-			@Override
-			public void handleCollision(Collider other) {
-				superCol.handleCollision(other);
-			}
-			
-		};
-		setCollider(newCol);
+		});
 	}
 	private void handleDeath() {
 		if (zombie)

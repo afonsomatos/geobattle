@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import geobattle.collider.Collider;
+import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Living;
@@ -41,9 +42,10 @@ public class Asteroid extends GameObject {
 	}
 	
 	private Collider makeCollider() {
-		return new Collider(this) {
+		Collider col = new Collider(this);
+		col.addHandler(new CollisionHandler() {
 			@Override
-			public void handleCollision(Collider other) {
+			public void handle(Collider other) {
 				GameObject obj = other.getGameObject();
 				if (!(obj instanceof Living)) return;
 				Living living = (Living) obj;
@@ -52,7 +54,8 @@ public class Asteroid extends GameObject {
 				stopAttack.add(living);
 				game.getSchedule().next(smashInterval, () -> stopAttack.remove(living));
 			}
-		};
+		});
+		return col;
 	}
 
 }
