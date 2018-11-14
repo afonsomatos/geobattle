@@ -11,7 +11,7 @@ import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
 
-	private final static int START_LEVEL = 1;
+	private final static int START_LEVEL = 5;
 	
 	private final static int MAX_WEAPON_SLOTS  = 5;
 	private final static int MAX_SPECIAL_SLOTS = 5;
@@ -61,21 +61,21 @@ public class Achievements {
 	
 	private void unlockPowerups() {
 		// Unlock a new powerup slot every 5 levels
-		if (level % 4 == 0 && powerupSlots < MAX_POWERUP_SLOTS)
+		if (level % 5 == 0 && powerupSlots < MAX_POWERUP_SLOTS)
 			powerupSlots++;
 		
-		// Unlock a new powerup every 3 levels
-		if (level % 3 == 0)
+		// Unlock a new powerup every 5 levels
+		if (level % 5 == 0)
 			powerups.add(ALL_POWERUPS[(level - 1) % ALL_POWERUPS.length]);
 	}
 
 	private void unlockSpecials() {
 		// Unlock a new special slot every 4 levels
-		if (level >= 4 && level % 4 == 0 && specialSlots < MAX_SPECIAL_SLOTS)
+		if (level % 4 == 0 && specialSlots < MAX_SPECIAL_SLOTS)
 			specialSlots++;
 		
-		// Unlock a new special every 3 levels
-		if (level % 3 == 0)
+		// Unlock a new special every 4 levels
+		if (level % 4 == 0)
 			specials.add(ALL_SPECIALS[(level / 3) % ALL_SPECIALS.length]);
 	}
 
