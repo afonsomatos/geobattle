@@ -11,7 +11,7 @@ import geobattle.weapon.WeaponFactory;
 
 public class Achievements {
 
-	private final static int START_LEVEL = 20;
+	private final static int START_LEVEL = 30;
 	
 	private final static int MAX_WEAPON_SLOTS  = 5;
 	private final static int MAX_SPECIAL_SLOTS = 5;

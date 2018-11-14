@@ -64,7 +64,7 @@ public class LevelManager {
 	private Supplier<Integer> botQuantitySupplier  = () -> wave + (level - 1);
 	
 	private List< Spawn<Item> > items = Arrays.asList(
-		new Spawn<Item>(50, 1, () -> new AmmoItem(game, 50 * level)),
+		new Spawn<Item>(150, 1, () -> new AmmoItem(game, 50 * level)),
 		new Spawn<Item>(50, 3, () -> new HealthItem(game, 50 * level)),
 		new Spawn<Item>(50, 5, () -> new ShieldItem(game, 50 * level))
 	);
