@@ -23,6 +23,7 @@ import geobattle.living.bots.Soldier;
 import geobattle.living.bots.Tower;
 import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
+import geobattle.timer.Clock;
 import geobattle.util.Log;
 import geobattle.util.Util;
 import geobattle.util.WeightedRandomBag;
@@ -58,15 +59,16 @@ public class LevelManager {
 	private int dead;
 	private int spawned;
 	private int score;
-	private long start;
+	
+	private Clock waveClock = new Clock();
 	
 	private Supplier<Integer> itemQuantitySupplier = () -> 1;
 	private Supplier<Integer> botQuantitySupplier  = () -> wave + (level - 1);
 	
 	private List< Spawn<Item> > items = Arrays.asList(
 		new Spawn<Item>(150, 1, () -> new AmmoItem(game, 50 * level)),
-		new Spawn<Item>(50, 3, () -> new HealthItem(game, 50 * level)),
-		new Spawn<Item>(50, 5, () -> new ShieldItem(game, 50 * level))
+		new Spawn<Item>(50, 3,  () -> new HealthItem(game, 50 * level)),
+		new Spawn<Item>(50, 5,  () -> new ShieldItem(game, 50 * level))
 	);
 	
 	private List< Spawn<Bot> > spawns = Arrays.asList(
@@ -90,14 +92,13 @@ public class LevelManager {
 		this.level = level;
 		wave = 0;
 		score = 0;
-		// FIXME: Pause ruins this
-		start = System.currentTimeMillis();
 		sendNextWave();
 	}
 	
 	private void loadWave(Runnable finish) {
 		spawnBots();
 		spawnItems();
+		game.getTimer().start(waveClock);
 	}
 	
 	private void spawnItems() {
@@ -172,12 +173,13 @@ public class LevelManager {
 	
 	private void finishWave() {
 		// In seconds
-		double elapsed = getLevelTimeEllapsed() / 1000.0;
+		double elapsed = waveClock.getElapsed() / 1000.0;
 		
-		// Time for which extra score is max
-		double bestTime = (level + wave) * 5; 
-		int bestScore	= (level + wave) * 50;
-		int scoreGained = (int) Util.clamp(0, bestScore * elapsed / bestTime, bestScore);
+		// 5 seconds estimate for each bot
+		int bestTime = botQuantitySupplier.get() * 5;
+		int bestScore = bestTime * 10;
+		
+		int scoreGained = (int) Util.clamp(0, bestScore * bestTime / elapsed, bestScore);
 		String msg = String.format("Wave cleared! +%d (%.2fs)", scoreGained, elapsed);
 		
 		score += scoreGained;
@@ -222,10 +224,6 @@ public class LevelManager {
 
 	public int getWave() {
 		return this.wave;
-	}
-	
-	public long getLevelTimeEllapsed() {
-		return System.currentTimeMillis() - start;
 	}
 
 }
