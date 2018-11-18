@@ -1,6 +1,5 @@
 package geobattle.schedule;
 
-import geobattle.util.Log;
 import geobattle.util.Util;
 
 public class Event implements Runnable {

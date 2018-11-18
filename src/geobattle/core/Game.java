@@ -28,6 +28,8 @@ import geobattle.schedule.Schedule;
 import geobattle.special.slot.SpecialSet;
 import geobattle.special.slot.SpecialSlot;
 import geobattle.special.slot.SpecialSlotFactory;
+import geobattle.timer.Clock;
+import geobattle.timer.Timer;
 import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Log;
@@ -46,6 +48,7 @@ public class Game implements Launchable, Renderable {
 	
 	private Renderable debugRender;
 
+	private Timer timer = new Timer();
 	private Schedule schedule = new Schedule();
 	private UIManager uiManager;
 	private IOManager ioManager;
@@ -118,16 +121,24 @@ public class Game implements Launchable, Renderable {
 		return achievements;
 	}
 	
+	public Timer getTimer() {
+		return timer;
+	}
+	
 	public UIManager getUIManager() {
 		return uiManager;
 	}
 	
 	public void togglePause() {
 		paused = !paused;
-		if (paused)
+		if (paused) {
 			schedule.pause();
-		else
+			timer.pause();
+		}
+		else {
 			schedule.unpause();
+			timer.unpause();
+		}
 	}
 	
 	public void setPause(boolean paused) {
@@ -297,7 +308,7 @@ public class Game implements Launchable, Renderable {
 		level = opts.getLevel();
 		levelFinished = false;
 		levelManager.sendLevel(opts.getLevel());
-
+		
 		state = State.PLAYING;
 		gameLoop();
 	}
@@ -428,7 +439,8 @@ public class Game implements Launchable, Renderable {
 	public void tick() {
 		// Must always be recording time
 		schedule.tick();
-
+		timer.tick();
+		
 		if (paused) return;
 		if (state != State.PLAYING) return;
 
