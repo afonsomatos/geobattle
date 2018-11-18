@@ -19,7 +19,7 @@ class Picker extends JPanel {
 	private List<Integer> selected = new ArrayList<Integer>();
 	
 	private int max;
-	private boolean[] btns;
+	private boolean[] btns = new boolean[50];
 	
 	private JPanel col = new JPanel();
 	private JLabel title = new JLabel();
@@ -76,9 +76,10 @@ class Picker extends JPanel {
 		
 		Font font = uiStyle.getFont();
 		
+		// selected.clear();
+		// btns = new boolean[slots.length];
+		
 		// Clear previous slots
-		btns = new boolean[slots.length];
-		selected.clear();
 		col.removeAll();
 
 		col.setLayout(new GridLayout(slots.length, 1));
@@ -108,6 +109,11 @@ class Picker extends JPanel {
 				}
 				updateTitle();
 			});
+			
+			if (btns[x]) {
+				btn.setText("-");
+				label.setForeground(selectedColor);
+			}
 			
 			slot.add(label, BorderLayout.CENTER);
 			slot.add(btn, BorderLayout.EAST);
