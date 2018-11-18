@@ -99,7 +99,7 @@ public class Infection extends GameObject {
 	}
 	
 	private void spawned() {
-		game.getSchedule().add(event);
+		game.getSchedule().start(event);
 	}
 	
 	private void draw(Graphics2D gfx) {

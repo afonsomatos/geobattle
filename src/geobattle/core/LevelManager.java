@@ -23,7 +23,6 @@ import geobattle.living.bots.Soldier;
 import geobattle.living.bots.Tower;
 import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
-import geobattle.timer.Clock;
 import geobattle.util.Log;
 import geobattle.util.Util;
 import geobattle.util.WeightedRandomBag;
@@ -60,7 +59,7 @@ public class LevelManager {
 	private int spawned;
 	private int score;
 	
-	private Clock waveClock = new Clock();
+	private Event waveEvent = new Event();
 	
 	private Supplier<Integer> itemQuantitySupplier = () -> 1;
 	private Supplier<Integer> botQuantitySupplier  = () -> wave + (level - 1);
@@ -98,7 +97,7 @@ public class LevelManager {
 	private void loadWave(Runnable finish) {
 		spawnBots();
 		spawnItems();
-		game.getTimer().start(waveClock);
+		game.getSchedule().start(waveEvent);
 	}
 	
 	private void spawnItems() {
@@ -150,10 +149,9 @@ public class LevelManager {
 		}
 		
 		// Spawn them in order
-		Event spawnEvent = new Event(WAIT_PER_SPAWN, true);
-		spawnEvent.setRunnable(() -> {
+		Event spawnEvent = new Event(WAIT_PER_SPAWN, true, event -> {
 			if (spawned == n) {
-				spawnEvent.setOff(true);
+				event.setOff(true);
 				return;
 			}
 			game.spawnGameObject(new BotSpawner(game, bots[spawned], SPAWN_DELAY));
@@ -162,7 +160,7 @@ public class LevelManager {
 
 		// Spawn first without delay
 		spawnEvent.run();
-		game.getSchedule().add(spawnEvent);
+		game.getSchedule().start(spawnEvent);
 	}
 	
 	private Point getRandomLocation(int margin) {
@@ -173,7 +171,7 @@ public class LevelManager {
 	
 	private void finishWave() {
 		// In seconds
-		double elapsed = waveClock.getElapsed() / 1000.0;
+		double elapsed = waveEvent.getElapsed() / 1000.0;
 		
 		// 5 seconds estimate for each bot
 		int bestTime = botQuantitySupplier.get() * 5;
@@ -194,14 +192,13 @@ public class LevelManager {
 		waveCountDown = WAVE_COUNT_DOWN;
 		
 		Log.i("Next wave!");
-		Event event = new Event(1000, true);
-		event.setRunnable(() -> {
+		Event event = new Event(1000, true, e -> {
 			String msg;
 			assert waveCountDown >= 0;
 			if (waveCountDown == 0) {
 				wave++;
 				loadWave(this::finishWave);
-				event.setOff(true);
+				e.setOff(true);
 				msg = "Go";
 			} else {
 				msg = "New wave in " + waveCountDown;
@@ -211,7 +208,7 @@ public class LevelManager {
 		});
 		
 		event.run();
-		game.getSchedule().add(event);
+		game.getSchedule().start(event);
 	}
 	
 	public int getWaveCountDown() {

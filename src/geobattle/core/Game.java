@@ -28,8 +28,6 @@ import geobattle.schedule.Schedule;
 import geobattle.special.slot.SpecialSet;
 import geobattle.special.slot.SpecialSlot;
 import geobattle.special.slot.SpecialSlotFactory;
-import geobattle.timer.Clock;
-import geobattle.timer.Timer;
 import geobattle.ui.UIManager;
 import geobattle.util.Counter;
 import geobattle.util.Log;
@@ -48,7 +46,6 @@ public class Game implements Launchable, Renderable {
 	
 	private Renderable debugRender;
 
-	private Timer timer = new Timer();
 	private Schedule schedule = new Schedule();
 	private UIManager uiManager;
 	private IOManager ioManager;
@@ -121,10 +118,6 @@ public class Game implements Launchable, Renderable {
 		return achievements;
 	}
 	
-	public Timer getTimer() {
-		return timer;
-	}
-	
 	public UIManager getUIManager() {
 		return uiManager;
 	}
@@ -133,11 +126,9 @@ public class Game implements Launchable, Renderable {
 		paused = !paused;
 		if (paused) {
 			schedule.pause();
-			timer.pause();
 		}
 		else {
 			schedule.unpause();
-			timer.unpause();
 		}
 	}
 	
@@ -156,7 +147,7 @@ public class Game implements Launchable, Renderable {
 	public void sendMessage(long delay, String msg) {
 		message = msg;
 		hideMessageEvent.setDelay(delay);
-		schedule.add(hideMessageEvent);
+		schedule.start(hideMessageEvent);
 	}
 	
 	public boolean isPaused() {
@@ -416,14 +407,14 @@ public class Game implements Launchable, Renderable {
 	
 	public void playerGotHit() {
 		gettingHit = true;
-		schedule.add(gettingHitEvent);
+		schedule.start(gettingHitEvent);
 	}
 	
 	private void handleOutOfBorders() {
 		// Check for switch
 		if (outOfBorders ^ (outOfBorders = player.isOutOfBorders()) && outOfBorders) {
 			outOfBorderCounter.reset();
-			schedule.add(outOfBorderEvent);
+			schedule.start(outOfBorderEvent);
 		}
 	}
 	
@@ -439,7 +430,6 @@ public class Game implements Launchable, Renderable {
 	public void tick() {
 		// Must always be recording time
 		schedule.tick();
-		timer.tick();
 		
 		if (paused) return;
 		if (state != State.PLAYING) return;

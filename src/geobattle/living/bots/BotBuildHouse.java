@@ -79,7 +79,7 @@ public class BotBuildHouse extends Living {
 			bot.setTarget(target);
 			game.spawnGameObject(bot);
 		});
-		game.getSchedule().add(event);
+		game.getSchedule().start(event);
 	}
 
 }

@@ -68,7 +68,7 @@ public abstract class Living extends GameObject {
 		if (godmode) return;
 		
 		suffered = hit;
-		game.getSchedule().add(sufferEvent);
+		game.getSchedule().start(sufferEvent);
 		
 		healthTank.take(hit);
 		if (isDead()) {

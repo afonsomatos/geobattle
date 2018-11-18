@@ -1,44 +1,29 @@
 package geobattle.schedule;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Schedule {
-
-	private List<Event> timers = new LinkedList<Event>();
-	private long startPause;
+	
+	private List<Event> events = new ArrayList<>();
+	
+	private long startPause = 0;
 	private boolean paused = false;
 	
-	public void tick() {
-		if (paused) return;
+	public void next(long delay, Runnable runnable) {
+		start(new Event(delay, false, runnable));
+	}
 	
-		// TODO: Find better way
-		List<Event> toRemove = new ArrayList<Event>();
-		for (Event t : new ArrayList<>(timers)) {
-			if (t.isOff()) {
-				toRemove.add(t);
-				continue;
-			}
-			
-			long now = System.currentTimeMillis();
-			long elapsed = (now - t.getExtraDelay() - t.getStart());
-			t.setElapsed(elapsed);
-			
-			if (t.getDelay() <= elapsed) {
-				t.removeExtraDelay();
-				t.run();
-				
-				if (!t.isRepeat()) {
-					toRemove.add(t);
-					continue;
-				}
-				
-				t.setStart(now);
-			}
-		}
-
-		timers.removeAll(toRemove);
+	public void start(long delay, boolean repeat, Event.Routine routine) {
+		start(new Event(delay, repeat, routine));
+	}
+	
+	public void start(Event event) {
+		event.setExtraDelay(0);
+		event.setActive(true);
+		event.setStart(System.currentTimeMillis());
+		events.add(event);
 	}
 	
 	public void pause() {
@@ -47,35 +32,56 @@ public class Schedule {
 	}
 	
 	public void unpause() {
-		if (!paused) {
-			throw new IllegalStateException("Can't unpaused what's not paused");
+		if (!paused)
+			throw new IllegalStateException("Can't unpause unpaused timer");
+		
+		for (Event e : events) {
+			// We only add the time the clock was paused
+			long delay = System.currentTimeMillis() - Math.max(e.getStart(), startPause);
+			e.setExtraDelay(e.getExtraDelay() + delay);
 		}
-		for (Event t : timers)
-			t.addExtraDelay(System.currentTimeMillis() - startPause);
+		
 		paused = false;
 	}
 	
-	public void next(long delay, Runnable runnable) {
-		Event newEvent = new Event();
-		newEvent.setDelay(delay);
-		newEvent.setRepeat(false);
-		newEvent.setRunnable(runnable);
-		this.add(newEvent);		
+	public void tick() {
+		if (paused) return;
+		
+		// Remove expired clocks
+		events.removeAll(new ArrayList<>(events).stream().filter(e -> {
+			
+			// If the clock ended then no need to track it anymore
+			if (!e.isActive())
+				return true;
+			
+			long now = System.currentTimeMillis();
+			long elapsed = (now - e.getExtraDelay() - e.getStart());
+			e.setElapsed(elapsed);
+			
+			long delay = e.getDelay();
+			
+			// Never ending clock
+			if (delay == Event.STATIC)
+				return false;
+			
+			if (elapsed >= delay) {
+				e.run();
+				
+				if (!e.isRepeat())
+					return true;
+				
+				// reset
+				e.setExtraDelay(0);
+				e.setStart(now);
+			}
+			
+			return false;
+			
+		}).collect(Collectors.toList()));
 	}
 	
 	public void clear() {
-		timers.clear();
+		events.clear();
 	}
 	
-	public void next(Runnable runnable) {
-		next(0, runnable);
-	}
-	
-	public void add(Event event) {
-		event.setStart(System.currentTimeMillis());
-		event.setOff(false);
-		if (!timers.contains(event))
-			timers.add(event);
-	}
-
 }

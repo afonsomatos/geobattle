@@ -42,7 +42,7 @@ public class BotSpawner extends GameObject {
 				runnable.run();
 			game.spawnGameObject(spawn);
 		});
-		game.getSchedule().add(event);
+		game.getSchedule().start(event);
 		
 	}
 

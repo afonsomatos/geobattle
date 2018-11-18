@@ -76,7 +76,7 @@ public class Bomb extends GameObject {
 	}
 	
 	private void spawned() {
-		game.getSchedule().add(explode);
+		game.getSchedule().start(explode);
 	}
 
 	private void draw(Graphics2D gfx) {

@@ -27,7 +27,7 @@ public class TimedSpecialSlot extends SpecialSlot {
 		if (used) return;
 		used = true;
 		
-		getSpecial().getGame().getSchedule().add(chargeEvent);
+		getSpecial().getGame().getSchedule().start(chargeEvent);
 		
 		Special special = getSpecial();
 		Player player = special.getGame().getPlayer();

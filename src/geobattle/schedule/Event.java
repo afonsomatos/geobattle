@@ -1,98 +1,109 @@
 package geobattle.schedule;
 
-import geobattle.util.Util;
-
-public class Event implements Runnable {
+public class Event {
 	
-	private boolean repeat = false;
-	private boolean off = false;
-	
-	private long start = 0;
-	private long delay = 0;
-	private long elapsed = 0;
-	
-	private long extraDelay = 0;
-	
-	private Runnable runnable;
-	
-	public Event() {
-		
+	public interface Routine {
+		public void exec(Event self);
 	}
 	
-	public Event(long delay, boolean repeat) {
-		this.delay = delay;
-		this.repeat = repeat;
+	// Does not trigger any routine
+	public final static int STATIC = -1;
+	
+	/* Used for timer */
+	private long start = 0;
+	private long extraDelay = 0;
+	
+	private long delay = STATIC;
+	private long elapsed = 0;
+	private boolean active = true;
+	private boolean repeat = false;
+
+	private Routine routine;
+	
+	public Event() {
+
 	}
 	
 	public Event(long delay, boolean repeat, Runnable runnable) {
-		this.delay = delay;
+		this(delay, repeat, c -> runnable.run());
+	}
+	
+	public Event(long delay, boolean repeat, Routine routine) {
 		this.repeat = repeat;
-		this.runnable = runnable;
+		this.delay = delay;
+		this.routine = routine;
 	}
 	
-	@Override
+	public void setRoutine(Routine routine) {
+		this.routine = routine;
+	}
+	
 	public void run() {
-		runnable.run();
+		routine.exec(this);
 	}
 	
-	void setElapsed(long elapsed) {
-		this.elapsed = elapsed;
+	public Routine getRoutine() {
+		return routine;
 	}
 	
-	void removeExtraDelay() {
-		this.extraDelay = 0;
-	}
-	
-	void addExtraDelay(long extraDelay) {
-		this.extraDelay += extraDelay;
+	public boolean isRepeat() {
+		return repeat;
 	}
 	
 	long getExtraDelay() {
 		return extraDelay;
 	}
 	
+	void setExtraDelay(long extraDelay) {
+		this.extraDelay = extraDelay;
+	}
+	
+	void setStart(long start) {
+		this.start = start;
+	}
+	
+	long getStart() {
+		return start;
+	}
+	
+	public void setDelay(long delay) {
+		this.delay = delay;
+	}
+	
+	public long getDelay() {
+		return delay;
+	}
+	
+	public void setRepeat(boolean repeat) {
+		this.repeat = repeat;
+	}
+	
+	void setElapsed(long elapsed) {
+		this.elapsed = elapsed;
+	}
+	
 	public double getPercentage() {
-		return Util.clamp(0, (double) elapsed / delay, 1);
+		return (double) elapsed / delay;
 	}
 	
 	public long getElapsed() {
 		return elapsed;
 	}
 	
-	public boolean isRepeat() {
-		return repeat;
-	}
-
-	public void setRepeat(boolean repeat) {
-		this.repeat = repeat;
-	}
-
-	public boolean isOff() {
-		return off;
-	}
-
 	public void setOff(boolean off) {
-		this.off = off;
+		setActive(!off);
 	}
-
-	public long getStart() {
-		return start;
+	
+	boolean isActive() {
+		return active;
 	}
-
-	public void setStart(long start) {
-		this.start = start;
+	
+	public void setRunnable(Runnable run) {
+		routine = c -> run.run();
 	}
-
-	public long getDelay() {
-		return delay;
+	
+	void setActive(boolean active) {
+		this.active = active;
 	}
-
-	public void setDelay(long delay) {
-		this.delay = delay;
-	}
-
-	public void setRunnable(Runnable runnable) {
-		this.runnable = runnable;
-	}
-
+	
 }

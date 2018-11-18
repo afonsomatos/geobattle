@@ -79,7 +79,7 @@ public class Bomber extends Bot {
 			attackEvent.setDelay(Util.randomInteger(attackInterval));
 		});
 		
-		game.getSchedule().add(attackEvent);
+		game.getSchedule().start(attackEvent);
 	}
 
 	private void travel(GameObject obj) {

@@ -41,7 +41,7 @@ public class AsteroidSpecial extends Special {
 			destroyEvent = new Event();
 			destroyEvent.setDelay(time);
 			destroyEvent.setRunnable(asteroid::kill);
-			game.getSchedule().add(destroyEvent);
+			game.getSchedule().start(destroyEvent);
 		}
 	}
 

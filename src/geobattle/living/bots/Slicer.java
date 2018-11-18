@@ -67,7 +67,7 @@ public class Slicer extends Bot {
 		setupAttackBehavior();
 		
 		getTriggerMap().add("spawn", () -> {
-			game.getSchedule().add(attackEvent);
+			game.getSchedule().start(attackEvent);
 		});
 		
 		addController(this::updateState);
