@@ -3,17 +3,13 @@ package geobattle.object;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
-
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
-import geobattle.util.Log;
 import geobattle.util.Palette;
-import geobattle.util.Util;
 
 public class Bomb extends GameObject {
 

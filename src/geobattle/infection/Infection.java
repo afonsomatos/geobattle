@@ -10,8 +10,6 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.living.Living;
 import geobattle.schedule.Event;
-import geobattle.util.Counter;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.util.Util;
 

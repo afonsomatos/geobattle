@@ -1,16 +1,9 @@
 package geobattle.collider;
 
 import java.awt.Rectangle;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
-
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
 import geobattle.render.sprite.Sprite;
 
 public class Collider {

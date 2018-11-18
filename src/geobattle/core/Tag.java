@@ -2,7 +2,6 @@ package geobattle.core;
 
 import java.awt.Color;
 
-import geobattle.util.Log;
 import geobattle.util.Palette;
 
 public class Tag {

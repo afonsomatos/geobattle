@@ -1,13 +1,10 @@
 package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-
 import geobattle.collider.Collider;
 import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
 import geobattle.infection.Infection;
 import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;

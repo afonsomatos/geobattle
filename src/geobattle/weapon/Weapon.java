@@ -1,19 +1,12 @@
 package geobattle.weapon;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
-import geobattle.infection.InfectionFactory;
-import geobattle.render.Renderable;
 import geobattle.render.sprite.Sprite;
-import geobattle.render.sprite.shapes.Circle;
-import geobattle.render.sprite.shapes.Rect;
-import geobattle.render.sprite.shapes.Triangle;
 import geobattle.util.Counter;
-import geobattle.util.Log;
 import geobattle.util.Tank;
 import geobattle.util.Util;
 
@@ -46,8 +39,6 @@ public class Weapon extends GameObject {
 	private double fireAngle = 32;
 	private double recoil = 0;
 	private int padding = 0;
-	
-	private Renderable drawer;
 	
 	Weapon(Game game) {
 		this(game, null, Tag.Neutral);
@@ -124,10 +115,6 @@ public class Weapon extends GameObject {
 	
 	public void setRecoil(double recoil) {
 		this.recoil = recoil;
-	}
-	
-	public void setDrawer(Renderable drawer) {
-		this.drawer = drawer;
 	}
 	
 	public void fill() {

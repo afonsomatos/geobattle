@@ -1,7 +1,5 @@
 package geobattle.weapon;
 
-import java.awt.Graphics2D;
-
 import geobattle.collider.Collider;
 import geobattle.collider.CollisionHandler;
 import geobattle.core.Game;
@@ -11,7 +9,6 @@ import geobattle.infection.InfectionFactory;
 import geobattle.living.Living;
 import geobattle.object.Wave;
 import geobattle.object.WaveFactory;
-import geobattle.util.Log;
 
 public class Projectile extends GameObject {
 	

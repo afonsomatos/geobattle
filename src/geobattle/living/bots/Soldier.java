@@ -1,8 +1,6 @@
 package geobattle.living.bots;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.extension.Follower;

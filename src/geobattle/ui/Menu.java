@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-import geobattle.core.Score;
 
 @SuppressWarnings("serial")
 class Menu extends JPanel {
@@ -24,10 +20,8 @@ class Menu extends JPanel {
 	private JLabel highScoreLabel 	= new JLabel();
 	
 	private String options = "";
-	private UIManager uiManager;
 
 	Menu(UIManager uiManager) {
-		this.uiManager = uiManager;
 		
 		UIStyle uiStyle = uiManager.getUIStyle();
 		Font font 	= uiStyle.getFont();

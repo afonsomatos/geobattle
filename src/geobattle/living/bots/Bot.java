@@ -7,8 +7,6 @@ import java.util.List;
 import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.living.Living;
-import geobattle.living.bots.powerups.Powerup;
-import geobattle.util.Palette;
 import geobattle.util.Util;
 
 public abstract class Bot extends Living {

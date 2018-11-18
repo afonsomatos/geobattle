@@ -2,18 +2,12 @@ package geobattle.collider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.core.Tag;
-import geobattle.util.Log;
 
 public class CollisionManager {
 

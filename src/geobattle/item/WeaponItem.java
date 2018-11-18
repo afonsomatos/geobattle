@@ -1,8 +1,6 @@
 package geobattle.item;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-
 import com.sun.glass.events.KeyEvent;
 
 import geobattle.core.Game;
@@ -10,9 +8,7 @@ import geobattle.core.GameObject;
 import geobattle.living.Player;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.CircleCross;
-import geobattle.util.Log;
 import geobattle.util.Palette;
-import geobattle.util.Util;
 import geobattle.weapon.WeaponSet;
 import geobattle.weapon.Weapon;
 

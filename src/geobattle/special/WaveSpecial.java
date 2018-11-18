@@ -4,7 +4,6 @@ import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.object.Wave;
 import geobattle.object.WaveFactory;
-import geobattle.util.Log;
 
 public class WaveSpecial extends Special {
 

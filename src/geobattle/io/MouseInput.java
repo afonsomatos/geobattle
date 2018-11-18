@@ -7,7 +7,6 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Game.State;
 import geobattle.living.Player;
-import geobattle.util.Log;
 
 public class MouseInput extends MouseAdapter {
 

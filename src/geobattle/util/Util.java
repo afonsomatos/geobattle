@@ -19,6 +19,7 @@ public final class Util {
 		return (int) clamp((double)min, val, max);
 	}
 	
+	@SafeVarargs
 	public static <T> T random(T... array) {
 		return array[rand.nextInt(array.length)];
 	}

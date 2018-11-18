@@ -16,7 +16,6 @@ import geobattle.io.IOManager;
 import geobattle.launcher.Launchable;
 import geobattle.launcher.LauncherOption;
 import geobattle.living.Player;
-import geobattle.living.bots.Bot;
 import geobattle.living.bots.powerups.Powerup;
 import geobattle.object.ArrowKeysFollower;
 import geobattle.object.MouseFollower;

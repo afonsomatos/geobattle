@@ -1,25 +1,6 @@
 package geobattle.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
-import geobattle.living.Player;
-import geobattle.living.bots.Bomber;
-import geobattle.living.bots.Bot;
-import geobattle.living.bots.BotBuildHouse;
-import geobattle.living.bots.BotSpawner;
-import geobattle.living.bots.Bubble;
-import geobattle.living.bots.Creeper;
-import geobattle.living.bots.Fly;
-import geobattle.living.bots.Sentry;
-import geobattle.living.bots.Slicer;
-import geobattle.living.bots.Slime;
-import geobattle.living.bots.Soldier;
-import geobattle.living.bots.Tower;
-import geobattle.living.bots.Zombie;
 
 public class Test {
 	

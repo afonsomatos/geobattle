@@ -1,19 +1,12 @@
 package geobattle.living.bots;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
-import geobattle.render.sprite.shapes.Circle;
 import geobattle.schedule.Event;
-import geobattle.util.Log;
 
 public class BotSpawner extends GameObject {
 	
-	private Sprite sprite;
 	private Bot spawn;
 	private Event event;
 	private Runnable runnable;

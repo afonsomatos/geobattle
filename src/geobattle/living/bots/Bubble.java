@@ -63,7 +63,6 @@ public class Bubble extends Bot {
 	}
 
 	private void setupCollider() {
-		Collider superCol = this.getCollider();
 		Bubble bubble = this;
 		getCollider().addHandler(new CollisionHandler() {
 			@Override

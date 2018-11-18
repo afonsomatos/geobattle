@@ -6,7 +6,6 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Tag;
 import geobattle.infection.InfectionFactory;
-import geobattle.object.WaveFactory;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Aura;
 import geobattle.render.sprite.shapes.Circle;
@@ -14,6 +13,7 @@ import geobattle.render.sprite.shapes.Rect;
 import geobattle.render.sprite.shapes.Triangle;
 import geobattle.util.Palette;
 
+@SuppressWarnings("unused")
 public class WeaponFactory {
 
 	public final static WeaponFactory RIFLE;

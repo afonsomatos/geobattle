@@ -1,7 +1,6 @@
 package geobattle.living.bots;
 
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
@@ -9,7 +8,6 @@ import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.schedule.Event;
 import geobattle.core.Tag;
-import geobattle.living.Living;
 import geobattle.render.sprite.Sprite;
 import geobattle.special.BombSpecial;
 import geobattle.util.Interval;

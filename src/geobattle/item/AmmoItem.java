@@ -4,9 +4,7 @@ import java.awt.Color;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
-import geobattle.living.Player;
 import geobattle.living.WeaponHolder;
-import geobattle.living.bots.Bot;
 import geobattle.render.sprite.Sprite;
 import geobattle.render.sprite.shapes.Diamond;
 import geobattle.util.Palette;

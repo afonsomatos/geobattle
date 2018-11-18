@@ -16,7 +16,6 @@ import geobattle.core.Options;
 import geobattle.core.Score;
 import geobattle.special.slot.SpecialSlotFactory;
 import geobattle.util.Interval;
-import geobattle.util.Log;
 import geobattle.util.Palette;
 import geobattle.weapon.WeaponFactory;
 

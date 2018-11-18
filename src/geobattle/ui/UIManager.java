@@ -21,10 +21,8 @@ import geobattle.core.Options;
 import geobattle.core.Score;
 import geobattle.io.IOManager;
 import geobattle.render.Renderable;
-import geobattle.special.Special;
 import geobattle.util.Log;
 import geobattle.util.Palette;
-import geobattle.weapon.WeaponFactory;
 
 public class UIManager {
 

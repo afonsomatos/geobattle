@@ -1,10 +1,7 @@
 package geobattle.object;
 
 import java.awt.Color;
-import java.awt.Point;
-
 import geobattle.core.Game;
-import geobattle.core.Tag;
 
 public class WaveFactory {
 
