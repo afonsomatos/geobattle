@@ -30,7 +30,7 @@ public class Options {
 	 * 
 	 * @param string with extra settings
 	 */
-	void setSettings(String settings) {
+	public void setSettings(String settings) {
 		this.settings = settings;
 	}
 
