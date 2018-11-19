@@ -13,12 +13,21 @@ public class Collider {
 
 	private GameObject gameObject;
 
+	/*
+	 * Size of the collision box.
+	 */
 	private int width = 0;
 	private int height = 0;
+	
+	/*
+	 * Collision box's position relative to the game object.
+	 */
 	private int offsetX = 0;
 	private int offsetY = 0;
 
-	private List<Collider> currentCollisions = new LinkedList<Collider>();
+	// Colliders that were last hit
+	private List<Collider> lastCollisions = new LinkedList<Collider>();
+	
 	private List<CollisionHandler> handlers = new LinkedList<CollisionHandler>();
 
 	public Collider(GameObject gameObject) {
@@ -28,17 +37,17 @@ public class Collider {
 	void updateCollisions(List<Collider> updatedCollisions) {
 
 		// Check gained collisions
-		updatedCollisions.stream().filter(b -> !currentCollisions.contains(b))
+		updatedCollisions.stream().filter(b -> !lastCollisions.contains(b))
 				.forEach(col -> handlers.forEach(h -> h.enter(col)));
 
 		// Check lost collisions
-		currentCollisions.stream().filter(a -> !updatedCollisions.contains(a))
+		lastCollisions.stream().filter(a -> !updatedCollisions.contains(a))
 				.forEach(col -> handlers.forEach(h -> h.leave(col)));
 
 		for (CollisionHandler h : handlers)
 			updatedCollisions.forEach(h::handle);
 
-		currentCollisions = updatedCollisions;
+		lastCollisions = updatedCollisions;
 	}
 
 	/**

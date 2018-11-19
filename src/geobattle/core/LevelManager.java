@@ -61,7 +61,8 @@ public class LevelManager {
 	
 	private Event waveEvent = new Event();
 	
-	private Supplier<Integer> itemQuantitySupplier = () -> 1;
+	private Supplier<Integer> itemQuantitySupplier = () -> (wave + level) / 5
+			+ 1;
 	private Supplier<Integer> botQuantitySupplier  = () -> wave + (level - 1);
 	
 	private List< Spawn<Item> > items = Arrays.asList(
