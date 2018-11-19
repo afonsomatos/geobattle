@@ -3,7 +3,7 @@ package geobattle.collider;
 import geobattle.core.Tag;
 
 /**
- * Keeps track of which {@code Tag}s collide with eachother. This is used
+ * Keeps track of which {@link Tag}s collide with eachother. This is used
  * by {@link CollisionManager} to check if two collider's can collide based on
  * their game object's tag.
  */
