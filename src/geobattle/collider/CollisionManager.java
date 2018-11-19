@@ -36,13 +36,13 @@ public class CollisionManager {
 	 * Traces all collisions of all game objects in the moment it is called, and
 	 * updates every game object's {@code Collider} with this information.
 	 * 
-	 * @see {@link Collider}
-	 * @see {@link CollisionHandler}
+	 * @see Collider
+	 * @see CollisionHandler
 	 */
 	public void handleCollisions() {
-		
+
 		// TODO Make this prettier
-		
+
 		List<GameObject> gameObjects = game.getGameObjects();
 
 		List<Collider> colliders = gameObjects
