@@ -11,7 +11,7 @@ import geobattle.core.GameObject;
 
 /**
  * Handles all collisions between game objects according to a
- * {@code CollisionMatrix}.
+ * {@link CollisionMatrix}.
  */
 public class CollisionManager {
 

@@ -7,7 +7,7 @@ import geobattle.core.GameObject;
 import geobattle.render.sprite.Sprite;
 
 /**
- * Creates a rectangular collision box linked to a {@code GameObject}.
+ * Creates a rectangular collision box linked to a {@linked GameObject}.
  */
 public class Collider {
 
