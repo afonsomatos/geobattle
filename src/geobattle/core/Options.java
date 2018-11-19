@@ -48,7 +48,7 @@ public class Options {
 	 * 
 	 * @param level to be played
 	 */
-	void setLevel(int level) {
+	public void setLevel(int level) {
 		this.level = level;
 	}
 	
