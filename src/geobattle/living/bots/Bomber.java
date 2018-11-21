@@ -19,38 +19,44 @@ public class Bomber extends Bot {
 	private final static Sprite SPRITE = new Sprite(90, 60, 50, 30);
 	private final static int HEALTH = 1000;
 	private final static int MARGIN = 100;
-	
+
 	static {
 		SPRITE.draw(g -> {
 			g.setColor(Palette.NAVY);
 			int side = 50;
-			int[] xs = {0, -side, -side};
-			int[] ys = {0, side, -side};
-			
+			int[] xs = { 0, -side, -side };
+			int[] ys = { 0, side, -side };
+
 			g.translate(-30, 0);
 			g.fillPolygon(xs, ys, 3);
-				
+
 			g.translate(30, 0);
 			g.setColor(Palette.MINT);
 			g.fillRect(-15, 10, 30, 20);
-			
+
 			Ellipse2D.Double body = Util.Graphics.getEllipse(0, 0, 70, 50);
 			g.setColor(Palette.GREY);
 			g.fill(body);
 			g.setStroke(new BasicStroke(3));
 			g.setColor(Palette.NAVY);
 			g.draw(body);
-			
+
 		});
 	}
-	
+
 	private boolean onMap = true;
 	private int reappearDelay = 2000;
 
 	private BombSpecial bombSpecial;
-	
-	private Event attackEvent;
+
 	private Interval<Integer> attackInterval = new Interval<Integer>(750, 1500);
+
+	private Event attackEvent =
+			new Event(Util.randomInteger(attackInterval), true, event -> {
+				bombSpecial.setPos(getPos());
+				bombSpecial.send();
+				event.setDelay(Util.randomInteger(attackInterval));
+			});
 
 	public Bomber(Game game) {
 		super(game);
@@ -60,23 +66,17 @@ public class Bomber extends Bot {
 		getCollider().surround(SPRITE);
 		setSpeed(6);
 		setVelX(6);
-		
-		getTriggerMap().add("die",attackEvent::off);
+
+		getTriggerMap().add("die", attackEvent::off);
 		getTriggerMap().add("spawn", this::resetEvent);
-		
+
 		addController(this::travel);
 	}
-	
+
 	public void resetEvent() {
 		if (attackEvent != null)
 			attackEvent.off();
-		
-		attackEvent = new Event(Util.randomInteger(attackInterval), true, () -> {
-			bombSpecial.setPos(new Point((int)getX(), (int)getY()));
-			bombSpecial.send();
-			attackEvent.setDelay(Util.randomInteger(attackInterval));
-		});
-		
+
 		game.getSchedule().start(attackEvent);
 	}
 
@@ -95,21 +95,23 @@ public class Bomber extends Bot {
 				stop();
 				int z = Util.randomInteger(0, 3);
 				if (z <= 1) {
-					double x = Util.randomDouble(MARGIN, game.getWidth() - MARGIN);
+					double x =
+							Util.randomDouble(MARGIN, game.getWidth() - MARGIN);
 					setX(x);
 					if (z == 1) {
 						// up
 						setY(-MARGIN);
 						// go down
 						setVelY(getSpeed());
-					} else if (z== 0) {
+					} else if (z == 0) {
 						// down
-						setY(game.getHeight()+MARGIN);
+						setY(game.getHeight() + MARGIN);
 						// go up
 						setVelY(-getSpeed());
 					}
 				} else if (z <= 3) {
-					double y = Util.randomDouble(MARGIN, game.getHeight() - MARGIN);
+					double y = Util.randomDouble(MARGIN,
+							game.getHeight() - MARGIN);
 					setY(y);
 					if (z == 2) {
 						// left
@@ -125,7 +127,7 @@ public class Bomber extends Bot {
 				}
 			});
 		}
-		
+
 	}
 
 }
