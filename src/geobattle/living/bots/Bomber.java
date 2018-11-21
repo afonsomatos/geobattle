@@ -61,7 +61,7 @@ public class Bomber extends Bot {
 		setSpeed(6);
 		setVelX(6);
 		
-		getTriggerMap().add("die", () -> attackEvent.setOff(true));
+		getTriggerMap().add("die",attackEvent::off);
 		getTriggerMap().add("spawn", this::resetEvent);
 		
 		addController(this::travel);
@@ -69,7 +69,7 @@ public class Bomber extends Bot {
 	
 	public void resetEvent() {
 		if (attackEvent != null)
-			attackEvent.setOff(true);
+			attackEvent.off();
 		
 		attackEvent = new Event(Util.randomInteger(attackInterval), true, () -> {
 			bombSpecial.setPos(new Point((int)getX(), (int)getY()));
@@ -90,7 +90,7 @@ public class Bomber extends Bot {
 		} else if (onMap) {
 			// wait a little bit
 			onMap = false;
-			attackEvent.setOff(true);
+			attackEvent.off();
 			game.getSchedule().next(reappearDelay, () -> {
 				stop();
 				int z = Util.randomInteger(0, 3);

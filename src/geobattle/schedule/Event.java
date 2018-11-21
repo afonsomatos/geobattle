@@ -94,18 +94,6 @@ public class Event {
 		setActive(false);
 	}
 
-	/**
-	 * @param off
-	 * @deprecated
-	 * Use {@link #off()} instead.
-	 */
-	public void setOff(boolean off) {
-		if (off == false)
-			throw new IllegalArgumentException(
-					"Only a schedule can turn on an event");
-		setActive(!off);
-	}
-
 	boolean isActive() {
 		return active;
 	}

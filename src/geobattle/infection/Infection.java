@@ -91,7 +91,7 @@ public class Infection extends GameObject {
 	}
 	
 	public void destroy() {
-		event.setOff(true);
+		event.off();
 		this.kill();
 		gone = true;
 	}

@@ -56,7 +56,7 @@ public class BotBuildHouse extends Living {
 	}
 	
 	private void remove() {
-		event.setOff(true);
+		event.off();
 		kill();
 	}
 	

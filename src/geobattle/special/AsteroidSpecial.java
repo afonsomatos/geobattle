@@ -34,7 +34,7 @@ public class AsteroidSpecial extends Special {
 		owner.getTriggerMap().add("kill", () -> {
 			asteroid.kill();
 			if (destroyEvent != null)
-				destroyEvent.setOff(true);
+				destroyEvent.off();
 		});
 		// Setup self destroy
 		if (time != UNLIMITED_TIME) {

@@ -66,7 +66,7 @@ public class Game implements Launchable, Renderable {
 	private Counter outOfBorderCounter = new Counter(5, -1, 0, false) {
 		@Override
 		public void fire() {
-			outOfBorderEvent.setOff(true);
+			outOfBorderEvent.off();
 			if (outOfBorders)
 				playerExitedMap();
 		}

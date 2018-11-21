@@ -339,7 +339,7 @@ public class LevelManager {
 			if (waveCountDown == 0) {
 				wave++;
 				loadWave();
-				e.setOff(true);
+				e.off();
 				msg = "Go";
 			} else {
 				msg = "New wave in " + waveCountDown;
