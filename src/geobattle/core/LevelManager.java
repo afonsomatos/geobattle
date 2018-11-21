@@ -39,7 +39,8 @@ public class LevelManager {
 	 * Formatted string message when wave is cleared. Must include the score
 	 * (int) and elapsed time (double).
 	 */
-	private final static String WAVE_CLEARED_MESSAGE = "Wave cleared! +%d (%.2fs)";
+	private final static String WAVE_CLEARED_MESSAGE =
+			"Wave cleared! +%d (%.2fs)";
 
 	/**
 	 * Score gained after killing an enemy.
@@ -98,7 +99,7 @@ public class LevelManager {
 	 */
 	private final static Interval<Integer> ITEM_SPAWN_DELAY =
 			new Interval<>(10000, 30000);
-			
+
 	/**
 	 * Wraps an object (for example an enemy or item) and gives it the minimum
 	 * required level to spawn and a relative weight used for probabilities.
@@ -170,7 +171,7 @@ public class LevelManager {
 	 * List of all the items available for spawn.
 	 */
 	private List<Spawn<Item>> items = Arrays.asList(
-			new Spawn<Item>(100, 1, () -> new AmmoItem(game, 50 * level)),
+			new Spawn<Item>(100, 1, () -> new AmmoItem(game, 25 * level)),
 			new Spawn<Item>(100, 3, () -> new HealthItem(game, 50 * level)),
 			new Spawn<Item>(50, 5, () -> new ShieldItem(game, 50 * level)));
 
@@ -188,12 +189,12 @@ public class LevelManager {
 			new Spawn<Bot>(50, 8, () -> new Fly(game)),
 			new Spawn<Bot>(50, 9, () -> new Bomber(game)),
 			new Spawn<Bot>(50, 10, () -> new Zombie(game)));
-	
+
 	/**
 	 * Spawns items across levels.
 	 */
 	private Event spawnItemsEvent;
-	
+
 	public LevelManager(Game game) {
 		this.game = game;
 	}
@@ -224,7 +225,8 @@ public class LevelManager {
 	 */
 	private void spawnItems() {
 		// Construct probability bag
-		WeightedRandomBag<Spawn<Item>> bag = new WeightedRandomBag<Spawn<Item>>();
+		WeightedRandomBag<Spawn<Item>> bag =
+				new WeightedRandomBag<Spawn<Item>>();
 		for (Spawn<Item> s : items)
 			if (level >= s.minLevel)
 				bag.addEntry(s, s.weight);
@@ -238,7 +240,7 @@ public class LevelManager {
 					game.spawnGameObject(item);
 					event.setDelay(Util.randomInteger(ITEM_SPAWN_DELAY));
 				});
-		
+
 		game.getSchedule().start(spawnItemsEvent);
 	}
 
@@ -310,7 +312,7 @@ public class LevelManager {
 		spawnItemsEvent.off();
 		game.sendLevelFinished();
 	}
-	
+
 	private void finishWave() {
 		// In seconds
 		double elapsed = waveEvent.getElapsed() / 1000.0;
