@@ -1,5 +1,7 @@
 Geobattle
 ---------
-Java 2D game made with Swing & AWT. No images were used, all shapes are programatically drawn and rendered.
+Java 2D game made with Swing & AWT. No images were used, all shapes are programatically drawn and rendered. The project is still developing. I welcome suggestions and improvements (open a new issue for that).
 
-![alt text](screenshots/Peek%202018-11-20%2011-38.gif)
+![Gif preview](screenshots/screenshot0.gif)
+
+More screenshots: [/screenshots](/screenshots)
