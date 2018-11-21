@@ -98,7 +98,7 @@ public class LevelManager {
 	 * Delay between item spawns.
 	 */
 	private final static Interval<Integer> ITEM_SPAWN_DELAY =
-			new Interval<>(10000, 30000);
+			new Interval<>(20_000, 40_000);
 
 	/**
 	 * Wraps an object (for example an enemy or item) and gives it the minimum
@@ -171,9 +171,11 @@ public class LevelManager {
 	 * List of all the items available for spawn.
 	 */
 	private List<Spawn<Item>> items = Arrays.asList(
-			new Spawn<Item>(100, 1, () -> new AmmoItem(game, 25 * level)),
-			new Spawn<Item>(100, 3, () -> new HealthItem(game, 50 * level)),
-			new Spawn<Item>(50, 5, () -> new ShieldItem(game, 50 * level)));
+			new Spawn<Item>(100, 1, () -> new AmmoItem(game, 50 + 5 * level)),
+			new Spawn<Item>(100, 3,
+					() -> new HealthItem(game, 50 + 5 * level)),
+			new Spawn<Item>(50, 5,
+					() -> new ShieldItem(game, 50 + 5 * level)));
 
 	/**
 	 * List of all the bots available for spawn.
