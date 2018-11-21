@@ -23,6 +23,7 @@ import geobattle.living.bots.Soldier;
 import geobattle.living.bots.Tower;
 import geobattle.living.bots.Zombie;
 import geobattle.schedule.Event;
+import geobattle.util.Interval;
 import geobattle.util.Log;
 import geobattle.util.Util;
 import geobattle.util.WeightedRandomBag;
@@ -93,6 +94,12 @@ public class LevelManager {
 	private final static int BOT_SPAWN_MARGIN = 20;
 
 	/**
+	 * Delay between item spawns.
+	 */
+	private final static Interval<Integer> ITEM_SPAWN_DELAY =
+			new Interval<>(10000, 30000);
+			
+	/**
 	 * Wraps an object (for example an enemy or item) and gives it the minimum
 	 * required level to spawn and a relative weight used for probabilities.
 	 */
@@ -144,13 +151,6 @@ public class LevelManager {
 	private Event waveEvent = new Event();
 
 	/**
-	 * Returns the quantity of items to be spawned at the current state of the
-	 * game.
-	 */
-	private Supplier<Integer> itemQuantitySupplier = () -> (wave + level) / 5
-			+ 1;
-
-	/**
 	 * Returns the quantity of bots to be spawned at the current state of the
 	 * game.
 	 */
@@ -170,8 +170,8 @@ public class LevelManager {
 	 * List of all the items available for spawn.
 	 */
 	private List<Spawn<Item>> items = Arrays.asList(
-			new Spawn<Item>(150, 1, () -> new AmmoItem(game, 50 * level)),
-			new Spawn<Item>(50, 3, () -> new HealthItem(game, 50 * level)),
+			new Spawn<Item>(100, 1, () -> new AmmoItem(game, 50 * level)),
+			new Spawn<Item>(100, 3, () -> new HealthItem(game, 50 * level)),
 			new Spawn<Item>(50, 5, () -> new ShieldItem(game, 50 * level)));
 
 	/**
@@ -188,7 +188,12 @@ public class LevelManager {
 			new Spawn<Bot>(50, 8, () -> new Fly(game)),
 			new Spawn<Bot>(50, 9, () -> new Bomber(game)),
 			new Spawn<Bot>(50, 10, () -> new Zombie(game)));
-
+	
+	/**
+	 * Spawns items across levels.
+	 */
+	private Event spawnItemsEvent;
+	
 	public LevelManager(Game game) {
 		this.game = game;
 	}
@@ -203,6 +208,7 @@ public class LevelManager {
 		wave = 0;
 		score = 0;
 		sendNextWave();
+		spawnItems();
 	}
 
 	/**
@@ -210,12 +216,11 @@ public class LevelManager {
 	 */
 	private void loadWave() {
 		spawnBots();
-		spawnItems();
 		game.getSchedule().start(waveEvent);
 	}
 
 	/**
-	 * Spawns all the items for the current wave.
+	 * Spawns all the items for the current level.
 	 */
 	private void spawnItems() {
 		// Construct probability bag
@@ -224,12 +229,17 @@ public class LevelManager {
 			if (level >= s.minLevel)
 				bag.addEntry(s, s.weight);
 
-		int n = itemQuantitySupplier.get();
-		while (--n >= 0) {
-			Item item = bag.getRandom().supplier.get();
-			item.moveTo(getRandomLocation(ITEM_SPAWN_MARGIN));
-			game.spawnGameObject(item);
-		}
+		// Spawn items according to a timer
+		spawnItemsEvent = new Event(Util.randomInteger(ITEM_SPAWN_DELAY), true,
+				event -> {
+					Log.i(event.getElapsed());
+					Item item = bag.getRandom().supplier.get();
+					item.moveTo(getRandomLocation(ITEM_SPAWN_MARGIN));
+					game.spawnGameObject(item);
+					event.setDelay(Util.randomInteger(ITEM_SPAWN_DELAY));
+				});
+		
+		game.getSchedule().start(spawnItemsEvent);
 	}
 
 	/**
@@ -270,7 +280,7 @@ public class LevelManager {
 		// Spawn them in order
 		Event spawnEvent = new Event(WAIT_PER_SPAWN, true, event -> {
 			if (spawned == n) {
-				event.setOff(true);
+				event.off();
 				return;
 			}
 			game.spawnGameObject(
@@ -296,6 +306,11 @@ public class LevelManager {
 		return new Point(randX, randY);
 	}
 
+	private void finishLevel() {
+		spawnItemsEvent.off();
+		game.sendLevelFinished();
+	}
+	
 	private void finishWave() {
 		// In seconds
 		double elapsed = waveEvent.getElapsed() / 1000.0;
@@ -307,7 +322,7 @@ public class LevelManager {
 		game.getSchedule().next(WAVE_CLEARED_PAUSE, this::sendNextWave);
 
 		if (wave == WAVES_PER_LEVEL)
-			game.sendLevelFinished();
+			finishLevel();
 	}
 
 	/**
