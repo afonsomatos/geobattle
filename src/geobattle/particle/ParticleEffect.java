@@ -2,6 +2,9 @@ package geobattle.particle;
 
 import geobattle.core.Game;
 
+/**
+ * Renders game special effects.
+ */
 abstract class ParticleEffect {
 
 	protected Game game;
@@ -14,6 +17,13 @@ abstract class ParticleEffect {
 		return game;
 	}
 	
+	/**
+	 * Start rendering particle effect.
+	 */
 	public abstract void start();
+	
+	/**
+	 * Stops rendering particle effect.
+	 */
 	public abstract void destroy();
 }

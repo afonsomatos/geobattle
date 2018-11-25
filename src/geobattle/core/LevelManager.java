@@ -236,7 +236,6 @@ public class LevelManager {
 		// Spawn items according to a timer
 		spawnItemsEvent = new Event(Util.randomInteger(ITEM_SPAWN_DELAY), true,
 				event -> {
-					Log.i(event.getElapsed());
 					Item item = bag.getRandom().supplier.get();
 					item.moveTo(getRandomLocation(ITEM_SPAWN_MARGIN));
 					game.spawnGameObject(item);

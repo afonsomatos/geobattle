@@ -6,6 +6,7 @@ import geobattle.core.Game;
 import geobattle.core.Tag;
 import geobattle.special.AsteroidSpecial;
 import geobattle.special.BombSpecial;
+import geobattle.special.GodModeSpecial;
 import geobattle.special.Special;
 import geobattle.special.TroopsSpecial;
 import geobattle.special.WaveSpecial;
@@ -29,6 +30,7 @@ public class SpecialSlotFactory {
 		return func.apply(game);
 	}
 	
+	public final static SpecialSlotFactory GODMODE;
 	public final static SpecialSlotFactory SENTRY_5S;
 	public final static SpecialSlotFactory ASTEROID_15S;
 	public final static SpecialSlotFactory BOMBS_X5;
@@ -36,6 +38,11 @@ public class SpecialSlotFactory {
 	
 	// Default specials
 	static {
+		
+		GODMODE = new SpecialSlotFactory("Godmode", game -> {
+			Special special = new GodModeSpecial(game, game.getPlayer(), 5000);
+			return new TimedSpecialSlot(special, 15_000);
+		});
 		
 		WAVE = new SpecialSlotFactory("Wave", game -> {
 			Special special = new WaveSpecial(game, Tag.Player);

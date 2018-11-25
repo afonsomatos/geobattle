@@ -15,7 +15,7 @@ import geobattle.weapon.WeaponFactory;
 public class Achievements {
 
 	// Unlock all levels till this one at start
-	private final static int START_LEVEL = 30;
+	private final static int START_LEVEL = 20;
 	
 	/*
 	 * No more than these amounts of slots will be unlocked for each item.
@@ -46,6 +46,7 @@ public class Achievements {
 			SpecialSlotFactory.SENTRY_5S,
 			SpecialSlotFactory.ASTEROID_15S,
 			SpecialSlotFactory.BOMBS_X5,
+			SpecialSlotFactory.GODMODE
 	};
 	
 	private static final WeaponFactory[] ALL_WEAPONS = new WeaponFactory[] {
