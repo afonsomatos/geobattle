@@ -2,3 +2,6 @@
 doc
 *.class
 .settings
+.project
+.classpath
+/bin/
