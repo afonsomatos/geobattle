@@ -1,6 +1,6 @@
 package geobattle.object;
 
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 
 import geobattle.core.Game;
 import geobattle.core.GameObject;
