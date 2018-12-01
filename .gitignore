@@ -1,2 +1,4 @@
 .metadata
 doc
+*.class
+.settings
