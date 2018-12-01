@@ -33,7 +33,8 @@ public class KeyInput extends KeyAdapter {
 	
 	public void bindAll() {
 		
-		bind("released P", game::togglePause);
+		bind("released P", game::togglePause, true);
+		
 		bind("released R", this::sendReload);
 		bind("released Q", this::sendSwap);
 		
@@ -82,6 +83,10 @@ public class KeyInput extends KeyAdapter {
 	}
 	
 	private void bind(String key, Runnable runnable) {
+		bind(key, runnable, false);
+	}
+	
+	private void bind(String key, Runnable runnable, boolean force) {
 
 		game.getUIManager()
 			.getInputMap()
@@ -92,7 +97,7 @@ public class KeyInput extends KeyAdapter {
 			.put(key, new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (active)
+					if (active || force)
 						runnable.run();
 				}
 			});

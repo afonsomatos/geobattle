@@ -125,9 +125,11 @@ public class Game implements Launchable, Renderable {
 		paused = !paused;
 		if (paused) {
 			schedule.pause();
+			ioManager.disable();
 		}
 		else {
 			schedule.unpause();
+			ioManager.enable();
 		}
 	}
 	
@@ -135,8 +137,6 @@ public class Game implements Launchable, Renderable {
 		// Check for a switch
 		if (this.paused ^ paused)
 			togglePause();
-		else
-			this.paused = paused;
 	}
 	
 	String getMessage() {
