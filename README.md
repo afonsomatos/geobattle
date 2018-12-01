@@ -8,6 +8,8 @@ More screenshots: [/screenshots](/screenshots)
 
 Compile & run:
 --------------
+Either open it on eclipse or:
+
 ```sh
 cd src
 javac `find geobattle -name *.java`
