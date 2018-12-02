@@ -54,9 +54,6 @@ public class Game implements Launchable, Renderable {
 	private LevelManager levelManager;
 	private CollisionManager collisionHandler;
 	
-	private int ups = 0;
-	private int fps = 0;
-
 	private int width = 1280;
 	private int height = 720;
 	private double ratio = 16.0 / 9.0;
@@ -83,13 +80,7 @@ public class Game implements Launchable, Renderable {
 	private List<GameObject> gameObjects 	= new ArrayList<GameObject>(500);
 	private List<Score> scores  			= new ArrayList<Score>();
 			
-	public enum State {
-		MENU,
-		PLAYING,
-		END
-	};
-	
-	public State state = State.MENU;
+	private boolean ingame = false;
 	
 	private String message = "";
 	private Event hideMessageEvent = new Event(0, false, () -> message = "");
@@ -100,7 +91,10 @@ public class Game implements Launchable, Renderable {
 	private int level;
 	private boolean levelFinished;
 	
+	private GameLoop gameLoop;
+	
 	public Game() {
+		gameLoop			= new GameLoop(this);
 		ioManager			= new IOManager(this);
 		hud 				= new HUD(this);
 		levelManager 		= new LevelManager(this);
@@ -171,11 +165,11 @@ public class Game implements Launchable, Renderable {
 	
 	public void open() {
 		uiManager.sendOpen();
-		state = State.MENU;
 	}
 	
 	public void end() {
-		state = State.END;
+		ingame = false;
+		gameLoop.stop();
 		String name = uiManager.sendScoreEnter();
 		if (name != null)
 			saveScore(name, levelManager.getScore(), level);
@@ -299,8 +293,8 @@ public class Game implements Launchable, Renderable {
 		levelFinished = false;
 		levelManager.sendLevel(opts.getLevel());
 		
-		state = State.PLAYING;
-		gameLoop();
+		ingame = true;
+		gameLoop.start();
 	}
 	
 	public HUD getHUD() {
@@ -321,73 +315,14 @@ public class Game implements Launchable, Renderable {
 		return ratio;
 	}
 	
-	public void gameLoop() {
-		final long NANOS_PER_SECOND = (long) Math.pow(10, 9);
-		final long NANOS_PER_MILLIS = (long) Math.pow(10, 6);
-		final long rateLimit = NANOS_PER_SECOND / settings.getInt("targetFps");
-		
-		new Thread(() -> {
-			double ticksPerSecond = 60.0;
-			double nanosPerTick = NANOS_PER_SECOND / ticksPerSecond;
-			
-			long lastTime = System.nanoTime();
-			long lastPrint = System.nanoTime();
-			
-			int updates = 0;
-			int frames = 0;
-			double delta = 0;
-			
-			
-			while (state == State.PLAYING) {
-				long now = System.nanoTime();
-				delta += (now - lastTime) / nanosPerTick;
-				lastTime = now;
-				
-				while (delta >= 1) {
-					tick();
-					updates++;
-					delta--;
-				}
-				
-				uiManager.renderFrame(this);
-				frames++;
-				
-				if (lastTime - lastPrint >= NANOS_PER_SECOND) {
-					lastPrint = System.nanoTime();
-					
-					ups = updates;
-					fps = frames;
-					
-					updates = 0;
-					frames = 0;
-				}
-				
-			   final long delayms =  ((now + rateLimit) - System.nanoTime()) / NANOS_PER_MILLIS;
-			    if (delayms > 0) {
-			        // more than a millisecond wait, do it....
-			    	try {
-			    		Thread.sleep(delayms);
-			    	} catch (InterruptedException ie) {
-			    		// ignore.
-			    	}
-			    }
-			}
-			
-		}).start();
-	}
-	
 	public List<Score> getScores() {
 		return scores;
 	}
 	
 	public int getUps() {
-		return ups;
+		return gameLoop.getUps();
 	}
 
-	public void setState(State state) {
-		this.state = state;
-	}
-	
 	public boolean isGameOver() {
 		return gameOver;
 	}
@@ -422,16 +357,11 @@ public class Game implements Launchable, Renderable {
 		player.die();
 	}
 	
-	public State getState() {
-		return state;
-	}
-	
 	public void tick() {
 		// Must always be recording time
 		schedule.tick();
 		
-		if (paused) return;
-		if (state != State.PLAYING) return;
+		if (paused || !ingame) return;
 
 		handleOutOfBorders();
 		
@@ -454,7 +384,7 @@ public class Game implements Launchable, Renderable {
 		gfx.setColor(Color.BLACK);
 		gfx.fillRect(0, 0, width, height);
 		
-		if (state == State.PLAYING) {
+		if (ingame) {
 			
 			getGameObjects()
 				.stream()
@@ -513,7 +443,7 @@ public class Game implements Launchable, Renderable {
 	}
 	
 	public int getFps() {
-		return fps;
+		return gameLoop.getFps();
 	}
 
 	public Player getPlayer() {
