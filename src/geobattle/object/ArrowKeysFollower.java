@@ -1,12 +1,12 @@
 package geobattle.object;
 
-import java.awt.event.KeyEvent;
-
 import geobattle.core.Game;
 import geobattle.core.GameObject;
 import geobattle.core.Settings;
 import geobattle.io.KeyInput;
 import geobattle.living.Player;
+
+import java.awt.event.KeyEvent;
 
 public class ArrowKeysFollower extends GameObject {
 
@@ -94,6 +94,11 @@ public class ArrowKeysFollower extends GameObject {
 		setSliceSpeed(settings.getDouble("arrows.speed"));
 		setArrowMap(ArrowMap.values()[settings.getInt("arrows.mode") - 1]);
 		setRadius(settings.getInt("arrows.radius"));
+		setPrecision(settings.getDouble("arrows.precision"));
+	}
+
+	public void setPrecision(double precision) {
+		this.precision = precision;
 	}
 	
 	public void setRadius(int radius) {
@@ -129,8 +134,8 @@ public class ArrowKeysFollower extends GameObject {
 		int[][] dirMap = arrowMap.map;
 		
 		int slice = getSlice();
-		int currQuarter = (int) slice / quarter;
-		int dirs[];
+		int currQuarter = slice / quarter;
+		int[] dirs;
 		
 		if (slice % quarter == 0)
 			dirs = dirMap[4 + currQuarter];

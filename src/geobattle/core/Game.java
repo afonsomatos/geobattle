@@ -1,16 +1,5 @@
 package geobattle.core;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import geobattle.collider.CollisionManager;
 import geobattle.io.IOManager;
 import geobattle.launcher.Launchable;
@@ -34,6 +23,15 @@ import geobattle.util.Palette;
 import geobattle.weapon.Weapon;
 import geobattle.weapon.WeaponFactory;
 import geobattle.weapon.WeaponSet;
+
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Game implements Launchable, Renderable {
 
@@ -110,7 +108,7 @@ public class Game implements Launchable, Renderable {
 	public Achievements getAchievements() {
 		return achievements;
 	}
-	
+
 	public UIManager getUIManager() {
 		return uiManager;
 	}
@@ -173,6 +171,7 @@ public class Game implements Launchable, Renderable {
 		String name = uiManager.sendScoreEnter();
 		if (name != null)
 			saveScore(name, levelManager.getScore(), level);
+        gameLoop.end();
 		uiManager.sendLoad();
 	}
 	
@@ -183,7 +182,7 @@ public class Game implements Launchable, Renderable {
 	private void loadSettings(String opts) {
 		try {
 			settings.loadDefault();
-			settings.load(new ByteArrayInputStream(opts.getBytes("UTF-8")));
+            settings.load(new ByteArrayInputStream(opts.getBytes(StandardCharsets.UTF_8)));
 		} catch (IOException ioe) {
 			Log.e("Failed loading settings");
 			ioe.printStackTrace();

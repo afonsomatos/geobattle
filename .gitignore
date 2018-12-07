@@ -1,7 +1,13 @@
-.metadata
 doc
 *.class
+/bin/
+
+# Eclipse
+.metadata
 .settings
 .project
 .classpath
-/bin/
+
+# Idea
+.idea
+*.iml

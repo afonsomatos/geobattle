@@ -1,7 +1,5 @@
 package geobattle.core;
 
-import geobattle.util.Log;
-
 class GameLoop {
 
 	private Game game;
@@ -14,12 +12,7 @@ class GameLoop {
 	private static final double NANOS_PER_SECOND = Math.pow(10, 9);
 	private static final double NANOS_PER_MILLIS = Math.pow(10, 6);
 
-	private static final double FRAMES_PER_SECOND = 120;
 	private static final double TICKS_PER_SECOND = 60.0;
-
-	private static final double NANOS_PER_FRAME =
-			NANOS_PER_SECOND / FRAMES_PER_SECOND;
-
 	private static final double NANOS_PER_TICK =
 			NANOS_PER_SECOND / TICKS_PER_SECOND;
 
@@ -89,7 +82,10 @@ class GameLoop {
 	}
 	
 	void renderer() {
-		
+
+		final double targetFps = game.getSettings().getDouble("targetFps");
+		final double nanosPerFrame = NANOS_PER_SECOND / targetFps;
+
 		long lastSecond = System.nanoTime();
 		int frames = 0;
 
@@ -108,7 +104,7 @@ class GameLoop {
 			
 			// Wait for next update
 			double delay =
-					((now + NANOS_PER_FRAME) - System.nanoTime())
+					((now + nanosPerFrame) - System.nanoTime())
 							/ NANOS_PER_MILLIS;
 			
 			if (delay > 0) {
